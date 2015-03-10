@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Laika</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Network -->
+    <string name="http_client_null_exception_message">Client must not be null.</string>
+
+    <!-- IO error strings -->
+    <string name="generic_server_down_error">It could not connect to the server</string>
+    <string name="auth_failure_error">The email or password is incorrect</string>
+    <string name="no_internet_error">There was a problem with your internet connection</string>
+    <string name="generic_networking_error">There was an error</string>
+    <string name="content_description_logo_image_view">Logo</string>
+    <string name="login_submit">Login</string>
+    <string name="password">Password</string>
+    <string name="email_address">Email</string>
+    <string name="error_empty_search_query">You didn\'t enter the search field</string>
+    <string name="not_valid_email_error">Invalid email</string>
+    <string name="field_not_empty_error">This field can\'t be empty</string>
+    <string name="parameters_error">The account doesn\'t exist or the password is incorrect</string>
+    <string name="password_recovery_parameters_error">There is not associated account to this email</string>
+    <string name="must_select_reason">You must select a reason</string>
+    <string name="must_select_responsible">You must select a responsible</string>
+
+    <!-- [AI] [G+] Button text -->
+    <string name="btn_logout_from_google">Cerrar Sesión de Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+
+    <!-- Utils -->
+    <string name="zero_number">0</string>
+    <string name="accept_dialog">Aceptar</string>
+    <string name="cancel_dialog">Cancelar</string>
+    <string name="confirm_dialog">Confirmar</string>
+    <string name="empty_string"></string>
+    <string name="search_button">Buscar</string>
+
+    <!-- ERRORS -->
+    <string	name="error_invalid_phone">Número de celular inválido</string>
+
+    <!-- LOGIN -->
+    <string name="log_in_activity_name">Inicio de Sesión</string>
+    <string name="log_in_description_1"></string>
+    <string name="log_in_description_2"></string>
+    <string name="log_in_title_1"></string>
+    <string name="log_in_title_2">Ingreso</string>
+    <string name="register_success">¡Te has registrado exitosamente!</string>
+    <string name="log_in">Ingresar</string>
+    <string name="log_in2">Enviar</string>
+    <string name="back_to_menu">Volver al menú principal</string>
+
+    <string	name="registered_description"></string>
+    <!-- [AI] left menu -->
+    <string name="sign_in">Ingresa</string>
+    <string name="sign_up">Regístrate</string>
+    <string name="g_plus_sign_in">Ingresa con tus redes sociales</string>
+    <string name="camera">Cámara</string>
+    <string name="log_out">Cerrar Sesión</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Laika -->
+
+    <!-- Main -->
+    <string name="main_activity_name">Laika</string>
+    <string name="adopt_me_main">Adóptame</string>
+    <string name="my_dog_me_main">Mi Perro</string>
+    <string name="news_main">Noticias</string>
+    <string name="tips_main">Tips</string>
+    <string name="events_main">Eventos</string>
+    <string name="stories_main">Historias</string>
+
+    <!-- Menu -->
+    <string name="menu_activity_name">Menú</string>
+    <string name="registered_pets_left_menu">Mascotas Registradas</string>
+    <string name="give_in_adoption_left_menu">Dar en Adopción</string>
+    <string name="add_left_menu">Añadir nueva mascota</string>
+
+    <!-- AdoptDogActivity -->
+    <string name="adopt_activity_name">Adopción</string>
+    <string name="years_adopt_dog">Tres Años</string>
+    <string name="view_more_adopt_dog">Ver más</string>
+    <string name="adopt_adopt_dog">Adoptar</string>
+	<string name="view_more_story_adopt_dog">Es un perrito de tres años, que se encontraba en cal y canto. Es un perro de tamaño grande, muy sociable y excelente
+	    guardián. Necesita un hogar cariñoso que lo reciba como uno más de la familia</string>
+
+    <!-- AdoptDogFormActivity -->
+    <string name="space_adopt_dog_form">Espacio</string>
+    <string name="free_time_adopt_dog_form">Tiempo Libre</string>
+    <string name="partners_adopt_dog_form">Convivientes</string>
+    <string name="female_adopt_dog_form">Hembra</string>
+    <string name="male_adopt_dog_form">Macho</string>
+    <string name="whatever_adopt_dog_form">Da Igual</string>
+    <string name="size_adopt_dog_form">Tamaño</string>
+    <string name="personality_adopt_dog_form">Personalidad</string>
+    <string name="dog_adopt_dog_form">Perro</string>
+    <string name="owner_adopt_dog_form">Dueño</string>
+
+    <!-- AdoptDogSuccessActivity -->
+    <string name="congrats_adopt_dog_success">¡Felicidades</string>
+    <string name="happy_news_adopt_dog_success">estará feliz con la noticia</string>
+    <string name="mail_adopt_dog_success">Revisa tu correo para confirmar y nos contactaremos contigo</string>
+
+    <!-- NewDogRegisterActivity -->
+    <string name="new_dog_register_activity_name">Registro de Mascotas</string>
+    <string name="register_new_dog_register">Registro</string>
+    <string name="name_new_dog_register">Nombre de tu Mascota</string>
+    <string name="name_hint_new_dog_register">Ejemplo: "Tony", "Filipo"&#8230;</string>
+    <string name="birth_new_dog_register">Fecha de Nacimiento</string>
+    <string name="smaller_new_dog_register">Muy Pequeño</string>
+    <string name="small_new_dog_register">Pequeño</string>
+    <string name="middle_new_dog_register">Mediano</string>
+    <string name="big_new_dog_register">Grande</string>
+    <string name="bigger_new_dog_register">Muy Grande</string>
+    <string name="gender_new_dog_register">Sexo</string>
+    <string name="weight_new_dog_register">Peso</string>
+    <string name="weight_hint_new_dog_register">Ejemplo: "17"</string>
+    <string name="breed_new_dog_register">Raza</string>
+    <string name="add_new_dog_register">Añadir</string>
+
+    <!-- GiveInAdoptionActivity -->
+    <string name="give_in_adoption_activity_name">Dar en Adopción</string>
+    <string name="name_give_in_adoption">Nombre del Perro</string>
+    <string name="personality_give_in_adoption">Personalidad</string>
+    <string name="story_give_in_adoption">Escribe su historia en 300 caracteres</string>
+    <string name="publish_give_in_adoption">Publicar</string>
+
+
+    <!-- MyDogActivity -->
+    <string name="my_dog_activity_name">Mis Mascotas</string>
+    <string name="album_my_dog">Álbum</string>
+    <string name="alimentation_my_dog">Alimentación</string>
+    <string name="food_my_dog">Comida</string>
+    <string name="owners_my_dog">Dueños</string>
+    <string name="walk_my_dog">Paseos</string>
+    <string name="health_my_dog">Salud</string>
+    <string name="history_my_dog">Historial</string>
+    <string name="reminders_my_dog">Recordatorios</string>
+    <string name="poo_my_dog">Recoger Fecas</string>
+    <string name="medicine_my_dog">Remedios</string>
+    <string name="example_breed_my_dog">Pastor Alemán</string>
+
+    <!-- HistoryMyDog -->
+    <string name="title_history_my_dog">Almuerzo</string>
+    <string name="detail_history_my_dog">Darle 2 tazas de Pedigree</string>
+    <string name="date_history_my_dog">Todos los días a las 14:00 hrs.</string>
+    <string name="monday_date">Lunes</string>
+    <string name="tuesday_date">Martes</string>
+    <string name="wednesday_date">Miércoles</string>
+    <string name="thursday_date">Jueves</string>
+    <string name="friday_date">Viernes</string>
+    <string name="saturdays_date">Sábados</string>
+    <string name="saturday_date">Sábado</string>
+    <string name="sundays_date">Domingos</string>
+    <string name="sunday_date">Domingo</string>
+    <string name="all_the_date">Todos los</string>
+    <string name="and_date">y</string>
+    <string name="days_date">días</string>
+    <string name="weekdays_date">días de semana</string>
+    <string name="weekend_date">fines de semana</string>
+
+    <!-- OwnersMyDog-->
+    <string name="my_dog_owners_activity_name">Dueños</string>
+    <string name="add_owners_my_dog">Añadir dueño</string>
+    <string name="email_add_owners_my_dog">Ingrese el correo electrónico del dueño:</string>
+    <string name="email_hint_owners_my_dog">Ejemplo: dueño@laika.com</string>
+    <string name="sent_email_owners_my_dog">Se ha añadido el usuario:</string>
+    <string name="main_owner_my_dog">Dueño Principal</string>
+    <string name="name_owner_my_dog">Cristóbal Leiva Sierra</string>
+    <string name="age_owner_my_dog">25 años</string>
+    <string name="email_owner_my_dog">dueño@laika.com</string>
+    <string name="phone_owner_my_dog">+56 9 96195432</string>
+    <string name="location_owner_my_dog">Los Vilos, Chile</string>
+
+    <!-- MyDogRemaindersActivity -->
+    <string name="my_dog_reminders_activity_name">Recordatorios</string>
+    <string name="add_my_dog_remainders">Agregar un recordatorio</string>
+    <string name="type_my_dog_remainders">Almuerzo</string>
+    <string name="hour_my_dog_remainders">14:00</string>
+    <string name="date_my_dog_remainders">Todos los días</string>
+    <string name="owner_my_dog_remainders">Creado por: Tito</string>
+
+    <!-- MyDogProfileActivity -->
+    <string name="birth_my_dog_profile">13&#8211;02&#8211;2003</string>
+    <string name="breed_my_dog_profile">Pastor Alemán</string>
+
+    <!-- MyDogHealthActivity -->
+    <string name="my_dog_health_activity_name">Salud</string>
+    <string name="search_vet_my_dog_health">Buscar Veterinaria</string>
+    <string name="vaccine_my_dog_health">Vacunas</string>
+    <string name="barber_shop_my_dog_health">Peluquería</string>
+    <string name="deals_my_dog_health">Convenios</string>
+
+    <!-- NewsActivity -->
+    <string name="news_activity_name">Noticias</string>
+    <string name="title_news_activity">Municipio de Maipú: "La nueva brigada de perros callejeros dará inclusión a todos"</string>
+	<string name="body_news_activity">La Municipalidad de Maipú trabaja en conjunto con una serie de agrupaciones animalistas,
+	    con las que se llevan a cabo politicas contra el maltrato animal, adopción y tenencia de mascotas entre otras, adopción de perros</string>
+
+    <!-- TipsActivity -->
+    <string name="tips_activity_name">Tips</string>
+    <string name="example_tips_activity">Este es un tip</string>
+
+    <!-- EventsActivity -->
+    <string name="events_activity_name">Eventos</string>
+
+    <!-- StoriesFragmentActivity -->
+    <string name="stories_fragment_activity_name">Historias</string>
+    <string name="hygiene_my_dog">Higiene</string>
+    <string name="vet_my_dog">Veterinario</string>
+
+
+
+
+</resources>

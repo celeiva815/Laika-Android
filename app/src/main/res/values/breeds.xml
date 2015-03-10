@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="smaller_breed">
+        <item>Mestizo</item>
+        <item>Bichón Maltés</item>
+		<item>Poodle Toy</item>
+		<item>Chihuahua</item>
+		<item>Grifón de Bruselas</item>
+		<item>Lulú de Pomerania</item>
+		<item>Yorshire Terrier</item>
+		<item>Fox Terrier Toy </item>
+    </string-array>
+    
+    <string-array name="small_breed">
+        <item>Mestizo</item>
+        <item>Affenpinscher</item>
+		<item>Bedlington Terrier </item>
+		<item>Bichón Frisé</item>
+		<item>Maltés</item>
+		<item>Boston Terrier</item>
+		<item>Bull Terrier Miniatura</item>
+		<item>Bulldog Francés</item>
+		<item>Cairn Terrier</item>
+		<item>Poodle </item>
+		<item>Pug</item>
+		<item>Cersky Terrier</item>
+		<item>Crestado Chino</item>
+		<item>Dachshund</item>
+		<item>Dandie Dinmont Terrier</item>
+		<item>Fox Terrier</item>
+		<item>Jack Russell Terrier</item>
+		<item>Lakeland Terrier</item>
+		<item>Lhasa Apso</item>
+		<item>Norfolk Terrier</item>
+		<item>Norwich Terrier</item>
+		<item>Papillón</item>
+		<item>Pekinés</item>
+		<item>Pinscher Miniatura</item>
+		<item>Schnauzer Miniatura</item>
+		<item>Shih Tzu</item>
+		<item>Skye Terrier</item>
+		<item>Terrier Australiano</item>
+		<item>Terrier Brasilero</item>
+		<item>Terrier Escocés</item>
+		<item>Terrier Galés</item>
+		<item>Volpino Italiano</item>
+		<item>West Highland</item>
+		<item>Yorkshire Terrier</item>
+    </string-array>
+    
+    <string-array name="middle_breed">
+        <item>Mestizo</item>
+        <item>Ainu</item>
+		<item>Airedale Terrier</item>
+		<item>Basenji</item>
+		<item>Basset Azul de Gascuña</item>
+		<item>Basset Hound</item>
+		<item>Beagle</item>
+		<item>Border Collie</item>
+		<item>Boxer</item>
+		<item>Bull Terrier</item>
+		<item>Bulldog</item>
+		<item>Caniche </item>
+		<item>Cocker Spaniel</item>
+		<item>Dingo </item>
+		<item>Kerry Blue Terrier</item>
+		<item>Pastor Catalán</item>
+		<item>Pitbull</item>
+		<item>Pointer Inglés</item>
+		<item>Sabueso Helénico</item>
+		<item>Shar Pei</item>
+		<item>Spaniel Alemán</item>
+		<item>Spaniel Ruso</item>
+		<item>Staffordshire Bull Terrier</item>
+		<item>Terrier Irlandés</item>
+    </string-array>
+    
+    <string-array name="big_breed">
+        <item>Mestizo</item>
+        <item>Akita Japonés</item>
+		<item>Alaskan Malamute</item>
+		<item>Bobtail</item>
+		<item>Boyero de Berna</item>
+		<item>Pointer Alemán Pelo Corto</item>
+		<item>Braco de Weimar</item>
+		<item>Mastín Italiano</item>
+		<item>Chow Chow</item>
+		<item>Dálmata</item>
+		<item>Doberman</item>
+		<item>Dogo Argentino </item>
+		<item>Golden Retriever</item>
+		<item>Husky Siberiano</item>
+		<item>Labrador Retriever</item>
+		<item>Lebrel Afgano</item>
+		<item>Lebrel Africano</item>
+		<item>Lebrel Polaco </item>
+		<item>Pastor Alemán</item>
+		<item>Pastor Blanco Suizo</item>
+		<item>Pastor de Maremma</item>
+		<item>Pastor Groenendael</item>
+		<item>Presa Canario</item>
+		<item>Rottweiler</item>
+		<item>Samoyedo </item>
+		<item>Setter Inglés</item>
+    </string-array>
+    
+    <string-array name="bigger_breed">
+        <item>Mestizo</item>
+        <item>Dogo de Burdeos</item>
+		<item>Fila Brasileño</item>
+		<item>Gran Danés</item>
+		<item>Leonberger</item>
+		<item>Mastín del Pirineo</item>
+		<item>Mastín Español</item>
+		<item>Mastín Napolitano</item>
+		<item>Mastín Tibetano</item>
+		<item>Pastor Caucásico</item>
+		<item>San Bernardo </item>
+		<item>Terranova</item>
+		<item>Galgo Inglés</item>
+		<item>Mastín Inglés</item>
+		<item>Komondor</item>
+		<item>Borzoi</item>
+		<item>Bullmastiff</item>
+		<item>Lebrel Irlandés</item>        
+    </string-array>
+</resources>

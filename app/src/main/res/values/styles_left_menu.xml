@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <color name="left_menu_item_color">#cccccc</color>
+    <string name="left_menu_imagen_description">Menu icon</string>
+    <color name="left_menu_divider_color">#aaaaaa</color>
+    <color name="left_menu_item_background">#333333</color>
+    <color name="left_menu_background">#3C3C3C</color>
+    <color name="left_menu_text_selected">#FFFFFF</color>
+    <color name="left_menu_text">#A6A6A6</color>
+    <dimen name="left_menu_divider_height">1dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>    
+  
+</resources>

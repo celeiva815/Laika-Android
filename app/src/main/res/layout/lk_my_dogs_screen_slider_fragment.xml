@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lk_my_dog_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="100"
+        android:id="@+id/linearLayout"
+        android:background="#AA000000">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/dog_picture_my_dog_linearlayout"
+            android:weightSum="5"
+            android:background="@color/main_background">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:id="@+id/history_my_dog_linearlayout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/history_my_dog_imageview"
+                    android:scaleType="fitStart"
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/pets2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history_my_dog"
+                    android:id="@+id/history_my_dog_textview"
+                    android:textSize="@dimen/menu_my_dog"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/light_black_font"
+                    android:textIsSelectable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:id="@+id/reminders_my_dog_linearlayout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reminders_my_dog_imageview"
+                    android:scaleType="fitStart"
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/circular159"
+                    android:padding="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reminders_my_dog"
+                    android:id="@+id/reminder_my_dog_textview"
+                    android:textSize="@dimen/menu_my_dog"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/light_black_font" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:id="@+id/health_my_dog_linearlayout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/health_my_dog_imageview"
+                    android:scaleType="fitStart"
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/cruz"
+                    android:padding="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health_my_dog"
+                    android:id="@+id/health_my_dog_textview"
+                    android:textSize="@dimen/menu_my_dog"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/light_black_font" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:id="@+id/owner_my_dog_linearlayout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/owner_my_dog_imageview"
+                    android:scaleType="fitStart"
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/owner"
+                    android:padding="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/owners_my_dog"
+                    android:id="@+id/owner_my_dog_textview"
+                    android:textSize="@dimen/menu_my_dog"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/light_black_font" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:id="@+id/album_my_dog_linearlayout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/album_my_dog_imageview"
+                    android:scaleType="fitStart"
+                    android:baselineAlignBottom="false"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/album"
+                    android:padding="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/album_my_dog"
+                    android:id="@+id/album_my_dog_textview"
+                    android:textSize="@dimen/menu_my_dog"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/light_black_font" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/container_my_dog_framelayout"></FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

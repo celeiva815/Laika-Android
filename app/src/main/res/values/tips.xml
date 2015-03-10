@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="example_tips">
+    	<item>No recurras a la violencia, malos tratos o golpes para educar. Ni tampoco fuera del entrenamiento. 
+    	    Así sólo fomentarás una mascota que te teme y no que te respeta. Tu perro no debe tenerte miedo, él debe respetarte como un líder.</item>
+		<item>Lo más recomendable es darle un alimento balanceado de calidad, que sea completo 
+		    y le entregue el aporte nutricional diario necesario para su sana alimentación.</item>
+		<item>El Parvorirus es una enfermedad muy común en  los perros. 
+		    Afecta principalmente a cachorros a contar de las 6 semanas de vida, cuando pierden la inmunidad materna.</item>
+		<item>Calendario vacunación de cachorros:\n
+		    2 meses parvovirus\n
+		    3 meses séxtuple / óctuple\n
+		    4 meses séxtuple / óctuple\n
+		    6 meses antirrábica</item>
+		    <item >Los perros son muy inteligentes y si los motivas, pueden aprender rápidamente. 
+		        Lo importante es ser consistente en el entrenamiento, no premiar conductas confusas y repetir, repetir y repetir. </item>
+		    <item >Lo más recomendable es darle un alimento balanceado de calidad, que sea completo y le entregue el aporte nutricional diario necesario para su sano mantenimiento.</item>
+    </string-array>
+    
+    <string-array name="type_tips">
+        <item >4</item>
+        <item >1</item>
+        <item >2</item>
+        <item >2</item>
+        <item >4</item>
+        <item >1</item>
+    </string-array>
+    
+</resources>

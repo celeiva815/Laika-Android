@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="#AAffffff"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/type_my_dog_reminders_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:minHeight="50sp"
+        android:minWidth="50sp"
+        android:src="@drawable/lk_food_tips" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.27"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:paddingLeft="20dp" >
+
+        <TextView
+            android:id="@+id/type_my_dog_reminders_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/type_my_dog_remainders"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/hour_my_dog_reminders_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/hour_my_dog_remainders"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date_my_dog_reminders_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="@string/date_my_dog_remainders"
+            android:textColor="#000" />
+        
+        <TextView
+            android:id="@+id/owner_my_dog_reminders_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/owner_my_dog_remainders"
+            android:textColor="#000" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:weightSum="2" >
+
+    <ImageView
+        android:id="@+id/settings_my_dog_reminders_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:minHeight="40sp"
+        android:minWidth="40sp"
+        android:src="@drawable/lk_settings" />
+
+    <ImageView
+        android:id="@+id/delete_my_dog_reminders_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="40sp"
+        android:minWidth="40sp"
+        android:src="@drawable/lk_assistance_cross" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lk_wood_background" >
+      
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#AA000000"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp" >
+
+    <TextView
+        android:id="@+id/name_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/name_new_dog_register"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/name_new_dog_register_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#90ffffff"
+        android:hint="@string/name_hint_new_dog_register"
+        android:minHeight="30dp"
+        android:paddingLeft="5dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/birth_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/birth_new_dog_register"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <DatePicker
+        android:id="@+id/birth_new_dog_register_datepicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#90FFFFFF"
+        android:calendarViewShown="false" />
+
+    <TextView
+        android:id="@id/gender_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/gender_new_dog_register"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/male_new_dog_register_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/male_adopt_dog_form"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/female_new_dog_register_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/female_adopt_dog_form"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:onClick="onRadioButtonClicked" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/size_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/size_adopt_dog_form"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Spinner
+        android:id="@+id/size_new_dog_register_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#90ffffff" />
+
+    <TextView
+        android:id="@+id/type_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/breed_new_dog_register"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Spinner
+        android:id="@+id/type_new_dog_register_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#90ffffff" />
+
+    <TextView
+        android:id="@+id/personality_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/personality_adopt_dog_form"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Spinner
+        android:id="@+id/personality_new_dog_register_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#90ffffff" />
+
+    <Button
+        android:id="@+id/add_dog_new_dog_register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/date_button"
+        android:text="@string/add_new_dog_register"
+        android:textSize="20sp" />
+
+</LinearLayout>
+
+</ScrollView>

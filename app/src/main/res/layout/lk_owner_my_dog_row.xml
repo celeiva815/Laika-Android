@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/owner_my_dog_imageview"
+            android:src="@drawable/man_white"
+            android:padding="10dp"
+            android:adjustViewBounds="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_owner_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/title_history_my_dog"
+            android:text="@string/name_owner_my_dog"
+            android:paddingBottom="5dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_owner_my_dog"
+            android:id="@+id/email_owner_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/detail_history_my_dog"
+            android:paddingBottom="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_owner_my_dog"
+            android:id="@+id/phone_owner_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/detail_history_my_dog"
+            android:paddingBottom="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_owner_my_dog"
+            android:id="@+id/role_owner_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/detail_history_my_dog"
+            android:paddingBottom="3dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

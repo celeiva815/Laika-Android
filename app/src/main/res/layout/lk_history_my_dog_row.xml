@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:weightSum="4">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/category_history_my_dog_imageview"
+        android:layout_weight="1"
+        android:src="@drawable/lk_food_logo"
+        android:padding="15dp"
+        android:adjustViewBounds="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_history_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/title_history_my_dog"
+            android:text="@string/title_history_my_dog"
+            android:paddingBottom="5dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_history_my_dog"
+            android:id="@+id/detail_history_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/detail_history_my_dog"
+            android:paddingBottom="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_history_my_dog"
+            android:id="@+id/date_history_my_dog_textview"
+            android:textColor="@color/dark_white_font"
+            android:textSize="@dimen/date_history_my_dog"
+            android:singleLine="true" />
+    </LinearLayout>
+</LinearLayout>

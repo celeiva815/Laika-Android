@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_size_adopt">
+        <item>Departamento chico</item>
+		<item>Departamento mediano</item>
+		<item>Departamento grande</item>
+		<item>Casa sin patio</item>
+		<item>Casa con patio trasero</item>
+		<item>Casa con antejardín</item>
+		<item>Casa con dos patios</item>
+		<item>Parcela </item>
+    </string-array>
+	    
+    <string-array name="free_time_adopt">
+        <item>0 a 10 horas semanales</item>
+		<item>10 a 20 horas semanales</item>
+		<item>20 a 30 horas semanales</item>
+		<item>30 a 40 horas semanales</item>
+		<item>más de 40 horas semanales</item>
+    </string-array>
+        
+    <string-array name="partners_adopt">
+        <item>0 convientes</item>
+		<item>1 ó 2 convivientes</item>
+		<item>3 ó 4 convivientes</item>
+		<item>5 o más convivientes</item>
+    </string-array>
+        
+    <string-array name="dog_size_adopt">
+        <item>Muy pequeño</item>
+		<item>Pequeño</item>
+		<item>Mediano</item>
+		<item>Grande</item>
+		<item>Muy grande</item>
+	</string-array>
+        
+    <string-array name="personality_adopt">
+        <item>Tímido</item>
+		<item>Sociable</item>
+		<item>Juguetón</item>
+		<item>Indiferente</item>
+	</string-array>
+</resources>

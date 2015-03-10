@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_adopt_dog_success_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lk_blanquito_picture"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/congrats_adopt_dog_success_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/congrats_adopt_dog_success"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/happy_news_adopt_dog_success_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/happy_news_adopt_dog_success"
+        android:textColor="#fff"
+        android:textSize="20sp" />
+    
+      <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/fb_adopt_dog_success_imageview"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fb_logo" />
+
+            <ImageView
+                android:id="@+id/gplus_adopt_dog_success_imageview"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/gplus_logo" />
+
+            <ImageView
+                android:id="@+id/tw_adopt_dog_success_imageview"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tw_logo" />
+
+        </LinearLayout>
+    
+
+</LinearLayout>

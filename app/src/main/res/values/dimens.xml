@@ -1,0 +1,13 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Fonts -->
+
+    <dimen name="menu_my_dog">8sp</dimen>
+    <dimen name="title_history_my_dog">17sp</dimen>
+    <dimen name="detail_history_my_dog">13sp</dimen>
+    <dimen name="date_history_my_dog">13sp</dimen>
+    <dimen name="dog_name_my_dog">20sp</dimen>
+</resources>
