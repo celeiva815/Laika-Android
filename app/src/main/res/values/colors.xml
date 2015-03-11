@@ -2,6 +2,8 @@
 <resources>
 	<color name="main_background">#eee</color>
     <color name="red_background">#F75b5b</color>
+    <color name="semi_trans_background">#77FFFFFF</color>
+    <color name="semi_trans_black_background">#33000000</color>
     <color name="light_black_font">#222</color>
     <color name="dark_white_font">#f2f2f2</color>
 

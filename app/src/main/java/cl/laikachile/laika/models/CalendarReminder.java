@@ -75,7 +75,7 @@ public class CalendarReminder extends Model {
 
         switch (this.mCategory) {
 
-            case Tag.CATEGORY_CALENDAR_MEDICINE:
+            case Tag.CATEGORY_VACCINE:
 
                 return R.drawable.lk_food_tips;
 
@@ -96,7 +96,7 @@ public class CalendarReminder extends Model {
 
         switch (this.mCategory) {
 
-            case Tag.CATEGORY_CALENDAR_MEDICINE:
+            case Tag.CATEGORY_VACCINE:
 
                 return Do.getRString(context, R.string.medicine_my_dog);
 

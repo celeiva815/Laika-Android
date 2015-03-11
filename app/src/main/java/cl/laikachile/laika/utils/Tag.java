@@ -17,8 +17,8 @@ public class Tag {
     public static final int CATEGORY_FOOD = 1;
     public static final int CATEGORY_POO = 2;
     public static final int CATEGORY_WALK = 3;
-    public static final int CATEGORY_ALARM_MEDICINE = 4;
-    public static final int CATEGORY_CALENDAR_MEDICINE = 5;
+    public static final int CATEGORY_MEDICINE = 4;
+    public static final int CATEGORY_VACCINE = 5;
     public static final int CATEGORY_HYGIENE = 6;
     public static final int CATEGORY_VET = 7;
     public static final int STATUS_NOT_COMPLETED = 1;

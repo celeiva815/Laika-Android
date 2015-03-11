@@ -5,14 +5,6 @@
     android:background="@android:color/transparent"
     android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dog_adopt_dog_form"
-        android:id="@+id/dog_name_history_my_dog_textview"
-        android:textColor="@color/dark_white_font"
-        android:textSize="@dimen/dog_name_my_dog" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

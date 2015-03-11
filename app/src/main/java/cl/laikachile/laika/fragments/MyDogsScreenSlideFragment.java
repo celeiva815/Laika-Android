@@ -59,6 +59,13 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        mRemindersLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setReminderFragment();
+            }
+        });
+
         return view;
     }
 
@@ -101,14 +108,22 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
 
         mFragment = new HistoryMyDogFragment(mDog);
         getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-        int color = getResources().getColor(R.color.red_background);
+        int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
 
     }
 
     public void setReminderFragment() {
 
+        if (mFragment != null) {
+            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
+        }
+
+        mFragment = new RemindersMyDogFragment(mDog);
         getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
+        int color = getResources().getColor(R.color.semi_trans_black_background);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+
     }
 
     public void setHealthFragment() {
@@ -124,7 +139,7 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
 
         mFragment = new OwnerMyDogFragment(mDog);
         getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-        int color = getResources().getColor(R.color.red_background);
+        int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color ,Color.TRANSPARENT);
 
     }

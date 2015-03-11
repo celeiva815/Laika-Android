@@ -10,8 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ import cl.laikachile.laika.fragments.MyDogsScreenSlideFragment;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.models.Dog;
 
-public class MyDogsFragmentActivity extends FragmentActivity{
+public class MyDogsFragmentActivity extends ActionBarActivity{
 	
 	protected NavigationDrawerFragment mNavigationDrawerFragment;
     private int mIdLayout = R.layout.ai_screen_slide_activity;
@@ -41,11 +44,37 @@ public class MyDogsFragmentActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
         setDogList();
-        
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
+
+       if (mDogs.get(0) != null) {
+
+           setTitle(mDogs.get(0).mName);
+       }
+
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                setTitle(mDogs.get(position).mName);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         
     }
     
@@ -111,14 +140,17 @@ public class MyDogsFragmentActivity extends FragmentActivity{
 
         @Override
         public Fragment getItem(int position) {
-        	     	
-            return new MyDogsScreenSlideFragment(mDogs.get(position));
+
+            Dog dog = mDogs.get(position);
+            return new MyDogsScreenSlideFragment(dog);
         }
 
         @Override
         public int getCount() {
             return mDogs.size();
         }
+
+
     }
 
 }

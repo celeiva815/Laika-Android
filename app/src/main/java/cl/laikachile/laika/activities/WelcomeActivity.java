@@ -95,11 +95,11 @@ public class WelcomeActivity extends Activity
                  String mApartmentNumber, String mTown, String mCity, String mCountry)
          */
 		
-		Owner tito = new Owner(1, "tito_leiva", "Crist�bal", "Eduardo", "Leiva", "Sierra",
+		Owner tito = new Owner(1, "tito_leiva", "Cristóbal", "Eduardo", "Leiva", "Sierra",
                 "15-02-1990", 1, "celeiva@uc.cl", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
 
-		Owner nacho = new Owner(2, "NachoBiker", "Ignacio", "Valentín", "G�mez", "Muñoz",
+		Owner nacho = new Owner(2, "NachoBiker", "Ignacio", "Valentín", "Gómez", "Muñoz",
                 "15-02-1990", 1, "ignacio.gomuz@gmail.com", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
 
@@ -115,8 +115,8 @@ public class WelcomeActivity extends Activity
                 "15-02-1990", 2, "valecornejomorales@gmail.com", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
 
-		Dog tony = new Dog(1, 10, "Tony", "13-02-2003", R.drawable.lk_tony_profile, "Pastor Alem�n", 1, 5, "Macho", "Grande", "Sociable",Dog.STATUS_OWN, 1, 98);
-    	Dog cachupin = new Dog(2, 10, "Cachupin", "01-12-2013", R.drawable.lk_cachupin_profile, "Mestizo", 1, 5, "Macho", "Mediano", "Juguet�n", Dog.STATUS_OWN, 1,83);
+		Dog tony = new Dog(1, 10, "Tony", "13-02-2003", R.drawable.lk_tony_profile, "Pastor Alemán", 1, 5, "Macho", "Grande", "Sociable",Dog.STATUS_OWN, 1, 98);
+    	Dog cachupin = new Dog(2, 10, "Cachupin", "01-12-2013", R.drawable.lk_cachupin_profile, "Mestizo", 1, 5, "Macho", "Mediano", "Juguetón", Dog.STATUS_OWN, 1,83);
 
 
         tony.addOwner(tito, Tag.ROLE_ADMIN);
@@ -128,7 +128,7 @@ public class WelcomeActivity extends Activity
         cami.addDog(cachupin, Tag.ROLE_ADMIN);
 
 
-        CalendarReminder medicine = new CalendarReminder(1, Tag.TYPE_CALENDAR, Tag.CATEGORY_CALENDAR_MEDICINE,
+        CalendarReminder medicine = new CalendarReminder(1, Tag.TYPE_CALENDAR, Tag.CATEGORY_VACCINE,
                 "Vacuna Antirábica", "Nobivac Rabia", "12-05-15", "12:00", 1, 1);
         CalendarReminder hygiene = new CalendarReminder(2, Tag.TYPE_CALENDAR, Tag.CATEGORY_HYGIENE,
                 "Baño", "Usar Shampoo de Perros", "13-01-15", "18:15", 2, 2);
@@ -141,7 +141,7 @@ public class WelcomeActivity extends Activity
                 true, false,false, true, false, true, false, "09:00", 5, 1);
         AlarmReminder walk = new AlarmReminder(3, Tag.TYPE_ALARM,Tag.CATEGORY_WALK, "Parque Bicentenario", "Llevar Disco", Tag.STATUS_IN_PROGRESS,
                 false, false,false, false, false, true, true, "18:00", 1, 2);
-        AlarmReminder medicinetwo = new AlarmReminder(4, Tag.TYPE_ALARM,Tag.CATEGORY_ALARM_MEDICINE, "Antipulgas", "No hay que bañarlo", Tag.STATUS_IN_PROGRESS,
+        AlarmReminder medicinetwo = new AlarmReminder(4, Tag.TYPE_ALARM,Tag.CATEGORY_MEDICINE, "Antipulgas", "No hay que bañarlo", Tag.STATUS_IN_PROGRESS,
                 false, false,false, false, true, false, false, "06:30", 2, 1);
 
         tito.save();

@@ -69,11 +69,11 @@ public class HistoryMyDogAdapter extends ArrayAdapter<History> {
                 typeImageView.setImageResource(R.drawable.walk_white);
                 break;
 
-            case Tag.CATEGORY_ALARM_MEDICINE:
+            case Tag.CATEGORY_MEDICINE:
                 typeImageView.setImageResource(R.drawable.pill_white);
                 break;
 
-            case Tag.CATEGORY_CALENDAR_MEDICINE:
+            case Tag.CATEGORY_VACCINE:
                 typeImageView.setImageResource(R.drawable.medicine_white);
                 break;
 

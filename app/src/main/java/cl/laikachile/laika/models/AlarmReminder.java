@@ -17,6 +17,8 @@ import cl.laikachile.laika.utils.Tag;
 @Table(name = AlarmReminder.TABLE_NAME)
 public class AlarmReminder extends Model {
 
+    public static int ID = 100;
+
 	public final static String TABLE_NAME = "alarm_reminder";
     public final static String COLUMN_ALARM_REMINDER_ID = "alarm_reminder_id";
     public final static String COLUMN_TYPE = "type";
@@ -117,7 +119,7 @@ public class AlarmReminder extends Model {
 			
 			return R.drawable.lk_food_tips;
 			
-		case Tag.CATEGORY_ALARM_MEDICINE:
+		case Tag.CATEGORY_MEDICINE:
 			
 			return R.drawable.lk_health_tips;
 			
@@ -142,7 +144,7 @@ public class AlarmReminder extends Model {
 
                 return Do.getRString(context, R.string.food_my_dog);
 
-            case Tag.CATEGORY_ALARM_MEDICINE:
+            case Tag.CATEGORY_MEDICINE:
 
                 return Do.getRString(context, R.string.medicine_my_dog);
 

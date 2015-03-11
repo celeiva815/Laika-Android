@@ -39,16 +39,22 @@ public class HistoryMyDogFragment extends Fragment {
 
         View view = inflater.inflate(mIdLayout, container, false);
 
-        TextView nameTextView = (TextView) view.findViewById(R.id.dog_name_history_my_dog_textview);
         ListView historyListView = (ListView) view.findViewById(R.id.history_my_dog_listview);
         mHistoryAdapter = new HistoryMyDogAdapter(view.getContext(), R.layout.lk_history_my_dog_row,
                 getHistories(view.getContext()));
 
-        nameTextView.setText(mDog.mName);
         historyListView.setAdapter(mHistoryAdapter);
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mHistories = getHistories(getActivity().getApplicationContext());
+        mHistoryAdapter.notifyDataSetChanged();
     }
 
     private List<History> getHistories(Context context) {

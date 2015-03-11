@@ -174,13 +174,32 @@
     <string name="phone_owner_my_dog">+56 9 96195432</string>
     <string name="location_owner_my_dog">Los Vilos, Chile</string>
 
-    <!-- MyDogRemaindersActivity -->
+    <!-- RemindersMyDog-->
+    <string name="reminder_question">¿Qué tipo de recordatorio quieres?</string>
+    <string name="time_reminder_question">¿A qué hora?</string>
+    <string name="date_reminder_question">¿Cuándo?</string>
+    <string name="name_reminders">Ponle una nombre al recordatorio:</string>
+    <string name="title_reminders_hint">Ejemplo: Almuerzo, Paseo por el parque...</string>
+    <string name="add_detail_reminders">Agrégale un detalle</string>
+    <string name="detail_reminders_hint">Ejemplo: Dar una taza...</string>
+    <string name="new_reminder_added">Enhorabuena! Haz agregado un nuevo recordatorio</string>
     <string name="my_dog_reminders_activity_name">Recordatorios</string>
     <string name="add_my_dog_remainders">Agregar un recordatorio</string>
     <string name="type_my_dog_remainders">Almuerzo</string>
     <string name="hour_my_dog_remainders">14:00</string>
     <string name="date_my_dog_remainders">Todos los días</string>
     <string name="owner_my_dog_remainders">Creado por: Tito</string>
+    <string name="monday_char">L</string>
+    <string name="tuesday_char">M</string>
+    <string name="wednesday_char">W</string>
+    <string name="thursday_char">J</string>
+    <string name="friday_char">V</string>
+    <string name="saturday_char">S</string>
+    <string name="sunday_char">D</string>
+    <string name="save_reminder">Guardar</string>
+    <string name="time_reminder">Hora</string>
+    <string name="example_time_reminder">12:00 pm</string>
+    <string name="example_date_reminder">11-03-15</string>
 
     <!-- MyDogProfileActivity -->
     <string name="birth_my_dog_profile">13&#8211;02&#8211;2003</string>
