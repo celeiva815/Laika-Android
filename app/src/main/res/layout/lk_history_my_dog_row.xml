@@ -47,6 +47,6 @@
             android:id="@+id/date_history_my_dog_textview"
             android:textColor="@color/dark_white_font"
             android:textSize="@dimen/date_history_my_dog"
-            android:singleLine="true" />
+            android:singleLine="false" />
     </LinearLayout>
 </LinearLayout>

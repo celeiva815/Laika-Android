@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,7 +21,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AdoptDogScreenSlideFragment;
 import cl.laikachile.laika.models.Dog;
 
-public class AdoptDogFragmentActivity extends FragmentActivity{
+public class AdoptDogFragmentActivity extends ActionBarActivity{
 	
 	private int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
@@ -39,6 +41,9 @@ public class AdoptDogFragmentActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
         setDogList();
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
         
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);

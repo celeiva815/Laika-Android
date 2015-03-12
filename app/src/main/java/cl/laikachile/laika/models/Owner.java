@@ -109,7 +109,7 @@ public class Owner extends Model {
 
     public String getFullName() {
 
-        return mFirstName + " " + mSecondName + " " + mFirstSurname + " " + mSecondSurname;
+        return mFirstName + " " + mFirstSurname + " " + mSecondSurname;
     }
 
     public void addDog(Dog dog, int role) {

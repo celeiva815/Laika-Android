@@ -17,7 +17,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/title_calendar_reminder_my_dog_edittext"
         android:layout_gravity="center_horizontal"
         android:background="@color/dark_white_font"
         android:textSize="@dimen/name_alarm_reminder_my_dog"
@@ -26,6 +26,27 @@
         android:textColor="@color/light_black_font"
         android:singleLine="true"
         android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_detail_reminders"
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/dark_white_font"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_calendar_reminder_my_dog_edittext"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/dark_white_font"
+        android:textSize="@dimen/name_alarm_reminder_my_dog"
+        android:hint="@string/detail_reminders_hint"
+        android:padding="5dp"
+        android:textColor="@color/light_black_font"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_reminder"
-        android:id="@+id/button"
+        android:id="@+id/save_calendar_remind_my_dog_button"
         android:background="@color/dark_white_font"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="20dp"

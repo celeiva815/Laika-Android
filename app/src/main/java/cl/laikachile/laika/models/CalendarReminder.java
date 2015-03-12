@@ -17,6 +17,8 @@ import cl.laikachile.laika.utils.Tag;
 @Table(name = CalendarReminder.TABLE_NAME)
 public class CalendarReminder extends Model {
 
+    public static int ID = 100;
+
     public final static String TABLE_NAME = "calendar_reminder";
     public final static String COLUMN_CALENDAR_REMINDER = "calendar_reminder";
     public final static String COLUMN_TYPE = "type";

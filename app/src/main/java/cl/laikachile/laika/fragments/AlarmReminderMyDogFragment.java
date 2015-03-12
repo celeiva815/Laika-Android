@@ -49,6 +49,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public boolean mFriday = false;
     public boolean mSaturday = false;
     public boolean mSunday = false;
+    public String mTime;
 
     public static final String TIMEPICKER_TAG = "timepicker";
 
@@ -77,8 +78,12 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         mTimeButton = (Button) view.findViewById(R.id.time_alarm_remind_my_dog_button);
         mSaveButton = (Button) view.findViewById(R.id.save_alarm_remind_my_dog_button);
 
+
         final Calendar calendar = Calendar.getInstance();
         final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY) ,calendar.get(Calendar.MINUTE), false, false);
+
+        mTime = getTime(calendar.get(Calendar.HOUR_OF_DAY) ,calendar.get(Calendar.MINUTE));
+        mTimeButton.setText(mTime);
 
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,10 +101,10 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
-                //FIXME agregar el owner otras variables.
+                //FIXME agregar el owner otras variables y verificar que no sean nullOrEmpty.
                 AlarmReminder reminder = new AlarmReminder(AlarmReminder.ID++, Tag.TYPE_ALARM,
                         mReminderCategory,title,detail,Tag.STATUS_IN_PROGRESS,mMonday,mTuesday,mWednesday,
-                        mThursday,mFriday,mSaturday,mSunday,"",1,mDog.mDogId);
+                        mThursday,mFriday,mSaturday,mSunday,mTime,1,mDog.mDogId);
 
                 reminder.save();
 
@@ -220,7 +225,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     @Override
     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hourOfDay, int minute) {
 
-        mTimeButton.setText(getTime(hourOfDay, minute));
+        mTime = getTime(hourOfDay, minute);
+        mTimeButton.setText(mTime);
 
     }
 

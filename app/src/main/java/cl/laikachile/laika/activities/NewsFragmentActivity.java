@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,7 +20,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NewsScreenSlideFragment;
 import cl.laikachile.laika.models.News;
 
-public class NewsFragmentActivity extends FragmentActivity{
+public class NewsFragmentActivity extends ActionBarActivity{
     
     private int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
@@ -38,6 +40,9 @@ public class NewsFragmentActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
         setNewsList();
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
