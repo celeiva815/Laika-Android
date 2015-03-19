@@ -88,13 +88,7 @@ public class WelcomeActivity extends Activity
         new Delete().from(CalendarReminder.class).execute();
         new Delete().from(AlarmReminder.class).execute();
 
-        /*
-        int mOwnerId, String mOwnerName, String mFirstName, String mSecondName,
-                 String mFirstSurname, String mSecondSurname, String mBirthday, int mGender,
-                 String mEmail, String mPhone, String mAddress, String mAddressNumber,
-                 String mApartmentNumber, String mTown, String mCity, String mCountry)
-         */
-		
+
 		Owner tito = new Owner(1, "tito_leiva", "Cristóbal", "Eduardo", "Leiva", "Sierra",
                 "15-02-1990", 1, "celeiva@uc.cl", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
@@ -115,8 +109,11 @@ public class WelcomeActivity extends Activity
                 "15-02-1990", 2, "valecornejomorales@gmail.com", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
 
-		Dog tony = new Dog(1, 10, "Tony", "13-02-2003", R.drawable.lk_tony_profile, "Pastor Alemán", 1, 5, "Macho", "Grande", "Sociable",Dog.STATUS_OWN, 1, 98);
-    	Dog cachupin = new Dog(2, 10, "Cachupin", "01-12-2013", R.drawable.lk_cachupin_profile, "Mestizo", 1, 5, "Macho", "Mediano", "Juguetón", Dog.STATUS_OWN, 1,83);
+		Dog tony = new Dog(1,"Tony","13-02-2003","Pastor Alemán",1,"Grande","Sociable",false,"",
+                Tag.PROCESS_OWNED, 1);
+
+        Dog cachupin = new Dog(2,"Cachupin","29-06-2010","Mestizo",1,"Mediano","Juguetón",true,"",
+                Tag.PROCESS_OWNED, 3);
 
 
         tony.addOwner(tito, Tag.ROLE_ADMIN);

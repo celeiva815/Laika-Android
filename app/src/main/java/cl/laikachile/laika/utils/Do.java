@@ -98,7 +98,8 @@ public class Do {
         String monthText = month < 10 ? "0"+Integer.toString(month + 1) : Integer.toString(month + 1);;
         String dayText = day < 10 ? "0"+Integer.toString(day) : Integer.toString(day);
 
-        return dayText + "-" + monthText + "-" + yearText;
+        String date = dayText + "-" + monthText + "-" + yearText;
+        return date;
     }
 
     public static String getToStringTime(int hour, int minute) {

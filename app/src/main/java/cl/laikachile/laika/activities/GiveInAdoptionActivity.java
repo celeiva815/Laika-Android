@@ -12,7 +12,6 @@ import android.widget.Spinner;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
-import cl.laikachile.laika.listeners.PublishDogOnClickListener;
 import cl.laikachile.laika.utils.Do;
 
 public class GiveInAdoptionActivity extends BaseActivity {
@@ -50,14 +49,12 @@ public class GiveInAdoptionActivity extends BaseActivity {
 		ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter, getBreedList(sizeSpinner));
 		ArrayAdapter<String> personalityAdapter = new ArrayAdapter<String>(this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter, this.getResources().getStringArray(R.array.personality_adopt));
 		ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(breedSpinner);
-		PublishDogOnClickListener publishListener = new PublishDogOnClickListener(this);
-		
+
 		sizeSpinner.setAdapter(sizeAdapter);
 		breedSpinner.setAdapter(breedAdapter);
 		personalitySpinner.setAdapter(personalityAdapter);
 		sizeSpinner.setOnItemSelectedListener(breedListener);
-		publishButton.setOnClickListener(publishListener);
-		
+
 	}
 	
 	private ArrayList<String> getSizeList() {

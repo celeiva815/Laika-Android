@@ -4,7 +4,11 @@ package cl.laikachile.laika.utils;
  * Created by Tito_Leiva on 09-03-15.
  */
 public class Tag {
-    
+
+    //Dog
+    public static final int PROCESS_ADOPTED = 6;
+    public static final int PROCESS_OWNED = 7;
+
     //Owners
     public static final int GENDER_MALE = 1;
     public static final int GENDER_FEMALE = 2;
@@ -31,6 +35,9 @@ public class Tag {
     public static final int ASSISTANCE_ACCEPT = 1;
     public static final int ASSISTANCE_REFUSE = 2;
     public static final int ASSISTANCE_NOT_ANSWERED = 3;
-    
+
+    //Picker
+    public static final String TIME_PICKER = "time_picker";
+    public static final String DATE_PICKER = "date_picker";
 
 }

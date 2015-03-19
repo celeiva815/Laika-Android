@@ -33,6 +33,8 @@
     <string name="zero_number">0</string>
     <string name="accept_dialog">Aceptar</string>
     <string name="cancel_dialog">Cancelar</string>
+    <string name="yes_dialog">Sí</string>
+    <string name="no_dialog">No</string>
     <string name="confirm_dialog">Confirmar</string>
     <string name="empty_string"></string>
     <string name="search_button">Buscar</string>
@@ -106,9 +108,15 @@
     <!-- NewDogRegisterActivity -->
     <string name="new_dog_register_activity_name">Registro de Mascotas</string>
     <string name="register_new_dog_register">Registro</string>
-    <string name="name_new_dog_register">Nombre de tu Mascota</string>
+    <string name="name_new_dog_register">¿Cuál es el nombre de tu perro?</string>
+    <string name="size_new_dog_register">¿De qué tamaño es?</string>
+    <string name="personality_new_dog_register">¿Cómo es tu perro?</string>
+    <string name="steralized_new_dog_register">¿Está esterilizado?</string>
+    <string name="code_new_dog_register">¿Tiene chip?</string>
+    <string name="picture_new_dog_register">Sube una foto de tu perro</string>
     <string name="name_hint_new_dog_register">Ejemplo: "Tony", "Filipo"&#8230;</string>
-    <string name="birth_new_dog_register">Fecha de Nacimiento</string>
+    <string name="chip_hint_new_dog_register">Ingresa el código del chip</string>
+    <string name="birth_new_dog_register">¿Cuando nació?</string>
     <string name="smaller_new_dog_register">Muy Pequeño</string>
     <string name="small_new_dog_register">Pequeño</string>
     <string name="middle_new_dog_register">Mediano</string>
@@ -117,7 +125,7 @@
     <string name="gender_new_dog_register">Sexo</string>
     <string name="weight_new_dog_register">Peso</string>
     <string name="weight_hint_new_dog_register">Ejemplo: "17"</string>
-    <string name="breed_new_dog_register">Raza</string>
+    <string name="breed_new_dog_register">¿De qué raza es?</string>
     <string name="add_new_dog_register">Añadir</string>
 
     <!-- GiveInAdoptionActivity -->
@@ -141,6 +149,8 @@
     <string name="poo_my_dog">Recoger Fecas</string>
     <string name="medicine_my_dog">Remedios</string>
     <string name="example_breed_my_dog">Pastor Alemán</string>
+    <string name="gender_male">Macho</string>
+    <string name="gender_female">Hembra</string>
 
     <!-- HistoryMyDog -->
     <string name="title_history_my_dog">Almuerzo</string>

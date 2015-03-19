@@ -48,7 +48,7 @@ public class ViewMoreAdoptDogOnClickListener implements OnClickListener {
 		View view = inflater.inflate(mIdLayout, null, false);
 		
 		TextView simpleTextView = (TextView) view.findViewById(R.id.scrollable_textview);
-		simpleTextView.setText(dog.getaStory());
+		simpleTextView.setText(dog.mDetail);
 		
 		return view;	
 		

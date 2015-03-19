@@ -14,6 +14,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ConfirmAdoptionDialogOnClickListener;
 import cl.laikachile.laika.listeners.ViewMoreAdoptDogOnClickListener;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.utils.Do;
 
 public class AdoptDogScreenSlideFragment extends Fragment {
 	
@@ -43,11 +44,11 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         Button adoptButton = (Button) rootView.findViewById(R.id.search_vet_my_dog_health_button);
        
         nameTextView.setText(dog.mName);
-        sizeTextView.setText(dog.aSize);
-        genderTextView.setText(dog.aGender);
-        yearsTextView.setText(dog.aBirth);
-        matchTextView.setText(Integer.toString(dog.percentage) + "%");
-        pictureImageView.setImageResource(dog.aType);
+        sizeTextView.setText(dog.mSize);
+        genderTextView.setText(dog.getGender(rootView.getContext()));
+        yearsTextView.setText(dog.mBirth);
+        matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%");
+        pictureImageView.setImageResource(dog.mImage);
         
         ViewMoreAdoptDogOnClickListener viewMoreListener = new ViewMoreAdoptDogOnClickListener(dog);
         viewMoreImageView.setOnClickListener(viewMoreListener);

@@ -10,37 +10,35 @@ import android.view.View.OnClickListener;
 
 public class AddDogOnClickListener implements OnClickListener {
 
-	NewDogRegisterActivity newDogRegisterActivity;
+	NewDogRegisterActivity mActivity;
 	
-	public AddDogOnClickListener(NewDogRegisterActivity newDogRegisterActivity) {
+	public AddDogOnClickListener(NewDogRegisterActivity mActivity) {
 		
-		this.newDogRegisterActivity = newDogRegisterActivity; 
+		this.mActivity = mActivity;
 	}
 
 	@Override
 	public void onClick(View v) {
 		
-		//FIXME crear los valores posibles
+		//FIXME crear los valores posibles, Esperar por la API
 		
-		int space = 0;
-		String name = newDogRegisterActivity.nameEditText.getText().toString();		
-	    String birth = Do.getToStringDate(newDogRegisterActivity.birthDatePicker.getDayOfMonth(), 
-	    								  newDogRegisterActivity.birthDatePicker.getMonth(), 
-	    								  newDogRegisterActivity.birthDatePicker.getYear());
-		int type = 0;
-		String breed = newDogRegisterActivity.breedSpinner.getSelectedItem().toString();
-		int freeTime = 0;
-		int partner = 0;
-		String gender = newDogRegisterActivity.gender;
-		String size = newDogRegisterActivity.sizeSpinner.getSelectedItem().toString();
-		String personality = newDogRegisterActivity.personalitySpinner.getSelectedItem().toString();;
-		int status = Dog.STATUS_OWN;
-		int userId = 0;
+		String name = mActivity.mNameEditText.getText().toString();
+	    String birth = mActivity.mBirthButton.getText().toString();
+		String breed = mActivity.mBreedSpinner.getSelectedItem().toString();
+		String size = mActivity.mSizeSpinner.getSelectedItem().toString();
+        String personality = mActivity.mPersonalitySpinner.getSelectedItem().toString();
+        boolean sterilized = mActivity.mSterilized;
+        String chipCode = mActivity.mChipCode;
+        int gender = mActivity.mGender;
+        int status = Dog.STATUS_OWN;
+        int userId = 0;
 		
-		Dog newDog = new Dog(Do.randomInteger(100, 1000), space, name, birth, type, breed, freeTime, partner, gender, size, personality, status, userId, 100);//FIXME percentage
+		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, size, personality, sterilized,
+                chipCode, status, userId);
+
 		newDog.save();
 		
-		Do.changeActivity(v.getContext(), MainActivity.class, newDogRegisterActivity);
+		Do.changeActivity(v.getContext(), MainActivity.class, mActivity);
 		Do.showToast("Felicitaciones! haz registrado una nueva mascota: "+ name, v.getContext());
 	}
 

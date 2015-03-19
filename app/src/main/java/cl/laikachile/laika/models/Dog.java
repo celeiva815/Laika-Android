@@ -1,30 +1,36 @@
 package cl.laikachile.laika.models;
 
+import android.content.Context;
+
 import java.util.Calendar;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
 
+import cl.laikachile.laika.R;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Tag;
 
 
 @Table(name = Dog.TABLE_NAME)
 public class Dog extends Model {
 
+    public static int ID = 100;
+
 	public final static String TABLE_NAME = "dogs";
     public final static String COLUMN_DOG_ID = "dog_id";
 	public final static String COLUMN_NAME = "name";
 	public final static String COLUMN_BIRTH = "birth";
-	public final static String COLUMN_TYPE = "type";
-	public final static String COLUMN_BREED = "breed";
-	public final static String COLUMN_SPACE = "space";
-	public final static String COLUMN_FREE_TIME = "free_time";
-	public final static String COLUMN_PARTNER = "partner";
-	public final static String COLUMN_GENDER = "gender";
-	public final static String COLUMN_SIZE = "size";
-	public final static String COLUMN_PERSONALITY = "personality";
-	public final static String COLUMN_STATUS = "status";
+    public final static String COLUMN_BREED = "breed";
+    public final static String COLUMN_GENDER = "gender";
+    public final static String COLUMN_SIZE = "size";
+    public final static String COLUMN_PERSONALITY = "personality";
+    public final static String COLUMN_STERILIZED = "sterilized";
+    public final static String COLUMN_CHIP_CODE = "chip_code";
+    public final static String COLUMN_STATUS = "status";
+    public final static String COLUMN_WEIGHT = "weight";
+    public final static String COLUMN_TRAINED = "trained";
 	public final static String COLUMN_USER_ID = "user_id";
 	
 	public final static int STATUS_OWN = 1;
@@ -38,76 +44,60 @@ public class Dog extends Model {
 	public String mName;
 
 	@Column(name = COLUMN_BIRTH)
-	public String aBirth;
+	public String mBirth;
 
-	@Column(name = COLUMN_TYPE)
-	public int aType;
-
-	@Column(name = COLUMN_BREED)
-	public String aBreed;
-
-	@Column(name = COLUMN_FREE_TIME)
-	public int aFreeTime;
-
-	@Column(name = COLUMN_PARTNER)
-	public int aPartner;
+    @Column(name = COLUMN_BREED)
+    public String mBreed;
 
 	@Column(name = COLUMN_GENDER)
-	public String aGender;
-
-    @Column(name = COLUMN_SPACE)
-    public int aSpace;
+	public int mGender;
 
 	@Column(name = COLUMN_SIZE)
-	public String aSize;
+	public String mSize;
 	
 	@Column(name = COLUMN_PERSONALITY)
-	public String aPersonality;
+	public String mPersonality;
+
+    @Column(name = COLUMN_STERILIZED)
+    public boolean mSterilized;
+
+    @Column(name = COLUMN_CHIP_CODE)
+    public String mChipCode;
 	
 	@Column(name = COLUMN_STATUS)
-	public int aStatus;
+	public int mStatus;
 	
 	@Column(name = COLUMN_USER_ID)
 	public int mOwnerId;
-	
-	//FIXME
-	public String aStory;
-	
-	public int percentage;
 
+    //FIXME cambiar a un string de URL
+    public int mImage;
+
+    public String mDetail;
+	
 	public Dog() { }
 
-	public Dog(int mDogId, int space, String name, String birth, int type, String breed, int freeTime,
-               int partner, String gender, String size,	String personality, int status, int userId, int percentage) {
+    public Dog(int mDogId, String mName, String mBirth, String mBreed, int mGender, String mSize,
+               String mPersonality, boolean mSterilized, String mChipCode, int mStatus,
+               int mOwnerId) {
 
         this.mDogId = mDogId;
-		this.aSpace = space;
-		this.mName = name;
-		this.aBirth = birth;
-		this.aType = type;
-		this.aBreed = breed;
-		this.aFreeTime = freeTime;
-		this.aPartner = partner;
-		this.aGender = gender;
-		this.aSize = size;
-		this.aPersonality = personality;
-		this.aStatus = status;
-		this.mOwnerId = userId;
-		this.percentage = percentage;
-	}
-
- 	public void setaStory(String aStory) {
-		this.aStory = aStory;
-	}
-
-	public String getaStory() {
-		return aStory;
-	}
+        this.mName = mName;
+        this.mBirth = mBirth;
+        this.mBreed = mBreed;
+        this.mGender = mGender;
+        this.mSize = mSize;
+        this.mPersonality = mPersonality;
+        this.mSterilized = mSterilized;
+        this.mChipCode = mChipCode;
+        this.mStatus = mStatus;
+        this.mOwnerId = mOwnerId;
+    }
 
 	public String getAge() {
 		
 		Calendar dateOfBirth = Calendar.getInstance();  
-		dateOfBirth.setTime(Do.stringToDate(aBirth, Do.DAY_FIRST));
+		dateOfBirth.setTime(Do.stringToDate(mBirth, Do.DAY_FIRST));
 		
 		Calendar today = Calendar.getInstance();
 		
@@ -117,16 +107,17 @@ public class Dog extends Model {
 			
 			age--;  
 		
-		} else if (today.get(Calendar.MONTH) == dateOfBirth.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dateOfBirth.get(Calendar.DAY_OF_MONTH)) {
+		} else if (today.get(Calendar.MONTH) == dateOfBirth.get(Calendar.MONTH) &&
+                today.get(Calendar.DAY_OF_MONTH) < dateOfBirth.get(Calendar.DAY_OF_MONTH)) {
 			age--;  
 		}
 		
-		return Integer.toString(age) + " a�os";
+		return Integer.toString(age) + " años";
 	}
 	
 	public String getNameAndStatus() {
 		
-		switch (aStatus) {
+		switch (mStatus) {
 		case Dog.STATUS_OWN:
 			
 			return this.mName;
@@ -137,7 +128,7 @@ public class Dog extends Model {
 			
 		case Dog.STATUS_PUBLISH:
 	
-			return this.mName + " - (En adopci�n)";
+			return this.mName + " - (En adopción)";
 
 		default:
 			
@@ -151,5 +142,24 @@ public class Dog extends Model {
         OwnerDog ownerDog = new OwnerDog(owner.mOwnerId, this.mDogId, role);
         ownerDog.save();
 
+    }
+
+    public void setDetail(String detail) {
+
+        this.mDetail = detail;
+    }
+
+    public String getGender(Context context) {
+
+        switch (mGender) {
+
+            case Tag.GENDER_MALE:
+                return Do.getRString(context, R.string.gender_male);
+
+            case Tag.GENDER_FEMALE:
+                return Do.getRString(context, R.string.gender_female);
+        }
+
+        return null;
     }
 }

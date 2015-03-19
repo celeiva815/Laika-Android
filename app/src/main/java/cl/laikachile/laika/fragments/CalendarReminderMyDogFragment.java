@@ -39,9 +39,6 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
     public String mDate;
     public String mTime;
 
-    public static final String DATEPICKER_TAG = "datepicker";
-    public static final String TIMEPICKER_TAG = "timepicker";
-
     public CalendarReminderMyDogFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;
@@ -77,7 +74,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
             public void onClick(View v) {
 
                 timePickerDialog.setCloseOnSingleTapMinute(false);
-                timePickerDialog.show(getActivity().getSupportFragmentManager(), TIMEPICKER_TAG);
+                timePickerDialog.show(getActivity().getSupportFragmentManager(), Tag.TIME_PICKER);
             }
         });
 
@@ -88,7 +85,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                 int year = calendar.get(Calendar.YEAR);
                 datePickerDialog.setYearRange(year, 2028);
                 datePickerDialog.setCloseOnSingleTapDay(false);
-                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), Tag.DATE_PICKER);
             }
         });
 

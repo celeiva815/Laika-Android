@@ -84,17 +84,14 @@ public class BaseActivity extends ActionBarActivity
             //Logged in menu
             switch (position) {
                 case 0:
-
-
                     Do.showToast("Por implementar", this.getApplicationContext());
-
                     break;
+
                 case 1:
-
-
+                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
-                default:
 
+                default:
                     intent = new Intent(this.getApplicationContext(), MainActivity.class);
                     startActivity(intent);
 
@@ -104,36 +101,27 @@ public class BaseActivity extends ActionBarActivity
             //Logged out menu
             switch (position) {
                 case 0:
-
                     Do.changeActivity(getApplicationContext(), MyDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
                     break;
+
                 case 1:
-
                     Do.changeActivity(getApplicationContext(), NewDogRegisterActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
-
                     break;
 
                 case 2:
-
                     Do.changeActivity(getApplicationContext(), GiveInAdoptionActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
-
                     break;
+
                 case 3:
-
                     Do.showToast("Por implementar", this.getApplicationContext());
-
                     break;
+
                 case 4:
-
                     Do.showToast("Por implementar", this.getApplicationContext());
-
                     break;
+
                 default:
-
                     Do.showToast("Por implementar", this.getApplicationContext());
-
                     break;
             }
         }

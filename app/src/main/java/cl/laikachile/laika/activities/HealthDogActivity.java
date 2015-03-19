@@ -37,7 +37,7 @@ public class HealthDogActivity extends BaseActivity {
 		 Button dealsButton = (Button) view.findViewById(R.id.deals_my_dog_health_button);
 		 
 		 nameTextView.setText(dog.mName);
-	     profileImageView.setImageResource(dog.aType);
+	     profileImageView.setImageResource(dog.mImage);
 	     ToMapOnClickListener mapListener = new ToMapOnClickListener();
 	     ToMapHairOnClickListener mapHairListener = new ToMapHairOnClickListener();
 	     searchButton.setOnClickListener(mapListener);

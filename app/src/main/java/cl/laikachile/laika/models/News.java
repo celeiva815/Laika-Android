@@ -16,7 +16,7 @@ public class News extends Model {
 	
 	@Column(name = COLUMN_BODY)
 	public String aBody;
-	
+
 	@Column(name = COLUMN_TITLE)
 	public String aTitle;
 	

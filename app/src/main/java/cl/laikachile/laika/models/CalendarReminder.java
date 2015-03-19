@@ -20,7 +20,7 @@ public class CalendarReminder extends Model {
     public static int ID = 100;
 
     public final static String TABLE_NAME = "calendar_reminder";
-    public final static String COLUMN_CALENDAR_REMINDER = "calendar_reminder";
+    public final static String COLUMN_CALENDAR_REMINDER = "calendar_reminder_id";
     public final static String COLUMN_TYPE = "type";
     public final static String COLUMN_CATEGORY = "category";
     public final static String COLUMN_TITLE = "title";

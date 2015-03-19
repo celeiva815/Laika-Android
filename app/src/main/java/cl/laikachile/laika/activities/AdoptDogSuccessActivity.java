@@ -33,7 +33,7 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 		 TextView congratsTextView = (TextView) view.findViewById(R.id.congrats_adopt_dog_success_textview);
 		 TextView happyTextView = (TextView) view.findViewById(R.id.happy_news_adopt_dog_success_textview);
 		 
-		 containerLinearLayout.setBackgroundResource(this.dog.aType);
+		 containerLinearLayout.setBackgroundResource(this.dog.mImage);
 		 congratsTextView.setText(getCongratsMessage());
 		 happyTextView.setText(getHappyNewsMessage());
 	 }

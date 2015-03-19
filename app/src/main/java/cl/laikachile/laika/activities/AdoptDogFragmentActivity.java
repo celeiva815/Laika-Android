@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AdoptDogScreenSlideFragment;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogFragmentActivity extends ActionBarActivity{
 	
@@ -101,15 +102,22 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	this.dogs = new ArrayList<Dog>();
     	
     	//XXX hardcoded dogs
-    	Dog blanquito = new Dog(100, 10, "Blanquito", "02-05-2011", R.drawable.lk_blanquito_picture, "Mestizo", 1, 5, "Macho", "Mediano", "Sociable", Dog.STATUS_ADOPTED, 1, 98);
-    	Dog pulguita = new Dog(101, 10, "Pulguita", "17-10-2013", R.drawable.lk_miko_picture, "Mestizo", 1, 5, "Hembra", "Mediano", "Sociable", Dog.STATUS_ADOPTED, 1,83);
-    	Dog filipa = new Dog(102, 10, "Filipa", "01-08-2014", R.drawable.lk_milo_picture, "Mestizo", 1, 5, "Hembra", "Mediano", "Sociable", 1, Dog.STATUS_ADOPTED, 79);
-    	Dog alba = new Dog(103, 10, "Alba", "05-05-2014", R.drawable.lk_lolo_picture, "Mestizo", 1, 5, "Hembra", "Mediano", "Sociable", 1, Dog.STATUS_ADOPTED, 65);
-    	
-    	blanquito.setaStory("Es un perrito de 3 a�os, rescatado de la calle. Es un perro tama�o grande, buen car�cter, excelente para guardi�n. Necesita un hogar cari�oso que lo reciba como uno m�s de la familia.");
-    	filipa.setaStory("Es una perrita tama�o medio, muy cari�osa y juguetona. Ella fue rescatada muy enferma, hoy 100% recuperada pero debe comer comida renal, por lo que quien la adopte debe tener eso en consideraci�n. Esterilizada.");
-    	pulguita.setaStory("Es una perrita de 4 meses, juguetona y cari�osa rescatada de la calle a punto de ser atropellada. Est� vacunada y desparasitada y se entrega con compromiso de esterilizaci�n para cuando cumpla 6 meses.");
-    	alba.setaStory("Es una perrita mestiza tama�o mediano que necesita un hogar para vivir. Le gusta mucho que le den cari�o y se lleva muy bien con otros perros y gatos."); //TODO hacer una historia para alba
+        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013","Mestizo",1,"Grande","Juguetón",true,"", Tag.PROCESS_ADOPTED,1000);
+    	blanquito.mImage = R.drawable.lk_blanquito_picture;
+
+    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1001);
+        pulguita.mImage = R.drawable.lk_miko_picture;
+
+    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1002);
+        filipa.mImage = R.drawable.lk_milo_picture;
+
+    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1003);
+        alba.mImage = R.drawable.lk_lolo_picture;
+
+    	blanquito.setDetail("Es un perrito de 3 años, rescatado de la calle. Es un perro tamaño grande, buen carácter, excelente para guardián. Necesita un hogar cariñoso que lo reciba como uno más de la familia.");
+    	filipa.setDetail("Es una perrita tamaño medio, muy cariñosa y juguetona. Ella fue rescatada muy enferma, hoy 100% recuperada pero debe comer comida renal, por lo que quien la adopte debe tener eso en consideración. Esterilizada.");
+    	pulguita.setDetail("Es una perrita de 4 meses, juguetona y cariñosa rescatada de la calle a punto de ser atropellada. Está vacunada y desparasitada y se entrega con compromiso de esterilización para cuando cumpla 6 meses.");
+    	alba.setDetail("Es una perrita mestiza tamaño mediano que necesita un hogar para vivir. Le gusta mucho que le den cariño y se lleva muy bien con otros perros y gatos.");
     	
     	dogs.add(blanquito);
     	dogs.add(pulguita);
