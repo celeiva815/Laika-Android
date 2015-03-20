@@ -7,8 +7,10 @@ import java.util.Calendar;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.query.Select;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.utils.DB;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
@@ -31,6 +33,7 @@ public class Dog extends Model {
     public final static String COLUMN_STATUS = "status";
     public final static String COLUMN_WEIGHT = "weight";
     public final static String COLUMN_TRAINED = "trained";
+    public final static String COLUMN_URL_IMAGE = "url_image";
 	public final static String COLUMN_USER_ID = "user_id";
 	
 	public final static int STATUS_OWN = 1;
@@ -61,6 +64,9 @@ public class Dog extends Model {
     @Column(name = COLUMN_STERILIZED)
     public boolean mSterilized;
 
+    @Column(name = COLUMN_TRAINED)
+    public boolean mTrained;
+
     @Column(name = COLUMN_CHIP_CODE)
     public String mChipCode;
 	
@@ -71,6 +77,7 @@ public class Dog extends Model {
 	public int mOwnerId;
 
     //FIXME cambiar a un string de URL
+    @Column(name = COLUMN_URL_IMAGE)
     public int mImage;
 
     public String mDetail;
@@ -78,8 +85,8 @@ public class Dog extends Model {
 	public Dog() { }
 
     public Dog(int mDogId, String mName, String mBirth, String mBreed, int mGender, String mSize,
-               String mPersonality, boolean mSterilized, String mChipCode, int mStatus,
-               int mOwnerId) {
+               String mPersonality, boolean mSterilized, boolean mTrained, String mChipCode,
+               int mStatus, int mOwnerId) {
 
         this.mDogId = mDogId;
         this.mName = mName;
@@ -89,6 +96,7 @@ public class Dog extends Model {
         this.mSize = mSize;
         this.mPersonality = mPersonality;
         this.mSterilized = mSterilized;
+        this.mTrained = mTrained;
         this.mChipCode = mChipCode;
         this.mStatus = mStatus;
         this.mOwnerId = mOwnerId;
@@ -161,5 +169,47 @@ public class Dog extends Model {
         }
 
         return null;
+    }
+
+    public String getSterilized(Context context) {
+
+        if (mSterilized) {
+            return Do.getRString(context, R.string.is_sterilized);
+
+        } else {
+            return Do.getRString(context, R.string.is_not_sterilized);
+
+        }
+    }
+
+
+    public String getChip(Context context) {
+
+        if (!Do.isNullOrEmpty(mChipCode)) {
+            return Do.getRString(context, R.string.has_chip);
+
+        } else {
+            return Do.getRString(context, R.string.has_not_chip);
+
+        }
+    }
+
+    public String getTrained(Context context) {
+
+        if (mTrained) {
+            return Do.getRString(context, R.string.is_trained);
+
+        } else {
+            return Do.getRString(context, R.string.is_not_trained);
+
+        }
+
+    }
+
+    public static Dog getSingleDog(int dogId) {
+
+        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dogId;
+        return new Select().from(Dog.class).where(condition).executeSingle();
+
     }
 }

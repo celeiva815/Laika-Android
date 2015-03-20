@@ -83,10 +83,15 @@
     <!-- AdoptDogActivity -->
     <string name="adopt_activity_name">Adopción</string>
     <string name="years_adopt_dog">Tres Años</string>
+    <string name="sterilized_adopt_dog">Esterilizado</string>
+    <string name="not_sterilized_adopt_dog">No Esterilizado</string>
     <string name="view_more_adopt_dog">Ver más</string>
     <string name="adopt_adopt_dog">Adoptar</string>
+    <string name="postulate_adopt_dog">POSTULAR</string>
+    <string name="info_adopt_dog">Info</string>
 	<string name="view_more_story_adopt_dog">Es un perrito de tres años, que se encontraba en cal y canto. Es un perro de tamaño grande, muy sociable y excelente
 	    guardián. Necesita un hogar cariñoso que lo reciba como uno más de la familia</string>
+    <string name="foundation_stuka">Fundación Stuka</string>
 
     <!-- AdoptDogFormActivity -->
     <string name="space_adopt_dog_form">Espacio</string>
@@ -151,6 +156,12 @@
     <string name="example_breed_my_dog">Pastor Alemán</string>
     <string name="gender_male">Macho</string>
     <string name="gender_female">Hembra</string>
+    <string name="is_sterilized">Esterilizado</string>
+    <string name="is_not_sterilized">No Esterilizado</string>
+    <string name="is_trained">Entrenado</string>
+    <string name="is_not_trained">No Entrenado</string>
+    <string name="has_chip">Con Chip</string>
+    <string name="has_not_chip">Sin Chip</string>
 
     <!-- HistoryMyDog -->
     <string name="title_history_my_dog">Almuerzo</string>

@@ -34,7 +34,7 @@ public class AddDogOnClickListener implements OnClickListener {
         int userId = 0;
 		
 		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, size, personality, sterilized,
-                chipCode, status, userId);
+                false, chipCode, status, userId);
 
 		newDog.save();
 		

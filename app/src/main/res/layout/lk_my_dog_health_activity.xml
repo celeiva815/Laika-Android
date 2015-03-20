@@ -33,11 +33,11 @@
         android:src="@drawable/lk_tony_profile" />
 
     <Button
-        android:id="@+id/search_vet_my_dog_health_button"
+        android:id="@+id/postulate_adopt_dog_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/date_button"
+        android:background="@drawable/laika_button"
         android:text="@string/search_vet_my_dog_health" />
 
     <Button
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/date_button"
+        android:background="@drawable/laika_button"
         android:text="@string/vaccine_my_dog_health" />
 
     <Button
@@ -53,14 +53,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/date_button"
+        android:background="@drawable/laika_button"
         android:text="@string/barber_shop_my_dog_health" />
 
     <Button
         android:id="@+id/deals_my_dog_health_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/date_button"
+        android:background="@drawable/laika_button"
         android:text="@string/deals_my_dog_health" />
 
 </LinearLayout>

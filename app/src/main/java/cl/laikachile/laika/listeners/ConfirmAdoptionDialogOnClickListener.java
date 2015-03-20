@@ -42,7 +42,7 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
 				
 				// TODO Hacer la l�gica de la API
 				
-				final ProgressDialog progressDialog = ProgressDialog.show(context, "Mascota Adoptada", "Enviando notificaci�n de adopci�n");
+				final ProgressDialog progressDialog = ProgressDialog.show(context, "Mascota Adoptada", "Enviando notificación de adopción");
 				
 				new Handler().postDelayed(new Runnable() {
 
@@ -53,8 +53,7 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
 		            	
 		            	Intent intent = new Intent(context, AdoptDogSuccessActivity.class);
 		        		Bundle b = new Bundle();
-		        		dog.save();
-		        		b.putLong("DogId", dog.getId()); //Your id
+		        		b.putInt("DogId", dog.mDogId); //Your id
 		        		intent.putExtras(b); //Put your id to your next Intent
 		        		context.startActivity(intent);
 		            	activity.finish();

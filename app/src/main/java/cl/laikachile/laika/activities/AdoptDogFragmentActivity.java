@@ -102,17 +102,21 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	this.dogs = new ArrayList<Dog>();
     	
     	//XXX hardcoded dogs
-        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013","Mestizo",1,"Grande","Juguetón",true,"", Tag.PROCESS_ADOPTED,1000);
+        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013","Mestizo",1,"Grande","Juguetón",true, false,"", Tag.PROCESS_ADOPTED,1000);
     	blanquito.mImage = R.drawable.lk_blanquito_picture;
+        blanquito.save();
 
-    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1001);
+    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013","Mestizo",2,"Mediano","Sociable",true, true,"", Tag.PROCESS_ADOPTED,1001);
         pulguita.mImage = R.drawable.lk_miko_picture;
+        pulguita.save();
 
-    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1002);
+    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014","Mestizo",2,"Mediano","Sociable",true, false,"", Tag.PROCESS_ADOPTED,1002);
         filipa.mImage = R.drawable.lk_milo_picture;
+        filipa.save();
 
-    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014","Mestizo",2,"Mediano","Sociable",true,"", Tag.PROCESS_ADOPTED,1003);
+    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014","Mestizo",2,"Mediano","Sociable",true, true,"", Tag.PROCESS_ADOPTED,1003);
         alba.mImage = R.drawable.lk_lolo_picture;
+        alba.save();
 
     	blanquito.setDetail("Es un perrito de 3 años, rescatado de la calle. Es un perro tamaño grande, buen carácter, excelente para guardián. Necesita un hogar cariñoso que lo reciba como uno más de la familia.");
     	filipa.setDetail("Es una perrita tamaño medio, muy cariñosa y juguetona. Ella fue rescatada muy enferma, hoy 100% recuperada pero debe comer comida renal, por lo que quien la adopte debe tener eso en consideración. Esterilizada.");
@@ -123,7 +127,7 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	dogs.add(pulguita);
     	dogs.add(filipa);
     	dogs.add(alba);
-    	
+
     }
     
 

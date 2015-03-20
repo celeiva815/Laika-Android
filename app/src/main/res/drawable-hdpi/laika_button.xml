@@ -6,7 +6,7 @@
           android:radius="10dp" />
       <size 
           />
-       <stroke android:width="2px" android:color="#9cb8c0"/>
+       <stroke android:width="2px" android:color="@color/red_background"/>
       <padding
           android:left="10dp"
           android:top="0dp"

@@ -263,7 +263,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/date_button"
+        android:background="@drawable/laika_button"
         android:text="@string/add_new_dog_register"
         android:textSize="20sp" />
 

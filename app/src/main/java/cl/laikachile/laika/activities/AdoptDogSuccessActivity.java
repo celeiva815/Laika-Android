@@ -19,7 +19,8 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 		public void onStart() {
 		 
 		 	Bundle b = getIntent().getExtras();
-			this.dog = Dog.load(Dog.class, b.getLong("DogId"));
+            int dogId = b.getInt("DogId");
+			this.dog = Dog.getSingleDog(dogId);
 
 	    	createFragmentView(mIdLayout);
 	    	Do.showToast(getMailMessage(), getApplicationContext(), Toast.LENGTH_LONG);

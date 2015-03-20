@@ -88,7 +88,8 @@ public class BaseActivity extends ActionBarActivity
                     break;
 
                 case 1:
-                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
                 default:
@@ -101,15 +102,18 @@ public class BaseActivity extends ActionBarActivity
             //Logged out menu
             switch (position) {
                 case 0:
-                    Do.changeActivity(getApplicationContext(), MyDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Do.changeActivity(getApplicationContext(), MyDogsFragmentActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
                 case 1:
-                    Do.changeActivity(getApplicationContext(), NewDogRegisterActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Do.changeActivity(getApplicationContext(), NewDogRegisterActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
                 case 2:
-                    Do.changeActivity(getApplicationContext(), GiveInAdoptionActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Do.changeActivity(getApplicationContext(), GiveInAdoptionActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
                 case 3:

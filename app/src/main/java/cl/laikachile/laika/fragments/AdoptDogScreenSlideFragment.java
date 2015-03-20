@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ConfirmAdoptionDialogOnClickListener;
-import cl.laikachile.laika.listeners.ViewMoreAdoptDogOnClickListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
 
@@ -31,32 +30,35 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(mIdLayout, container, false);
-        
-        TextView nameTextView = (TextView) rootView.findViewById(R.id.name_dogs_screen_slide_textview);
-        TextView sizeTextView = (TextView) rootView.findViewById(R.id.size_dogs_screen_slide_textview);
-        TextView genderTextView = (TextView) rootView.findViewById(R.id.gender_dogs_screen_slide_textview);
-        TextView yearsTextView = (TextView) rootView.findViewById(R.id.years_dogs_screen_slide_textview);
-        TextView matchTextView = (TextView) rootView.findViewById(R.id.match_dogs_screen_slide_textview);
-        ImageView pictureImageView = (ImageView) rootView.findViewById(R.id.picture_dogs_screen_slide_imageview);
-        ImageView viewMoreImageView = (ImageView) rootView.findViewById(R.id.view_more_dogs_screen_slide_imageview);
-        
-        Button adoptButton = (Button) rootView.findViewById(R.id.search_vet_my_dog_health_button);
-       
+        ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
+
+        TextView matchTextView = (TextView) view.findViewById(R.id.match_dogs_screen_slide_textview);
+        ImageView pictureImageView = (ImageView) view.findViewById(R.id.picture_dogs_screen_slide_imageview);
+        TextView nameTextView = (TextView) view.findViewById(R.id.name_dogs_screen_slide_textview);
+        TextView genderTextView = (TextView) view.findViewById(R.id.gender_dogs_screen_slide_textview);
+        TextView sterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dogs_screen_slide_textview);
+        TextView chipTextView = (TextView) view.findViewById(R.id.chip_dogs_screen_slide_textview);
+        TextView trainedTextView = (TextView) view.findViewById(R.id.trained_dogs_screen_slide_textview);
+        TextView sizeTextView = (TextView) view.findViewById(R.id.size_dogs_screen_slide_textview);
+        TextView yearsTextView = (TextView) view.findViewById(R.id.years_dogs_screen_slide_textview);
+        TextView detailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
+        Button postulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
+
         nameTextView.setText(dog.mName);
         sizeTextView.setText(dog.mSize);
-        genderTextView.setText(dog.getGender(rootView.getContext()));
+        genderTextView.setText(dog.getGender(view.getContext()));
         yearsTextView.setText(dog.mBirth);
-        matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%");
+        sterilizedTextView.setText(dog.getSterilized(view.getContext()));
+        chipTextView.setText(dog.getChip(view.getContext()));
+        trainedTextView.setText(dog.getTrained(view.getContext()));
+        matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME
         pictureImageView.setImageResource(dog.mImage);
-        
-        ViewMoreAdoptDogOnClickListener viewMoreListener = new ViewMoreAdoptDogOnClickListener(dog);
-        viewMoreImageView.setOnClickListener(viewMoreListener);
+        detailsTextView.setText(dog.mDetail);
         
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(dog, this.activity);
-        adoptButton.setOnClickListener(listener);
+        postulateButton.setOnClickListener(listener);
         
-        return rootView;
+        return view;
     }
 	
 	

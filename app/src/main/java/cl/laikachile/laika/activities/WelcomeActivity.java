@@ -109,12 +109,11 @@ public class WelcomeActivity extends Activity
                 "15-02-1990", 2, "valecornejomorales@gmail.com", "+56 9 96195432", "Salvador", "2111", "1702",
                 "Ñuñoa", "Santiago", "Chile");
 
-		Dog tony = new Dog(1,"Tony","13-02-2003","Pastor Alemán",1,"Grande","Sociable",false,"",
-                Tag.PROCESS_OWNED, 1);
+		Dog tony = new Dog(1,"Tony","13-02-2003","Pastor Alemán",1,"Grande","Sociable",false, true,
+                "", Tag.PROCESS_OWNED, 1);
 
-        Dog cachupin = new Dog(2,"Cachupin","29-06-2010","Mestizo",1,"Mediano","Juguetón",true,"",
-                Tag.PROCESS_OWNED, 3);
-
+        Dog cachupin = new Dog(2,"Cachupin","29-06-2010","Mestizo",1,"Mediano","Juguetón",true,
+                false, "", Tag.PROCESS_OWNED, 3);
 
         tony.addOwner(tito, Tag.ROLE_ADMIN);
         tony.addOwner(chuchuca, Tag.ROLE_EDITOR);
