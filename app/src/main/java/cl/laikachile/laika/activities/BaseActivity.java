@@ -30,7 +30,7 @@ public class BaseActivity extends ActionBarActivity
         setContentView(R.layout.ai_base_activity);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -102,7 +102,7 @@ public class BaseActivity extends ActionBarActivity
             //Logged out menu
             switch (position) {
                 case 0:
-                    Do.changeActivity(getApplicationContext(), MyDogsFragmentActivity.class,
+                    Do.changeActivity(getApplicationContext(), MyDogsActivity.class,
                             Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 

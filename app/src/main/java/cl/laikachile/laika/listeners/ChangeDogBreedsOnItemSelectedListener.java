@@ -22,7 +22,8 @@ public class ChangeDogBreedsOnItemSelectedListener implements OnItemSelectedList
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		
-		ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(view.getContext(),R.layout.ai_simple_textview_for_adapter, getBreedList(view.getContext(), position));
+		ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(view.getContext(),
+                R.layout.ai_simple_textview_for_adapter, getBreedList(view.getContext(), position));
 		breedSpinner.setAdapter(breedAdapter);
 		
 	}

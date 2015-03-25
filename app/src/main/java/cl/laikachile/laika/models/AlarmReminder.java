@@ -391,7 +391,9 @@ public class AlarmReminder extends Model {
     public static List<AlarmReminder> getDogReminders(int dogId) {
 
         String condition = AlarmReminder.COLUMN_DOG_ID + DB._EQUALS_ + dogId;
-        return new Select().from(AlarmReminder.class).where(condition).execute();
+        List<AlarmReminder> reminders = new Select().from(AlarmReminder.class).where(condition).execute();
+
+        return reminders;
     }
 
     public static List<AlarmReminder> getAllReminders() {

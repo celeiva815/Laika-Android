@@ -19,13 +19,6 @@
 		<item>más de 40 horas semanales</item>
     </string-array>
         
-    <string-array name="partners_adopt">
-        <item>0 convientes</item>
-		<item>1 ó 2 convivientes</item>
-		<item>3 ó 4 convivientes</item>
-		<item>5 o más convivientes</item>
-    </string-array>
-        
     <string-array name="dog_size_adopt">
         <item>Muy pequeño</item>
 		<item>Pequeño</item>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="main_background">#eee</color>
-    <color name="red_background">#F75b5b</color>
+    <color name="laika_red">#F75b5b</color>
+    <color name="light_laika_red">#F27575</color>
+    <color name="dark_laika_red">#F75b5b</color>
     <color name="light_red_background">#F49292</color>
     <color name="semi_trans_background">#77FFFFFF</color>
     <color name="semi_trans_black_background">#33000000</color>
     <color name="dark_trans_black_background">#66000000</color>
     <color name="darker_trans_black_background">#99000000</color>
-    <color name="light_black_font">#222</color>
+    <color name="light_black_font">#333</color>
+    <color name="lighter_black_font">#666</color>
     <color name="dark_white_font">#f2f2f2</color>
     <color name="darker_white_font">#929292</color>
 

@@ -94,16 +94,23 @@
     <string name="foundation_stuka">Fundación Stuka</string>
 
     <!-- AdoptDogFormActivity -->
-    <string name="space_adopt_dog_form">Espacio</string>
-    <string name="free_time_adopt_dog_form">Tiempo Libre</string>
-    <string name="partners_adopt_dog_form">Convivientes</string>
+    <string name="region_adopt_dog_form">¿A qué región perteneces?</string>
+    <string name="city_adopt_dog_form">¿En qué comuna vives?</string>
+    <string name="space_adopt_dog_form">¿Cómo es tu hogar?</string>
+    <string name="free_time_adopt_dog_form">¿Cuánto tiempo tendrás para tu perro?</string>
+    <string name="kids_adopt_dog_form">¿Vives con niños menores de 10 años?</string>
+    <string name="elderly_adopt_dog_form">¿Vives con adultos mayores?</string>
+    <string name="pets_adopt_dog_form">¿Vives con otras mascotas?</string>
+    <string name="partners_adopt_dog_form">¿Cuántas personas viven en tu casa?</string>
     <string name="female_adopt_dog_form">Hembra</string>
     <string name="male_adopt_dog_form">Macho</string>
+    <string name="yes_adopt_dog_form">Sí</string>
+    <string name="no_adopt_dog_form">No</string>
     <string name="whatever_adopt_dog_form">Da Igual</string>
-    <string name="size_adopt_dog_form">Tamaño</string>
-    <string name="personality_adopt_dog_form">Personalidad</string>
-    <string name="dog_adopt_dog_form">Perro</string>
-    <string name="owner_adopt_dog_form">Dueño</string>
+    <string name="size_adopt_dog_form">¿De qué tamaño lo deseas?</string>
+    <string name="personality_adopt_dog_form">¿De qué personalidad lo prefieres?</string>
+    <string name="dog_adopt_dog_form">¿Qué perrito andas buscando?</string>
+    <string name="owner_adopt_dog_form">Cuéntanos un poco de ti</string>
 
     <!-- AdoptDogSuccessActivity -->
     <string name="congrats_adopt_dog_success">¡Felicidades</string>
@@ -237,7 +244,9 @@
     <string name="news_activity_name">Noticias</string>
     <string name="title_news_activity">Municipio de Maipú: "La nueva brigada de perros callejeros dará inclusión a todos"</string>
 	<string name="body_news_activity">La Municipalidad de Maipú trabaja en conjunto con una serie de agrupaciones animalistas,
-	    con las que se llevan a cabo politicas contra el maltrato animal, adopción y tenencia de mascotas entre otras, adopción de perros</string>
+	    con las que se llevan a cabo políticas contra el maltrato animal, adopción y tenencia de mascotas entre otras, adopción de perros</string>
+    <string name="pach_news">por Pach News</string>
+    <string name="date_news">24 de Marzo de 2015, 10:01</string>
 
     <!-- TipsActivity -->
     <string name="tips_activity_name">Tips</string>
@@ -250,6 +259,14 @@
     <string name="stories_fragment_activity_name">Historias</string>
     <string name="hygiene_my_dog">Higiene</string>
     <string name="vet_my_dog">Veterinario</string>
+    <string name="title_stories_activity">\"Cholito y los abuelitos\"</string>
+    <string name="owner_stories">por Andrea Castillo</string>
+    <string name="date_stories">24 de Marzo de 2015, 10:01</string>
+    <string name="body_stories_activity">Después del fallecimiento de "Tati", la perrita de mis
+    abuelos, me propuso buscarles otra para animarlos nuevamente. Así supe de Laika y me puse a
+    investigar de qué se trataba. Hoy puedo decir que cholito, como le pusieron ellos, era el
+    perrito ideal para acompañarse. Un perro de 6 años, super cariñoso y que te acompaña a todos
+    lados. Ellos están felices y él con nueva casita</string>
 
 
 

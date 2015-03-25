@@ -257,7 +257,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red_background"
+        android:background="@color/laika_red"
         android:gravity="center_horizontal"
         android:padding="10dp">
 

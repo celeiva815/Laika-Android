@@ -3,7 +3,7 @@
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lk_new_dog_register_background" >
+    android:background="@drawable/lk_new_dog_register_background2" >
       
 <LinearLayout
     android:layout_width="match_parent"
@@ -12,61 +12,7 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="20dp" >
-
-    <TextView
-        android:id="@+id/name_my_dog_profile_activity_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/owner_adopt_dog_form"
-        android:textColor="#fff"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/name_new_dog_register_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="@string/space_adopt_dog_form"
-        android:textColor="#fff" />
-
-    <Spinner
-        android:id="@+id/space_dog_form_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="#90ffffff" />
-
-    <TextView
-        android:id="@+id/birth_new_dog_register_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="@string/free_time_adopt_dog_form"
-        android:textColor="#fff" />
-
-    <Spinner
-        android:id="@+id/free_time_dog_form_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="#90ffffff" />
-
-    <TextView
-        android:id="@+id/partners_dog_form_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="@string/partners_adopt_dog_form"
-        android:textColor="#fff" />
-
-    <Spinner
-        android:id="@+id/partners_dog_form_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="#90ffffff" />
+    android:paddingTop="20dp">
 
     <TextView
         android:id="@+id/breed_my_dog_profile_textview"
@@ -76,13 +22,15 @@
         android:layout_marginTop="5dp"
         android:text="@string/dog_adopt_dog_form"
         android:textColor="#fff"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal" />
 
 	<RadioGroup
-	    android:layout_width="match_parent"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginBottom="20dp"
-	    android:orientation="horizontal" >
+	    android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
 
        <RadioButton
            android:id="@+id/male_dog_form_radiobutton"
@@ -90,7 +38,8 @@
            android:layout_height="wrap_content"
            android:gravity="center"
            android:text="@string/male_adopt_dog_form"
-           android:textColor="#fff" />
+           android:textColor="#fff"
+           android:onClick="setGenderFormRadioButtonClicked"/>
 
        <RadioButton
            android:id="@+id/female_dog_form_radiobutton"
@@ -98,15 +47,17 @@
            android:layout_height="wrap_content"
            android:gravity="center"
            android:text="@string/female_adopt_dog_form"
-           android:textColor="#fff" />
+           android:textColor="#fff"
+           android:onClick="setGenderFormRadioButtonClicked"/>
 
        <RadioButton
-           android:id="@+id/whatever_dog_form_radiobutton"
+           android:id="@+id/both_dog_form_radiobutton"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:gravity="center"
            android:text="@string/whatever_adopt_dog_form"
-           android:textColor="#fff" />
+           android:textColor="#fff"
+           android:onClick="setGenderFormRadioButtonClicked"/>
        
     </RadioGroup>
 
@@ -123,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="#90ffffff" />
+        android:background="@color/dark_trans_black_background" />
 
     <TextView
         android:id="@+id/personality_new_dog_register_textview"
@@ -138,7 +89,207 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="#90ffffff" />
+        android:background="@color/dark_trans_black_background" />
+
+    <TextView
+        android:id="@+id/name_my_dog_profile_activity_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/owner_adopt_dog_form"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/region_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/region_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <Spinner
+        android:id="@+id/region_dog_form_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background" />
+
+    <TextView
+        android:id="@+id/city_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/city_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <Spinner
+        android:id="@+id/city_dog_form_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background" />
+
+    <TextView
+        android:id="@+id/space_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/space_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <Spinner
+        android:id="@+id/space_dog_form_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background" />
+
+    <TextView
+        android:id="@+id/partners_dog_form_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/partners_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <EditText
+        android:id="@+id/partners_dog_form_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background"
+        android:textSize="20sp"
+        android:textColor="@color/dark_white_font"
+        android:inputType="number"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/kids_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|top">
+
+        <RadioButton
+            android:id="@+id/yes_kid_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/yes_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:onClick="setKidsRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/no_kid_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:onClick="setKidsRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/elderly_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|top">
+
+        <RadioButton
+            android:id="@+id/yes_elderly_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/yes_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:onClick="setElderlyRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/no_elderly_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:onClick="setElderlyRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/pets_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|top">
+
+        <RadioButton
+            android:id="@+id/yes_pet_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/yes_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:onClick="setPetsRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/no_pet_dog_form_radiobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_adopt_dog_form"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:onClick="setPetsRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/free_time_new_dog_register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/free_time_adopt_dog_form"
+        android:textColor="#fff" />
+
+    <Spinner
+        android:id="@+id/free_time_dog_form_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background" />
 
     <Button
         android:id="@+id/search_dog_form_button"

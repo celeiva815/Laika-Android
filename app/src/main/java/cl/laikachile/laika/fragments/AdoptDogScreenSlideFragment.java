@@ -18,12 +18,12 @@ import cl.laikachile.laika.utils.Do;
 public class AdoptDogScreenSlideFragment extends Fragment {
 	
 	private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
-	private Dog dog;
+	private Dog mDog;
 	private Activity activity;
 	
-	public AdoptDogScreenSlideFragment(Dog dog, Activity activity) {
+	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 		
-		this.dog = dog;
+		this.mDog = mDog;
 		this.activity = activity;
 	}
 
@@ -44,18 +44,19 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         TextView detailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
         Button postulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
 
-        nameTextView.setText(dog.mName);
-        sizeTextView.setText(dog.mSize);
-        genderTextView.setText(dog.getGender(view.getContext()));
-        yearsTextView.setText(dog.mBirth);
-        sterilizedTextView.setText(dog.getSterilized(view.getContext()));
-        chipTextView.setText(dog.getChip(view.getContext()));
-        trainedTextView.setText(dog.getTrained(view.getContext()));
+        nameTextView.setText(mDog.mName);
+        sizeTextView.setText(mDog.mSize);
+        genderTextView.setText(mDog.getGender(view.getContext()));
+        yearsTextView.setText(mDog.mBirth);
+        sterilizedTextView.setText(mDog.getSterilized(view.getContext()));
+        chipTextView.setText(mDog.getChip(view.getContext()));
+        trainedTextView.setText(mDog.getTrained(view.getContext()));
         matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME
-        pictureImageView.setImageResource(dog.mImage);
-        detailsTextView.setText(dog.mDetail);
+        pictureImageView.setImageResource(mDog.mImage);
+        detailsTextView.setText(mDog.mDetail);
         
-        ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(dog, this.activity);
+        ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
+                mDog, this.activity);
         postulateButton.setOnClickListener(listener);
         
         return view;

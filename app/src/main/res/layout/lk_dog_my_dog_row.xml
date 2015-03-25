@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:padding="5dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dog_my_dog_imageview"
+            android:src="@drawable/register_background"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_dog_my_dog_textview"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/dog_name"
+            android:text="Tony"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:layout_weight="4" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="23sp"
+            android:id="@+id/imageView7"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
+</LinearLayout>

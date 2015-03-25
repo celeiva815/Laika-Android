@@ -1,37 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container_adopt_dog_success_linearlayout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/picture_dogs_screen_slide_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/lk_stories_picture" />
-    </RelativeLayout>
+    android:layout_gravity="center_horizontal" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/body_story_textview"
+            android:id="@+id/title_stories_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/story_give_in_adoption"
-            android:textAlignment="center"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_stories_activity"
+            android:textSize="22sp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/light_black_font"
+            android:layout_gravity="center_horizontal"
             android:gravity="center" />
 
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/owner_stories"
+                android:id="@+id/owner_stories_textview"
+                android:layout_gravity="right"
+                android:textSize="10sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/date_stories"
+                android:id="@+id/date_stories_textview"
+                android:layout_gravity="right"
+                android:textSize="10sp"
+                android:paddingRight="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/main_stories_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/abuelo"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:id="@+id/body_stories_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/body_stories_activity"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/light_black_font"
+            android:gravity="center|center_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/share_stories_imageview"
+                android:src="@drawable/share41"
+                android:adjustViewBounds="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView6"
+                android:layout_alignTop="@+id/share_stories_imageview"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/star102"
+                android:adjustViewBounds="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

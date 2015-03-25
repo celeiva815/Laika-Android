@@ -12,5 +12,6 @@
     <dimen name="dog_name_my_dog">20sp</dimen>
     <dimen name="alarm_reminder_my_dog">30sp</dimen>
     <dimen name="save_alarm_reminder_my_dog">20sp</dimen>
+    <dimen name="dog_name">22sp</dimen>
     <dimen name="name_alarm_reminder_my_dog">15sp</dimen>
 </resources>

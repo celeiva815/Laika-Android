@@ -3,7 +3,6 @@ package cl.laikachile.laika.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -42,7 +41,7 @@ public class NewsFragmentActivity extends ActionBarActivity{
         setNewsList();
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -55,13 +54,20 @@ public class NewsFragmentActivity extends ActionBarActivity{
     	//FIXME ver con la API    	
     	this.news = new ArrayList<News>();
     	
-    	News maipu = new News("La Municipalidad de Maip�, trabaja en conjunto con una serie de argrupaciones de animalistas con lasque se llevan a cabo pol�ticas conra el maltrato animal, adopci�n...", 
-    			"Municipio de Maip�: \"La nueva brigada de perros callejeros dar� inclusi�n a todos\"", 
-    			R.drawable.lk_news, 1); 
+    	News maipu = new News(
+                "Municipio de Maipú: \"La nueva brigada de perros callejeros dará inclusión a " +
+                        "todos\"", "Pach News", "25 de marzo de 2015, 11:02","La Municipalidad de "+
+                "Maipú, trabaja en conjunto con una serie de agrupaciones de animalistas con las " +
+                "que se llevan a cabo políticas contra el maltrato animal, adopción...",
+    			R.drawable.lk_news, 1, "http://pachnews.cl/?p=10480");
     			
-    	News ptaArenas = new News("El alcalde de Punta Arenas, Emilio Boccazzi, present� en la sesi�n del Concejo Municipal una propuesta que contempla un contrato que permitir� la captura, esterilizaci�n, desparasitaci�n y vacunaci�n de perros...", 
-    			"Municipalidad de Punta Arenas contrata empresa para esterilizar y vacunar perros callejeros", 
-    			R.drawable.lk_news_picture_two, 2);
+    	News ptaArenas = new News("Municipalidad de Punta Arenas contrata empresa para " +
+                "esterilizar y vacunar perros callejeros", "Prensa Animalista", "10 de enero de " +
+                "2015, 17:32","El alcalde de Punta Arenas, Emilio Boccazzi, presentó en la " +
+                "sesión del Concejo Municipal una propuesta que contempla un contrato que " +
+                "permitirá la captura, esterilización, desparasitación y vacunación de perros...",
+    			R.drawable.lk_news_picture_two, 2, "http://www.prensanimalista.cl/web/2015/03/16/" +
+                "perla-primera-pelicula-chilena-donde-un-kiltro-es-su-protagonista/" );
     	
     	news.add(maipu);
     	news.add(ptaArenas);

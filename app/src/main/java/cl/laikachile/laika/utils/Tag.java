@@ -10,6 +10,7 @@ public class Tag {
     public static final int PROCESS_OWNED = 7;
 
     //Owners
+    public static final int GENDER_BOTH = 0;
     public static final int GENDER_MALE = 1;
     public static final int GENDER_FEMALE = 2;
 
@@ -39,5 +40,10 @@ public class Tag {
     //Picker
     public static final String TIME_PICKER = "time_picker";
     public static final String DATE_PICKER = "date_picker";
+
+
+    //Active Regions
+    public static final String REGION_METROPOLITANA = "Región Metropolitana de Santiago";
+    public static final String REGION_VALPARAISO = "Valparaíso";
 
 }

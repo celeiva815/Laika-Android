@@ -9,6 +9,7 @@ public class DB {
     public final static String _AND_ = " AND ";
     public final static String _OR_ = " OR ";
     public final static String _EQUALS_ = " = ";
+    public final static String _EQUALS_QUESTION = " = ?";
     public final static String ORDER_BY = "ORDER BY";
 
     public static String values(int... integers) {

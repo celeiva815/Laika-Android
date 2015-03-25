@@ -4,6 +4,7 @@ import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.activities.NewDogRegisterActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Tag;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +31,7 @@ public class AddDogOnClickListener implements OnClickListener {
         boolean sterilized = mActivity.mSterilized;
         String chipCode = mActivity.mChipCode;
         int gender = mActivity.mGender;
-        int status = Dog.STATUS_OWN;
+        int status = Tag.PROCESS_OWNED;
         int userId = 0;
 		
 		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, size, personality, sterilized,

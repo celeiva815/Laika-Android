@@ -3,7 +3,6 @@ package cl.laikachile.laika.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -42,7 +41,7 @@ public class StoriesFragmentActivity extends ActionBarActivity{
         setStoriesList();
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.red_background));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -55,9 +54,23 @@ public class StoriesFragmentActivity extends ActionBarActivity{
     	//FIXME ver con la API    	
     	this.stories = new ArrayList<Story>();
     	
-    	Story coke = new Story("\"Adopt� a Coke hace cinco meses por Laika, Sinceramente no hubiese existido mejor perrito para m�. Es muy sociable y eso es importante, ya que trabjo con abuelitos. Ellos lo aman tambi�n. A m� me cambi� la vida y yo la de �l\"", "Coke", "Juanita");
-		
-    	stories.add(coke);
+    	Story cholito = new Story("Pinky y los Abuelitos", "Valentina Cornejo", "25 de Marzo de 2015, 12:59",
+                "Después del fallecimiento de \"Tati\", la perrita de mis abuelos, me propuso " +
+                "buscarles otra para animarlos nuevamente. Así supe de Laika y me puse a " +
+                "investigar de qué se trataba. Hoy puedo decir que Pinky, como le pusieron ellos," +
+                " era la Perrita ideal para acompañarse. Una perra de 6 años, super cariñosa y " +
+                "que te acompaña a todos lados. Ellos están felices y ella con nueva casita",
+                R.drawable.abuelo, Story.ID++);
+
+        Story gaspar = new Story("Mi Mamá y Gaspar", "Fabiola Muñoz", "29 de Febrero de 2018, 12:59",
+                "Esta foto se la tomé a mi mamá con su querido Gaspar. Ella ese día tuvo complicaciones médicas" +
+                "debido a su edad, nosotros no sabíamos como animarla hasta que cuando Laika" +
+                " me mandó una notificación en que Gaspar tenía que almorzar, se me ocurrió llevarlo al " +
+                " hospital. Los encargados me ayudaron a que eso pasara y aquí el resultado." +
+                " Hoy mi mamá está en su casa junto a Gaspar.", R.drawable.abuela, Story.ID++);
+
+    	stories.add(cholito);
+        stories.add(gaspar);
 	}
     
     @Override

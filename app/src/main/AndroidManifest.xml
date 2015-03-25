@@ -114,7 +114,7 @@
         </activity>
 
         <activity
-            android:name="cl.laikachile.laika.activities.MyDogsFragmentActivity"
+            android:name=".activities.MyDogsActivity"
             android:label="@string/my_dog_activity_name"
             android:exported="false"
             android:screenOrientation="portrait">
@@ -137,6 +137,17 @@
 
         <activity
             android:name="cl.laikachile.laika.activities.NewsFragmentActivity"
+            android:label="@string/news_activity_name"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="cl.laikachile.laika.activities.WebActivity"
             android:label="@string/news_activity_name"
             android:exported="false"
             android:screenOrientation="portrait">

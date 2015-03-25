@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.adapters.HistoryMyDogAdapter;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
@@ -24,6 +24,7 @@ import cl.laikachile.laika.models.History;
  */
 public class HistoryMyDogFragment extends Fragment {
 
+    public String mTag;
     private int mIdLayout = R.layout.lk_history_my_dog_fragment;
     public Dog mDog;
     public List<History> mHistories;
@@ -31,6 +32,11 @@ public class HistoryMyDogFragment extends Fragment {
 
     public HistoryMyDogFragment(Dog mDog) {
         this.mDog = mDog;
+        this.mTag = Long.toString(mDog.getId());
+    }
+
+    public HistoryMyDogFragment() {
+
     }
 
     @Override
@@ -64,14 +70,20 @@ public class HistoryMyDogFragment extends Fragment {
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
 
-       for (CalendarReminder c : calendars) {
+        if (calendars.size() > 0) {
 
-           mHistories.add(c.toHistory(context));
-       }
+            for (CalendarReminder c : calendars) {
 
-        for (AlarmReminder a : alarms) {
+                mHistories.add(c.toHistory(context));
+            }
+        }
 
-            mHistories.add(a.toHistory(context));
+        if (alarms.size() > 0) {
+
+            for (AlarmReminder a : alarms) {
+
+                mHistories.add(a.toHistory(context));
+            }
         }
 
         return mHistories;

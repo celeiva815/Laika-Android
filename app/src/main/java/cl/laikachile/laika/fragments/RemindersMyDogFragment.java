@@ -125,22 +125,22 @@ public class RemindersMyDogFragment extends Fragment {
     public void openAlarmReminder(int reminderType) {
 
         if (mFragment != null) {
-            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
         mFragment = new AlarmReminderMyDogFragment(mDog, reminderType);
-        getChildFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
 
     public void openCalendarReminder(int reminderCategory) {
 
         if (mFragment != null) {
-            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
         mFragment = new CalendarReminderMyDogFragment(mDog, reminderCategory);
-        getChildFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
 

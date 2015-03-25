@@ -18,7 +18,7 @@ import cl.laikachile.laika.models.Dog;
  */
 public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
 
-    private int mIdLayout = R.layout.lk_my_dogs_screen_slider_fragment;
+    private int mIdLayout = R.layout.lk_my_dogs_fragment;
     Dog mDog;
 
     LinearLayout mHistoryLinearLayout;
@@ -45,27 +45,6 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
         mOwnerLinearLayout = (LinearLayout) view.findViewById(R.id.owner_my_dog_linearlayout);
         mAlbumLinearLayout = (LinearLayout) view.findViewById(R.id.album_my_dog_linearlayout);
 
-        mHistoryLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setHistoryFragment();
-            }
-        });
-
-        mOwnerLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setOwnerFragment();
-            }
-        });
-
-        mRemindersLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setReminderFragment();
-            }
-        });
-
         return view;
     }
 
@@ -73,7 +52,6 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        setHistoryFragment();
     }
 
     private void setListViewHeightBasedOnChildren(ListView listView) {
@@ -100,62 +78,5 @@ public class MyDogsScreenSlideFragment extends android.support.v4.app.Fragment {
         listView.requestLayout();
     }
 
-    public void setHistoryFragment() {
-
-        if (mFragment != null) {
-            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
-        }
-
-        mFragment = new HistoryMyDogFragment(mDog);
-        getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
-
-    }
-
-    public void setReminderFragment() {
-
-        if (mFragment != null) {
-            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
-        }
-
-        mFragment = new RemindersMyDogFragment(mDog);
-        getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
-
-    }
-
-    public void setHealthFragment() {
-
-
-    }
-
-    public void setOwnerFragment() {
-
-        if (mFragment != null) {
-            getChildFragmentManager().beginTransaction().detach(mFragment).commit();
-        }
-
-        mFragment = new OwnerMyDogFragment(mDog);
-        getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color ,Color.TRANSPARENT);
-
-    }
-
-    public void setAlbumFragment() {
-
-        getChildFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mFragment).commit();
-    }
-
-    public void setBackgrounds(int history, int reminders, int health, int owner, int album) {
-
-        mHistoryLinearLayout.setBackgroundColor(history);
-        mRemindersLinearLayout.setBackgroundColor(reminders);
-        mHealthLinearLayout.setBackgroundColor(health);
-        mOwnerLinearLayout.setBackgroundColor(owner);
-        mAlbumLinearLayout.setBackgroundColor(album);
-    }
 }
 

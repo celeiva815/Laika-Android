@@ -122,7 +122,9 @@ public class CalendarReminder extends Model {
     public static List<CalendarReminder> getDogReminders(int dogId) {
 
         String condition = CalendarReminder.COLUMN_DOG_ID + DB._EQUALS_ + dogId;
-        return new Select().from(CalendarReminder.class).where(condition).execute();
+        List<CalendarReminder> reminders = new Select().from(CalendarReminder.class).where(condition).execute();
+
+        return reminders;
     }
 
 }

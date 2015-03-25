@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="chilean_country">Chile</string>
+
+    <string-array name="available_chilean_regions">
+        <item>Región Metropolitana de Santiago</item>
+        <item>Valparaíso</item>
+    </string-array>
+
+    <string-array name="chilean_regions">
+        <item>Arica y Parinacota</item>
+        <item>Tarapacá</item>
+        <item>Antofagasta</item>
+        <item>Atacama</item>
+        <item>Coquimbo</item>
+        <item>Valparaíso</item>
+        <item>Región del Libertador Gral. Bernardo O’Higgins</item>
+        <item>Región del Maule</item>
+        <item>Región del Biobío</item>
+        <item>Región de la Araucanía</item>
+        <item>Región de Los Ríos</item>
+        <item>Región de Los Lagos</item>
+        <item>Región Aisén del Gral. Carlos Ibáñez del Campo</item>
+        <item>Región de Magallanes y de la Antártica Chilena</item>
+        <item>Región Metropolitana de Santiago</item>
+    </string-array>
+
+    <string-array name="arica_cities">
+        <item>Arica</item>
+        <item>Camarones</item>
+        <item>Putre</item>
+        <item>General Lagos</item>
+    </string-array>
+
+    <string-array name="tarapaca_cities">
+        <item>Iquique</item>
+        <item>Alto Hospicio</item>
+        <item>Pozo Almonte</item>
+        <item>Camiña</item>
+        <item>Colchane</item>
+        <item>Huara</item>
+        <item>Pica</item>
+    </string-array>
+
+    <string-array name="antofagasta_cities">
+        <item>Antofagasta</item>
+        <item>Mejillones</item>
+        <item>Sierra Gorda</item>
+        <item>Taltal</item>
+        <item>Calama</item>
+        <item>Ollagüe</item>
+        <item>San Pedro de Atacama</item>
+        <item>Tocopilla</item>
+        <item>María Elena</item>
+    </string-array>
+
+    <string-array name="atacama_cities">
+        <item>Copiapó</item>
+        <item>Caldera</item>
+        <item>Tierra Amarilla</item>
+        <item>Chañaral</item>
+        <item>Diego de Almagro</item>
+        <item>Vallenar</item>
+        <item>Alto del Carmen</item>
+        <item>Freirina</item>
+        <item>Huasco</item>
+    </string-array>
+    <string-array name="coquimbo_cities">
+        <item>La Serena</item>
+        <item>Coquimbo</item>
+        <item>Andacollo</item>
+        <item>La Higuera</item>
+        <item>Paiguano</item>
+        <item>Vicuña</item>
+        <item>Illapel</item>
+        <item>Canela</item>
+        <item>Los Vilos</item>
+        <item>Salamanca</item>
+        <item>Ovalle</item>
+        <item>Combarbalá</item>
+        <item>Monte Patria</item>
+        <item>Punitaqui</item>
+        <item>Río Hurtado</item>
+    </string-array>
+    <string-array name="valparaiso_cities">
+        <item>Valparaíso</item>
+        <item>Casablanca</item>
+        <item>Concón</item>
+        <item>Juan Fernández</item>
+        <item>Puchuncaví</item>
+        <item>Quintero</item>
+        <item>Viña del Mar</item>
+        <item>Isla de Pascua</item>
+        <item>Los Andes</item>
+        <item>Calle Larga</item>
+        <item>Rinconada</item>
+        <item>San Esteban</item>
+        <item>La Ligua</item>
+        <item>Cabildo</item>
+        <item>Papudo</item>
+        <item>Petorca</item>
+        <item>Zapallar</item>
+        <item>Quillota</item>
+        <item>Calera</item>
+        <item>Hijuelas</item>
+        <item>La Cruz</item>
+        <item>Nogales</item>
+        <item>San Antonio</item>
+        <item>Algarrobo</item>
+        <item>Cartagena</item>
+        <item>El Quisco</item>
+        <item>El Tabo</item>
+        <item>Santo Domingo</item>
+        <item>San Felipe</item>
+        <item>Catemu</item>
+        <item>Llaillay</item>
+        <item>Panquehue</item>
+        <item>Putaendo</item>
+        <item>Santa María</item>
+        <item>Quilpué</item>
+        <item>Limache</item>
+        <item>Olmué</item>
+        <item>Villa Alemana</item>
+    </string-array>
+    <string-array name="ohiggins_cities">
+        <item>Rancagua</item>
+        <item>Codegua</item>
+        <item>Coinco</item>
+        <item>Coltauco</item>
+        <item>Doñihue</item>
+        <item>Graneros</item>
+        <item>Las Cabras</item>
+        <item>Machalí</item>
+        <item>Malloa</item>
+        <item>Mostazal</item>
+        <item>Olivar</item>
+        <item>Peumo</item>
+        <item>Pichidegua</item>
+        <item>Quinta de Tilcoco</item>
+        <item>Rengo</item>
+        <item>Requínoa</item>
+        <item>San Vicente</item>
+        <item>Pichilemu</item>
+        <item>La Estrella</item>
+        <item>Litueche</item>
+        <item>Marchihue</item>
+        <item>Navidad</item>
+        <item>Paredones</item>
+        <item>San Fernando</item>
+        <item>Chépica</item>
+        <item>Chimbarongo</item>
+        <item>Lolol</item>
+        <item>Nancagua</item>
+        <item>Palmilla</item>
+        <item>Peralillo</item>
+        <item>Placilla</item>
+        <item>Pumanque</item>
+        <item>Santa Cruz</item>
+
+    </string-array>
+    <string-array name="maule_cities">
+        <item>Talca</item>
+        <item>Constitución</item>
+        <item>Curepto</item>
+        <item>Empedrado</item>
+        <item>Maule</item>
+        <item>Pelarco</item>
+        <item>Pencahue</item>
+        <item>Río Claro</item>
+        <item>San Clemente</item>
+        <item>San Rafael</item>
+        <item>Cauquenes</item>
+        <item>Chanco</item>
+        <item>Pelluhue</item>
+        <item>Curicó</item>
+        <item>Hualañé</item>
+        <item>Licantén</item>
+        <item>Molina</item>
+        <item>Rauco</item>
+        <item>Romeral</item>
+        <item>Sagrada Familia</item>
+        <item>Teno</item>
+        <item>Vichuquén</item>
+        <item>Linares</item>
+        <item>Colbún</item>
+        <item>Longaví</item>
+        <item>Parral</item>
+        <item>Retiro</item>
+        <item>San Javier</item>
+        <item>Villa Alegre</item>
+        <item>Yerbas Buenas</item>
+    </string-array>
+    <string-array name="biobio_cities">
+        <item>Concepción</item>
+        <item>Coronel</item>
+        <item>Chiguayante</item>
+        <item>Florida</item>
+        <item>Hualqui</item>
+        <item>Lota</item>
+        <item>Penco</item>
+        <item>San Pedro de la Paz</item>
+        <item>Santa Juana</item>
+        <item>Talcahuano</item>
+        <item>Tomé</item>
+        <item>Hualpén</item>
+        <item>Lebu</item>
+        <item>Arauco</item>
+        <item>Cañete</item>
+        <item>Contulmo</item>
+        <item>Curanilahue</item>
+        <item>Los Álamos</item>
+        <item>Tirúa</item>
+        <item>Los Ángeles</item>
+        <item>Antuco</item>
+        <item>Cabrero</item>
+        <item>Laja</item>
+        <item>Mulchén</item>
+        <item>Nacimiento</item>
+        <item>Negrete</item>
+        <item>Quilaco</item>
+        <item>Quilleco</item>
+        <item>San Rosendo</item>
+        <item>Santa Bárbara</item>
+        <item>Tucapel</item>
+        <item>Yumbel</item>
+        <item>Alto Biobío</item>
+        <item>Chillán</item>
+        <item>Bulnes</item>
+        <item>Cobquecura</item>
+        <item>Coelemu</item>
+        <item>Coihueco</item>
+        <item>Chillán Viejo</item>
+        <item>El Carmen</item>
+        <item>Ninhue</item>
+        <item>Ñiquén</item>
+        <item>Pemuco</item>
+        <item>Pinto</item>
+        <item>Portezuelo</item>
+        <item>Quillón</item>
+        <item>Quirihue</item>
+        <item>Ránquil</item>
+        <item>San Carlos</item>
+        <item>San Fabián</item>
+        <item>San Ignacio</item>
+        <item>San Nicolás</item>
+        <item>Treguaco</item>
+        <item>Yungay</item>
+
+    </string-array>
+    <string-array name="araucania_cities">
+        <item>Temuco</item>
+        <item>Carahue</item>
+        <item>Cunco</item>
+        <item>Curarrehue</item>
+        <item>Freire</item>
+        <item>Galvarino</item>
+        <item>Gorbea</item>
+        <item>Lautaro</item>
+        <item>Loncoche</item>
+        <item>Melipeuco</item>
+        <item>Nueva Imperial</item>
+        <item>Padre las Casas</item>
+        <item>Perquenco</item>
+        <item>Pitrufquén</item>
+        <item>Pucón</item>
+        <item>Saavedra</item>
+        <item>Teodoro Schmidt</item>
+        <item>Toltén</item>
+        <item>Vilcún</item>
+        <item>Villarrica</item>
+        <item>Cholchol</item>
+        <item>Angol</item>
+        <item>Collipulli</item>
+        <item>Curacautín</item>
+        <item>Ercilla</item>
+        <item>Lonquimay</item>
+        <item>Los Sauces</item>
+        <item>Lumaco</item>
+        <item>Purén</item>
+        <item>Renaico</item>
+        <item>Traiguén</item>
+        <item>Victoria</item>
+
+    </string-array>
+    <string-array name="rios_cities">
+        <item>Valdivia</item>
+        <item>Corral</item>
+        <item>Lanco</item>
+        <item>Los Lagos</item>
+        <item>Máfil</item>
+        <item>Mariquina</item>
+        <item>Paillaco</item>
+        <item>Panguipulli</item>
+        <item>La Unión</item>
+        <item>Futrono</item>
+        <item>Lago Ranco</item>
+        <item>Río Bueno</item>
+    </string-array>
+    <string-array name="lagos_cities">
+        <item>Puerto Montt</item>
+        <item>Calbuco</item>
+        <item>Cochamó</item>
+        <item>Fresia</item>
+        <item>Frutillar</item>
+        <item>Los Muermos</item>
+        <item>Llanquihue</item>
+        <item>Maullín</item>
+        <item>Puerto Varas</item>
+        <item>Castro</item>
+        <item>Ancud</item>
+        <item>Chonchi</item>
+        <item>Curaco de Vélez</item>
+        <item>Dalcahue</item>
+        <item>Puqueldón</item>
+        <item>Queilén</item>
+        <item>Quellón</item>
+        <item>Quemchi</item>
+        <item>Quinchao</item>
+        <item>Osorno</item>
+        <item>Puerto Octay</item>
+        <item>Purranque</item>
+        <item>Puyehue</item>
+        <item>Río Negro</item>
+        <item>San Juan de la Costa</item>
+        <item>San Pablo</item>
+        <item>Chaitén</item>
+        <item>Futaleufú</item>
+        <item>Hualaihué</item>
+        <item>Palena</item>
+
+    </string-array>
+    <string-array name="aisen_cities">
+        <item>Coihaique</item>
+        <item>Lago Verde</item>
+        <item>Aisén</item>
+        <item>Cisnes</item>
+        <item>Guaitecas</item>
+        <item>Cochrane</item>
+        <item>O’Higgins</item>
+        <item>Tortel</item>
+        <item>Chile Chico</item>
+        <item>Río Ibáñez</item>
+
+    </string-array>
+    <string-array name="magallanes_cities">
+        <item>Punta Arenas</item>
+        <item>Laguna Blanca</item>
+        <item>Río Verde</item>
+        <item>San Gregorio</item>
+        <item>Cabo de Hornos (Ex Navarino)</item>
+        <item>Antártica</item>
+        <item>Porvenir</item>
+        <item>Primavera</item>
+        <item>Timaukel</item>
+        <item>Natales</item>
+        <item>Torres del Paine</item>
+
+    </string-array>
+    <string-array name="metropolitana_cities">
+        <item>Santiago</item>
+        <item>Cerrillos</item>
+        <item>Cerro Navia</item>
+        <item>Conchalí</item>
+        <item>El Bosque</item>
+        <item>Estación Central</item>
+        <item>Huechuraba</item>
+        <item>Independencia</item>
+        <item>La Cisterna</item>
+        <item>La Florida</item>
+        <item>La Granja</item>
+        <item>La Pintana</item>
+        <item>La Reina</item>
+        <item>Las Condes</item>
+        <item>Lo Barnechea</item>
+        <item>Lo Espejo</item>
+        <item>Lo Prado</item>
+        <item>Macul</item>
+        <item>Maipú</item>
+        <item>Ñuñoa</item>
+        <item>Pedro Aguirre Cerda</item>
+        <item>Peñalolén</item>
+        <item>Providencia</item>
+        <item>Pudahuel</item>
+        <item>Quilicura</item>
+        <item>Quinta Normal</item>
+        <item>Recoleta</item>
+        <item>Renca</item>
+        <item>San Joaquín</item>
+        <item>San Miguel</item>
+        <item>San Ramón</item>
+        <item>Vitacura</item>
+        <item>Puente Alto</item>
+        <item>Pirque</item>
+        <item>San José de Maipo</item>
+        <item>Colina</item>
+        <item>Lampa</item>
+        <item>Tiltil</item>
+        <item>San Bernardo</item>
+        <item>Buin</item>
+        <item>Calera de Tango</item>
+        <item>Paine</item>
+        <item>Melipilla</item>
+        <item>Alhué</item>
+        <item>Curacaví</item>
+        <item>María Pinto</item>
+        <item>San Pedro</item>
+        <item>Talagante</item>
+        <item>El Monte</item>
+        <item>Isla de Maipo</item>
+        <item>Padre Hurtado</item>
+        <item>Peñaflor</item>
+    </string-array>
+</resources>
