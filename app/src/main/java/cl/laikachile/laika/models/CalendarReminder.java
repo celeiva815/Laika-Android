@@ -20,7 +20,7 @@ public class CalendarReminder extends Model {
     public static int ID = 100;
 
     public final static String TABLE_NAME = "calendar_reminder";
-    public final static String COLUMN_CALENDAR_REMINDER = "calendar_reminder_id";
+    public final static String COLUMN_CALENDAR_REMINDER_ID = "calendar_reminder_id";
     public final static String COLUMN_TYPE = "type";
     public final static String COLUMN_CATEGORY = "category";
     public final static String COLUMN_TITLE = "title";
@@ -30,7 +30,7 @@ public class CalendarReminder extends Model {
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
 
-    @Column(name = COLUMN_CALENDAR_REMINDER)
+    @Column(name = COLUMN_CALENDAR_REMINDER_ID)
     public int mCalendarReminderId;
 
     @Column(name = COLUMN_TYPE)
@@ -116,7 +116,7 @@ public class CalendarReminder extends Model {
 
     public History toHistory(Context context) {
 
-        return new History(mCategory, mType, mTitle, mDetail, mDate, mTime);
+        return new History(mCalendarReminderId, mCategory, mType, mTitle, mDetail, mDate, mTime);
     }
 
     public static List<CalendarReminder> getDogReminders(int dogId) {
@@ -127,4 +127,11 @@ public class CalendarReminder extends Model {
         return reminders;
     }
 
+    public static CalendarReminder getSingleReminder(int reminderId) {
+
+        String condition = CalendarReminder.COLUMN_CALENDAR_REMINDER_ID + DB._EQUALS_ + reminderId;
+        CalendarReminder reminder = new Select().from(CalendarReminder.class).where(condition).executeSingle();
+
+        return reminder;
+    }
 }

@@ -1,11 +1,16 @@
 package cl.laikachile.laika.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,6 +23,7 @@ import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.History;
+import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
@@ -29,6 +35,8 @@ public class HistoryMyDogFragment extends Fragment {
     public Dog mDog;
     public List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
+    public Dialog mDialog;
+
 
     public HistoryMyDogFragment(Dog mDog) {
         this.mDog = mDog;
@@ -50,6 +58,18 @@ public class HistoryMyDogFragment extends Fragment {
                 getHistories(view.getContext()));
 
         historyListView.setAdapter(mHistoryAdapter);
+
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //FIXME solo para editar el recordatorio
+                editReminder(mHistories.get(position));
+
+            }
+        });
+
 
 
         return view;
@@ -90,6 +110,27 @@ public class HistoryMyDogFragment extends Fragment {
 
     }
 
+    public void editReminder(History history) {
 
+        MyDogsActivity activity = (MyDogsActivity) getActivity();
+
+        switch (history.mType) {
+
+            case Tag.TYPE_ALARM:
+
+                AlarmReminder alarmReminder = AlarmReminder.getSingleReminder(history.mReminderId);
+                activity.setReminderFragment(alarmReminder);
+
+                break;
+
+            case Tag.TYPE_CALENDAR:
+
+                CalendarReminder calendarReminder = CalendarReminder.getSingleReminder(history.mReminderId);
+                activity.setReminderFragment(calendarReminder);
+
+                break;
+
+        }
+    }
 
 }

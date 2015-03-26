@@ -7,6 +7,7 @@ import android.content.Context;
  */
 public class History {
 
+    public int mReminderId;
     public int mCategory;
     public int mType;
     public String mTitle;
@@ -14,8 +15,10 @@ public class History {
     public String mDate;
     public String mTime;
 
-    public History(int mCategory, int mType, String mTitle, String mDetail, String mDate, String mTime) {
+    public History(int mReminderId, int mCategory, int mType, String mTitle, String mDetail,
+                   String mDate, String mTime) {
 
+        this.mReminderId = mReminderId;
         this.mCategory = mCategory;
         this.mType = mType;
         this.mTitle = mTitle;
@@ -30,6 +33,5 @@ public class History {
 
         return mDate + " a las " + mTime;
     }
-
 
 }

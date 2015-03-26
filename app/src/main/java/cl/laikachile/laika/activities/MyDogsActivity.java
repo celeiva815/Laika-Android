@@ -12,9 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.fragments.AlbumMyDogFragment;
 import cl.laikachile.laika.fragments.HistoryMyDogFragment;
 import cl.laikachile.laika.fragments.OwnerMyDogFragment;
 import cl.laikachile.laika.fragments.RemindersMyDogFragment;
+import cl.laikachile.laika.models.AlarmReminder;
+import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 
 public class MyDogsActivity extends ActionBarActivity {
@@ -109,6 +112,13 @@ public class MyDogsActivity extends ActionBarActivity {
                 setReminderFragment(mDog);
             }
         });
+
+        mAlbumLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlbumFragment(mDog);
+            }
+        });
     }
 
     public void setHistoryFragment(Dog mDog) {
@@ -137,6 +147,32 @@ public class MyDogsActivity extends ActionBarActivity {
 
     }
 
+    public void setReminderFragment(AlarmReminder alarmReminder) {
+
+        if (mChildFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        }
+
+        mChildFragment = new RemindersMyDogFragment(mDog, alarmReminder);
+        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        int color = getResources().getColor(R.color.semi_trans_black_background);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+
+    }
+
+    public void setReminderFragment(CalendarReminder calendarReminder) {
+
+        if (mChildFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        }
+
+        mChildFragment = new RemindersMyDogFragment(mDog, calendarReminder);
+        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        int color = getResources().getColor(R.color.semi_trans_black_background);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+
+    }
+
     public void setHealthFragment() {
 
 
@@ -157,7 +193,14 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setAlbumFragment(Dog mDog) {
 
+        if (mChildFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        }
+
+        mChildFragment = new AlbumMyDogFragment(mDog);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        int color = getResources().getColor(R.color.semi_trans_black_background);
+        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
     }
 
     public void setBackgrounds(int history, int reminders, int health, int owner, int album) {

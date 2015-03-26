@@ -383,7 +383,8 @@ public class AlarmReminder extends Model {
 
     public History toHistory(Context context) {
 
-        return new History(mCategory, mType, mTitle, mDetail, toDate(context), mTime);
+        return new History(mAlarmReminderId, mCategory, mType, mTitle, mDetail, toDate(context),
+                mTime);
     }
 
     // DATABASE METHODS
@@ -399,5 +400,13 @@ public class AlarmReminder extends Model {
     public static List<AlarmReminder> getAllReminders() {
 
         return new Select().from(AlarmReminder.class).execute();
+    }
+
+    public static AlarmReminder getSingleReminder(int reminderId) {
+
+        String condition = AlarmReminder.COLUMN_ALARM_REMINDER_ID + DB._EQUALS_ + reminderId;
+        AlarmReminder reminder = new Select().from(AlarmReminder.class).where(condition).executeSingle();
+
+        return reminder;
     }
 }

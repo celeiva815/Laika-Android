@@ -1,5 +1,6 @@
 package cl.laikachile.laika.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.models.AlarmReminder;
+import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Tag;
 
@@ -21,6 +24,8 @@ public class RemindersMyDogFragment extends Fragment {
     private int mIdLayout = R.layout.lk_reminders_my_dog_fragment;
     public Dog mDog;
     public Fragment mFragment;
+    public AlarmReminder mAlarmReminder;
+    public CalendarReminder mCalendarReminder;
 
     public ImageView mFoodImageView;
     public ImageView mPooImageView;
@@ -32,6 +37,19 @@ public class RemindersMyDogFragment extends Fragment {
 
     public RemindersMyDogFragment(Dog mDog) {
         this.mDog = mDog;
+    }
+
+    public RemindersMyDogFragment(Dog mDog, AlarmReminder alarmReminder) {
+
+        this.mDog = mDog;
+        this.mAlarmReminder = alarmReminder;
+
+    }
+
+    public RemindersMyDogFragment(Dog mDog, CalendarReminder calendarReminder) {
+
+        this.mDog = mDog;
+        this.mCalendarReminder = calendarReminder;
     }
 
     @Override
@@ -122,13 +140,39 @@ public class RemindersMyDogFragment extends Fragment {
 
     }
 
-    public void openAlarmReminder(int reminderType) {
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mAlarmReminder != null) {
+
+            getAlarmReminderFragment(mAlarmReminder);
+        }
+
+        if (mCalendarReminder != null) {
+
+            getCalendarReminderFragment(mCalendarReminder);
+        }
+    }
+
+    public void openAlarmReminder(int reminderCategory) {
 
         if (mFragment != null) {
             getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new AlarmReminderMyDogFragment(mDog, reminderType);
+        mFragment = new AlarmReminderMyDogFragment(mDog, reminderCategory);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+
+    }
+
+    public void openAlarmReminder(AlarmReminder alarmReminder) {
+
+        if (mFragment != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
+        }
+
+        mFragment = new AlarmReminderMyDogFragment(mDog, alarmReminder);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -140,6 +184,17 @@ public class RemindersMyDogFragment extends Fragment {
         }
 
         mFragment = new CalendarReminderMyDogFragment(mDog, reminderCategory);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+
+    }
+
+    public void openCalendarReminder(CalendarReminder calendarReminder) {
+
+        if (mFragment != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
+        }
+
+        mFragment = new CalendarReminderMyDogFragment(mDog, calendarReminder);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -182,5 +237,48 @@ public class RemindersMyDogFragment extends Fragment {
         if (vaccine) {
             mVaccineImageView.setImageDrawable(getResources().getDrawable(R.drawable.medicine_white));
         }
+    }
+
+    public void getAlarmReminderFragment(AlarmReminder alarmReminder) {
+
+        switch (alarmReminder.mCategory) {
+
+            case Tag.CATEGORY_FOOD:
+                setCheckedImage(true, false, false, false, false, false, false);
+                break;
+
+            case Tag.CATEGORY_POO:
+                setCheckedImage(false, true, false, false, false, false, false);
+                break;
+
+            case Tag.CATEGORY_WALK:
+                setCheckedImage(false, false, true, false, false, false, false);
+                break;
+
+            case Tag.CATEGORY_MEDICINE:
+                setCheckedImage(false, false, false, true, false, false, false);
+                break;
+        }
+
+        openAlarmReminder(alarmReminder);
+
+    }
+
+    public void getCalendarReminderFragment(CalendarReminder calendarReminder) {
+
+        switch (calendarReminder.mCategory) {
+
+            case Tag.CATEGORY_VET:
+                setCheckedImage(false, false, false, false, false, true, false);
+
+            case Tag.CATEGORY_HYGIENE:
+                setCheckedImage(false, false, false, false, true, false, false);
+
+            case Tag.CATEGORY_VACCINE:
+                setCheckedImage(false, false, false, false, false, false, true);
+        }
+
+        openCalendarReminder(calendarReminder);
+
     }
 }

@@ -30,6 +30,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
     private int mIdLayout = R.layout.lk_calendar_reminder_my_dog_fragment;
     public Dog mDog;
     public int mReminderCategory;
+    public CalendarReminder mCalendarReminder;
 
     public EditText mTitleEditText;
     public EditText mDetailEditText;
@@ -45,6 +46,11 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
         this.mReminderCategory = mReminderCategory;
     }
 
+    public CalendarReminderMyDogFragment(Dog mDog, CalendarReminder mCalendarReminder) {
+
+        this.mDog = mDog;
+        this.mCalendarReminder = mCalendarReminder;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,17 +103,39 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                 String detail = mDetailEditText.getText().toString();
 
                 //FIXME agregar el owner otras variables y verificar que no sean nullOrEmpty.
-                CalendarReminder reminder = new CalendarReminder(CalendarReminder.ID++,Tag.TYPE_CALENDAR,
-                        mReminderCategory, title, detail, mDate, mTime, 1, mDog.mDogId);
+                if (mCalendarReminder != null) {
 
-                reminder.save();
+                    mCalendarReminder.mTitle = title;
+                    mCalendarReminder.mDetail = detail;
+                    mCalendarReminder.mDate = mDate;
+                    mCalendarReminder.mTime = mTime;
 
-                String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
+                    mCalendarReminder.save();
 
+                    String message = Do.getRString(v.getContext(), R.string.edit_reminder_added);
+                    Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
 
+                } else {
+
+                    CalendarReminder reminder = new CalendarReminder(CalendarReminder.ID++, Tag.TYPE_CALENDAR,
+                            mReminderCategory, title, detail, mDate, mTime, 1, mDog.mDogId);
+
+                    reminder.save();
+                    String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
+                    Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
+                }
             }
         });
+
+        if (mCalendarReminder != null) {
+
+            mTitleEditText.setText(mCalendarReminder.mTitle);
+            mDetailEditText.setText(mCalendarReminder.mDetail);
+            mDate = mCalendarReminder.mDate;
+            mDateButton.setText(mDate);
+            mTime = mCalendarReminder.mTime;
+            mTimeButton.setText(mTime);
+        }
 
         return view;
     }

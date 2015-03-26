@@ -15,8 +15,10 @@ import cl.laikachile.laika.listeners.ToMainActivityOnCLickListener;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.models.Zone;
 import cl.laikachile.laika.models.Owner;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -134,6 +136,25 @@ public class WelcomeActivity extends Activity
             AlarmReminder medicineTwo = new AlarmReminder(4, Tag.TYPE_ALARM, Tag.CATEGORY_MEDICINE, "Antipulgas", "No hay que bañarlo", Tag.STATUS_IN_PROGRESS,
                     false, false, false, false, true, false, false, "06:30", 2, 1);
 
+            int[] nino = { R.drawable.nino01, R.drawable.nino02, R.drawable.nino03, R.drawable.nino04,
+                    R.drawable.nino05, R.drawable.nino06 };
+
+            int[] filipo = { R.drawable.filipo1, R.drawable.filipo2, R.drawable.filipo3,
+                    R.drawable.filipo4, R.drawable.filipo5, R.drawable.filipo6, R.drawable.filipo7,
+                    R.drawable.filipo8, R.drawable.filipo9, R.drawable.filipo10};
+
+            for (int i : nino) {
+
+                Photo photo = new Photo(Photo.ID++, "Hola", cachupin.mDogId, "", Do.now(), "Prueba",
+                        i);
+                photo.save();
+            }
+
+            for (int i : filipo) {
+
+                Photo photo = new Photo(Photo.ID++, "Hola", tony.mDogId, "", Do.now(), "Prueba", i);
+                photo.save();
+            }
             tito.save();
             nacho.save();
             cami.save();

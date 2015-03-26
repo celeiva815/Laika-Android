@@ -29,6 +29,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public Dog mDog;
     public int mReminderCategory;
     public Fragment mFragment;
+    public AlarmReminder mAlarmReminder;
 
     public EditText mTitleEditText;
     public EditText mDetailEditText;
@@ -59,6 +60,12 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         this.mReminderCategory = mReminderCategory;
     }
 
+    public AlarmReminderMyDogFragment(Dog mDog, AlarmReminder alarmReminder) {
+
+        this.mDog = mDog;
+        this.mAlarmReminder = alarmReminder;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,7 +84,6 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         mDetailEditText = (EditText) view.findViewById(R.id.detail_alarm_reminder_my_dog_edittext);
         mTimeButton = (Button) view.findViewById(R.id.time_alarm_remind_my_dog_button);
         mSaveButton = (Button) view.findViewById(R.id.save_alarm_remind_my_dog_button);
-
 
         final Calendar calendar = Calendar.getInstance();
         final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY) ,calendar.get(Calendar.MINUTE), false, false);
@@ -102,15 +108,36 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                 String detail = mDetailEditText.getText().toString();
 
                 //FIXME agregar el owner otras variables y verificar que no sean nullOrEmpty.
-                AlarmReminder reminder = new AlarmReminder(AlarmReminder.ID++, Tag.TYPE_ALARM,
-                        mReminderCategory,title,detail,Tag.STATUS_IN_PROGRESS,mMonday,mTuesday,mWednesday,
-                        mThursday,mFriday,mSaturday,mSunday,mTime,1,mDog.mDogId);
 
-                reminder.save();
+                if (mAlarmReminder != null) {
 
-                String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
+                    mAlarmReminder.mTitle = title;
+                    mAlarmReminder.mDetail = detail;
+                    mAlarmReminder.mHasMonday = mMonday;
+                    mAlarmReminder.mHasTuesday = mTuesday;
+                    mAlarmReminder.mHasWednesday = mWednesday;
+                    mAlarmReminder.mHasThursday = mThursday;
+                    mAlarmReminder.mHasFriday = mFriday;
+                    mAlarmReminder.mHasSaturday = mSaturday;
+                    mAlarmReminder.mHasSunday = mSunday;
+                    mAlarmReminder.mTime = mTime;
 
+                    mAlarmReminder.save();
+
+                    String message = Do.getRString(v.getContext(), R.string.edit_reminder_added);
+                    Do.showToast(message, v.getContext(), Toast.LENGTH_LONG);
+
+                } else {
+
+                    AlarmReminder reminder = new AlarmReminder(AlarmReminder.ID++, Tag.TYPE_ALARM,
+                            mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday, mTuesday, mWednesday,
+                            mThursday, mFriday, mSaturday, mSunday, mTime, 1, mDog.mDogId);
+
+                    reminder.save();
+
+                    String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
+                    Do.showToast(message, v.getContext(), Toast.LENGTH_LONG);
+                }
             }
         });
 
@@ -118,14 +145,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mMonday) {
-                    mMonday = true;
-                    mMondayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mMonday = false;
-                    mMondayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setMonday();
             }
         });
 
@@ -133,14 +153,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mTuesday) {
-                    mTuesday = true;
-                    mTuesdayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mTuesday = false;
-                    mTuesdayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setTuesday();
             }
         });
 
@@ -148,14 +161,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mWednesday) {
-                    mWednesday = true;
-                    mWednesdayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mWednesday = false;
-                    mWednesdayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setWednesday();
             }
         });
 
@@ -163,14 +169,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mThursday) {
-                    mThursday = true;
-                    mThursdayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mThursday = false;
-                    mThursdayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setThursday();
             }
         });
 
@@ -178,14 +177,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mFriday) {
-                    mFriday = true;
-                    mFridayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mFriday = false;
-                    mFridayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setFriday();
             }
         });
 
@@ -193,14 +185,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mSaturday) {
-                    mSaturday = true;
-                    mSaturdayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mSaturday = false;
-                    mSaturdayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setSaturday();
             }
         });
 
@@ -208,16 +193,39 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                if (!mSunday) {
-                    mSunday = true;
-                    mSundayButton.setBackgroundColor(getDarkWhiteColor());
-
-                } else {
-                    mSunday = false;
-                    mSundayButton.setBackgroundColor(getSemiTransparentColor());
-                }
+                setSunday();
             }
         });
+
+        if (mAlarmReminder != null) {
+
+            mTitleEditText.setText(mAlarmReminder.mTitle);
+            mDetailEditText.setText(mAlarmReminder.mDetail);
+
+            mTime = mAlarmReminder.mTime;
+            mTimeButton.setText(mTime);
+
+            mMonday = mAlarmReminder.mHasMonday;
+            setMonday();
+
+            mTuesday = mAlarmReminder.mHasTuesday;
+            setTuesday();
+
+            mWednesday = mAlarmReminder.mHasWednesday;
+            setWednesday();
+
+            mThursday = mAlarmReminder.mHasThursday;
+            setThursday();
+
+            mFriday = mAlarmReminder.mHasFriday;
+            setFriday();
+
+            mSaturday = mAlarmReminder.mHasSaturday;
+            setSaturday();
+
+            mSunday = mAlarmReminder.mHasSunday;
+            setSunday();
+        }
 
         return view;
     }
@@ -258,5 +266,89 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
         return hour + ":" + min;
+    }
+
+    public void setMonday() {
+
+        if (!mMonday) {
+            mMonday = true;
+            mMondayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mMonday = false;
+            mMondayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+
+    }
+
+    public void setTuesday() {
+
+        if (!mTuesday) {
+            mTuesday = true;
+            mTuesdayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mTuesday = false;
+            mTuesdayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+    }
+    public void setWednesday() {
+
+        if (!mWednesday) {
+            mWednesday = true;
+            mWednesdayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mWednesday = false;
+            mWednesdayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+    }
+
+    public void setThursday() {
+
+        if (!mThursday) {
+            mThursday = true;
+            mThursdayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mThursday = false;
+            mThursdayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+
+    }
+    public void setFriday() {
+
+        if (!mFriday) {
+            mFriday = true;
+            mFridayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mFriday = false;
+            mFridayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+
+    }
+    public void setSaturday() {
+
+        if (!mSaturday) {
+            mSaturday = true;
+            mSaturdayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mSaturday = false;
+            mSaturdayButton.setBackgroundColor(getSemiTransparentColor());
+        }
+
+    }
+    public void setSunday() {
+
+        if (!mSunday) {
+            mSunday = true;
+            mSundayButton.setBackgroundColor(getDarkWhiteColor());
+
+        } else {
+            mSunday = false;
+            mSundayButton.setBackgroundColor(getSemiTransparentColor());
+        }
     }
 }
