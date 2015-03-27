@@ -1,5 +1,10 @@
 package cl.laikachile.laika.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AlbumMyDogFragment;
@@ -19,10 +28,13 @@ import cl.laikachile.laika.fragments.RemindersMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.Photo;
+import cl.laikachile.laika.utils.Do;
 
 public class MyDogsActivity extends ActionBarActivity {
 
     public static final String DOG_ID = "dog_id";
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     private int mIdLayout = R.layout.lk_my_dogs_fragment;
     public Dog mDog;
@@ -33,6 +45,7 @@ public class MyDogsActivity extends ActionBarActivity {
     public LinearLayout mAlbumLinearLayout;
 
     public Fragment mChildFragment;
+    public String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +68,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.activity_main, menu);
+            getMenuInflater().inflate(R.menu.activity_my_dog, menu);
 
         return true;
     }
@@ -72,12 +85,29 @@ public class MyDogsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.home_menu_button) {
+        if (id == R.id.camera_menu_button) {
 
-            Intent homeIntent = new Intent(this, MainActivity.class);
-            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+
+                    photoFile = createImageFile();
+
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                    Do.showToast("Problem creating the picture", getApplicationContext());
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(photoFile));
+                    startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            }
+
 
             return true;
         }
@@ -121,6 +151,30 @@ public class MyDogsActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if ( requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            if ( resultCode == RESULT_OK) {
+
+                //Bitmap imageBitmap = setPicture();
+                //String imageName = getImageName(mDog.mDogId);
+
+                Photo photo = new Photo(Photo.ID++,"Tito", mDog.mDogId,mCurrentPhotoPath,Do.now(),
+                        "foto de prueba",R.drawable.filipo1);
+                photo.save();
+
+            } else if ( resultCode == RESULT_CANCELED) {
+
+                Toast.makeText(this, "La fotografía fue cancelada", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(this, "No se pudo tomar la fotografía", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void setHistoryFragment(Dog mDog) {
 
         if (mChildFragment != null) {
@@ -130,7 +184,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mChildFragment = new HistoryMyDogFragment(mDog);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
     }
 
@@ -143,7 +197,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mChildFragment = new RemindersMyDogFragment(mDog);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
     }
 
@@ -156,7 +210,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mChildFragment = new RemindersMyDogFragment(mDog, alarmReminder);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
     }
 
@@ -169,7 +223,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mChildFragment = new RemindersMyDogFragment(mDog, calendarReminder);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT ,Color.TRANSPARENT);
+        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
     }
 
@@ -187,7 +241,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mChildFragment = new OwnerMyDogFragment(mDog);
         getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color ,Color.TRANSPARENT);
+        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color, Color.TRANSPARENT);
 
     }
 
@@ -212,5 +266,64 @@ public class MyDogsActivity extends ActionBarActivity {
         mAlbumLinearLayout.setBackgroundColor(album);
     }
 
+    public File createImageFile() throws IOException {
+        // Create an image file name
+
+        mCurrentPhotoPath = "";
+
+        String imageFileName = getImageName(mDog.mDogId) + ".jpg";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = new File(storageDir, imageFileName);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+
+        return image;
+    }
+
+    private Bitmap setPicture() {
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/640, photoH/480);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+        bmOptions.inSampleSize = scaleFactor;
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        return bitmap;
+    }
+
+    public String getImageName(int dogId) {
+
+        int[] dateArray = Do.nowDateInArray();
+        int[] timeArray = Do.nowTimeInArray();
+
+        String date = "";
+
+        for (int i : dateArray) {
+
+            date += Integer.toString(i);
+        }
+
+        for (int i : timeArray) {
+
+            date += Integer.toString(i);
+        }
+
+        date += Integer.toString(dogId);
+
+        return date;
+
+    }
 
 }

@@ -44,10 +44,10 @@ public class NewsScreenSlideFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Context context = v.getContext();
-                Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra(WebActivity.URL, news.mUrlNews);
-                context.startActivity(intent);
+        Context context = v.getContext();
+        Intent intent = new Intent(context, WebActivity.class);
+        intent.putExtra(WebActivity.URL, news.mUrlNews);
+        context.startActivity(intent);
 
             }
         });

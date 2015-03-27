@@ -1,6 +1,8 @@
 package cl.laikachile.laika.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import cl.laikachile.laika.models.Photo;
+import cl.laikachile.laika.utils.Do;
 
 public class AlbumAdapter extends BaseAdapter {
 
@@ -47,6 +50,8 @@ public class AlbumAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
 
         SquareImageView imageView;
+        Photo photo = mPhotos.get(position);
+
         if (view == null) {
             // if it's not recycled, initialize some attributes
             imageView = new SquareImageView(mContext);
@@ -59,7 +64,13 @@ public class AlbumAdapter extends BaseAdapter {
             imageView = (SquareImageView) view;
         }
 
-        imageView.setImageResource(mPhotos.get(position).mResource);
+        if (!Do.isNullOrEmpty(photo.mUrlImage)) {
+
+            imageView.setImageBitmap(getPicture(photo));
+
+        } else {
+            imageView.setImageResource(photo.mResource);
+        }
 
         return imageView;
     }
@@ -90,6 +101,27 @@ public class AlbumAdapter extends BaseAdapter {
         {
             super.onSizeChanged(w, w, oldw, oldh);
         }
+    }
+
+    private Bitmap getPicture(Photo photo) {
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photo.mUrlImage, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/800, photoH/600);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(photo.mUrlImage, bmOptions);
+
+        return bitmap;
     }
 
 }

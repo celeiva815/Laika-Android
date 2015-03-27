@@ -1,64 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="130dp"
     android:background="#fff"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:padding="5dp"
+    android:weightSum="13">
 
     <ImageView
-        android:id="@+id/type_events_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:id="@+id/photo_events_imageview"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:minWidth="50sp"
-        android:src="@drawable/lk_food_tips" />
+        android:src="@drawable/lk_news"
+        android:adjustViewBounds="false"
+        android:layout_weight="4"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/sponsor_events_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.50"
-        android:orientation="vertical" >
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:text="@string/sponsor_events"
+        android:textColor="@color/light_black_font"
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/photo_events_imageview"
+        android:layout_toEndOf="@+id/photo_events_imageview" />
 
-        <TextView
-            android:id="@+id/name_events_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:text="@string/example_tips_activity"
-            android:textColor="#000"
-            android:textSize="17sp" />
+    <TextView
+        android:id="@+id/name_events_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:text="@string/name_events"
+        android:textColor="@color/light_black_font"
+        android:textSize="15sp"
+        android:layout_below="@+id/sponsor_events_textview"
+        android:layout_alignLeft="@+id/sponsor_events_textview"
+        android:layout_alignStart="@+id/sponsor_events_textview"
+        android:layout_marginBottom="5dp"
+        android:textIsSelectable="false"
+        android:layout_toLeftOf="@+id/imageView14" />
 
-        <TextView
-            android:id="@+id/start_date_events_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="#000" />
+    <TextView
+        android:id="@+id/location_events_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/place_events"
+        android:textColor="@color/light_black_font"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="2dp" />
 
-        <TextView
-            android:id="@+id/finish_date_events_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="#000" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/time_events_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_events"
+        android:textColor="@color/light_black_font"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/imageView12"
+        android:layout_alignLeft="@+id/location_events_textview"
+        android:layout_alignStart="@+id/location_events_textview"
+        android:layout_marginTop="3dp" />
+
+    <TextView
+        android:id="@+id/date_events_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date_events"
+        android:textColor="@color/light_black_font"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/imageView13"
+        android:layout_alignLeft="@+id/time_events_textview"
+        android:layout_alignStart="@+id/time_events_textview"
+        android:layout_marginTop="3dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"/>
 
     <ImageView
-        android:id="@+id/accept_assistance_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/lk_assistance_ticket" />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/event_place"
+        android:layout_below="@+id/name_events_textview"
+        android:layout_alignLeft="@+id/name_events_textview"
+        android:layout_alignStart="@+id/name_events_textview"
+        android:adjustViewBounds="true" />
 
     <ImageView
-        android:id="@+id/refuse_assistance_imageview"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView12"
+        android:src="@drawable/event_clock"
+        android:layout_below="@+id/imageView"
+        android:layout_toRightOf="@+id/photo_events_imageview"
+        android:layout_toEndOf="@+id/photo_events_imageview" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView13"
+        android:src="@drawable/event_calendar"
+        android:layout_below="@+id/imageView12"
+        android:layout_toRightOf="@+id/photo_events_imageview"
+        android:layout_toEndOf="@+id/photo_events_imageview"
+        android:padding="3sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView14"
+        android:src="@drawable/arrow_right"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/announce_events_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dp"
-        android:src="@drawable/lk_assistance_cross" />
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:text="@string/announce_events"
+        android:textColor="@color/laika_red"
+        android:textSize="12sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/imageView14"
+        android:layout_alignEnd="@+id/imageView14" />
 
-</LinearLayout>
+</RelativeLayout>

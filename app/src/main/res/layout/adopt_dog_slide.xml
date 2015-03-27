@@ -271,7 +271,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:maxLength="200" />
 
         <Button
             android:id="@+id/postulate_adopt_dog_button"

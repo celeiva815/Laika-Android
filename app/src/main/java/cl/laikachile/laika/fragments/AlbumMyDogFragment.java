@@ -29,10 +29,19 @@ public class AlbumMyDogFragment extends Fragment {
     public Dog mDog;
     public List<Photo> mPhotos;
     public GridView mGridView;
+    public AlbumAdapter mAlbumAdapter;
 
     public AlbumMyDogFragment(Dog mDog) {
         this.mDog = mDog;
         this.mPhotos = getPhotos();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPhotos = getPhotos();
+        mAlbumAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -42,7 +51,8 @@ public class AlbumMyDogFragment extends Fragment {
         View view = inflater.inflate(mIdLayout, container, false);
 
         mGridView= (GridView) view.findViewById(R.id.album_my_dog_gridview);
-        mGridView.setAdapter(new AlbumAdapter(view.getContext(), mPhotos));
+        mAlbumAdapter = new AlbumAdapter(view.getContext(), mPhotos);
+        mGridView.setAdapter(mAlbumAdapter);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

@@ -255,6 +255,13 @@
 
     <!-- EventsActivity -->
     <string name="events_activity_name">Eventos</string>
+    <string name="sponsor_events">Municipalidad de Las Condes</string>
+    <string name="name_events">JORNADA DE ESTERILIZACIÓN</string>
+    <string name="place_events">Parque Padre Hurtado</string>
+    <string name="time_events">9:00 - 18:00</string>
+    <string name="date_events">05 de mayo de 2015</string>
+    <string name="announce_events">Anuncio</string>
+
 
     <!-- StoriesFragmentActivity -->
     <string name="stories_fragment_activity_name">Historias</string>

@@ -136,7 +136,7 @@ public class WelcomeActivity extends Activity
             AlarmReminder medicineTwo = new AlarmReminder(4, Tag.TYPE_ALARM, Tag.CATEGORY_MEDICINE, "Antipulgas", "No hay que bañarlo", Tag.STATUS_IN_PROGRESS,
                     false, false, false, false, true, false, false, "06:30", 2, 1);
 
-            int[] nino = { R.drawable.nino01, R.drawable.nino02, R.drawable.nino03, R.drawable.nino04,
+            /* int[] nino = { R.drawable.nino01, R.drawable.nino02, R.drawable.nino03, R.drawable.nino04,
                     R.drawable.nino05, R.drawable.nino06 };
 
             int[] filipo = { R.drawable.filipo1, R.drawable.filipo2, R.drawable.filipo3,
@@ -154,7 +154,8 @@ public class WelcomeActivity extends Activity
 
                 Photo photo = new Photo(Photo.ID++, "Hola", tony.mDogId, "", Do.now(), "Prueba", i);
                 photo.save();
-            }
+            } */
+
             tito.save();
             nacho.save();
             cami.save();
