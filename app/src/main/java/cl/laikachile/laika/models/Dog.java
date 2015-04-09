@@ -24,7 +24,7 @@ public class Dog extends Model {
     public final static String TABLE_NAME = "dogs";
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_NAME = "name";
-    public final static String COLUMN_BIRTH = "birth";
+    public final static String COLUMN_BIRTHDATE = "birthdate";
     public final static String COLUMN_BREED = "breed";
     public final static String COLUMN_GENDER = "gender";
     public final static String COLUMN_SIZE = "size";
@@ -35,7 +35,7 @@ public class Dog extends Model {
     public final static String COLUMN_WEIGHT = "weight";
     public final static String COLUMN_TRAINED = "trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
-    public final static String COLUMN_USER_ID = "user_id";
+    public final static String COLUMN_OWNER_ID = "owner_id";
 
     public final static int STATUS_OWN = 1;
     public final static int STATUS_ADOPTED = 2;
@@ -47,7 +47,7 @@ public class Dog extends Model {
     @Column(name = COLUMN_NAME)
     public String mName;
 
-    @Column(name = COLUMN_BIRTH)
+    @Column(name = COLUMN_BIRTHDATE)
     public String mBirth;
 
     @Column(name = COLUMN_BREED)
@@ -57,10 +57,10 @@ public class Dog extends Model {
     public int mGender;
 
     @Column(name = COLUMN_SIZE)
-    public String mSize;
+    public String mSize; //FIXME cambiar por enteros
 
     @Column(name = COLUMN_PERSONALITY)
-    public String mPersonality;
+    public String mPersonality; //FIXME cambiar por enteros
 
     @Column(name = COLUMN_STERILIZED)
     public boolean mSterilized;
@@ -74,7 +74,7 @@ public class Dog extends Model {
     @Column(name = COLUMN_STATUS)
     public int mStatus;
 
-    @Column(name = COLUMN_USER_ID)
+    @Column(name = COLUMN_OWNER_ID)
     public int mOwnerId;
 
     //FIXME cambiar a un string de URL
@@ -204,7 +204,6 @@ public class Dog extends Model {
             return Do.getRString(context, R.string.is_not_trained);
 
         }
-
     }
 
     public static Dog getSingleDog(int dogId) {

@@ -9,19 +9,19 @@
     <string name="http_client_null_exception_message">Client must not be null.</string>
 
     <!-- IO error strings -->
-    <string name="generic_server_down_error">It could not connect to the server</string>
-    <string name="auth_failure_error">The email or password is incorrect</string>
-    <string name="no_internet_error">There was a problem with your internet connection</string>
-    <string name="generic_networking_error">There was an error</string>
+    <string name="generic_server_down_error">No se pudo conectar con el servidor</string>
+    <string name="auth_failure_error">El correo o contraseña ingresados no son correctos</string>
+    <string name="no_internet_error">Hubo un problema con tu conexión a internet</string>
+    <string name="generic_networking_error">Hubo un error. Lo sentimos!</string>
     <string name="content_description_logo_image_view">Logo</string>
-    <string name="login_submit">Login</string>
-    <string name="password">Password</string>
-    <string name="email_address">Email</string>
+    <string name="login_submit">Ingresar</string>
+    <string name="password">Contraseña</string>
+    <string name="email_address">Correo</string>
     <string name="error_empty_search_query">You didn\'t enter the search field</string>
-    <string name="not_valid_email_error">Invalid email</string>
-    <string name="field_not_empty_error">This field can\'t be empty</string>
-    <string name="parameters_error">The account doesn\'t exist or the password is incorrect</string>
-    <string name="password_recovery_parameters_error">There is not associated account to this email</string>
+    <string name="not_valid_email_error">Correo Inválido</string>
+    <string name="field_not_empty_error">Este campo no puede estar vacío</string>
+    <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
+    <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
     <string name="must_select_reason">You must select a reason</string>
     <string name="must_select_responsible">You must select a responsible</string>
 
@@ -44,20 +44,19 @@
 
     <!-- LOGIN -->
     <string name="log_in_activity_name">Inicio de Sesión</string>
-    <string name="log_in_description_1"></string>
-    <string name="log_in_description_2"></string>
-    <string name="log_in_title_1"></string>
-    <string name="log_in_title_2">Ingreso</string>
+    <string name="user_log_in">Correo electrónico</string>
+    <string name="password_log_in">Contraseña</string>
+    <string name="register_log_in">¿No tienes una cuenta? Regístrate aquí</string>
+    <string name="forgot_log_in">¿Olvidaste tu contraseña?</string>
     <string name="register_success">¡Te has registrado exitosamente!</string>
     <string name="log_in">Ingresar</string>
     <string name="log_in2">Enviar</string>
     <string name="back_to_menu">Volver al menú principal</string>
-
     <string	name="registered_description"></string>
-    <!-- [AI] left menu -->
     <string name="sign_in">Ingresa</string>
     <string name="sign_up">Regístrate</string>
-    <string name="g_plus_sign_in">Ingresa con tus redes sociales</string>
+    <string name="g_plus_log_in">Google</string>
+    <string name="facebook_log_in">Facebook</string>
     <string name="camera">Cámara</string>
     <string name="log_out">Cerrar Sesión</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -252,6 +251,10 @@
     <!-- TipsActivity -->
     <string name="tips_activity_name">Tips</string>
     <string name="example_tips_activity">Este es un tip</string>
+    <string name="title_tip_activity">Qué hacer si el perro orina en todos lados</string>
+	<string name="body_tip_activity">Si encuentras al perro orinando puedes hacer un sonido
+        para captar su atención. Llévalo al sitio donde quieres que orine.</string>
+
 
     <!-- EventsActivity -->
     <string name="events_activity_name">Eventos</string>
@@ -276,7 +279,10 @@
     perrito ideal para acompañarse. Un perro de 6 años, super cariñoso y que te acompaña a todos
     lados. Ellos están felices y él con nueva casita</string>
 
-
+    <string name="title_activity_show_image">ShowImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="photos_activity_name">Fotos</string>
 
 
 </resources>

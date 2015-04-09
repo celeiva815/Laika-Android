@@ -4,21 +4,89 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:paddingTop="5sp">
 
-    <ImageView
-        android:id="@+id/type_tips_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ticket" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/content_tips_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textColor="#000"
-        android:text="@string/example_tips_activity" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pach_news"
+            android:id="@+id/sponsor_tip_textview"
+            android:layout_gravity="right"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="3dp"
+            android:textColor="@color/lighter_black_font" />
+
+        <ImageView
+            android:id="@+id/main_tip_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/lk_news_picture_three"
+            android:adjustViewBounds="false"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/title_tip_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/title_tip_activity"
+            android:textSize="16sp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/light_black_font" />
+
+        <TextView
+            android:id="@+id/body_tip_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/body_tip_activity"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/light_black_font"
+            android:textIsSelectable="false"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/share_tip_imageview"
+                android:src="@drawable/share41"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView6"
+                android:src="@drawable/star102"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

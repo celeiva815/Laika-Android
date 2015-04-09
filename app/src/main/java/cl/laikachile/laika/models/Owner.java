@@ -34,7 +34,7 @@ public class Owner extends Model {
 	@Column(name = COLUMN_OWNER_ID)
 	public int mOwnerId;
 
-    @Column(name = COLUMN_OWNER_NAME)
+    @Column(name = COLUMN_OWNER_NAME) //No va a tener usuario
     public String mOwnerName;
 	
 	@Column(name = COLUMN_FIRST_NAME)
@@ -136,5 +136,12 @@ public class Owner extends Model {
         }
 
         return owners;
+    }
+
+    public static Owner getUser(int userId) {
+
+        String condition = COLUMN_OWNER_ID + DB._EQUALS_ + Integer.toString(userId);
+        return new Select().from(Owner.class).where(condition).executeSingle();
+
     }
 }

@@ -13,6 +13,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 
 /**
  * Created by Tito_Leiva on 10-02-15.
@@ -89,6 +90,12 @@ public class BaseActivity extends ActionBarActivity
 
                 case 1:
                     Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    break;
+
+                case 4:
+                    PrefsManager.clearPrefs(getApplicationContext());
+                    Do.changeActivity(this.getApplicationContext(), LoginActivity.class,
                             Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 

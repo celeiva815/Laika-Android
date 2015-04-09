@@ -46,4 +46,9 @@ public class Tag {
     public static final String REGION_METROPOLITANA = "Región Metropolitana de Santiago";
     public static final String REGION_VALPARAISO = "Valparaíso";
 
+    //TIP
+    public static final int TIP_FOOD = 1;
+    public static final int TIP_HEALTH = 2;
+    public static final int TIP_HYGIENE = 3;
+    public static final int TIP_WALK = 4;
 }

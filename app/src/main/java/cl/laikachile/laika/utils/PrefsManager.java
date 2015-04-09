@@ -6,8 +6,7 @@ import android.text.TextUtils;
 
 import java.util.Date;
 
-import cl.laikachile.laika.models.User;
-import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.models.Owner;
 
 /**
  * Created by Tito_Leiva on 05-02-15.
@@ -19,8 +18,9 @@ public class PrefsManager {
     private static final String PREF_SESSION_COOKIE = "session_cookie";
     private static final String PREF_USER_ID = "user_id";
     private static final String PREF_USER_NAME = "name";
+    private static final String PREF_USER_EMAIL = "email";
     private static final String PREF_USER_PASSWORD = "password";
-    private static final String PREF_USER_LOGIN_TOKEN = "token";
+    private static final String PREF_USER_ACCESS_TOKEN = "access_token";
 
     private static final String PREF_IS_SYNCING_STATUS = "is_syncing_status";
     private static final String PREF_LAST_SYNC = "last_sync";
@@ -51,30 +51,56 @@ public class PrefsManager {
         return getPrefs(context).getString(PREF_SESSION_COOKIE, DEFAULT_STRING);
     }
 
-    public static User getLoggedUser(Context context) {
-        SharedPreferences prefs = getPrefs(context);
-        return User.getUser(prefs.getInt(PREF_USER_ID, 0));
+    // #####################################
+    // ######### User Methods ##############
+    // #####################################
+
+    public static int getUserId(Context context) {
+        return getPrefs(context).getInt(PREF_USER_ID, 0);
     }
 
     public static String getUserToken(Context context) {
 
         SharedPreferences prefs = getPrefs(context);
-        String token = prefs.getString(PREF_USER_LOGIN_TOKEN, "");
-
-        token = token.replaceAll(RequestManager.NORMAL_SPACE, RequestManager.URL_SPACE);
+        String token = prefs.getString(PREF_USER_ACCESS_TOKEN, "");
 
         return token;
     }
 
-    public static void saveUser(Context context, String name, String token, long id) {
+    public static String getUserName(Context context) {
+
+        SharedPreferences prefs = getPrefs(context);
+        String name = prefs.getString(PREF_USER_NAME, "");
+
+        return name;
+    }
+
+    public static Owner getLoggedOwner(Context context) {
+
+        SharedPreferences prefs = getPrefs(context);
+        return Owner.getUser(prefs.getInt(PREF_USER_ID, 0));
+    }
+
+    public static boolean isUserLoggedIn(Context context) {
+        String email = getPrefs(context).getString(PREF_USER_EMAIL, "");
+
+        return !TextUtils.isEmpty(email);
+    }
+
+    public static void saveUser(Context context, String fullName, String email, String token,
+                                int id) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
 
-        editor.putInt(PREF_USER_ID, (int) id);
-        editor.putString(PREF_USER_NAME, name);
-        editor.putString(PREF_USER_LOGIN_TOKEN, token);
+        editor.putInt(PREF_USER_ID, id);
+        editor.putString(PREF_USER_NAME, fullName);
+        editor.putString(PREF_USER_EMAIL, email);
+        editor.putString(PREF_USER_ACCESS_TOKEN, token);
 
         editor.apply();
     }
+
+    // ########################################
+    // #########################################
 
     public static void setIsSyncingStatus(Context context, boolean isSyncing) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
@@ -103,12 +129,6 @@ public class PrefsManager {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString(PREF_SESSION_COOKIE, jsonSessionCookie);
         editor.apply();
-    }
-
-    public static boolean isUserLoggedIn(Context context) {
-        String email = getPrefs(context).getString(PREF_USER_NAME, "");
-
-        return !TextUtils.isEmpty(email);
     }
 
     public static void clearPrefs(Context context) {

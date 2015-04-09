@@ -66,7 +66,7 @@ public class AlbumAdapter extends BaseAdapter {
 
         if (!Do.isNullOrEmpty(photo.mUrlImage)) {
 
-            imageView.setImageBitmap(getPicture(photo));
+            imageView.setImageBitmap(photo.getPicture());
 
         } else {
             imageView.setImageResource(photo.mResource);
@@ -102,26 +102,4 @@ public class AlbumAdapter extends BaseAdapter {
             super.onSizeChanged(w, w, oldw, oldh);
         }
     }
-
-    private Bitmap getPicture(Photo photo) {
-
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(photo.mUrlImage, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/800, photoH/600);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(photo.mUrlImage, bmOptions);
-
-        return bitmap;
-    }
-
 }

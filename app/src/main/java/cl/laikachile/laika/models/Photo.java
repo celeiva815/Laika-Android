@@ -1,5 +1,8 @@
 package cl.laikachile.laika.models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -20,6 +23,7 @@ public class Photo extends Model {
 
     public final static String TABLE_PHOTO = "photos";
     public final static String COLUMN_PHOTO_ID = "photo_id";
+    public final static String COLUMN_OWNER_ID = "owner_id"; // TODO Agregar este campo
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_URL_IMAGE = "url_image";
@@ -29,6 +33,9 @@ public class Photo extends Model {
 
     @Column(name = COLUMN_PHOTO_ID)
     public int mPhotoId;
+
+    @Column(name = COLUMN_OWNER_ID)
+    public int mOwnerId;
 
     @Column(name = COLUMN_OWNER_NAME)
     public String mOwnerName;
@@ -51,10 +58,32 @@ public class Photo extends Model {
 
     public Photo() { }
 
-    public Photo(int mPhotoId, String mOwnerName, int mDogId, String mUrlImage, String mDate,
+    public Bitmap getPicture() {
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mUrlImage, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/800, photoH/600);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mUrlImage, bmOptions);
+
+        return bitmap;
+    }
+
+    public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlImage, String mDate,
                  String mDetail, int mResource) {
 
         this.mPhotoId = mPhotoId;
+        this.mOwnerId = mOwnerId;
         this.mOwnerName = mOwnerName;
         this.mDogId = mDogId;
         this.mUrlImage = mUrlImage;

@@ -9,9 +9,9 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.listeners.ChangeRegionZonesOnItemSelectedListener;
+import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
-import cl.laikachile.laika.models.Zone;
+import cl.laikachile.laika.models.Location;
 import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogFormActivity extends BaseActivity {
@@ -25,7 +25,7 @@ public class AdoptDogFormActivity extends BaseActivity {
     public EditText mPartnersEditText;
     public Spinner mFreeTimeSpinner;
     public Button mSearchButton;
-    public Zone mZone;
+    public Location mLocation;
     public int mGender;
     public boolean mKids;
     public boolean mElderly;
@@ -61,14 +61,14 @@ public class AdoptDogFormActivity extends BaseActivity {
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.available_chilean_regions));
         mRegionSpinner.setAdapter(regionAdapter);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionZonesOnItemSelectedListener(mCitySpinner));
+        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner));
 
         mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                mZone = (Zone) parent.getItemAtPosition(position);
+                mLocation = (Location) parent.getItemAtPosition(position);
             }
 
             @Override

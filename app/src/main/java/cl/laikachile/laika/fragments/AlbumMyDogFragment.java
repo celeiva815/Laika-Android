@@ -1,6 +1,7 @@
 package cl.laikachile.laika.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.PhotosFragmentActivity;
 import cl.laikachile.laika.adapters.AlbumAdapter;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Photo;
@@ -60,8 +62,10 @@ public class AlbumMyDogFragment extends Fragment {
                                     int position, long id) {
 
 
-                Toast.makeText(v.getContext(), "" + position,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), PhotosFragmentActivity.class);
+                intent.putExtra(PhotosFragmentActivity.KEY_CURRENT_ITEM, position);
+                intent.putExtra(PhotosFragmentActivity.KEY_DOG_ID, mDog.mDogId);
+                v.getContext().startActivity(intent);
             }
         });
 

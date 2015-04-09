@@ -10,19 +10,19 @@ import android.widget.TextView;
 import java.util.List;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.models.Zone;
+import cl.laikachile.laika.models.Location;
 
-public class ZonesAdapter extends ArrayAdapter<Zone> {
+public class LocationsAdapter extends ArrayAdapter<Location> {
 
 	private int mIdLayout = R.layout.ai_simple_textview_for_adapter;
 	private Context context;
-	public List<Zone> mZones;
+	public List<Location> mLocations;
 
-	public ZonesAdapter(Context context, int resource, List<Zone> objects) {
+	public LocationsAdapter(Context context, int resource, List<Location> objects) {
 		super(context, resource, objects);
 		
 		this.context = context;
-		this.mZones = objects;
+		this.mLocations = objects;
 	}
 
     @Override
@@ -36,7 +36,7 @@ public class ZonesAdapter extends ArrayAdapter<Zone> {
 	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    View view = inflater.inflate(mIdLayout, parent, false);
 		TextView cityTextView  = (TextView) view.findViewById(R.id.simple_textview);
-        cityTextView.setText(mZones.get(position).mCity);
+        cityTextView.setText(mLocations.get(position).mCity);
 
 	    return view;
 	    

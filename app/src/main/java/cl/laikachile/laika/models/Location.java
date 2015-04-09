@@ -17,10 +17,11 @@ import cl.laikachile.laika.utils.Tag;
 /**
  * Created by Tito_Leiva on 23-03-15.
  */
-@Table(name = Zone.TABLE_ZONE)
-public class Zone extends Model {
+@Table(name = Location.TABLE_LOCATION)
+public class Location extends Model {
 
-    public final static String TABLE_ZONE = "zone";
+    public final static String TABLE_LOCATION = "location";
+    public final static String COLUMN_ZONE_ID = "location_id";
     public final static String COLUMN_COUNTRY = "country";
     public final static String COLUMN_STATE = "state";
     public final static String COLUMN_CITY = "city";
@@ -38,9 +39,9 @@ public class Zone extends Model {
     @Column(name = COLUMN_IS_ACTIVE)
     public boolean mIsActive;
 
-    public Zone() { }
+    public Location() { }
 
-    public Zone(String mCountry, String mRegion, String mCity, boolean mIsActive) {
+    public Location(String mCountry, String mRegion, String mCity, boolean mIsActive) {
         this.mCountry = mCountry;
         this.mRegion = mRegion;
         this.mCity = mCity;
@@ -62,8 +63,8 @@ public class Zone extends Model {
 
                 for (String city : cities) {
 
-                    Zone zone = new Zone(country, region, city, true);
-                    zone.save();
+                    Location location = new Location(country, region, city, true);
+                    location.save();
                 }
             }
 
@@ -73,19 +74,19 @@ public class Zone extends Model {
 
                 for (String city : cities) {
 
-                    Zone zone = new Zone(country, region, city, true);
-                    zone.save();
+                    Location location = new Location(country, region, city, true);
+                    location.save();
                 }
             }
         }
     }
 
-    public static List<Zone> getZones(String region) {
+    public static List<Location> getLocation(String region) {
 
         String clause = COLUMN_STATE + DB._EQUALS_QUESTION;
-        List<Zone> zones = new Select().from(Zone.class).where(clause, region).execute();
+        List<Location> locations = new Select().from(Location.class).where(clause, region).execute();
 
-        return zones;
+        return locations;
 
     }
 }

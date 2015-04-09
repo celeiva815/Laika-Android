@@ -12,16 +12,16 @@ import android.widget.TextView;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.WebActivity;
-import cl.laikachile.laika.models.News;
+import cl.laikachile.laika.models.Publication;
 
-public class NewsScreenSlideFragment extends Fragment {
+public class PublicationScreenSlideFragment extends Fragment {
 	
-	private int mIdLayout = R.layout.lk_news_screen_slide_fragment;
-	News news;
+	private int mIdLayout = R.layout.lk_publication_screen_slide_fragment;
+	Publication publication;
 	
-	public NewsScreenSlideFragment(News news) {
+	public PublicationScreenSlideFragment(Publication publication) {
 		
-		this.news = news;
+		this.publication = publication;
 	}
 
 	@Override
@@ -35,18 +35,18 @@ public class NewsScreenSlideFragment extends Fragment {
 		TextView bodyTextView = (TextView) rootView.findViewById(R.id.body_news_textview);
 		ImageView mainImageView = (ImageView) rootView.findViewById(R.id.main_news_imageview);
         
-		titleTextView.setText(news.mTitle);
-        sponsorTextView.setText(news.getSponsor());
-        dateTextView.setText(news.mDate);
-        bodyTextView.setText(news.mBody);
-        mainImageView.setImageResource(news.mImage);
+		titleTextView.setText(publication.mTitle);
+        sponsorTextView.setText(publication.getSponsor());
+        dateTextView.setText(publication.mDate);
+        bodyTextView.setText(publication.mBody);
+        mainImageView.setImageResource(publication.mImage);
         mainImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
         Context context = v.getContext();
         Intent intent = new Intent(context, WebActivity.class);
-        intent.putExtra(WebActivity.URL, news.mUrlNews);
+        intent.putExtra(WebActivity.URL, publication.mUrlNews);
         context.startActivity(intent);
 
             }

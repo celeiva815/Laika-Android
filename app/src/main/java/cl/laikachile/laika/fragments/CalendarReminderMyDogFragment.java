@@ -20,6 +20,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 /**
@@ -109,6 +110,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                     mCalendarReminder.mDetail = detail;
                     mCalendarReminder.mDate = mDate;
                     mCalendarReminder.mTime = mTime;
+                    mCalendarReminder.mOwnerId = PrefsManager.getUserId(v.getContext());
 
                     mCalendarReminder.save();
 
@@ -117,8 +119,9 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
 
                 } else {
 
-                    CalendarReminder reminder = new CalendarReminder(CalendarReminder.ID++, Tag.TYPE_CALENDAR,
-                            mReminderCategory, title, detail, mDate, mTime, 1, mDog.mDogId);
+                    CalendarReminder reminder = new CalendarReminder(CalendarReminder.ID++,
+                            Tag.TYPE_CALENDAR, mReminderCategory, title, detail, mDate, mTime,
+                            PrefsManager.getUserId(v.getContext()), mDog.mDogId);
 
                     reminder.save();
                     String message = Do.getRString(v.getContext(), R.string.new_reminder_added);

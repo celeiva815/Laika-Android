@@ -18,6 +18,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 /**
@@ -70,7 +71,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(mIdLayout, container, false);
+        final View view = inflater.inflate(mIdLayout, container, false);
 
         mMondayButton = (Button) view.findViewById(R.id.monday_alarm_reminder_my_dog_button);
         mTuesdayButton = (Button) view.findViewById(R.id.tuesday_alarm_reminder_my_dog_button);
@@ -121,6 +122,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                     mAlarmReminder.mHasSaturday = mSaturday;
                     mAlarmReminder.mHasSunday = mSunday;
                     mAlarmReminder.mTime = mTime;
+                    mAlarmReminder.mOwnerId = PrefsManager.getUserId(v.getContext());
 
                     mAlarmReminder.save();
 
@@ -130,8 +132,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                 } else {
 
                     AlarmReminder reminder = new AlarmReminder(AlarmReminder.ID++, Tag.TYPE_ALARM,
-                            mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday, mTuesday, mWednesday,
-                            mThursday, mFriday, mSaturday, mSunday, mTime, 1, mDog.mDogId);
+                            mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday,
+                            mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
+                            PrefsManager.getUserId(v.getContext()), mDog.mDogId);
 
                     reminder.save();
 

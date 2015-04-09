@@ -4,6 +4,7 @@ import cl.laikachile.laika.activities.AdoptDogFormActivity;
 import cl.laikachile.laika.activities.AdoptDogFragmentActivity;
 import cl.laikachile.laika.models.AdoptDogForm;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,9 +24,9 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
 	public void onClick(View v) {
 
         //FIXME hacer el check de que toda la información este ingresada antes de postular.
-        int ownerId = 1; //FIXME sacar el id del dueño logueado
-        String region = mActivity.mZone.mRegion;
-        String city = mActivity.mZone.mCity;
+        int ownerId = PrefsManager.getUserId(v.getContext());
+        String region = mActivity.mLocation.mRegion;
+        String city = mActivity.mLocation.mCity;
         String homeType = (String) mActivity.mHomeSpinner.getSelectedItem();
 
         int familyCount = 0;

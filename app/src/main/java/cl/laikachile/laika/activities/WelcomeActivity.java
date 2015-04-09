@@ -3,22 +3,19 @@ package cl.laikachile.laika.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.SimpleFragment;
-import cl.laikachile.laika.listeners.GPlusSignInOnClickListener;
+import cl.laikachile.laika.listeners.ToLoginActivityOnCLickListener;
 import cl.laikachile.laika.listeners.ToMainActivityOnCLickListener;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Photo;
-import cl.laikachile.laika.models.Zone;
+import cl.laikachile.laika.models.Location;
 import cl.laikachile.laika.models.Owner;
-import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -64,15 +61,18 @@ public class WelcomeActivity extends Activity
 
     public void setActivityView(View view) {
 
-        ImageView gPlusImageView = (ImageView) view.findViewById(R.id.gplus_sign_in_imageview);
         ImageView mainImageView = (ImageView) view.findViewById(R.id.main_logo_welcome_imageview);
 
-        GPlusSignInOnClickListener gPlusListener = new GPlusSignInOnClickListener(this);
-        gPlusImageView.setOnClickListener(gPlusListener);
+        if (!PrefsManager.isUserLoggedIn(getApplicationContext())) {
 
-        ToMainActivityOnCLickListener listener = new ToMainActivityOnCLickListener(this);
-        mainImageView.setOnClickListener(listener);
+            ToLoginActivityOnCLickListener listener = new ToLoginActivityOnCLickListener(this);
+            mainImageView.setOnClickListener(listener);
 
+        } else {
+
+            ToMainActivityOnCLickListener listener = new ToMainActivityOnCLickListener(this);
+            mainImageView.setOnClickListener(listener);
+        }
     }
 
     @Override
@@ -145,15 +145,15 @@ public class WelcomeActivity extends Activity
 
             for (int i : nino) {
 
-                Photo photo = new Photo(Photo.ID++, "Hola", cachupin.mDogId, "", Do.now(), "Prueba",
+                Photo mPhoto = new Photo(Photo.ID++, "Hola", cachupin.mDogId, "", Do.now(), "Prueba",
                         i);
-                photo.save();
+                mPhoto.save();
             }
 
             for (int i : filipo) {
 
-                Photo photo = new Photo(Photo.ID++, "Hola", tony.mDogId, "", Do.now(), "Prueba", i);
-                photo.save();
+                Photo mPhoto = new Photo(Photo.ID++, "Hola", tony.mDogId, "", Do.now(), "Prueba", i);
+                mPhoto.save();
             } */
 
             tito.save();
@@ -173,7 +173,7 @@ public class WelcomeActivity extends Activity
             walk.save();
             medicineTwo.save();
 
-            Zone.generateAvailableZones(getApplicationContext());
+            Location.generateAvailableZones(getApplicationContext());
         }
     }
 }

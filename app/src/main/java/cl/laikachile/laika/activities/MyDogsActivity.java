@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -28,8 +29,10 @@ import cl.laikachile.laika.fragments.RemindersMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 
 public class MyDogsActivity extends ActionBarActivity {
 
@@ -76,7 +79,11 @@ public class MyDogsActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setHistoryFragment(mDog);
+
+        if (mChildFragment == null) {
+
+            setHistoryFragment(mDog);
+        }
     }
 
     @Override
@@ -90,7 +97,7 @@ public class MyDogsActivity extends ActionBarActivity {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             // Ensure that there's a camera activity to handle the intent
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                // Create the File where the photo should go
+                // Create the File where the mPhoto should go
                 File photoFile = null;
                 try {
 
@@ -160,10 +167,27 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 //Bitmap imageBitmap = setPicture();
                 //String imageName = getImageName(mDog.mDogId);
+                //FIXME agregar el nombre correcto del usuario
+                String ownerName = PrefsManager.getUserName(getApplicationContext());
+                int ownerId = PrefsManager.getUserId(getApplicationContext());
+                Photo photo = new Photo(Photo.ID++, ownerId, ownerName,
+                        mDog.mDogId,mCurrentPhotoPath, Do.now(), "foto de prueba",
+                        R.drawable.filipo1);
 
-                Photo photo = new Photo(Photo.ID++,"Tito", mDog.mDogId,mCurrentPhotoPath,Do.now(),
-                        "foto de prueba",R.drawable.filipo1);
                 photo.save();
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                if (mChildFragment != null) {
+                    transaction.detach(mChildFragment);
+                }
+
+                mChildFragment = new AlbumMyDogFragment(mDog);
+                transaction.add(R.id.container_my_dog_framelayout, mChildFragment);
+                transaction.commitAllowingStateLoss();
+
+                int color = getResources().getColor(R.color.semi_trans_black_background);
+                setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
 
             } else if ( resultCode == RESULT_CANCELED) {
 
@@ -173,6 +197,19 @@ public class MyDogsActivity extends ActionBarActivity {
                 Toast.makeText(this, "No se pudo tomar la fotografía", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void setFragment(Dog mDog, Fragment fragment) {
+
+        if (mChildFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        }
+
+        mChildFragment = fragment;
+        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        int color = getResources().getColor(R.color.semi_trans_black_background);
+        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
+
     }
 
     public void setHistoryFragment(Dog mDog) {
@@ -256,6 +293,7 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
     }
+
 
     public void setBackgrounds(int history, int reminders, int health, int owner, int album) {
 

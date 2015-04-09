@@ -4,23 +4,25 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-@Table(name = News.TABLE_NAME)
-public class News extends Model {
+@Table(name = Publication.TABLE_NAME)
+public class Publication extends Model {
 
 	public final static String TABLE_NAME = "news";
     public final static String COLUMN_NEWS_ID = "news_id";
     public final static String COLUMN_TITLE = "title";
-    public final static String COLUMN_SPONSOR = "sponsor";
+    public final static String COLUMN_SPONSOR_ID = "sponsor_id";
+    public final static String COLUMN_SPONSOR_NAME = "sponsor_name";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_BODY = "body";
     public final static String COLUMN_URL_NEWS = "url_news";
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public final static String COLUMN_IS_PAID = "is_paid";
 
 
     @Column(name = COLUMN_TITLE)
     public String mTitle;
 
-    @Column(name = COLUMN_SPONSOR)
+    @Column(name = COLUMN_SPONSOR_NAME)
     public String mSponsor;
 
     @Column(name = COLUMN_DATE)
@@ -40,10 +42,10 @@ public class News extends Model {
 
 
 
-	public News(){ }
+	public Publication(){ }
 
-    public News(String mTitle, String mSponsor, String mDate, String mBody, int mImage, int mNewsId,
-                String mUrlNews) {
+    public Publication(String mTitle, String mSponsor, String mDate, String mBody, int mImage, int mNewsId,
+                       String mUrlNews) {
 
         this.mTitle = mTitle;
         this.mSponsor = mSponsor;

@@ -110,11 +110,4 @@ public class User extends Model {
 
     public User() {	}
 
-    public static User getUser(int userId) {
-
-        String condition = COLUMN_USER_ID + DB._EQUALS_ + Integer.toString(userId);
-        return new Select().from(User.class).where(condition).executeSingle();
-
-    }
-
 }
