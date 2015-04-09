@@ -47,7 +47,12 @@ public class MyDogsActivity extends ActionBarActivity {
     public LinearLayout mOwnerLinearLayout;
     public LinearLayout mAlbumLinearLayout;
 
-    public Fragment mChildFragment;
+    public HistoryMyDogFragment mHistoryFragment;
+    public RemindersMyDogFragment mRemindersFragment;
+    public OwnerMyDogFragment mOwnerFragment;
+    public AlbumMyDogFragment mAlbumFragment;
+    public Fragment mCurrentFragment;
+
     public String mCurrentPhotoPath;
 
     @Override
@@ -80,7 +85,7 @@ public class MyDogsActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        if (mChildFragment == null) {
+        if (mCurrentFragment == null) {
 
             setHistoryFragment(mDog);
         }
@@ -161,9 +166,9 @@ public class MyDogsActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if ( requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 
-            if ( resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
 
                 //Bitmap imageBitmap = setPicture();
                 //String imageName = getImageName(mDog.mDogId);
@@ -171,25 +176,25 @@ public class MyDogsActivity extends ActionBarActivity {
                 String ownerName = PrefsManager.getUserName(getApplicationContext());
                 int ownerId = PrefsManager.getUserId(getApplicationContext());
                 Photo photo = new Photo(Photo.ID++, ownerId, ownerName,
-                        mDog.mDogId,mCurrentPhotoPath, Do.now(), "foto de prueba",
+                        mDog.mDogId, mCurrentPhotoPath, Do.now(), "foto de prueba",
                         R.drawable.filipo1);
 
                 photo.save();
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                if (mChildFragment != null) {
-                    transaction.detach(mChildFragment);
+                if (mCurrentFragment != null) {
+                    transaction.detach(mCurrentFragment);
                 }
 
-                mChildFragment = new AlbumMyDogFragment(mDog);
-                transaction.add(R.id.container_my_dog_framelayout, mChildFragment);
+                mCurrentFragment = new AlbumMyDogFragment(mDog);
+                transaction.add(R.id.container_my_dog_framelayout, mCurrentFragment);
                 transaction.commitAllowingStateLoss();
 
                 int color = getResources().getColor(R.color.semi_trans_black_background);
                 setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
 
-            } else if ( resultCode == RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED) {
 
                 Toast.makeText(this, "La fotografía fue cancelada", Toast.LENGTH_SHORT).show();
             } else {
@@ -199,27 +204,32 @@ public class MyDogsActivity extends ActionBarActivity {
         }
     }
 
-    public void setFragment(Dog mDog, Fragment fragment) {
-
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
-        }
-
-        mChildFragment = fragment;
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
-
-    }
-
     public void setHistoryFragment(Dog mDog) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        if (mHistoryFragment == null) {
+
+            mHistoryFragment = new HistoryMyDogFragment(mDog);
+
+            if (mCurrentFragment != null) {
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+            }
+            mCurrentFragment = mHistoryFragment;
+
+            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                    mCurrentFragment).commit();
+
+            mCurrentFragment = mHistoryFragment;
+
+        } else {
+
+            if (mHistoryFragment.isDetached()) {
+
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+                mCurrentFragment = mHistoryFragment;
+                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
+            }
         }
 
-        mChildFragment = new HistoryMyDogFragment(mDog);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
@@ -227,12 +237,30 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setReminderFragment(Dog mDog) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        if (mRemindersFragment == null) {
+
+            mRemindersFragment = new RemindersMyDogFragment(mDog);
+
+            if (mCurrentFragment != null) {
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+            }
+            mCurrentFragment = mRemindersFragment;
+
+            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                    mCurrentFragment).commit();
+
+            mCurrentFragment = mRemindersFragment;
+
+        } else {
+
+            if (mRemindersFragment.isDetached()) {
+
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+                mCurrentFragment = mRemindersFragment;
+                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
+            }
         }
 
-        mChildFragment = new RemindersMyDogFragment(mDog);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
@@ -240,12 +268,17 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setReminderFragment(AlarmReminder alarmReminder) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        mRemindersFragment = new RemindersMyDogFragment(mDog, alarmReminder);
+
+        if (mCurrentFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
         }
 
-        mChildFragment = new RemindersMyDogFragment(mDog, alarmReminder);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        mCurrentFragment = mRemindersFragment;
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                mCurrentFragment).commit();
+
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
@@ -253,12 +286,20 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setReminderFragment(CalendarReminder calendarReminder) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        mRemindersFragment = new RemindersMyDogFragment(mDog, calendarReminder);
+
+        if (mCurrentFragment != null) {
+            getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
         }
 
-        mChildFragment = new RemindersMyDogFragment(mDog, calendarReminder);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
+        mCurrentFragment = mRemindersFragment;
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                mCurrentFragment).commit();
+
+        mCurrentFragment = mRemindersFragment;
+
+
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
@@ -271,12 +312,31 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setOwnerFragment(Dog mDog) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        if (mOwnerFragment == null) {
+
+            mOwnerFragment = new OwnerMyDogFragment(mDog);
+
+            if (mCurrentFragment != null) {
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+            }
+
+            mCurrentFragment = mOwnerFragment;
+
+            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                    mCurrentFragment).commit();
+
+            mCurrentFragment = mOwnerFragment;
+
+        } else {
+
+            if (mOwnerFragment.isDetached()) {
+
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+                mCurrentFragment = mOwnerFragment;
+                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
+            }
         }
 
-        mChildFragment = new OwnerMyDogFragment(mDog);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color, Color.TRANSPARENT);
 
@@ -284,12 +344,31 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public void setAlbumFragment(Dog mDog) {
 
-        if (mChildFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mChildFragment).commit();
+        if (mAlbumFragment == null) {
+
+            mAlbumFragment = new AlbumMyDogFragment(mDog);
+
+            if (mCurrentFragment != null) {
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+            }
+
+            mCurrentFragment = mAlbumFragment;
+
+            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
+                    mCurrentFragment).commit();
+
+            mCurrentFragment = mAlbumFragment;
+
+        } else {
+
+            if (mAlbumFragment.isDetached()) {
+
+                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
+                mCurrentFragment = mAlbumFragment;
+                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
+            }
         }
 
-        mChildFragment = new AlbumMyDogFragment(mDog);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout, mChildFragment).commit();
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
     }
@@ -329,7 +408,7 @@ public class MyDogsActivity extends ActionBarActivity {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/640, photoH/480);
+        int scaleFactor = Math.min(photoW / 640, photoH / 480);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;

@@ -21,6 +21,7 @@ public class PhotoScreenSlideFragment extends Fragment {
 	private int mIdLayout = R.layout.photo_screen_slider_fragment;
 	public Photo mPhoto;
 	public PhotosFragmentActivity mActivity;
+    public boolean mIsFullScreen;
 
     public RelativeLayout mFullLayout;
     public LinearLayout mInformationLayout;
@@ -33,6 +34,7 @@ public class PhotoScreenSlideFragment extends Fragment {
 
         this.mActivity = mActivity;
 		this.mPhoto = mPhoto;
+        this.mIsFullScreen = mActivity.mIsFullScreen;
 	}
 
 	@Override
@@ -51,46 +53,13 @@ public class PhotoScreenSlideFragment extends Fragment {
 		mDetailTextView.setText(mPhoto.mDetail);
         mOwnerTextView.setText(mPhoto.mOwnerName);
         mDateTextView.setText(mPhoto.mDate);
-        mMainImageView.setImageBitmap(mPhoto.getPicture());
-
-        if (mActivity.mIsFullScreen) {
-            showFullScreen();
-
-        } else {
-            showInformationScreen();
-        }
-
-        mMainImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!mActivity.mIsFullScreen) {
-
-                    showFullScreen();
-                    mActivity.mIsFullScreen = true;
-
-                } else {
-
-                    showInformationScreen();
-                    mActivity.mIsFullScreen = false;
-                }
-            }
-        });
+        mMainImageView.setImageBitmap(mPhoto.getPicture(640));
 
         return view;
     }
 
     public void showFullScreen() {
 
-        mInformationLayout.setVisibility(View.GONE);
-        mFullLayout.setBackgroundColor(Color.BLACK);
-
-    }
-
-    public void showInformationScreen() {
-
-        mInformationLayout.setVisibility(View.VISIBLE);
-        mFullLayout.setBackgroundColor(Color.WHITE);
 
     }
 }

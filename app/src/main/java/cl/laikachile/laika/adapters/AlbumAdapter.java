@@ -66,7 +66,7 @@ public class AlbumAdapter extends BaseAdapter {
 
         if (!Do.isNullOrEmpty(photo.mUrlImage)) {
 
-            imageView.setImageBitmap(photo.getPicture());
+            imageView.setImageBitmap(photo.getPicture(100));
 
         } else {
             imageView.setImageResource(photo.mResource);

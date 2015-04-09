@@ -61,7 +61,6 @@ public class AlbumMyDogFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-
                 Intent intent = new Intent(v.getContext(), PhotosFragmentActivity.class);
                 intent.putExtra(PhotosFragmentActivity.KEY_CURRENT_ITEM, position);
                 intent.putExtra(PhotosFragmentActivity.KEY_DOG_ID, mDog.mDogId);

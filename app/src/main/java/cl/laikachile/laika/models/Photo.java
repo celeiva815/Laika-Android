@@ -1,7 +1,11 @@
 package cl.laikachile.laika.models;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -26,6 +30,7 @@ public class Photo extends Model {
     public final static String COLUMN_OWNER_ID = "owner_id"; // TODO Agregar este campo
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_DOG_ID = "dog_id";
+    public final static String COLUMN_URL_THUMBNAIL = "url_thumbnail";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_DETAIL = "detail";
@@ -43,6 +48,9 @@ public class Photo extends Model {
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
 
+    @Column(name = COLUMN_URL_THUMBNAIL)
+    public String mUrlThumbnail;
+
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
 
@@ -58,7 +66,13 @@ public class Photo extends Model {
 
     public Photo() { }
 
-    public Bitmap getPicture() {
+    public Bitmap getThumbnail(Context context) {
+
+        return null;
+    }
+
+
+    public Bitmap getPicture(int imageMaxSize) {
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -67,13 +81,15 @@ public class Photo extends Model {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/800, photoH/600);
+        int scale = 1;
+        if (photoW > imageMaxSize || photoH > imageMaxSize) {
+            scale = (int)Math.pow(2, (int) Math.ceil(Math.log(imageMaxSize /
+                    (double) Math.max(photoH, photoW)) / Math.log(0.5)));
+        }
 
         // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
+        bmOptions = new BitmapFactory.Options();
+        bmOptions.inSampleSize = scale;
         Bitmap bitmap = BitmapFactory.decodeFile(mUrlImage, bmOptions);
 
         return bitmap;

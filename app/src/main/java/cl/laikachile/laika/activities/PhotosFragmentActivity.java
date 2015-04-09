@@ -30,7 +30,7 @@ public class PhotosFragmentActivity extends FragmentActivity{
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    public ViewPager mPager;
     private int mDogId;
     public List<Photo> mPhotos;
     public boolean mIsFullScreen;
@@ -38,22 +38,37 @@ public class PhotosFragmentActivity extends FragmentActivity{
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter mPagerAdapter;
+    public PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int currentPosition = getIntent().getIntExtra(KEY_CURRENT_ITEM, 0);
         mDogId = getIntent().getIntExtra(KEY_DOG_ID, 0);
         mIsFullScreen = false;
+
         setContentView(mIdLayout);
         setPhotoList();
-        int currentPosition = getIntent().getIntExtra(KEY_CURRENT_ITEM, 0);
+
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(currentPosition);
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            public void onPageSelected(int position) {
+
+            }
+        });
     }
 
     private void setPhotoList() {
@@ -101,12 +116,7 @@ public class PhotosFragmentActivity extends FragmentActivity{
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
          }*/ 
     }
-       
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
