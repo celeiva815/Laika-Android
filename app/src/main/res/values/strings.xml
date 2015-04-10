@@ -118,6 +118,7 @@
 
     <!-- NewDogRegisterActivity -->
     <string name="new_dog_register_activity_name">Registro de Mascotas</string>
+    <string name="edit_dog_register_activity_name">Edita tu Mascota</string>
     <string name="register_new_dog_register">Registro</string>
     <string name="name_new_dog_register">¿Cuál es el nombre de tu perro?</string>
     <string name="size_new_dog_register">¿De qué tamaño es?</string>

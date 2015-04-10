@@ -29,7 +29,7 @@ public class AddDogOnClickListener implements OnClickListener {
 		String size = mActivity.mSizeSpinner.getSelectedItem().toString();
         String personality = mActivity.mPersonalitySpinner.getSelectedItem().toString();
         boolean sterilized = mActivity.mSterilized;
-        String chipCode = mActivity.mChipCode;
+        String chipCode = mActivity.mChipEditText.getText().toString();
         int gender = mActivity.mGender;
         int status = Tag.PROCESS_OWNED;
         int userId = PrefsManager.getUserId(v.getContext());

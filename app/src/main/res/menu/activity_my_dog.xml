@@ -1,12 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="cl.laikachile.laika.ActivityMain">
 
     <item
         android:id="@+id/camera_menu_button"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/action_bar_camera"/>
+        android:icon="@drawable/action_bar_camera"
+        android:orderInCategory="99"
+        app:showAsAction="always" />
 
+    <item
+        android:id="@+id/dog_settings"
+        android:orderInCategory="100"
+        android:title="Editar Perro"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -9,11 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.fragments.PlaceHolderFragment;
 import cl.laikachile.laika.listeners.AddDogOnClickListener;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.utils.Do;
@@ -21,6 +23,7 @@ import cl.laikachile.laika.utils.Tag;
 
 public class NewDogRegisterActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
+    public static final String KEY_DOG_ID = "dog_id";
     protected int mIdLayout = R.layout.lk_new_dog_register_activity;
 
     public EditText mNameEditText;
@@ -30,6 +33,9 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
     public Spinner mPersonalitySpinner;
     public EditText mChipEditText;
     public Button mAddButton;
+    public RadioGroup mGenderRadioGroup ;
+    public RadioGroup mSterilizedRadioGroup;
+    public RadioGroup mChipRadioGroup;
     public int mGender;
     public boolean mSterilized;
     public boolean mChip;
@@ -47,11 +53,15 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
     public void setActivityView(View view) {
 
         mNameEditText = (EditText) view.findViewById(R.id.name_new_dog_register_edittext);
+        mGenderRadioGroup =(RadioGroup) view.findViewById(R.id.gender_new_dog_register_radiogroup);
         mBirthButton = (Button) view.findViewById(R.id.birth_new_dog_register_button);
         mSizeSpinner = (Spinner) view.findViewById(R.id.size_new_dog_register_spinner);
         mBreedSpinner = (Spinner) view.findViewById(R.id.type_new_dog_register_spinner);
-        mAddButton = (Button) view.findViewById(R.id.add_dog_new_dog_register_button);
         mPersonalitySpinner = (Spinner) view.findViewById(R.id.personality_new_dog_register_spinner);
+        mSterilizedRadioGroup =(RadioGroup) view.findViewById(R.id.sterilized_new_dog_register_radiogroup);
+        mChipEditText = (EditText) view.findViewById(R.id.chip_code_new_dog_register_edittext);
+        mChipRadioGroup =(RadioGroup) view.findViewById(R.id.chip_new_dog_register_radiogroup);
+        mAddButton = (Button) view.findViewById(R.id.add_dog_new_dog_register_button);
 
         ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getSizeList());
         ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getBreedList(mSizeSpinner));
@@ -68,7 +78,7 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
             @Override
             public void onClick(View v) {
 
-                datePickerDialog.setYearRange(1990, 2028);
+                datePickerDialog.setYearRange(1990, calendar.get(Calendar.YEAR));
                 datePickerDialog.setCloseOnSingleTapDay(false);
                 datePickerDialog.show(getSupportFragmentManager(), Tag.DATE_PICKER);
             }
@@ -183,7 +193,6 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
 
                 break;
         }
-
     }
 
     public void setChipRadioButtonClicked(View view) {
@@ -193,17 +202,18 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
 
         // Check which radio button was clicked
         switch (view.getId()) {
-            case R.id.male_new_dog_register_radiobutton:
+            case R.id.chip_new_dog_register_radiobutton:
                 if (checked) {
                     mChip = true;
                     mChipEditText.setVisibility(View.VISIBLE);
                 }
 
                 break;
-            case R.id.female_new_dog_register_radiobutton:
+            case R.id.not_chip_new_dog_register_radiobutton:
                 if (checked) {
                     mChip = false;
                     mChipEditText.setVisibility(View.GONE);
+                    mChipEditText.setText("");
                 }
 
                 break;

@@ -111,6 +111,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.EditDogRegisterActivity"
+            android:exported="false"
+            android:label="@string/edit_dog_register_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activities.MyDogsActivity"
             android:exported="false"
             android:label="@string/my_dog_activity_name"

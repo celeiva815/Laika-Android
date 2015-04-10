@@ -81,11 +81,7 @@ public class Photo extends Model {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scale = 1;
-        if (photoW > imageMaxSize || photoH > imageMaxSize) {
-            scale = (int)Math.pow(2, (int) Math.ceil(Math.log(imageMaxSize /
-                    (double) Math.max(photoH, photoW)) / Math.log(0.5)));
-        }
+        int scale = Math.min(photoW/imageMaxSize, photoH/imageMaxSize);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions = new BitmapFactory.Options();

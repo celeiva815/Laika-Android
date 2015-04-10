@@ -97,32 +97,43 @@ public class MyDogsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.camera_menu_button) {
 
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // Ensure that there's a camera activity to handle the intent
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                // Create the File where the mPhoto should go
-                File photoFile = null;
-                try {
+        switch (id) {
 
-                    photoFile = createImageFile();
+            case R.id.camera_menu_button:
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the mPhoto should go
+                    File photoFile = null;
+                    try {
 
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                    Do.showToast("Problem creating the picture", getApplicationContext());
+                        photoFile = createImageFile();
+
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                        Do.showToast("Problem creating the picture", getApplicationContext());
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile));
+                        startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                    }
                 }
-                // Continue only if the File was successfully created
-                if (photoFile != null) {
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                            Uri.fromFile(photoFile));
-                    startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-                }
-            }
 
+                return true;
 
-            return true;
+            case R.id.dog_settings:
+
+                Intent intent = new Intent(getApplicationContext(), EditDogRegisterActivity.class);
+                intent.putExtra(EditDogRegisterActivity.KEY_DOG_ID, mDog.mDogId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
