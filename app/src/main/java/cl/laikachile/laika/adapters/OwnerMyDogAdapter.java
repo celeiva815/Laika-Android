@@ -1,5 +1,6 @@
 package cl.laikachile.laika.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.listeners.OwnerOptionsDialogOnClickListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.utils.Tag;
@@ -23,13 +25,15 @@ public class OwnerMyDogAdapter extends ArrayAdapter<Owner> {
     private Context mContext;
     private int mIdLayout;
     private List<Owner> mOwners;
+    private Dog mDog;
 
-    public OwnerMyDogAdapter(Context context, int resource, List<Owner> objects) {
+    public OwnerMyDogAdapter(Context context, int resource, List<Owner> objects, Dog dog) {
         super(context, resource, objects);
 
         mIdLayout = resource;
         mContext = context;
         mOwners = objects;
+        mDog = dog;
     }
 
     @Override
@@ -69,6 +73,9 @@ public class OwnerMyDogAdapter extends ArrayAdapter<Owner> {
 
                 break;
         }
+
+        view.setOnClickListener(new OwnerOptionsDialogOnClickListener(mDog, owner));
+
 
         return view;
     }

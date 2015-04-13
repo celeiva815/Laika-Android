@@ -2,20 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cl.laikachile.laika" >
 
-    <!-- [AI] [G+] So that we can get the account name -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
-    <!-- [AI] [G+] Used to request data from the Google+ APIs in the SignInActivity -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- [AI] [G+] Required if we need to invalidate access tokens -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
-    <!-- [AI] [CAM] Requerido para escribir sobre la tarjeta sd -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature
         android:name="android.hardware.camera"

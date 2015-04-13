@@ -24,22 +24,21 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.network.utils.ResponseHandler;
+import cl.laikachile.laika.responses.LoginResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
-public class LoginActivity extends ActionBarActivity
-                           implements Response.ErrorListener,
-                                      Response.Listener<JSONObject> {
+public class LoginActivity extends ActionBarActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String API_EMAIL = "email";
     public static final String API_PASSWORD = "password";
 
     // Ui views
-    private EditText mEmailEditText;
-    private EditText mPasswordEditText;
-    private Button mLoginButton;
-    private ProgressBar mLoginProgressBar;
+    public EditText mEmailEditText;
+    public EditText mPasswordEditText;
+    public Button mLoginButton;
+    public ProgressBar mLoginProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class LoginActivity extends ActionBarActivity
     }
 
 
-    private void enableViews(boolean enable) {
+    public void enableViews(boolean enable) {
         mEmailEditText.setEnabled(enable);
         mPasswordEditText.setEnabled(enable);
         mLoginButton.setEnabled(enable);
@@ -121,27 +120,13 @@ public class LoginActivity extends ActionBarActivity
         params.put(API_PASSWORD, password);
 
         JSONObject jsonParams = RequestManager.getParams(params);
+        LoginResponse response = new LoginResponse(this);
 
         Request loginRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
-                RequestManager.METHOD_POST, this, this,
+                RequestManager.METHOD_POST, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(loginRequest, TAG);
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-        mLoginProgressBar.setVisibility(View.GONE);
-        ResponseHandler.successLogin(this, response, getApplicationContext());
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-        ResponseHandler.error(error, getApplicationContext());
-        mLoginProgressBar.setVisibility(View.GONE);
-        enableViews(true);
     }
 }

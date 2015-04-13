@@ -19,6 +19,7 @@
     <string name="email_address">Correo</string>
     <string name="error_empty_search_query">You didn\'t enter the search field</string>
     <string name="not_valid_email_error">Correo Inválido</string>
+    <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
     <string name="field_not_empty_error">Este campo no puede estar vacío</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
     <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
@@ -153,7 +154,7 @@
     <string name="album_my_dog">Álbum</string>
     <string name="alimentation_my_dog">Alimentación</string>
     <string name="food_my_dog">Comida</string>
-    <string name="owners_my_dog">Dueños</string>
+    <string name="owners_my_dog">Responsables</string>
     <string name="walk_my_dog">Paseos</string>
     <string name="health_my_dog">Salud</string>
     <string name="history_my_dog">Historial</string>
@@ -190,15 +191,15 @@
     <string name="weekend_date">fines de semana</string>
 
     <!-- OwnersMyDog-->
-    <string name="my_dog_owners_activity_name">Dueños</string>
-    <string name="add_owners_my_dog">Añadir dueño</string>
-    <string name="email_add_owners_my_dog">Ingrese el correo electrónico del dueño:</string>
-    <string name="email_hint_owners_my_dog">Ejemplo: dueño@laika.com</string>
+    <string name="my_dog_owners_activity_name">Responsables</string>
+    <string name="add_owners_my_dog">Añadir responsable</string>
+    <string name="email_add_owners_my_dog">Ingrese el correo electrónico del responsable:</string>
+    <string name="email_hint_owners_my_dog">Ejemplo: responsable@laika.com</string>
     <string name="sent_email_owners_my_dog">Se ha añadido el usuario:</string>
-    <string name="main_owner_my_dog">Dueño Principal</string>
+    <string name="main_owner_my_dog">Principal Responsable</string>
     <string name="name_owner_my_dog">Cristóbal Leiva Sierra</string>
     <string name="age_owner_my_dog">25 años</string>
-    <string name="email_owner_my_dog">dueño@laika.com</string>
+    <string name="email_owner_my_dog">responsable@laika.com</string>
     <string name="phone_owner_my_dog">+56 9 96195432</string>
     <string name="location_owner_my_dog">Los Vilos, Chile</string>
 
@@ -284,6 +285,21 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="photos_activity_name">Fotos</string>
+
+    <!-- OwnerOptions -->
+    <string name="choose_an_option">Elije una opción...</string>
+    <string name="view_profile">Ver perfil</string>
+    <string name="edit_my_profile">Editar mi perfil</string>
+    <string name="view_my_profile">Ver mi perfil</string>
+    <string name="delete_owner">Eliminar responsable</string>
+    <string name="leave_dog">Dejar de ser responsable</string>
+    <string name="call_owner">Llamar a</string>
+    <string name="send_email">Enviar correo</string>
+    <string name="do_you_want">¿Quieres que</string>
+    <string name="leave_responsible_of">deje de ser responsable de</string>
+    <string name="leave_responsible_question">¿Quieres dejar de ser responsable de</string>
+    <string name="question_mark">\?</string>
+
 
 
 </resources>

@@ -38,10 +38,10 @@ public class OwnerMyDogFragment extends Fragment {
 
         ListView ownerListView = (ListView) view.findViewById(R.id.owner_my_dog_listview);
         mOwnerAdapter = new OwnerMyDogAdapter(view.getContext(), R.layout.lk_owner_my_dog_row,
-                getOwners(view.getContext()));
+                getOwners(view.getContext()), mDog);
 
         ownerListView.setAdapter(mOwnerAdapter);
-
+        ownerListView.setItemsCanFocus(true);
 
         return view;
     }

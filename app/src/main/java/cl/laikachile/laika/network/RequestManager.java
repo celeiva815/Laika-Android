@@ -80,7 +80,6 @@ public class RequestManager {
                 headers.put("Content-Type", "application/json");
                 headers.put(ACCESS_TOKEN, token);
                 return headers;
-
             }
         };
     }

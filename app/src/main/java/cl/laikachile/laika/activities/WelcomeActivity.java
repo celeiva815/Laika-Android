@@ -90,7 +90,7 @@ public class WelcomeActivity extends Activity
                     "Ñuñoa", "Santiago", "Chile");
 
             Owner nacho = new Owner(2, "NachoBiker", "Ignacio", "Valentín", "Gómez", "Muñoz",
-                    "15-02-1990", 1, "ignacio.gomuz@gmail.com", "+56 9 96195432", "Salvador", "2111", "1702",
+                    "15-02-1990", 1, "ignacio.gomuz@gmail.com", "+56 9 92827933", "Salvador", "2111", "1702",
                     "Ñuñoa", "Santiago", "Chile");
 
             Owner cami = new Owner(3, "cami_pizza", "Camila", "Andrea", "Ávalos", "Berkhoff",
