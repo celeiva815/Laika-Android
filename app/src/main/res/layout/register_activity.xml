@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_background"
+    android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#AA000000"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:gravity="center"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/name_surname_question"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:id="@+id/name_register_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_trans_black_background"
+        android:hint="@string/name_and_surname"
+        android:minHeight="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/dark_white_font"
+        android:textColorHint="@color/darker_white_font"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/email_question"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:id="@+id/email_register_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_trans_black_background"
+        android:hint="@string/user_log_in"
+        android:minHeight="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/dark_white_font"
+        android:textColorHint="@color/darker_white_font"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:layout_marginBottom="20dp"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/add_a_password_question"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:id="@+id/password_register_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background"
+        android:hint="@string/password_log_in"
+        android:minHeight="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/dark_white_font"
+        android:textColorHint="@color/darker_white_font"
+        android:padding="5dp"
+        android:inputType="textPassword"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/birthdate_question"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/example_date_reminder"
+        android:id="@+id/birthdate_register_button"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textSize="@dimen/alarm_reminder_my_dog"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/dark_white_font"
+        android:padding="0dp"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/submit_register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/laika_button"
+        android:text="@string/action_sign_in_short"
+        android:onClick="login"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_progressbar"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:indeterminate="false" />
+
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/darkest_trans_black_background">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_with_social_networks"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

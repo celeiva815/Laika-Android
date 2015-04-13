@@ -65,6 +65,14 @@
 
     <!-- Laika -->
 
+    <!-- RegisterActivity -->
+    <string name="name_surname_question">¿Cuál es tu nombre y tu apellido?</string>
+    <string name="name_and_surname">Nombre y Apellido</string>
+    <string name="email_question">¿Cuál es tu correo electrónico?</string>
+    <string name="add_a_password_question">Agrega una contraseña</string>
+    <string name="birthdate_question">¿Cuando estás de cumpleaños?</string>
+    <string name="sign_up_with_social_networks">o ingresa con tus redes sociales</string>
+
     <!-- Main -->
     <string name="main_activity_name">Laika</string>
     <string name="adopt_me_main">Adóptame</string>
@@ -147,7 +155,6 @@
     <string name="personality_give_in_adoption">Personalidad</string>
     <string name="story_give_in_adoption">Escribe su historia en 300 caracteres</string>
     <string name="publish_give_in_adoption">Publicar</string>
-
 
     <!-- MyDogActivity -->
     <string name="my_dog_activity_name">Mis Mascotas</string>

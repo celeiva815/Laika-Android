@@ -39,7 +39,7 @@ public class RequestManager {
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
     public static final String ADDRESS_LOGIN = "log_in/";
-    public static final String ADDRESS_SIGN_UP = "sign_up/";
+    public static final String ADDRESS_REGISTER = "sign_up/";
 
     public static final int METHOD_GET = Request.Method.GET;
     public static final int METHOD_POST = Request.Method.POST;
