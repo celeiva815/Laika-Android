@@ -64,6 +64,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         int dogId = getIntent().getIntExtra(DOG_ID, 0);
         mDog = Dog.getSingleDog(dogId);
@@ -99,6 +100,10 @@ public class MyDogsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         switch (id) {
+
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
 
             case R.id.camera_menu_button:
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

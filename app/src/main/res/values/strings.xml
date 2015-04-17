@@ -85,9 +85,10 @@
 
     <!-- Menu -->
     <string name="menu_activity_name">Menú</string>
-    <string name="registered_pets_left_menu">Mascotas Registradas</string>
-    <string name="give_in_adoption_left_menu">Dar en Adopción</string>
     <string name="add_left_menu">Añadir nueva mascota</string>
+    <string name="profile_left_menu">Mi perfil</string>
+    <string name="postulated_pets_left_menu">Mis Postulaciones</string>
+    <string name="favourites_left_menu">Favoritos</string>
 
     <!-- AdoptDogActivity -->
     <string name="adopt_activity_name">Adopción</string>

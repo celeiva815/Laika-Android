@@ -184,24 +184,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MyDogOwnersActivity"
-            android:exported="false"
-            android:label="@string/my_dog_owners_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.MyDogRemindersActivity"
-            android:exported="false"
-            android:label="@string/my_dog_reminders_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activities.GiveInAdoptionActivity"
             android:exported="false"
             android:label="@string/give_in_adoption_activity_name"

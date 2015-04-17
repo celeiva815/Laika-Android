@@ -42,6 +42,7 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -89,16 +90,13 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.home_menu_button) {
-			
-			Intent homeIntent = new Intent(this, MainActivity.class);
-			homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
-		
-			return true;
-		}
+
+        if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
 		return super.onOptionsItemSelected(item);
+
 	}
 
 

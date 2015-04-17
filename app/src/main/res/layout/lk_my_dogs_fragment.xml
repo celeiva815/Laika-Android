@@ -16,7 +16,7 @@
 
         <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
             android:orientation="horizontal"
             android:id="@+id/dog_picture_my_dog_linearlayout"
             android:weightSum="5"
@@ -28,7 +28,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:id="@+id/history_my_dog_linearlayout">
+                android:id="@+id/history_my_dog_linearlayout"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -39,16 +40,6 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/pets2" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/history_my_dog"
-                    android:id="@+id/history_my_dog_textview"
-                    android:textSize="@dimen/menu_my_dog"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/light_black_font"
-                    android:textIsSelectable="false" />
             </LinearLayout>
 
             <LinearLayout
@@ -57,7 +48,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:id="@+id/reminders_my_dog_linearlayout">
+                android:id="@+id/reminders_my_dog_linearlayout"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -69,15 +61,6 @@
                     android:src="@drawable/circular159"
                     android:padding="7dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reminders_my_dog"
-                    android:id="@+id/reminder_my_dog_textview"
-                    android:textSize="@dimen/menu_my_dog"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/light_black_font" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,7 +69,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:id="@+id/health_my_dog_linearlayout">
+                android:id="@+id/health_my_dog_linearlayout"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -98,15 +82,6 @@
                     android:src="@drawable/cruz"
                     android:padding="7dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/health_my_dog"
-                    android:id="@+id/health_my_dog_textview"
-                    android:textSize="@dimen/menu_my_dog"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/light_black_font" />
             </LinearLayout>
 
             <LinearLayout
@@ -115,7 +90,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:id="@+id/owner_my_dog_linearlayout">
+                android:id="@+id/owner_my_dog_linearlayout"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -127,15 +103,6 @@
                     android:src="@drawable/owner"
                     android:padding="7dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/owners_my_dog"
-                    android:id="@+id/owner_my_dog_textview"
-                    android:textSize="@dimen/menu_my_dog"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/light_black_font" />
             </LinearLayout>
 
             <LinearLayout
@@ -144,7 +111,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:id="@+id/album_my_dog_linearlayout">
+                android:id="@+id/album_my_dog_linearlayout"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -156,15 +124,6 @@
                     android:src="@drawable/album"
                     android:padding="7dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/album_my_dog"
-                    android:id="@+id/album_my_dog_textview"
-                    android:textSize="@dimen/menu_my_dog"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/light_black_font" />
             </LinearLayout>
 
         </LinearLayout>

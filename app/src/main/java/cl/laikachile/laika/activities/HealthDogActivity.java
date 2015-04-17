@@ -13,7 +13,7 @@ import cl.laikachile.laika.models.Dog;
 
 public class HealthDogActivity extends BaseActivity {
 	
-	private int mIdLayout = R.layout.lk_my_dog_health_activity;
+	private int mIdLayout;
 	private Dog dog;
 	
 	 @Override

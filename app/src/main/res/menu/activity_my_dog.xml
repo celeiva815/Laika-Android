@@ -13,5 +13,5 @@
         android:id="@+id/dog_settings"
         android:orderInCategory="100"
         android:title="Editar Perro"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 </menu>

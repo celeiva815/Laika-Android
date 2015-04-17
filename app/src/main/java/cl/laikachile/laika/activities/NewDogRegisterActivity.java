@@ -3,7 +3,12 @@ package cl.laikachile.laika.activities;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,7 +26,7 @@ import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
-public class NewDogRegisterActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
+public class NewDogRegisterActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
 
     public static final String KEY_DOG_ID = "dog_id";
     protected int mIdLayout = R.layout.lk_new_dog_register_activity;
@@ -43,25 +48,53 @@ public class NewDogRegisterActivity extends BaseActivity implements DatePickerDi
     public String mDate;
 
     @Override
-    public void onStart() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(mIdLayout);
+        setActivityView();
 
-        createFragmentView(mIdLayout);
-        super.onStart();
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public void setActivityView(View view) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        mNameEditText = (EditText) view.findViewById(R.id.name_new_dog_register_edittext);
-        mGenderRadioGroup =(RadioGroup) view.findViewById(R.id.gender_new_dog_register_radiogroup);
-        mBirthButton = (Button) view.findViewById(R.id.birth_new_dog_register_button);
-        mSizeSpinner = (Spinner) view.findViewById(R.id.size_new_dog_register_spinner);
-        mBreedSpinner = (Spinner) view.findViewById(R.id.type_new_dog_register_spinner);
-        mPersonalitySpinner = (Spinner) view.findViewById(R.id.personality_new_dog_register_spinner);
-        mSterilizedRadioGroup =(RadioGroup) view.findViewById(R.id.sterilized_new_dog_register_radiogroup);
-        mChipEditText = (EditText) view.findViewById(R.id.chip_code_new_dog_register_edittext);
-        mChipRadioGroup =(RadioGroup) view.findViewById(R.id.chip_new_dog_register_radiogroup);
-        mAddButton = (Button) view.findViewById(R.id.add_dog_new_dog_register_button);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(MainActivity.class))
+            getMenuInflater().inflate(R.menu.activity_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setActivityView() {
+
+        mNameEditText = (EditText) findViewById(R.id.name_new_dog_register_edittext);
+        mGenderRadioGroup =(RadioGroup) findViewById(R.id.gender_new_dog_register_radiogroup);
+        mBirthButton = (Button) findViewById(R.id.birth_new_dog_register_button);
+        mSizeSpinner = (Spinner) findViewById(R.id.size_new_dog_register_spinner);
+        mBreedSpinner = (Spinner) findViewById(R.id.type_new_dog_register_spinner);
+        mPersonalitySpinner = (Spinner) findViewById(R.id.personality_new_dog_register_spinner);
+        mSterilizedRadioGroup =(RadioGroup) findViewById(R.id.sterilized_new_dog_register_radiogroup);
+        mChipEditText = (EditText) findViewById(R.id.chip_code_new_dog_register_edittext);
+        mChipRadioGroup =(RadioGroup) findViewById(R.id.chip_new_dog_register_radiogroup);
+        mAddButton = (Button) findViewById(R.id.add_dog_new_dog_register_button);
 
         ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getSizeList());
         ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getBreedList(mSizeSpinner));

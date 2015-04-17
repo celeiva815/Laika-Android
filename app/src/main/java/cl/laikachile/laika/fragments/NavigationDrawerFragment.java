@@ -107,10 +107,10 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Logged in menu
 
-        list.add(getString(R.string.registered_pets_left_menu));
         list.add(getString(R.string.add_left_menu));
-        list.add(getString(R.string.give_in_adoption_left_menu));
-        list.add(getString(R.string.action_settings));
+        list.add(getString(R.string.postulated_pets_left_menu));
+        list.add(getString(R.string.favourites_left_menu));
+        list.add(getString(R.string.profile_left_menu));
         list.add(getString(R.string.log_out));
 
         LeftMenuAdapter adapter = new LeftMenuAdapter(getActivity(), list);

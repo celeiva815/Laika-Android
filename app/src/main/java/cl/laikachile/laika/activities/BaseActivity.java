@@ -33,6 +33,7 @@ public class BaseActivity extends ActionBarActivity
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
 
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -60,15 +61,7 @@ public class BaseActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.home_menu_button) {
 
-            Intent homeIntent = new Intent(this, MainActivity.class);
-            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
-
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -85,12 +78,20 @@ public class BaseActivity extends ActionBarActivity
             //Logged in menu
             switch (position) {
                 case 0:
-                    Do.showToast("Por implementar", this.getApplicationContext());
+                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
                 case 1:
-                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Do.showToast("Por implementar", this.getApplicationContext());
+                    break;
+
+                case 2:
+                    Do.showToast("Por implementar", this.getApplicationContext());
+                    break;
+
+                case 3:
+                    Do.showToast("Por implementar", this.getApplicationContext());
                     break;
 
                 case 4:

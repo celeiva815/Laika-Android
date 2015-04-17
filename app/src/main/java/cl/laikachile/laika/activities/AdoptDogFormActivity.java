@@ -1,5 +1,10 @@
 package cl.laikachile.laika.activities;
 
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +19,7 @@ import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
 import cl.laikachile.laika.models.Location;
 import cl.laikachile.laika.utils.Tag;
 
-public class AdoptDogFormActivity extends BaseActivity {
+public class AdoptDogFormActivity extends ActionBarActivity {
 	
 	private int mIdLayout = R.layout.lk_adopt_dog_form_activity;
     public Spinner mSizeSpinner;
@@ -32,31 +37,58 @@ public class AdoptDogFormActivity extends BaseActivity {
     public boolean mPets;
 
     @Override
-		public void onStart() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(mIdLayout);
+        setActivityView();
 
-	    	createFragmentView(mIdLayout);
-			super.onStart();		
-		}
-	 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
-    public void setActivityView(View view) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(MainActivity.class))
+            getMenuInflater().inflate(R.menu.activity_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    public void setActivityView() {
         //Dog
-        mSizeSpinner = (Spinner) view.findViewById(R.id.size_dog_form_spinner);
+        mSizeSpinner = (Spinner) findViewById(R.id.size_dog_form_spinner);
         ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.dog_size_adopt));
         mSizeSpinner.setAdapter(sizeAdapter);
 
-        mPersonalitySpinner = (Spinner) view.findViewById(R.id.personality_dog_form_spinner);
+        mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
         ArrayAdapter<String> personalityAdapter = new ArrayAdapter<String>(
                 this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.personality_adopt));
         mPersonalitySpinner.setAdapter(personalityAdapter);
 
         //Owner
-        mRegionSpinner = (Spinner) view.findViewById(R.id.region_dog_form_spinner);
-        mCitySpinner = (Spinner) view.findViewById(R.id.city_dog_form_spinner);
+        mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
+        mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
         ArrayAdapter<String> regionAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.available_chilean_regions));
@@ -77,21 +109,21 @@ public class AdoptDogFormActivity extends BaseActivity {
             }
         });
 
-        mHomeSpinner = (Spinner) view.findViewById(R.id.space_dog_form_spinner);
+        mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
         ArrayAdapter<String> spaceAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.home_size_adopt));
         mHomeSpinner.setAdapter(spaceAdapter);
 
-        mPartnersEditText = (EditText) view.findViewById(R.id.partners_dog_form_edittext);
+        mPartnersEditText = (EditText) findViewById(R.id.partners_dog_form_edittext);
 
-        mFreeTimeSpinner = (Spinner) view.findViewById(R.id.free_time_dog_form_spinner);
+        mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
         ArrayAdapter<String> freeTimeAdapter = new ArrayAdapter<String>(
                 this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
                     this.getResources().getStringArray(R.array.free_time_adopt));
         mFreeTimeSpinner.setAdapter(freeTimeAdapter);
 
-        mSearchButton = (Button) view.findViewById(R.id.search_dog_form_button);
+        mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
 
         SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
         mSearchButton.setOnClickListener(listener);
@@ -189,9 +221,4 @@ public class AdoptDogFormActivity extends BaseActivity {
                 break;
         }
     }
-
-	 
-	 
-
-
 }

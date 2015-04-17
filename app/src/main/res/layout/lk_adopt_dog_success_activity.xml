@@ -52,7 +52,8 @@
             android:layout_alignBottom="@+id/picture_adopt_dog_success_imageview"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:id="@+id/congrats_adopt_dog_success_linearlayout">
 
             <TextView
             android:id="@+id/congrats_adopt_dog_success_textview"
@@ -72,10 +73,11 @@
             android:layout_height="wrap_content"
             android:text="@string/happy_news_adopt_dog_success"
             android:textColor="#fff"
-            android:textSize="20sp"
+            android:textSize="@dimen/medium_text"
             android:layout_below="@+id/congrats_adopt_dog_success_textview"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+                android:gravity="center" />
 
         </LinearLayout>
 

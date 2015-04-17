@@ -4,7 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Fonts -->
-
     <dimen name="menu_my_dog">8sp</dimen>
     <dimen name="medium_text">17sp</dimen>
     <dimen name="min_text">13sp</dimen>
@@ -14,4 +13,7 @@
     <dimen name="save_alarm_reminder_my_dog">20sp</dimen>
     <dimen name="biggest_text">22sp</dimen>
     <dimen name="small_text">15sp</dimen>
+
+    <!-- Menu -->
+    <dimen name="bar_height">1sp</dimen>
 </resources>

@@ -1,7 +1,12 @@
 package cl.laikachile.laika.activities;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,26 +18,60 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.EventsAdapter;
 import cl.laikachile.laika.models.Event;
 
-public class EventsActivity extends BaseActivity {
+public class EventsActivity extends ActionBarActivity {
 
     private int mIdLayout = R.layout.lk_events_activity;
     public List<Event> mEvents;
 
-    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(mIdLayout);
+        setActivityView();
+
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+
+        @Override
     public void onStart() {
 
-        createFragmentView(mIdLayout);
         super.onStart();
     }
 
-    @Override
-    public void setActivityView(View view) {
+    public void setActivityView() {
 
         mEvents = getEvents(getApplicationContext());
-        ListView eventsListView = (ListView) view.findViewById(R.id.events_listview);
+        ListView eventsListView = (ListView) findViewById(R.id.events_listview);
         EventsAdapter adapter = new EventsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mEvents);
         eventsListView.setAdapter(adapter);
         eventsListView.setItemsCanFocus(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(MainActivity.class))
+            getMenuInflater().inflate(R.menu.activity_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     private List<Event> getEvents(Context context) {

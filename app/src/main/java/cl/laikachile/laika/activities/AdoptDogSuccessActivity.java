@@ -1,9 +1,11 @@
 package cl.laikachile.laika.activities;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,9 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 	
 	private int mIdLayout = R.layout.lk_adopt_dog_success_activity;
 	private Dog dog;
+
+    public int xDelta;
+    public int yDelta;
 	
 	 @Override
 		public void onStart() {
@@ -33,6 +38,7 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 	 public void setActivityView(View view) {
 		 
 		 LinearLayout containerLinearLayout = (LinearLayout) view.findViewById(R.id.container_adopt_dog_success_linearlayout);
+         final LinearLayout congratsLinearLayout = (LinearLayout) view.findViewById(R.id.congrats_adopt_dog_success_linearlayout);
 		 TextView congratsTextView = (TextView) view.findViewById(R.id.congrats_adopt_dog_success_textview);
 		 TextView happyTextView = (TextView) view.findViewById(R.id.happy_news_adopt_dog_success_textview);
          TextView contactTextView = (TextView) view.findViewById(R.id.contact_news_adopt_dog_success_textview);
