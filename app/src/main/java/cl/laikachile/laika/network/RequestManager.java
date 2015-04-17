@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
 /**
@@ -76,10 +77,17 @@ public class RequestManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                headers.put(ACCESS_TOKEN, token);
-                return headers;
+                if (!Do.isNullOrEmpty(token)) {
+
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put(ACCESS_TOKEN, token);
+                    return headers;
+
+                } else {
+
+                    return super.getHeaders();
+                }
             }
         };
     }

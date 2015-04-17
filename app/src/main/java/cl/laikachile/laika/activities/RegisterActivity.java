@@ -1,6 +1,5 @@
 package cl.laikachile.laika.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -25,10 +24,11 @@ import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.RegisterResponse;
 import cl.laikachile.laika.utils.Do;
-import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 public class RegisterActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+
+    public int mIdLayout = R.layout.lk_register_activity;
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
     public static final String API_EMAIL = "email";
@@ -49,15 +49,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(mIdLayout);
         getSupportActionBar().hide();
-
-        if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
-
-            //FIXME ver qué información sincronizar al comienzo
-            Do.changeActivity(this, MainActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        }
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this,
@@ -159,7 +152,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         enableViews(false);
 
         Map<String, String> params = new HashMap<String, String>(2);
-        params.put(API_FULL_NAME, name);
+        //params.put(API_FULL_NAME, name);
         params.put(API_EMAIL, email);
         params.put(API_PASSWORD, password);
         params.put(API_PASSWORD_CONFIRMATION, password);
@@ -168,8 +161,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         RegisterResponse response = new RegisterResponse(this);
 
         Request registerRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_REGISTER,
-                RequestManager.METHOD_POST, response, response,
-                PrefsManager.getUserToken(getApplicationContext()));
+                RequestManager.METHOD_POST, response, response, null);
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(registerRequest, TAG);

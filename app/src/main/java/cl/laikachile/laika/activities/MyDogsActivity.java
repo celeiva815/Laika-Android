@@ -237,6 +237,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
                 mCurrentFragment = mHistoryFragment;
+                mHistoryFragment.mHistoryAdapter.notifyDataSetChanged();
                 getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
             }
         }
@@ -344,6 +345,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
                 mCurrentFragment = mOwnerFragment;
+                mOwnerFragment.mOwnerAdapter.notifyDataSetChanged();
                 getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
             }
         }
@@ -376,6 +378,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
                 mCurrentFragment = mAlbumFragment;
+                mAlbumFragment.mAlbumAdapter.notifyDataSetChanged();
                 getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
             }
         }

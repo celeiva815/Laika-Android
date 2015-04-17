@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/name_owner_my_dog_textview"
             android:textColor="@color/dark_white_font"
-            android:textSize="@dimen/title_history_my_dog"
+            android:textSize="@dimen/medium_text"
             android:text="@string/name_owner_my_dog"
             android:paddingBottom="5dp"
             android:singleLine="true" />
@@ -44,7 +44,7 @@
             android:text="@string/email_owner_my_dog"
             android:id="@+id/email_owner_my_dog_textview"
             android:textColor="@color/dark_white_font"
-            android:textSize="@dimen/detail_history_my_dog"
+            android:textSize="@dimen/min_text"
             android:paddingBottom="3dp" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:text="@string/phone_owner_my_dog"
             android:id="@+id/phone_owner_my_dog_textview"
             android:textColor="@color/dark_white_font"
-            android:textSize="@dimen/detail_history_my_dog"
+            android:textSize="@dimen/min_text"
             android:paddingBottom="3dp" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:text="@string/main_owner_my_dog"
             android:id="@+id/role_owner_my_dog_textview"
             android:textColor="@color/dark_white_font"
-            android:textSize="@dimen/detail_history_my_dog"
+            android:textSize="@dimen/min_text"
             android:paddingBottom="3dp" />
 
     </LinearLayout>

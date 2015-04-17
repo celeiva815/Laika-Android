@@ -2,6 +2,7 @@ package cl.laikachile.laika.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 
 public class AdoptDogSuccessActivity extends BaseActivity {
 	
@@ -17,14 +19,14 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 	
 	 @Override
 		public void onStart() {
-		 
+
+            //FIXME aqui hay que enviar la información del match.
 		 	Bundle b = getIntent().getExtras();
             int dogId = b.getInt("DogId");
 			this.dog = Dog.getSingleDog(dogId);
 
 	    	createFragmentView(mIdLayout);
-	    	Do.showToast(getMailMessage(), getApplicationContext(), Toast.LENGTH_LONG);
-			super.onStart();		
+			super.onStart();
 		}
 	 
 	 @Override
@@ -33,26 +35,32 @@ public class AdoptDogSuccessActivity extends BaseActivity {
 		 LinearLayout containerLinearLayout = (LinearLayout) view.findViewById(R.id.container_adopt_dog_success_linearlayout);
 		 TextView congratsTextView = (TextView) view.findViewById(R.id.congrats_adopt_dog_success_textview);
 		 TextView happyTextView = (TextView) view.findViewById(R.id.happy_news_adopt_dog_success_textview);
+         TextView contactTextView = (TextView) view.findViewById(R.id.contact_news_adopt_dog_success_textview);
+         TextView matchTextView = (TextView) view.findViewById(R.id.match_adopt_dog_success_textview);
+         ImageView imageTextView = (ImageView) view.findViewById(R.id.picture_adopt_dog_success_imageview);
 		 
-		 containerLinearLayout.setBackgroundResource(this.dog.mImage);
 		 congratsTextView.setText(getCongratsMessage());
 		 happyTextView.setText(getHappyNewsMessage());
+         contactTextView.setText(getContactMessage());
+         matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME que sea el que viene desde el servidor.
+         imageTextView.setImageResource(this.dog.mImage);
 	 }
-	 
-	 private String getMailMessage() {
+
+    private String getContactMessage() {
+
+        String first = Do.getRString(getApplicationContext(), R.string.contact_news_adopt_dog_success_first);
+        String foundation = "Fundación Stuka"; //FIXME agregar la fundación
+        String second = Do.getRString(getApplicationContext(), R.string.contact_news_adopt_dog_success_second);
+
+        return first + " " +  foundation + " " + second;
+    }
+
+    private String getCongratsMessage() {
 		 
-		 return getResources().getString(R.string.mail_adopt_dog_success);
+		 String name = PrefsManager.getUserName(getApplicationContext());
+		 String congrats = Do.getRString(getApplicationContext(), R.string.congrats_adopt_dog_success);
 		 
-	 }
-	 
-	 private String getCongratsMessage() {
-		 
-		 //TODO agregar el usuario despu�s con SharedPreferences
-		 
-		 String name = " Ignacio"; //FIXME que sea el nombre del usuario loggeado
-		 String congrats = getResources().getString(R.string.congrats_adopt_dog_success);
-		 
-		 return congrats + name +"!";
+		 return congrats + " " + name + "!";
 	 }
 	 
 	 private String getHappyNewsMessage() {

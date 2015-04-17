@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.listeners.ToActivityOnCLickListener;
 import cl.laikachile.laika.listeners.ToDogFormOnCLickListener;
 import cl.laikachile.laika.listeners.ToEventsOnCLickListener;
 import cl.laikachile.laika.listeners.ToMyDogOnCLickListener;
@@ -60,19 +61,12 @@ public class MainActivity extends BaseActivity {
         ImageView eventsImageView = (ImageView) view.findViewById(R.id.events_main_imageview);
         ImageView storiesImageView = (ImageView) view.findViewById(R.id.stories_main_imageview);
 
-        ToDogFormOnCLickListener adoptListener = new ToDogFormOnCLickListener();
-        ToMyDogOnCLickListener myDogListener = new ToMyDogOnCLickListener();
-        ToNewsOnCLickListener newsListener = new ToNewsOnCLickListener();
-        ToTipsOnCLickListener tipsListener = new ToTipsOnCLickListener();
-        ToEventsOnCLickListener eventsListener = new ToEventsOnCLickListener();
-        ToStoriesOnCLickListener storiesListener = new ToStoriesOnCLickListener();
-
-        adoptImageView.setOnClickListener(adoptListener);
-        myDogImageView.setOnClickListener(myDogListener);
-        newsImageView.setOnClickListener(newsListener);
-        tipsImageView.setOnClickListener(tipsListener);
-        eventsImageView.setOnClickListener(eventsListener);
-        storiesImageView.setOnClickListener(storiesListener);
+        myDogImageView.setOnClickListener(new ToMyDogOnCLickListener());
+        adoptImageView.setOnClickListener(new ToActivityOnCLickListener(AdoptDogFormActivity.class));
+        newsImageView.setOnClickListener(new ToActivityOnCLickListener(PublicationsFragmentActivity.class));
+        tipsImageView.setOnClickListener(new ToActivityOnCLickListener(TipsActivity.class));
+        eventsImageView.setOnClickListener(new ToActivityOnCLickListener(EventsActivity.class));
+        storiesImageView.setOnClickListener(new ToActivityOnCLickListener(StoriesFragmentActivity.class));
 
     }
 }

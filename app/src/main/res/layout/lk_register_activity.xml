@@ -8,7 +8,6 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#AA000000"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -23,7 +22,7 @@
         android:layout_marginBottom="5dp"
         android:text="@string/name_surname_question"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="@dimen/min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -33,7 +32,7 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/name_and_surname"
         android:minHeight="30dp"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -47,7 +46,7 @@
         android:layout_marginBottom="5dp"
         android:text="@string/email_question"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="@dimen/min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -57,7 +56,7 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/user_log_in"
         android:minHeight="30dp"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -72,7 +71,7 @@
         android:layout_marginBottom="5dp"
         android:text="@string/add_a_password_question"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="@dimen/min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -83,7 +82,7 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/password_log_in"
         android:minHeight="30dp"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -97,7 +96,7 @@
         android:layout_marginBottom="5dp"
         android:text="@string/birthdate_question"
         android:textColor="#fff"
-        android:textSize="17sp"
+        android:textSize="@dimen/min_text"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -110,7 +109,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textSize="@dimen/alarm_reminder_my_dog"
+        android:textSize="@dimen/biggest_text"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@color/dark_white_font"
@@ -123,9 +122,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/laika_button"
-        android:text="@string/action_sign_in_short"
-        android:onClick="login"
-        android:textSize="20sp" />
+        android:text="@string/register_user"
+        android:onClick="register"
+        android:textSize="@dimen/medium_text" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
@@ -149,10 +148,56 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_up_with_social_networks"
             android:textColor="#fff"
-            android:textSize="17sp"
+            android:textSize="@dimen/min_text"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/textView24"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView15"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/facebook_white_icon"
+                android:adjustViewBounds="false"
+                android:layout_weight="1"
+                android:scaleType="centerInside" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView16"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/twitter_white_icon"
+                android:adjustViewBounds="false"
+                android:layout_weight="1"
+                android:scaleType="centerInside" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView17"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/google_plus_white_icon2"
+                android:adjustViewBounds="false"
+                android:layout_weight="1"
+                android:scaleType="centerInside" />
+        </LinearLayout>
 
     </RelativeLayout>
 

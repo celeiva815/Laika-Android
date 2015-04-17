@@ -58,8 +58,7 @@ public class ResponseHandler {
                 fullName = response.getString(RequestManager.EMAIL);
                 email = response.getString(RequestManager.EMAIL);
                 token = response.getString(RequestManager.ACCESS_TOKEN);
-                //userId = response.getInt(RequestManager.ID);
-                userId = 1;
+                userId = response.getInt(RequestManager.ID);
 
                 PrefsManager.saveUser(context, fullName, email, token, userId);
                 Do.changeActivity(activity.getApplicationContext(), MainActivity.class, activity,

@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 
 import cl.laikachile.laika.activities.LoginActivity;
 import cl.laikachile.laika.activities.MainActivity;
+import cl.laikachile.laika.activities.RegisterActivity;
 import cl.laikachile.laika.utils.Do;
 
 public class ToLoginActivityOnCLickListener implements OnClickListener {

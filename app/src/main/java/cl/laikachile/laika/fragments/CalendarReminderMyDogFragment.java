@@ -17,6 +17,7 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
@@ -127,6 +128,8 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                     String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
                     Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
                 }
+
+                ((MyDogsActivity) getActivity()).setHistoryFragment(mDog);
             }
         });
 

@@ -14,7 +14,4 @@ public class ToMapHairOnClickListener implements OnClickListener {
 		Do.changeActivity(v.getContext(), MapHairActivity.class);
 		
 	}
-	
-	
-
 }

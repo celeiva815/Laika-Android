@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
@@ -21,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.listeners.ToActivityOnCLickListener;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.responses.LoginResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -38,12 +36,13 @@ public class LoginActivity extends ActionBarActivity {
     public EditText mEmailEditText;
     public EditText mPasswordEditText;
     public Button mLoginButton;
+    public Button mRegisterButton;
     public ProgressBar mLoginProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.lk_login_activity);
         getSupportActionBar().hide();
 
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
@@ -56,7 +55,10 @@ public class LoginActivity extends ActionBarActivity {
         mEmailEditText = (EditText) findViewById(R.id.email_login_edittext);
         mPasswordEditText = (EditText) findViewById(R.id.password_login_edittext);
         mLoginButton = (Button) findViewById(R.id.login_button);
+        mRegisterButton = (Button) findViewById(R.id.register_login_button);
         mLoginProgressBar = (ProgressBar) findViewById(R.id.login_progressbar);
+
+        mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
 
     }
 

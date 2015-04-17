@@ -72,6 +72,7 @@
     <string name="add_a_password_question">Agrega una contraseña</string>
     <string name="birthdate_question">¿Cuando estás de cumpleaños?</string>
     <string name="sign_up_with_social_networks">o ingresa con tus redes sociales</string>
+    <string name="register_user">Registrarse</string>
 
     <!-- Main -->
     <string name="main_activity_name">Laika</string>
@@ -123,6 +124,11 @@
     <!-- AdoptDogSuccessActivity -->
     <string name="congrats_adopt_dog_success">¡Felicidades</string>
     <string name="happy_news_adopt_dog_success">estará feliz con la noticia</string>
+    <string name="contact_news_adopt_dog_success">Dentro de 48 horas te llegará un mail confirmando
+    tu postulación y la Fundación a cargo te contactará. Felicidades!!</string>
+    <string name="contact_news_adopt_dog_success_first">Dentro de 48 horas te llegará un mail confirmando
+    tu postulación y la</string>
+    <string name="contact_news_adopt_dog_success_second">te contactará. Felicidades!!</string>
     <string name="mail_adopt_dog_success">Revisa tu correo para confirmar y nos contactaremos contigo</string>
 
     <!-- NewDogRegisterActivity -->
@@ -214,6 +220,7 @@
     <string name="reminder_question">¿Qué tipo de recordatorio quieres?</string>
     <string name="time_reminder_question">¿A qué hora?</string>
     <string name="date_reminder_question">¿Cuándo?</string>
+    <string name="days_reminder_question">¿Durante qué días?</string>
     <string name="name_reminders">Ponle una nombre al recordatorio:</string>
     <string name="title_reminders_hint">Ejemplo: Almuerzo, Paseo por el parque...</string>
     <string name="add_detail_reminders">Agrégale un detalle</string>

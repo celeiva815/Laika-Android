@@ -15,6 +15,7 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
@@ -141,6 +142,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                     String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
                     Do.showToast(message, v.getContext(), Toast.LENGTH_LONG);
                 }
+
+                ((MyDogsActivity) getActivity()).setHistoryFragment(mDog);
             }
         });
 
@@ -148,7 +151,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setMonday();
+                setMonday(!mMonday);
             }
         });
 
@@ -156,7 +159,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setTuesday();
+                setTuesday(!mTuesday);
             }
         });
 
@@ -164,7 +167,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setWednesday();
+                setWednesday(!mWednesday);
             }
         });
 
@@ -172,7 +175,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setThursday();
+                setThursday(!mThursday);
             }
         });
 
@@ -180,7 +183,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setFriday();
+                setFriday(!mFriday);
             }
         });
 
@@ -188,7 +191,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setSaturday();
+                setSaturday(!mSaturday);
             }
         });
 
@@ -196,7 +199,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
-                setSunday();
+                setSunday(!mSunday);
             }
         });
 
@@ -208,26 +211,13 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             mTime = mAlarmReminder.mTime;
             mTimeButton.setText(mTime);
 
-            mMonday = mAlarmReminder.mHasMonday;
-            setMonday();
-
-            mTuesday = mAlarmReminder.mHasTuesday;
-            setTuesday();
-
-            mWednesday = mAlarmReminder.mHasWednesday;
-            setWednesday();
-
-            mThursday = mAlarmReminder.mHasThursday;
-            setThursday();
-
-            mFriday = mAlarmReminder.mHasFriday;
-            setFriday();
-
-            mSaturday = mAlarmReminder.mHasSaturday;
-            setSaturday();
-
-            mSunday = mAlarmReminder.mHasSunday;
-            setSunday();
+            setMonday(mAlarmReminder.mHasMonday);
+            setTuesday(mAlarmReminder.mHasTuesday);
+            setWednesday(mAlarmReminder.mHasWednesday);
+            setThursday(mAlarmReminder.mHasThursday);
+            setFriday(mAlarmReminder.mHasFriday);
+            setSaturday(mAlarmReminder.mHasSaturday);
+            setSunday(mAlarmReminder.mHasSunday);
         }
 
         return view;
@@ -271,9 +261,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         return hour + ":" + min;
     }
 
-    public void setMonday() {
+    public void setMonday(boolean day) {
 
-        if (!mMonday) {
+        if (day) {
             mMonday = true;
             mMondayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -284,9 +274,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
     }
 
-    public void setTuesday() {
+    public void setTuesday(boolean day) {
 
-        if (!mTuesday) {
+        if (day) {
             mTuesday = true;
             mTuesdayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -295,9 +285,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             mTuesdayButton.setBackgroundColor(getSemiTransparentColor());
         }
     }
-    public void setWednesday() {
+    public void setWednesday(boolean day) {
 
-        if (!mWednesday) {
+        if (day) {
             mWednesday = true;
             mWednesdayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -307,9 +297,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
     }
 
-    public void setThursday() {
+    public void setThursday(boolean day) {
 
-        if (!mThursday) {
+        if (day) {
             mThursday = true;
             mThursdayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -319,9 +309,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
     }
-    public void setFriday() {
+    public void setFriday(boolean day) {
 
-        if (!mFriday) {
+        if (day) {
             mFriday = true;
             mFridayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -331,9 +321,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
     }
-    public void setSaturday() {
+    public void setSaturday(boolean day) {
 
-        if (!mSaturday) {
+        if (day) {
             mSaturday = true;
             mSaturdayButton.setBackgroundColor(getDarkWhiteColor());
 
@@ -343,9 +333,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
     }
-    public void setSunday() {
+    public void setSunday(boolean day) {
 
-        if (!mSunday) {
+        if (day) {
             mSunday = true;
             mSundayButton.setBackgroundColor(getDarkWhiteColor());
 

@@ -50,6 +50,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/main_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activities.GPlusSignInActivity"
             android:exported="false"
             android:label="@string/log_in_activity_name" >
