@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="LaikaTheme" parent="@style/_LaikaTheme"/>
+
+  <style name="_LaikaTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <item name="android:editTextBackground">@drawable/laikatheme_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#99f75b5b</item>
+    <item name="android:textSelectHandleLeft">@drawable/laikatheme_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/laikatheme_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/laikatheme_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLaikaTheme</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/laikatheme_btn_check_holo_light</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/laikatheme_btn_radio_holo_light</item>
+
+    <item name="android:buttonStyle">@style/ButtonLaikaTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonLaikaTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerLaikaTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarLaikaTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarLaikaTheme</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarLaikaTheme</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLaikaTheme</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLaikaTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleLaikaTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/laikatheme_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/laikatheme_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/laikatheme_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

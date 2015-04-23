@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="LaikaTheme" parent="@style/_LaikaTheme"/>
+
+  <style name="_LaikaTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <item name="android:editTextStyle">@style/EditTextLaikaTheme</item>
+
+    <item name="android:textColorHighlight">#99f75b5b</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLaikaTheme</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxLaikaTheme</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonLaikaTheme</item>
+
+    <item name="android:buttonStyle">@style/ButtonLaikaTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonLaikaTheme</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerLaikaTheme</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemLaikaTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarLaikaTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarLaikaTheme</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarLaikaTheme</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLaikaTheme</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLaikaTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleLaikaTheme</item>
+
+    <item name="android:listViewStyle">@style/ListViewLaikaTheme</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewLaikaTheme.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemLaikaTheme</item>
+
+  </style>
+
+</resources>

@@ -6,13 +6,14 @@ package cl.laikachile.laika.utils;
 public class Tag {
 
     //Dog
-    public static final int PROCESS_ADOPTED = 6;
-    public static final int PROCESS_OWNED = 7;
+    public static final int PROCESS_ADOPTED = 1;
+    public static final int PROCESS_OWNED = 2;
+    public static final int PROCESS_POSTULATED = 3;
 
     //Owners
-    public static final int GENDER_BOTH = 0;
     public static final int GENDER_MALE = 1;
     public static final int GENDER_FEMALE = 2;
+    public static final int GENDER_BOTH = 3;
 
     //OwnerDog
     public static final int ROLE_ADMIN = 1;
@@ -36,6 +37,7 @@ public class Tag {
     public static final int ASSISTANCE_ACCEPT = 1;
     public static final int ASSISTANCE_REFUSE = 2;
     public static final int ASSISTANCE_NOT_ANSWERED = 3;
+
 
     //Picker
     public static final String TIME_PICKER = "time_picker";

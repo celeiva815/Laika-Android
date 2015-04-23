@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MainActivity;
+import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyErrorHelper;
 import cl.laikachile.laika.utils.Do;
@@ -63,6 +64,12 @@ public class ResponseHandler {
                 PrefsManager.saveUser(context, fullName, email, token, userId);
                 Do.changeActivity(activity.getApplicationContext(), MainActivity.class, activity,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Owner userOwner = new Owner(userId, fullName, "", "", "", "",
+                        "", 1, email, "", "", "", "",
+                        "Ñuñoa", "Santiago", "Chile"); //FIXME aqui deberia ir el location_id
+
+                Owner.createOrUpdate(userOwner);
 
             } catch (JSONException e) {
                 e.printStackTrace();

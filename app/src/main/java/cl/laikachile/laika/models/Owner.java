@@ -144,4 +144,36 @@ public class Owner extends Model {
         return new Select().from(Owner.class).where(condition).executeSingle();
 
     }
+
+    public static Owner createOrUpdate(Owner userOwner) {
+
+        Owner owner = Owner.getUser(userOwner.mOwnerId);
+
+        if (owner == null) {
+            userOwner.save();
+
+        } else {
+
+            owner.mOwnerId = userOwner.mOwnerId;
+            owner.mOwnerName = userOwner.mOwnerName;
+            owner.mFirstName = userOwner.mFirstName;
+            owner.mSecondName = userOwner.mSecondName;
+            owner.mFirstSurname = userOwner.mFirstSurname;
+            owner.mSecondSurname = userOwner.mSecondSurname;
+            owner.mBirthday = userOwner.mBirthday;
+            owner.mGender = userOwner.mGender;
+            owner.mEmail = userOwner.mEmail;
+            owner.mPhone = userOwner.mPhone;
+            owner.mAddress = userOwner.mAddress;
+            owner.mAddressNumber = userOwner.mAddressNumber;
+            owner.mApartmentNumber = userOwner.mApartmentNumber;
+            owner.mTown = userOwner.mTown;
+            owner.mCity = userOwner.mCity;
+            owner.mCountry = userOwner.mCountry;
+
+            owner.save();
+        }
+
+        return owner;
+    }
 }

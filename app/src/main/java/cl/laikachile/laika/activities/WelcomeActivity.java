@@ -46,7 +46,7 @@ public class WelcomeActivity extends Activity
             PrefsManager.setFirstBoot(getApplicationContext());
         }
 
-        restartDataBase(firstboot);
+        //restartDataBase(firstboot);
         createFragmentView(mIdLayout);
         super.onStart();
 

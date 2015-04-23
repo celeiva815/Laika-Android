@@ -19,7 +19,7 @@ import cl.laikachile.laika.utils.Tag;
 @Table(name = Dog.TABLE_NAME)
 public class Dog extends Model {
 
-    public static int ID = 100;
+    public static int ID = 1;
 
     public final static String TABLE_NAME = "dogs";
     public final static String COLUMN_DOG_ID = "dog_id";
@@ -213,9 +213,9 @@ public class Dog extends Model {
 
     }
 
-    public static List<Dog> getOwnedDogs() {
+    public static List<Dog> getDogs(int process) {
 
-        String condition = COLUMN_STATUS + DB._EQUALS_ + Tag.PROCESS_OWNED;
+        String condition = COLUMN_STATUS + DB._EQUALS_ + process;
         return new Select().from(Dog.class).where(condition).execute();
 
     }

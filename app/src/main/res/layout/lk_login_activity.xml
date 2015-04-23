@@ -48,7 +48,8 @@
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password_login_edittext"

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,18 +22,18 @@ import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogFragmentActivity extends ActionBarActivity{
 	
-	private int mIdLayout = R.layout.ai_screen_slide_activity;
+	protected int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    protected ViewPager mPager;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter mPagerAdapter;
-    private List<Dog> dogs;
+    protected PagerAdapter mPagerAdapter;
+    protected List<Dog> mDogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +89,13 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
          }*/ 
     }
     
-    private void setDogList() {
+    protected void setDogList() {
     	
     	//FIXME aqu� deber�a tener la l�gica de la API, etc.
     	
-    	this.dogs = new ArrayList<Dog>();
+    	this.mDogs = new ArrayList<Dog>();
     	
-    	//XXX hardcoded dogs
+    	//XXX hardcoded
         Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013","Mestizo",1,"Grande","Juguetón",true, false,"", Tag.PROCESS_ADOPTED,1000);
     	blanquito.mImage = R.drawable.lk_blanquito_picture;
         blanquito.save();
@@ -118,10 +117,10 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	pulguita.setDetail("Es una perrita de 4 meses, juguetona y cariñosa rescatada de la calle a punto de ser atropellada. Está vacunada y desparasitada y se entrega con compromiso de esterilización para cuando cumpla 6 meses.");
     	alba.setDetail("Es una perrita mestiza tamaño mediano que necesita un hogar para vivir. Le gusta mucho que le den cariño y se lleva muy bien con otros perros y gatos.");
     	
-    	dogs.add(blanquito);
-    	dogs.add(pulguita);
-    	dogs.add(filipa);
-    	dogs.add(alba);
+    	mDogs.add(blanquito);
+    	mDogs.add(pulguita);
+    	mDogs.add(filipa);
+    	mDogs.add(alba);
 
     }
     
@@ -142,12 +141,12 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
         @Override
         public Fragment getItem(int position) {
         	     	
-            return new AdoptDogScreenSlideFragment(dogs.get(position), this.activity);
+            return new AdoptDogScreenSlideFragment(mDogs.get(position), this.activity);
         }
 
         @Override
         public int getCount() {
-            return dogs.size();
+            return mDogs.size();
         }
     }
 

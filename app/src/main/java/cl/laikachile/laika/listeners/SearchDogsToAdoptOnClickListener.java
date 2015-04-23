@@ -23,7 +23,7 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
     @Override
 	public void onClick(View v) {
 
-        //FIXME hacer el check de que toda la información este ingresada antes de postular.
+        /*FIXME hacer el check de que toda la información este ingresada antes de postular.
         int ownerId = PrefsManager.getUserId(v.getContext());
         String region = mActivity.mLocation.mRegion;
         String city = mActivity.mLocation.mCity;
@@ -45,7 +45,7 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
         AdoptDogForm adoptDogForm = new AdoptDogForm(ownerId, region, city, homeType, familyCount,
                 hasPet, hasElderly, hasKids, gender, size, personality);
 
-        adoptDogForm.save();
+        adoptDogForm.save(); */
 
 		final Context context = v.getContext();
 		final ProgressDialog progressDialog = ProgressDialog.show(v.getContext(),

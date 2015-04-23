@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewLaikaTheme" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/laikatheme_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/laikatheme_edit_text_holo_light</item>
+  </style>
+
+  <style name="ButtonLaikaTheme" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/laikatheme_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonLaikaTheme" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/laikatheme_btn_default_holo_light</item>
+  </style>
+
+  <style name="SpinnerLaikaTheme" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/laikatheme_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/laikatheme_list_selector_holo_light</item>
+  </style>
+
+  <style name="ProgressBarLaikaTheme" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/laikatheme_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/laikatheme_progress_indeterminate_horizontal_holo_light</item>
+  </style>
+
+  <style name="SeekBarLaikaTheme" parent="android:Widget.Holo.Light.SeekBar">
+      <item name="android:progressDrawable">@drawable/laikatheme_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/laikatheme_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:thumb">@drawable/laikatheme_scrubber_control_selector_holo_light</item>
+  </style>
+
+  <style name="RatingBarLaikaTheme" parent="android:Widget.Holo.Light.RatingBar">
+      <item name="android:progressDrawable">@drawable/laikatheme_ratingbar_full_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/laikatheme_ratingbar_full_holo_light</item>
+  </style>
+
+  <style name="RatingBarBigLaikaTheme" parent="android:Widget.Holo.Light.RatingBar.Indicator">
+      <item name="android:progressDrawable">@drawable/laikatheme_ratingbar_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/laikatheme_ratingbar_holo_light</item>
+  </style>
+
+  <style name="RatingBarSmallLaikaTheme" parent="android:Widget.Holo.Light.RatingBar.Small">
+      <item name="android:progressDrawable">@drawable/laikatheme_ratingbar_small_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/laikatheme_ratingbar_small_holo_light</item>
+  </style>
+
+  <style name="ToggleLaikaTheme" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/laikatheme_btn_toggle_holo_light</item>
+  </style>
+
+</resources>

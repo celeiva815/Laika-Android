@@ -73,33 +73,49 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     }
 
     public void setActivityView() {
-        //Dog
+
+        //View creation
         mSizeSpinner = (Spinner) findViewById(R.id.size_dog_form_spinner);
+        mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
+        mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
+        mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
+        mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
+        mPartnersEditText = (EditText) findViewById(R.id.partners_dog_form_edittext);
+        mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
+        mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
+
+        //Adapters creation
         ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.dog_size_adopt));
-        mSizeSpinner.setAdapter(sizeAdapter);
-
-        mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
         ArrayAdapter<String> personalityAdapter = new ArrayAdapter<String>(
                 this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.personality_adopt));
-        mPersonalitySpinner.setAdapter(personalityAdapter);
-
-        //Owner
-        mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
-        mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
         ArrayAdapter<String> regionAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.available_chilean_regions));
-        mRegionSpinner.setAdapter(regionAdapter);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner));
+        ArrayAdapter<String> spaceAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter,
+                this.getResources().getStringArray(R.array.home_size_adopt));
+        ArrayAdapter<String> freeTimeAdapter = new ArrayAdapter<String>(
+                this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
+                this.getResources().getStringArray(R.array.free_time_adopt));
+        SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
 
+        //Setting the adapters
+        mSizeSpinner.setAdapter(sizeAdapter);
+        mPersonalitySpinner.setAdapter(personalityAdapter);
+        mRegionSpinner.setAdapter(regionAdapter);
+        mFreeTimeSpinner.setAdapter(freeTimeAdapter);
+        mHomeSpinner.setAdapter(spaceAdapter);
+
+        //Setting the listeners
+        mSearchButton.setOnClickListener(listener);
+        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner));
         mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 mLocation = (Location) parent.getItemAtPosition(position);
             }
 
@@ -108,25 +124,6 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
             }
         });
-
-        mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
-        ArrayAdapter<String> spaceAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.home_size_adopt));
-        mHomeSpinner.setAdapter(spaceAdapter);
-
-        mPartnersEditText = (EditText) findViewById(R.id.partners_dog_form_edittext);
-
-        mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
-        ArrayAdapter<String> freeTimeAdapter = new ArrayAdapter<String>(
-                this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
-                    this.getResources().getStringArray(R.array.free_time_adopt));
-        mFreeTimeSpinner.setAdapter(freeTimeAdapter);
-
-        mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
-
-        SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
-        mSearchButton.setOnClickListener(listener);
 
 
     }

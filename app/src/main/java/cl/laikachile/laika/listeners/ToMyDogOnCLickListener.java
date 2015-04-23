@@ -6,6 +6,7 @@ import cl.laikachile.laika.activities.NewDogRegisterActivity;
 import cl.laikachile.laika.adapters.DogsAdapter;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Tag;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,14 +30,12 @@ public class ToMyDogOnCLickListener implements OnClickListener {
     public void onClick(View v) {
 
         Context context = v.getContext();
-        mDogs = Dog.getOwnedDogs();
+        mDogs = Dog.getDogs(Tag.PROCESS_OWNED);
 
         if (mDogs == null || mDogs.isEmpty()) {
             Do.changeActivity(context, NewDogRegisterActivity.class);
 
         } else if (mDogs.size() == 1) {
-            Do.changeActivity(context, MyDogsActivity.class);
-
             goToMyDogsActivity(context, mDogs.get(0).mDogId);
 
         } else {
