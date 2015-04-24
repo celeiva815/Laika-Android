@@ -24,13 +24,13 @@ public class StoriesScreenSlideFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(mIdLayout, container, false);
+        ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
-        TextView titleTextView = (TextView) rootView.findViewById(R.id.title_stories_textview);
-        TextView sponsorTextView = (TextView) rootView.findViewById(R.id.owner_stories_textview);
-        TextView dateTextView = (TextView) rootView.findViewById(R.id.date_stories_textview);
-        TextView bodyTextView = (TextView) rootView.findViewById(R.id.body_stories_textview);
-        ImageView mainImageView = (ImageView) rootView.findViewById(R.id.main_stories_imageview);
+        TextView titleTextView = (TextView) view.findViewById(R.id.title_stories_textview);
+        TextView sponsorTextView = (TextView) view.findViewById(R.id.owner_stories_textview);
+        TextView dateTextView = (TextView) view.findViewById(R.id.date_stories_textview);
+        TextView bodyTextView = (TextView) view.findViewById(R.id.body_stories_textview);
+        ImageView mainImageView = (ImageView) view.findViewById(R.id.main_stories_imageview);
 
         titleTextView.setText(mStory.mTitle);
         sponsorTextView.setText(mStory.getOwnerName());
@@ -38,7 +38,7 @@ public class StoriesScreenSlideFragment extends Fragment {
         bodyTextView.setText(mStory.mBody);
         mainImageView.setImageResource(mStory.mImage);
 
-        return rootView;
+        return view;
     }
 	
 	
