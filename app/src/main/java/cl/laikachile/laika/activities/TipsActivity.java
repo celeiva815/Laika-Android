@@ -3,27 +3,33 @@ package cl.laikachile.laika.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.TipsAdapter;
+import cl.laikachile.laika.listeners.EndlessScrollListener;
 import cl.laikachile.laika.models.Tip;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
 public class TipsActivity extends ActionBarActivity {
 
-    private int mIdLayout = R.layout.lk_tips_activity;
+    private int mIdLayout = R.layout.lk_swipe_refresh_activity;
 
     public List<Tip> mTips;
+    public SwipeRefreshLayout mSwipeLayout;
+    public int mPreLast = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +45,27 @@ public class TipsActivity extends ActionBarActivity {
 
         mTips = getTips(getApplicationContext());
 
-        ListView tipsListView = (ListView) findViewById(R.id.tips_listview);
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        final ListView tipsListView = (ListView) findViewById(R.id.main_listview);
+        TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
         TipsAdapter adapter = new TipsAdapter(getApplicationContext(), R.layout.lk_tips_adapter,
                 mTips);
 
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                Do.showToast("refresca!", getApplicationContext());
+            }
+        });
+        mSwipeLayout.setColorScheme(R.color.light_white_font, R.color.light_laika_red,
+                R.color.light_white_font, R.color.dark_laika_red);
+        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
+
         tipsListView.setAdapter(adapter);
+        tipsListView.setOnScrollListener(new EndlessScrollListener(tipsListView, mSwipeLayout));
+
+        emptyTextView.setText(R.string.tips_no_results);
 
     }
 

@@ -27,13 +27,13 @@ public class PublicationScreenSlideFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(mIdLayout, container, false);
+        ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
         
-        TextView titleTextView = (TextView) rootView.findViewById(R.id.title_news_textview);
-        TextView sponsorTextView = (TextView) rootView.findViewById(R.id.sponsor_news_textview);
-        TextView dateTextView = (TextView) rootView.findViewById(R.id.date_news_textview);
-		TextView bodyTextView = (TextView) rootView.findViewById(R.id.body_news_textview);
-		ImageView mainImageView = (ImageView) rootView.findViewById(R.id.main_news_imageview);
+        TextView titleTextView = (TextView) view.findViewById(R.id.title_news_textview);
+        TextView sponsorTextView = (TextView) view.findViewById(R.id.sponsor_news_textview);
+        TextView dateTextView = (TextView) view.findViewById(R.id.date_news_textview);
+		TextView bodyTextView = (TextView) view.findViewById(R.id.body_news_textview);
+		ImageView mainImageView = (ImageView) view.findViewById(R.id.main_news_imageview);
         
 		titleTextView.setText(publication.mTitle);
         sponsorTextView.setText(publication.getSponsor());
@@ -52,7 +52,7 @@ public class PublicationScreenSlideFragment extends Fragment {
             }
         });
         
-        return rootView;
+        return view;
     }
 	
 	

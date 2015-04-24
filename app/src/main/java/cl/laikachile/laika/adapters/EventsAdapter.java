@@ -34,14 +34,14 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         Event event = mEvents.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(mIdLayout, parent, false);
-        ImageView photoImageView = (ImageView) rowView.findViewById(R.id.photo_events_imageview);
-        TextView nameTextView = (TextView) rowView.findViewById(R.id.name_events_textview);
-        TextView sponsorTextView = (TextView) rowView.findViewById(R.id.sponsor_events_textview);
-        TextView locationTextView = (TextView) rowView.findViewById(R.id.location_events_textview);
-        TextView dateTextView = (TextView) rowView.findViewById(R.id.date_events_textview);
-        TextView timeTextView = (TextView) rowView.findViewById(R.id.time_events_textview);
-        TextView announceTextView = (TextView) rowView.findViewById(R.id.announce_events_textview);
+        view = inflater.inflate(mIdLayout, parent, false);
+        ImageView photoImageView = (ImageView) view.findViewById(R.id.photo_events_imageview);
+        TextView nameTextView = (TextView) view.findViewById(R.id.name_events_textview);
+        TextView sponsorTextView = (TextView) view.findViewById(R.id.sponsor_events_textview);
+        TextView locationTextView = (TextView) view.findViewById(R.id.location_events_textview);
+        TextView dateTextView = (TextView) view.findViewById(R.id.date_events_textview);
+        TextView timeTextView = (TextView) view.findViewById(R.id.time_events_textview);
+        TextView announceTextView = (TextView) view.findViewById(R.id.announce_events_textview);
 
         nameTextView.setText(event.mName);
         nameTextView.setSelected(true);
@@ -62,9 +62,9 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         }
 
         final int pos = position;
-        rowView.setClickable(true);
-        rowView.setFocusable(true);
-        rowView.setOnClickListener(new View.OnClickListener() {
+        view.setClickable(true);
+        view.setFocusable(true);
+        view.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -77,7 +77,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
             }
         });
 
-        return rowView;
+        return view;
 
     }
 }

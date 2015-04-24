@@ -15,15 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.adapters.EventsAdapter;
+import cl.laikachile.laika.adapters.PublicationsAdapter;
 import cl.laikachile.laika.listeners.EndlessScrollListener;
-import cl.laikachile.laika.models.Event;
+import cl.laikachile.laika.models.Publication;
 import cl.laikachile.laika.utils.Do;
 
-public class EventsActivity extends ActionBarActivity {
+public class PublicationsActivity extends ActionBarActivity {
 
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
-    public List<Event> mEvents;
+    public List<Publication> mPublications;
     public SwipeRefreshLayout mSwipeLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,12 @@ public class EventsActivity extends ActionBarActivity {
 
     public void setActivityView() {
 
-        mEvents = getEvents(getApplicationContext());
+        mPublications = getPublications(getApplicationContext());
 
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        final ListView eventsListView = (ListView) findViewById(R.id.main_listview);
+        final ListView publicationsListView = (ListView) findViewById(R.id.main_listview);
         TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
-        EventsAdapter adapter = new EventsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mEvents);
+        PublicationsAdapter adapter = new PublicationsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mPublications);
 
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
@@ -62,12 +62,12 @@ public class EventsActivity extends ActionBarActivity {
         mSwipeLayout.setColorScheme(R.color.light_white_font, R.color.light_laika_red,
                 R.color.light_white_font, R.color.dark_laika_red);
         mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
+        
+        publicationsListView.setAdapter(adapter);
+        publicationsListView.setItemsCanFocus(true);
+        publicationsListView.setOnScrollListener(new EndlessScrollListener(publicationsListView, mSwipeLayout));
 
-        eventsListView.setAdapter(adapter);
-        eventsListView.setItemsCanFocus(true);
-        eventsListView.setOnScrollListener(new EndlessScrollListener(eventsListView, mSwipeLayout));
-
-        emptyTextView.setText(R.string.events_no_results);
+        emptyTextView.setText(R.string.publications_no_results);
     }
 
     @Override
@@ -95,36 +95,31 @@ public class EventsActivity extends ActionBarActivity {
 
     }
 
-    private List<Event> getEvents(Context context) {
+    private List<Publication> getPublications(Context context) {
 
         //FIXME cambiar por la lógica de la API
-        String[] events = context.getResources().getStringArray(R.array.example_tips);
-        List<Event> eventList = new ArrayList<Event>(events.length);
+        String[] publications = context.getResources().getStringArray(R.array.example_tips);
+        List<Publication> publicationList = new ArrayList<Publication>(publications.length);
 
-        Event jornada = new Event("JORNADA DE ESTERILIZACIÓN", "Ilustre Municipalidad de Las Condes",
-                R.drawable.event_1, "http://www.oprachile.cl/", "Parque Padre Hurtado", "05 de Mayo de 2015", "", "09:00",
-                "18:00", false);
+        Publication maipu = new Publication(
+                "Municipio de Maipú: \"La nueva brigada de perros callejeros dará inclusión a " +
+                        "todos\"", "Pach News", "25 de marzo de 2015, 11:02","La Municipalidad de "+
+                "Maipú, trabaja en conjunto con una serie de agrupaciones de animalistas con las " +
+                "que se llevan a cabo políticas contra el maltrato animal, adopción...",
+                R.drawable.lk_news, 1, "http://pachnews.cl/?p=10480");
 
-        Event perroton = new Event("PERROTÓN", "Dog Chow", R.drawable.event_2, "https://www.perroton.dogchow.cl/",
-                "Parque Los Dominicos", "23 de Junio de 2015", "", "11:00", "18:00", true);
+        Publication ptaArenas = new Publication("Municipalidad de Punta Arenas contrata empresa para " +
+                "esterilizar y vacunar perros callejeros", "Prensa Animalista", "10 de enero de " +
+                "2015, 17:32","El alcalde de Punta Arenas, Emilio Boccazzi, presentó en la " +
+                "sesión del Concejo Municipal una propuesta que contempla un contrato que " +
+                "permitirá la captura, esterilización, desparasitación y vacunación de perros...",
+                R.drawable.lk_news_picture_two, 2, "http://www.prensanimalista.cl/web/2015/03/16/" +
+                "perla-primera-pelicula-chilena-donde-un-kiltro-es-su-protagonista/" );
 
-        Event expo = new Event("EXPO MASCOTAS Y ANIMALES", "Royal Canin", R.drawable.event_3, "https://www.facebook.com/events/310987522413990/",
-                "Espacio Riesco", "17 de Abril de 2015", "19 de Abril de 2015", "11:00", "20:00", true);
+        publicationList.add(maipu);
+        publicationList.add(ptaArenas);
 
-        Event curso = new Event("CURSO DE HIGIENE", "Fundación Stuka", R.drawable.event_4, "http://www.fundacionstuka.cl/",
-                "Pajaritos 8980", "26 de Junio de 2015", "", "09:00", "18:00", false);
-
-        Event running = new Event("PERRO RUNNING", "Ilustre Municipalidad de Viña del Mar",
-                R.drawable.event_5, "http://www.vinadelmarchile.cl/", "Parque Padre Hurtado", "20 de Julio de 2015", "",
-                "08:30", "14:00", false);
-
-        eventList.add(jornada);
-        eventList.add(perroton);
-        eventList.add(expo);
-        eventList.add(curso);
-        eventList.add(running);
-
-        return eventList;
+        return publicationList;
     }
 
 }

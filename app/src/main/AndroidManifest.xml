@@ -140,6 +140,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.PublicationsActivity"
+            android:exported="false"
+            android:label="@string/news_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activities.PublicationsFragmentActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
