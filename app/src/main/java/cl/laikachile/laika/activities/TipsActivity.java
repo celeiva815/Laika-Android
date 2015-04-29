@@ -1,15 +1,12 @@
 package cl.laikachile.laika.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +16,8 @@ import java.util.List;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.TipsAdapter;
 import cl.laikachile.laika.listeners.EndlessScrollListener;
+import cl.laikachile.laika.listeners.EventsRefreshListener;
+import cl.laikachile.laika.listeners.TipsRefreshListener;
 import cl.laikachile.laika.models.Tip;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
@@ -29,6 +28,9 @@ public class TipsActivity extends ActionBarActivity {
 
     public List<Tip> mTips;
     public SwipeRefreshLayout mSwipeLayout;
+    public ListView mTipsListView;
+    public TextView mEmptyTextView;
+    public TipsAdapter mTipsAdapter;
     public int mPreLast = 0;
 
     @Override
@@ -45,27 +47,21 @@ public class TipsActivity extends ActionBarActivity {
 
         mTips = getTips(getApplicationContext());
 
-        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        final ListView tipsListView = (ListView) findViewById(R.id.main_listview);
-        TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
-        TipsAdapter adapter = new TipsAdapter(getApplicationContext(), R.layout.lk_tips_adapter,
+        mTipsListView = (ListView) findViewById(R.id.main_listview);
+        mTipsAdapter = new TipsAdapter(getApplicationContext(), R.layout.lk_tips_adapter,
                 mTips);
 
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //if (!isFavorite)
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
-            @Override
-            public void onRefresh() {
-                Do.showToast("refresca!", getApplicationContext());
-            }
-        });
-        mSwipeLayout.setColorScheme(R.color.light_white_font, R.color.light_laika_red,
-                R.color.light_white_font, R.color.dark_laika_red);
-        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
+        TipsRefreshListener refreshListener = new TipsRefreshListener(this);
 
-        tipsListView.setAdapter(adapter);
-        tipsListView.setOnScrollListener(new EndlessScrollListener(tipsListView, mSwipeLayout));
+        mTipsListView.setOnScrollListener(refreshListener);
+        onCreateSwipeRefresh(mSwipeLayout, refreshListener);
 
-        emptyTextView.setText(R.string.tips_no_results);
+        mTipsListView.setAdapter(mTipsAdapter);
+        mTipsListView.setOnScrollListener(new EndlessScrollListener(mTipsListView, mSwipeLayout));
+
 
     }
 
@@ -94,13 +90,24 @@ public class TipsActivity extends ActionBarActivity {
 
     }
 
+    private void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
+                                      SwipeRefreshLayout.OnRefreshListener listener) {
+
+        refreshLayout.setOnRefreshListener(listener);
+        refreshLayout.setColorScheme(
+                R.color.light_white_font, R.color.light_laika_red,
+                R.color.light_white_font, R.color.dark_laika_red);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+
+    }
+
     private List<Tip> getTips(Context context) {
 
         //FIXME hacer la conexión con la API
 
         List<Tip> tipList = new ArrayList<>();
         Tip tip = new Tip(Tip.ID++, "Pach News", Do.getRString(context, R.string.title_tip_activity),
-                Do.getRString(context,R.string.body_tip_activity), R.drawable.lk_news_picture_three,
+                Do.getRString(context, R.string.body_tip_activity), R.drawable.lk_news_picture_three,
                 Tag.TIP_HYGIENE);
 
         Tip tip2 = new Tip(Tip.ID++, "Pet Vet", "Parovirus: 5 cosas que debes saber", "El parovirus" +

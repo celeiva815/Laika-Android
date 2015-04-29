@@ -7,9 +7,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +22,24 @@ import java.util.List;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.EventsAdapter;
 import cl.laikachile.laika.listeners.EndlessScrollListener;
+import cl.laikachile.laika.listeners.EventsRefreshListener;
 import cl.laikachile.laika.models.Event;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.EventsResponse;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Tag;
 
 public class EventsActivity extends ActionBarActivity {
+
+    public static final String TAG = EventsActivity.class.getSimpleName();
 
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
     public List<Event> mEvents;
     public SwipeRefreshLayout mSwipeLayout;
+    public ListView mEventsListView;
+    public EventsAdapter mEventsAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,34 +55,34 @@ public class EventsActivity extends ActionBarActivity {
         @Override
     public void onStart() {
 
+            if (mEventsListView.getCount() == 0) {
+
+                mSwipeLayout.setRefreshing(true);
+                requestEvents(Tag.NONE, Tag.LIMIT, getApplicationContext());
+            }
+
         super.onStart();
     }
 
     public void setActivityView() {
 
-        mEvents = getEvents(getApplicationContext());
+        mEvents = getEvents();
 
+        mEventsListView = (ListView) findViewById(R.id.main_listview);
+        mEventsAdapter = new EventsAdapter(getApplicationContext(),
+                R.layout.lk_events_adapter, mEvents);
+
+        mEventsListView.setAdapter(mEventsAdapter);
+        mEventsListView.setItemsCanFocus(true);
+
+        //if (!mIsFavorite)
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        final ListView eventsListView = (ListView) findViewById(R.id.main_listview);
-        TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
-        EventsAdapter adapter = new EventsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mEvents);
 
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        EventsRefreshListener refreshListener = new EventsRefreshListener(this);
 
-            @Override
-            public void onRefresh() {
-                Do.showToast("refresca!", getApplicationContext());
-            }
-        });
-        mSwipeLayout.setColorScheme(R.color.light_white_font, R.color.light_laika_red,
-                R.color.light_white_font, R.color.dark_laika_red);
-        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
+        mEventsListView.setOnScrollListener(refreshListener);
+        onCreateSwipeRefresh(mSwipeLayout, refreshListener);
 
-        eventsListView.setAdapter(adapter);
-        eventsListView.setItemsCanFocus(true);
-        eventsListView.setOnScrollListener(new EndlessScrollListener(eventsListView, mSwipeLayout));
-
-        emptyTextView.setText(R.string.events_no_results);
     }
 
     @Override
@@ -95,36 +110,55 @@ public class EventsActivity extends ActionBarActivity {
 
     }
 
-    private List<Event> getEvents(Context context) {
+    private void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
+                                        SwipeRefreshLayout.OnRefreshListener listener ) {
 
-        //FIXME cambiar por la lógica de la API
-        String[] events = context.getResources().getStringArray(R.array.example_tips);
-        List<Event> eventList = new ArrayList<Event>(events.length);
+        refreshLayout.setOnRefreshListener(listener);
+        refreshLayout.setColorScheme(
+                R.color.light_white_font, R.color.light_laika_red,
+                R.color.light_white_font, R.color.dark_laika_red);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
-        Event jornada = new Event("JORNADA DE ESTERILIZACIÓN", "Ilustre Municipalidad de Las Condes",
-                R.drawable.event_1, "http://www.oprachile.cl/", "Parque Padre Hurtado", "05 de Mayo de 2015", "", "09:00",
-                "18:00", false);
-
-        Event perroton = new Event("PERROTÓN", "Dog Chow", R.drawable.event_2, "https://www.perroton.dogchow.cl/",
-                "Parque Los Dominicos", "23 de Junio de 2015", "", "11:00", "18:00", true);
-
-        Event expo = new Event("EXPO MASCOTAS Y ANIMALES", "Royal Canin", R.drawable.event_3, "https://www.facebook.com/events/310987522413990/",
-                "Espacio Riesco", "17 de Abril de 2015", "19 de Abril de 2015", "11:00", "20:00", true);
-
-        Event curso = new Event("CURSO DE HIGIENE", "Fundación Stuka", R.drawable.event_4, "http://www.fundacionstuka.cl/",
-                "Pajaritos 8980", "26 de Junio de 2015", "", "09:00", "18:00", false);
-
-        Event running = new Event("PERRO RUNNING", "Ilustre Municipalidad de Viña del Mar",
-                R.drawable.event_5, "http://www.vinadelmarchile.cl/", "Parque Padre Hurtado", "20 de Julio de 2015", "",
-                "08:30", "14:00", false);
-
-        eventList.add(jornada);
-        eventList.add(perroton);
-        eventList.add(expo);
-        eventList.add(curso);
-        eventList.add(running);
-
-        return eventList;
     }
+
+    private List<Event> getEvents() {
+
+        return Event.getEvents();
+    }
+
+    public void requestEvents(int lastEventId, int limit, Context context) {
+
+        JSONObject jsonParams = new JSONObject();
+
+        try {
+
+            if (lastEventId > Tag.NONE) {
+                jsonParams.put(Event.API_LAST_EVENT_ID, lastEventId);
+
+            }
+            jsonParams.put(Event.API_LIMIT, limit);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        EventsResponse response = new EventsResponse(this);
+
+        Request eventsRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_EVENTS,
+                RequestManager.METHOD_GET, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(eventsRequest, TAG);
+
+    }
+
+    public void refreshList() {
+
+        mEvents = getEvents();
+        mEventsAdapter.notifyDataSetChanged();
+
+    }
+
 
 }

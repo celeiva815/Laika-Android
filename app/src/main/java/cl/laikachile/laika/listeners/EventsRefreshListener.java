@@ -1,38 +1,51 @@
 package cl.laikachile.laika.listeners;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import cl.laikachile.laika.activities.EventsActivity;
+import cl.laikachile.laika.adapters.EventsAdapter;
+import cl.laikachile.laika.models.Event;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.EventsResponse;
+import cl.laikachile.laika.responses.LoginResponse;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 24-04-15.
  */
-public class EndlessScrollListener implements AbsListView.OnScrollListener {
+public class EventsRefreshListener implements AbsListView.OnScrollListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
-    private int visibleThreshold = 5;
-    private int currentPage = 0;
-    private int previousTotal = 0;
-    private boolean loading = true;
+    public static final String TAG = EventsRefreshListener.class.getSimpleName();
+
+    private EventsActivity mActivity;
     private SwipeRefreshLayout mSwipeLayout;
     private ListView mListView;
+    private EventsAdapter mAdapter;
     private int mLastVisibleItem;
     private int mCurrentVisibleItem;
     private int mCurrentScrollState;
 
-    public EndlessScrollListener(ListView mListView, SwipeRefreshLayout mSwipeLayout) {
+    public EventsRefreshListener(EventsActivity mActivity) {
 
-        this.mSwipeLayout = mSwipeLayout;
-        this.mListView = mListView;
-    }
-    public EndlessScrollListener(int visibleThreshold) {
-        this.visibleThreshold = visibleThreshold;
+        this.mActivity = mActivity;
+        this.mSwipeLayout = mActivity.mSwipeLayout;
+        this.mListView = mActivity.mEventsListView;
+        this.mAdapter = mActivity.mEventsAdapter;
     }
 
     @Override
@@ -63,16 +76,17 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
             mSwipeLayout.setRefreshing(true);
 
-            new Handler().postDelayed(new Runnable() {
+            int lastKingIndex = mAdapter.getCount() - 1;
+            int lastEventId = mActivity.mEvents.get(lastKingIndex).mEventId;
+            mActivity.requestEvents(lastEventId, Tag.LIMIT, mActivity);
 
-                @Override
-                public void run() {
-
-                    mSwipeLayout.setRefreshing(false);
-
-                }
-            }, 2000);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mActivity.requestEvents(Tag.NONE, Tag.LIMIT, mActivity);
+
     }
 
 }

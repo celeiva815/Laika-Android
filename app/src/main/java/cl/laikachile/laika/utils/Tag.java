@@ -53,4 +53,8 @@ public class Tag {
     public static final int TIP_HEALTH = 2;
     public static final int TIP_HYGIENE = 3;
     public static final int TIP_WALK = 4;
+
+    //MISC
+    public static final int NONE = 0;
+    public static final int LIMIT = 5;
 }

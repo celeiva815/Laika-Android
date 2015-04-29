@@ -60,7 +60,7 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
                         "todos\"", "Pach News", "25 de marzo de 2015, 11:02","La Municipalidad de "+
                 "Maipú, trabaja en conjunto con una serie de agrupaciones de animalistas con las " +
                 "que se llevan a cabo políticas contra el maltrato animal, adopción...",
-    			R.drawable.lk_news, 1, "http://pachnews.cl/?p=10480");
+    			R.drawable.lk_news, 1, "http://pachnews.cl/?p=10480", false, false);
     			
     	Publication ptaArenas = new Publication("Municipalidad de Punta Arenas contrata empresa para " +
                 "esterilizar y vacunar perros callejeros", "Prensa Animalista", "10 de enero de " +
@@ -68,7 +68,7 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
                 "sesión del Concejo Municipal una propuesta que contempla un contrato que " +
                 "permitirá la captura, esterilización, desparasitación y vacunación de perros...",
     			R.drawable.lk_news_picture_two, 2, "http://www.prensanimalista.cl/web/2015/03/16/" +
-                "perla-primera-pelicula-chilena-donde-un-kiltro-es-su-protagonista/" );
+                "perla-primera-pelicula-chilena-donde-un-kiltro-es-su-protagonista/", true, true);
     	
     	aNews.add(maipu);
     	aNews.add(ptaArenas);

@@ -3,6 +3,11 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
+
+import cl.laikachile.laika.utils.DB;
 
 @Table(name = Publication.TABLE_NAME)
 public class Publication extends Model {
@@ -17,7 +22,11 @@ public class Publication extends Model {
     public final static String COLUMN_URL_NEWS = "url_news";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_IS_PAID = "is_paid";
+    public final static String COLUMN_IS_FAVORITE = "is_favorite";
 
+
+    @Column(name = COLUMN_NEWS_ID)
+    public int mNewsId;
 
     @Column(name = COLUMN_TITLE)
     public String mTitle;
@@ -36,16 +45,19 @@ public class Publication extends Model {
 
     @Column(name = COLUMN_URL_NEWS)
     public String mUrlNews;
-	
-	@Column(name = COLUMN_NEWS_ID)
-	public int mNewsId;
+
+    @Column(name = COLUMN_IS_PAID)
+    public boolean mIsPaid;
+
+    @Column(name = COLUMN_IS_FAVORITE)
+    public boolean mIsFavorite;
 
 
 
 	public Publication(){ }
 
     public Publication(String mTitle, String mSponsor, String mDate, String mBody, int mImage, int mNewsId,
-                       String mUrlNews) {
+                       String mUrlNews, boolean mIsPaid, boolean mIsFavorite) {
 
         this.mTitle = mTitle;
         this.mSponsor = mSponsor;
@@ -54,6 +66,8 @@ public class Publication extends Model {
         this.mImage = mImage;
         this.mUrlNews = mUrlNews;
         this.mNewsId = mNewsId;
+        this.mIsPaid = mIsPaid;
+        this.mIsFavorite = mIsFavorite;
 
     }
 
@@ -63,4 +77,24 @@ public class Publication extends Model {
         return "por " + mSponsor;
 
     }
+
+    public void setIsFavorite(boolean isFavorite) {
+
+        mIsFavorite = isFavorite;
+        this.save();
+    }
+
+    public static List<Publication> getPublications() {
+
+        return new Select().from(Publication.class).execute();
+
+    }
+
+    public static List<Publication> getFavorites() {
+
+        String condition = COLUMN_IS_FAVORITE + DB._EQUALS_ + DB.TRUE;
+        return new Select().from(Publication.class).where(condition).execute();
+
+    }
+
 }

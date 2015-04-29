@@ -1,38 +1,35 @@
 package cl.laikachile.laika.listeners;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
-import cl.laikachile.laika.utils.Tag;
+import cl.laikachile.laika.activities.TipsActivity;
+import cl.laikachile.laika.adapters.TipsAdapter;
 
 /**
  * Created by Tito_Leiva on 24-04-15.
  */
-public class EndlessScrollListener implements AbsListView.OnScrollListener {
+public class TipsRefreshListener implements AbsListView.OnScrollListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
-    private int visibleThreshold = 5;
-    private int currentPage = 0;
-    private int previousTotal = 0;
-    private boolean loading = true;
+    private TipsActivity mActivity;
     private SwipeRefreshLayout mSwipeLayout;
+    private SwipeRefreshLayout mEmptySwipeLayout;
     private ListView mListView;
+    private TipsAdapter mAdapter;
     private int mLastVisibleItem;
     private int mCurrentVisibleItem;
     private int mCurrentScrollState;
 
-    public EndlessScrollListener(ListView mListView, SwipeRefreshLayout mSwipeLayout) {
+    public TipsRefreshListener(TipsActivity mActivity) {
 
-        this.mSwipeLayout = mSwipeLayout;
-        this.mListView = mListView;
-    }
-    public EndlessScrollListener(int visibleThreshold) {
-        this.visibleThreshold = visibleThreshold;
+        this.mActivity = mActivity;
+        this.mSwipeLayout = mActivity.mSwipeLayout;
+        this.mListView = mActivity.mTipsListView;
+        this.mAdapter = mActivity.mTipsAdapter;
     }
 
     @Override
@@ -74,5 +71,35 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
             }, 2000);
         }
     }
+
+    @Override
+    public void onRefresh() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                // Get the last king position
+                int lastKingIndex = mAdapter.getCount() - 1;
+
+                // If there is a king
+                if (lastKingIndex > -1) {
+                    // Remove him
+                    mAdapter.remove(mAdapter.getItem(lastKingIndex));
+                    mSwipeLayout.setRefreshing(false);
+
+                } else {
+                    // No-one there, add new ones
+                    //TODO método de la API
+                    mEmptySwipeLayout.setRefreshing(false);
+                }
+
+                // Notify adapters about the kings
+                mAdapter.notifyDataSetChanged();
+
+            }
+        }, 1000);
+    }
+
 
 }

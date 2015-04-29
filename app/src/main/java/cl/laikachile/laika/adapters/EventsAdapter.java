@@ -14,6 +14,7 @@ import java.util.List;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.WebActivity;
 import cl.laikachile.laika.models.Event;
+import cl.laikachile.laika.utils.Do;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
 
@@ -43,17 +44,25 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         TextView timeTextView = (TextView) view.findViewById(R.id.time_events_textview);
         TextView announceTextView = (TextView) view.findViewById(R.id.announce_events_textview);
 
-        nameTextView.setText(event.mName);
+        nameTextView.setText(Integer.toString(event.mEventId) + " - " +event.mName); //FIXME
         nameTextView.setSelected(true);
         sponsorTextView.setText(event.mSponsorName);
         sponsorTextView.setSelected(true);
-        locationTextView.setText(event.mLocation);
+        locationTextView.setText(Integer.toString(event.mLocationId));
         dateTextView.setText(event.getDate());
         dateTextView.setSelected(true);
         timeTextView.setText(event.getTime());
-        photoImageView.setImageResource(event.mURLImage);
 
-        if (event.mIsAnnounce) {
+        if (Do.isNullOrEmpty(event.mURLImage)) {
+
+            photoImageView.setImageResource(R.drawable.event_1);
+
+        } else {
+
+            //TODO solicitar la imagen por internet asincronamente.
+        }
+
+        if (event.mIsPaid) {
             announceTextView.setVisibility(View.VISIBLE);
             sponsorTextView.setTextColor(view.getContext().getResources().getColor(R.color.laika_red));
 

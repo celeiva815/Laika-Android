@@ -25,8 +25,8 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
 
         /*FIXME hacer el check de que toda la información este ingresada antes de postular.
         int ownerId = PrefsManager.getUserId(v.getContext());
-        String region = mActivity.mLocation.mRegion;
-        String city = mActivity.mLocation.mCity;
+        String region = mActivity.mLocationId.mRegion;
+        String city = mActivity.mLocationId.mCity;
         String homeType = (String) mActivity.mHomeSpinner.getSelectedItem();
 
         int familyCount = 0;

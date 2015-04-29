@@ -12,6 +12,7 @@ import android.view.View;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
+import cl.laikachile.laika.models.Publication;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
@@ -77,24 +78,28 @@ public class BaseActivity extends ActionBarActivity
         if(Do.isLoggedIn(this)){
             //Logged in menu
             switch (position) {
-                case 0:
+                case 0: // Añadir nueva mascota
                     Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
                             Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
 
-                case 1:
+                case 1: // Mis postulaciones
                     Do.showToast("Por implementar", this.getApplicationContext());
                     break;
 
-                case 2:
+                case 2: // Favoritos
+
+                    intent = new Intent(this.getApplicationContext(), PublicationsActivity.class);
+                    intent.putExtra(PublicationsActivity.KEY_FAVORITE, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    break;
+
+                case 3: // Mi perfil
                     Do.showToast("Por implementar", this.getApplicationContext());
                     break;
 
-                case 3:
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
-
-                case 4:
+                case 4: // Cerrar Sesión
                     PrefsManager.clearPrefs(getApplicationContext());
                     Do.changeActivity(this.getApplicationContext(), LoginActivity.class,
                             Intent.FLAG_ACTIVITY_NEW_TASK);

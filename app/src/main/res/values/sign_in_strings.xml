@@ -2,7 +2,7 @@
 
     <string name="title_activity_login">Iniciar Sesión</string>
 
-    <!-- Strings related to login -->
+    <!-- Strings related to requestLogIn -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in_register">Entrar</string>

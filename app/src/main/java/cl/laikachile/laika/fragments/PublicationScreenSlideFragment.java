@@ -16,7 +16,7 @@ import cl.laikachile.laika.models.Publication;
 
 public class PublicationScreenSlideFragment extends Fragment {
 	
-	private int mIdLayout = R.layout.lk_publication_screen_slide_fragment;
+	private int mIdLayout = R.layout.lk_publication_adapter;
 	Publication publication;
 	
 	public PublicationScreenSlideFragment(Publication publication) {

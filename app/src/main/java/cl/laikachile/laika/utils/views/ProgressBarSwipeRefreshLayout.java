@@ -34,8 +34,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
-import cl.laikachile.laika.utils.views.SwipeProgressBar;
-
 
 /**
  * The SwipeRefreshLayout should be used whenever the user can refresh the
@@ -57,7 +55,7 @@ import cl.laikachile.laika.utils.views.SwipeProgressBar;
  * provide accessibility events; instead, a menu item must be provided to allow
  * refresh of the content wherever this gesture is used.</p>
  */
-public class MySwipeRefreshLayout extends ViewGroup {
+public class ProgressBarSwipeRefreshLayout extends ViewGroup {
     private static final long RETURN_TO_ORIGINAL_POSITION_TIMEOUT = 300;
     private static final float ACCELERATE_INTERPOLATION_FACTOR = 1.5f;
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
@@ -167,7 +165,7 @@ public class MySwipeRefreshLayout extends ViewGroup {
      *
      * @param context
      */
-    public MySwipeRefreshLayout(Context context) {
+    public ProgressBarSwipeRefreshLayout(Context context) {
         this(context, null);
     }
 
@@ -177,7 +175,7 @@ public class MySwipeRefreshLayout extends ViewGroup {
      * @param context
      * @param attrs
      */
-    public MySwipeRefreshLayout(Context context, AttributeSet attrs) {
+    public ProgressBarSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();

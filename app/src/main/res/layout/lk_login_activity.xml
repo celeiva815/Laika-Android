@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/laika_button"
             android:text="@string/action_sign_in_short"
-            android:onClick="login"
+            android:onClick="requestLogIn"
             android:textSize="20sp" />
 
         <ProgressBar

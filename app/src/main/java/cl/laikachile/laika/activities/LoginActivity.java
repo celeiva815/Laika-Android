@@ -104,7 +104,7 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
-    public void login(View view) {
+    public void requestLogIn(View view) {
 
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
