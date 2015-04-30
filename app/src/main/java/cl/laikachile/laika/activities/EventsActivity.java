@@ -2,12 +2,14 @@ package cl.laikachile.laika.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,7 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.EventsAdapter;
@@ -38,6 +44,7 @@ public class EventsActivity extends ActionBarActivity {
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
     public List<Event> mEvents;
     public SwipeRefreshLayout mSwipeLayout;
+    public LinearLayout mLinearLayout;
     public ListView mEventsListView;
     public EventsAdapter mEventsAdapter;
 
@@ -52,14 +59,14 @@ public class EventsActivity extends ActionBarActivity {
     }
 
 
-        @Override
+    @Override
     public void onStart() {
 
-            if (mEventsListView.getCount() == 0) {
+        if (mEventsListView.getCount() == 0) {
 
-                mSwipeLayout.setRefreshing(true);
-                requestEvents(Tag.NONE, Tag.LIMIT, getApplicationContext());
-            }
+            mLinearLayout.setVisibility(View.VISIBLE);
+            requestEvents(Tag.NONE, Tag.LIMIT, getApplicationContext());
+        }
 
         super.onStart();
     }
@@ -68,12 +75,15 @@ public class EventsActivity extends ActionBarActivity {
 
         mEvents = getEvents();
 
+        mLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
         mEventsListView = (ListView) findViewById(R.id.main_listview);
         mEventsAdapter = new EventsAdapter(getApplicationContext(),
                 R.layout.lk_events_adapter, mEvents);
 
         mEventsListView.setAdapter(mEventsAdapter);
         mEventsListView.setItemsCanFocus(true);
+
+        mEventsListView.setEmptyView(mLinearLayout);
 
         //if (!mIsFavorite)
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -111,7 +121,7 @@ public class EventsActivity extends ActionBarActivity {
     }
 
     private void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
-                                        SwipeRefreshLayout.OnRefreshListener listener ) {
+                                      SwipeRefreshLayout.OnRefreshListener listener) {
 
         refreshLayout.setOnRefreshListener(listener);
         refreshLayout.setColorScheme(
@@ -128,25 +138,18 @@ public class EventsActivity extends ActionBarActivity {
 
     public void requestEvents(int lastEventId, int limit, Context context) {
 
-        JSONObject jsonParams = new JSONObject();
+        Map<String, String> params = new HashMap<>();
 
-        try {
+        if (lastEventId > Tag.NONE) {
+            params.put(Event.API_LAST_EVENT_ID, Integer.toString(lastEventId));
 
-            if (lastEventId > Tag.NONE) {
-                jsonParams.put(Event.API_LAST_EVENT_ID, lastEventId);
-
-            }
-            jsonParams.put(Event.API_LIMIT, limit);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+        params.put(Event.API_LIMIT, Integer.toString(limit));
 
         EventsResponse response = new EventsResponse(this);
 
-        Request eventsRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_EVENTS,
-                RequestManager.METHOD_GET, response, response,
-                PrefsManager.getUserToken(context));
+        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_EVENTS,
+                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)
                 .addToRequestQueue(eventsRequest, TAG);
@@ -155,7 +158,14 @@ public class EventsActivity extends ActionBarActivity {
 
     public void refreshList() {
 
-        mEvents = getEvents();
+        mLinearLayout.setVisibility(View.GONE);
+
+        if (!mEvents.isEmpty()) {
+            mEvents.clear();
+
+        }
+
+        mEvents.addAll(getEvents());
         mEventsAdapter.notifyDataSetChanged();
 
     }

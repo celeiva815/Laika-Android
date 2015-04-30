@@ -93,14 +93,31 @@ public class RequestManager {
         };
     }
 
-    public static Request getRequest(List<String> params, String address,
-                                     Response.Listener<JSONArray> listener,
-                                     Response.ErrorListener errorListener) {
+    public static Request getRequest(Map<String,String> params, String address,
+                                     Response.Listener<JSONObject> listener,
+                                     Response.ErrorListener errorListener, final String token) {
 
-        String url = getURL(address);
+        String url = addParamsToURL(getURL(address), params);
         Log.d(RequestManager.TAG, url);
 
-        return new JsonArrayRequest(url, listener, errorListener);
+        return new JsonObjectRequest(METHOD_GET, url, null, listener, errorListener) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                if (!Do.isNullOrEmpty(token)) {
+
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put(ACCESS_TOKEN, token);
+                    return headers;
+
+                } else {
+
+                    return super.getHeaders();
+                }
+            }
+        };
     }
 
     /**
@@ -152,17 +169,22 @@ public class RequestManager {
 
     }
 
-    private static String paramsToURL(List<String> params) {
+    private static String addParamsToURL(String url, Map<String, String> params) {
 
-        String url = "";
+        if(!url.endsWith("?"))
+            url += "?";
 
-        for (int i = 0; i < params.size(); i++) {
+        for(Map.Entry<String, String> entry : params.entrySet()) {
 
-            url += params.get(i);
+            String key = entry.getKey();
+            String value = entry.getValue();
 
-            if (i < params.size() - 1) {
-                url += "/";
-            }
+            url += key + "=" + value + "&";
+        }
+
+        if (url.charAt(url.length()-1) == '&') {
+
+            url = url.substring(0, url.length()-1);
         }
 
         return url;
@@ -193,5 +215,6 @@ public class RequestManager {
 
         return request;
     }
+
 
 }
