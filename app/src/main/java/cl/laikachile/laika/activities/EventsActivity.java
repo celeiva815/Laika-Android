@@ -2,7 +2,6 @@ package cl.laikachile.laika.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -11,29 +10,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.EventsAdapter;
-import cl.laikachile.laika.listeners.EndlessScrollListener;
 import cl.laikachile.laika.listeners.EventsRefreshListener;
 import cl.laikachile.laika.models.Event;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.EventsResponse;
-import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -44,7 +34,7 @@ public class EventsActivity extends ActionBarActivity {
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
     public List<Event> mEvents;
     public SwipeRefreshLayout mSwipeLayout;
-    public LinearLayout mLinearLayout;
+    public LinearLayout mEmptyLinearLayout;
     public ListView mEventsListView;
     public EventsAdapter mEventsAdapter;
 
@@ -64,7 +54,7 @@ public class EventsActivity extends ActionBarActivity {
 
         if (mEventsListView.getCount() == 0) {
 
-            mLinearLayout.setVisibility(View.VISIBLE);
+            mEmptyLinearLayout.setVisibility(View.VISIBLE);
             requestEvents(Tag.NONE, Tag.LIMIT, getApplicationContext());
         }
 
@@ -75,7 +65,7 @@ public class EventsActivity extends ActionBarActivity {
 
         mEvents = getEvents();
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
+        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
         mEventsListView = (ListView) findViewById(R.id.main_listview);
         mEventsAdapter = new EventsAdapter(getApplicationContext(),
                 R.layout.lk_events_adapter, mEvents);
@@ -83,7 +73,7 @@ public class EventsActivity extends ActionBarActivity {
         mEventsListView.setAdapter(mEventsAdapter);
         mEventsListView.setItemsCanFocus(true);
 
-        mEventsListView.setEmptyView(mLinearLayout);
+        mEventsListView.setEmptyView(mEmptyLinearLayout);
 
         //if (!mIsFavorite)
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -125,8 +115,8 @@ public class EventsActivity extends ActionBarActivity {
 
         refreshLayout.setOnRefreshListener(listener);
         refreshLayout.setColorScheme(
-                R.color.light_white_font, R.color.light_laika_red,
-                R.color.light_white_font, R.color.dark_laika_red);
+                R.color.light_laika_red, R.color.light_white_font,
+                R.color.dark_laika_red, R.color.light_white_font);
         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
     }
@@ -158,7 +148,7 @@ public class EventsActivity extends ActionBarActivity {
 
     public void refreshList() {
 
-        mLinearLayout.setVisibility(View.GONE);
+        mEmptyLinearLayout.setVisibility(View.GONE);
 
         if (!mEvents.isEmpty()) {
             mEvents.clear();

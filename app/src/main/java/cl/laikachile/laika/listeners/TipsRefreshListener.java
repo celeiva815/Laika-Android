@@ -1,13 +1,13 @@
 package cl.laikachile.laika.listeners;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
 import cl.laikachile.laika.activities.TipsActivity;
 import cl.laikachile.laika.adapters.TipsAdapter;
+import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 24-04-15.
@@ -15,9 +15,10 @@ import cl.laikachile.laika.adapters.TipsAdapter;
 public class TipsRefreshListener implements AbsListView.OnScrollListener,
         SwipeRefreshLayout.OnRefreshListener {
 
+    public static final String TAG = TipsRefreshListener.class.getSimpleName();
+
     private TipsActivity mActivity;
     private SwipeRefreshLayout mSwipeLayout;
-    private SwipeRefreshLayout mEmptySwipeLayout;
     private ListView mListView;
     private TipsAdapter mAdapter;
     private int mLastVisibleItem;
@@ -60,46 +61,17 @@ public class TipsRefreshListener implements AbsListView.OnScrollListener,
 
             mSwipeLayout.setRefreshing(true);
 
-            new Handler().postDelayed(new Runnable() {
+            int size = mActivity.mTips.size();
+            int lastTipId = mActivity.mTips.get(size - 1).mTipId;
+            mActivity.requestTips(lastTipId, Tag.LIMIT, mActivity);
 
-                @Override
-                public void run() {
-
-                    mSwipeLayout.setRefreshing(false);
-
-                }
-            }, 2000);
         }
     }
 
     @Override
     public void onRefresh() {
+        mActivity.requestTips(Tag.NONE, Tag.LIMIT, mActivity);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                // Get the last king position
-                int lastKingIndex = mAdapter.getCount() - 1;
-
-                // If there is a king
-                if (lastKingIndex > -1) {
-                    // Remove him
-                    mAdapter.remove(mAdapter.getItem(lastKingIndex));
-                    mSwipeLayout.setRefreshing(false);
-
-                } else {
-                    // No-one there, add new ones
-                    //TODO método de la API
-                    mEmptySwipeLayout.setRefreshing(false);
-                }
-
-                // Notify adapters about the kings
-                mAdapter.notifyDataSetChanged();
-
-            }
-        }, 1000);
     }
-
 
 }

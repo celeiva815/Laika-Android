@@ -38,7 +38,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         ImageView mainImageView = (ImageView) rowView.findViewById(R.id.main_tip_imageview);
 
         sponsorTextView.setText(tip.mSponsorName);
-        titleTextView.setText(tip.mTitle);
+        titleTextView.setText(tip.mTipId + " - " + tip.mTitle); //FIXME
         bodyTextView.setText(tip.mBody);
         mainImageView.setImageResource(tip.mUrlImage);
 

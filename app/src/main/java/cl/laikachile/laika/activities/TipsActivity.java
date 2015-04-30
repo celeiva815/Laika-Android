@@ -7,31 +7,36 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.android.volley.Request;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.TipsAdapter;
-import cl.laikachile.laika.listeners.EndlessScrollListener;
-import cl.laikachile.laika.listeners.EventsRefreshListener;
 import cl.laikachile.laika.listeners.TipsRefreshListener;
 import cl.laikachile.laika.models.Tip;
-import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.TipsResponse;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 public class TipsActivity extends ActionBarActivity {
 
+    public static final String TAG = TipsActivity.class.getSimpleName();
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
 
     public List<Tip> mTips;
     public SwipeRefreshLayout mSwipeLayout;
+    public LinearLayout mEmptyLinearLayout;
     public ListView mTipsListView;
-    public TextView mEmptyTextView;
     public TipsAdapter mTipsAdapter;
-    public int mPreLast = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +48,31 @@ public class TipsActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void onStart() {
+
+        if (mTipsListView.getCount() == 0) {
+
+            mEmptyLinearLayout.setVisibility(View.VISIBLE);
+            requestTips(Tag.NONE, Tag.LIMIT, getApplicationContext());
+        }
+
+        super.onStart();
+    }
+
     public void setActivityView() {
 
-        mTips = getTips(getApplicationContext());
+        mTips = getTips();
 
+        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
         mTipsListView = (ListView) findViewById(R.id.main_listview);
         mTipsAdapter = new TipsAdapter(getApplicationContext(), R.layout.lk_tips_adapter,
                 mTips);
+
+        mTipsListView.setAdapter(mTipsAdapter);
+        mTipsListView.setItemsCanFocus(true);
+
+        mTipsListView.setEmptyView(mEmptyLinearLayout);
 
         //if (!isFavorite)
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -58,10 +81,6 @@ public class TipsActivity extends ActionBarActivity {
 
         mTipsListView.setOnScrollListener(refreshListener);
         onCreateSwipeRefresh(mSwipeLayout, refreshListener);
-
-        mTipsListView.setAdapter(mTipsAdapter);
-        mTipsListView.setOnScrollListener(new EndlessScrollListener(mTipsListView, mSwipeLayout));
-
 
     }
 
@@ -95,30 +114,49 @@ public class TipsActivity extends ActionBarActivity {
 
         refreshLayout.setOnRefreshListener(listener);
         refreshLayout.setColorScheme(
-                R.color.light_white_font, R.color.light_laika_red,
-                R.color.light_white_font, R.color.dark_laika_red);
+                R.color.light_laika_red, R.color.light_white_font,
+                R.color.dark_laika_red, R.color.light_white_font);
         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
     }
 
-    private List<Tip> getTips(Context context) {
+    private List<Tip> getTips() {
 
-        //FIXME hacer la conexión con la API
+        return Tip.getTips();
+    }
 
-        List<Tip> tipList = new ArrayList<>();
-        Tip tip = new Tip(Tip.ID++, "Pach News", Do.getRString(context, R.string.title_tip_activity),
-                Do.getRString(context, R.string.body_tip_activity), R.drawable.lk_news_picture_three,
-                Tag.TIP_HYGIENE);
+    public void requestTips(int lastTipId, int limit, Context context) {
 
-        Tip tip2 = new Tip(Tip.ID++, "Pet Vet", "Parovirus: 5 cosas que debes saber", "El parovirus" +
-                "es una enfermedad grave que necesita atención médica urgente, ya que sin un " +
-                "tratamiento adecuado puede provocar su muerte en pocos días",
-                R.drawable.lk_news_picture_two, Tag.TIP_HEALTH);
+        Map<String, String> params = new HashMap<>();
 
-        tipList.add(tip);
-        tipList.add(tip2);
+        if (lastTipId > Tag.NONE) {
+            params.put(Tip.API_LAST_TIP_ID, Integer.toString(lastTipId));
 
-        return tipList;
+        }
+        params.put(Tip.API_LIMIT, Integer.toString(limit));
+
+        TipsResponse response = new TipsResponse(this);
+
+        Request tipsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_TIPS,
+                response, response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(tipsRequest, TAG);
+
+    }
+
+    public void refreshList() {
+
+        mEmptyLinearLayout.setVisibility(View.GONE);
+
+        if (!mTips.isEmpty()) {
+            mTips.clear();
+
+        }
+
+        mTips.addAll(getTips());
+        mTipsAdapter.notifyDataSetChanged();
+
     }
 
 }
