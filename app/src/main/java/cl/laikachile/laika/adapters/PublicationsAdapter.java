@@ -22,6 +22,8 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
     private Context context;
     private List<Publication> mPublications;
 
+    public ImageView mFavoriteImageView;
+
     public PublicationsAdapter(Context context, int resource, List<Publication> objects) {
         super(context, resource, objects);
 
@@ -41,7 +43,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         TextView dateTextView = (TextView) view.findViewById(R.id.date_news_textview);
         TextView bodyTextView = (TextView) view.findViewById(R.id.body_news_textview);
         ImageView mainImageView = (ImageView) view.findViewById(R.id.main_news_imageview);
-        final ImageView favoriteImageView = (ImageView) view.findViewById(R.id.favorite_publication_imageview);
+        mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_publication_imageview);
 
         titleTextView.setText(publication.mTitle);
         sponsorTextView.setText(publication.getSponsor());
@@ -52,11 +54,11 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             @Override
             public void onClick(View v) {
 
-                if (!Do.isNullOrEmpty(publication.mUrlNews)) {
+                if (!Do.isNullOrEmpty(publication.mUrlPublication)) {
 
                     Context context = v.getContext();
                     Intent intent = new Intent(context, WebActivity.class);
-                    intent.putExtra(WebActivity.URL, publication.mUrlNews);
+                    intent.putExtra(WebActivity.URL, publication.mUrlPublication);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
 
@@ -67,24 +69,33 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             }
         });
 
-        favoriteImageView.setOnClickListener(new View.OnClickListener() {
+        mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if (!publication.mIsFavorite) {
-                    publication.setIsFavorite(true);
-                    favoriteImageView.setImageResource(R.drawable.star102_yellow);
-
-                } else {
-                    publication.setIsFavorite(false);
-                    favoriteImageView.setImageResource(R.drawable.star102);
-
-                }
+                setFavorite(publication, !publication.mIsFavorite);
             }
         });
 
+        setFavorite(publication, publication.mIsFavorite);
+
         return view;
+
+    }
+
+    public void setFavorite(Publication publication, boolean isFavorite) {
+
+        if (isFavorite) {
+            publication.setIsFavorite(true);
+            mFavoriteImageView.setImageResource(R.drawable.star102_yellow);
+
+        } else {
+            publication.setIsFavorite(false);
+            mFavoriteImageView.setImageResource(R.drawable.star102);
+
+        }
+
 
     }
 }

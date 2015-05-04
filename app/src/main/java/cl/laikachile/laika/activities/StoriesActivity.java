@@ -7,23 +7,36 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.android.volley.Request;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.StoriesAdapter;
-import cl.laikachile.laika.listeners.EndlessScrollListener;
+import cl.laikachile.laika.listeners.StoriesRefreshListener;
 import cl.laikachile.laika.models.Story;
-import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.StoriesResponse;
+import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Tag;
 
 public class StoriesActivity extends ActionBarActivity {
 
+    public static final String TAG = StoriesActivity.class.getSimpleName();
+    
     private int mIdLayout = R.layout.lk_swipe_refresh_activity;
     public List<Story> mStories;
     public SwipeRefreshLayout mSwipeLayout;
+    public LinearLayout mEmptyLinearLayout;
+    public ListView mStoriesListView;
+    public StoriesAdapter mStoriesAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,34 +52,36 @@ public class StoriesActivity extends ActionBarActivity {
         @Override
     public void onStart() {
 
-        super.onStart();
+            if (mStoriesListView.getCount() == 0) {
+
+                mEmptyLinearLayout.setVisibility(View.VISIBLE);
+                requestStories(Tag.NONE, Tag.LIMIT, getApplicationContext());
+            }
+
+            super.onStart();
     }
 
     public void setActivityView() {
 
-        mStories = getStories(getApplicationContext());
+        mStories = getStories();
 
+
+        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
+        mStoriesListView = (ListView) findViewById(R.id.main_listview);
+        mStoriesAdapter = new StoriesAdapter(getApplicationContext(), R.layout.lk_stories_adapter, 
+                mStories);
+
+        mStoriesListView.setAdapter(mStoriesAdapter);
+        mStoriesListView.setItemsCanFocus(true);
+
+        mStoriesListView.setEmptyView(mEmptyLinearLayout);
+
+        //if (!mIsFavorite)
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        final ListView storiesListView = (ListView) findViewById(R.id.main_listview);
-        TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
-        StoriesAdapter adapter = new StoriesAdapter(getApplicationContext(), R.layout.lk_events_adapter, mStories);
+        StoriesRefreshListener refreshListener = new StoriesRefreshListener(this);
 
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                Do.showToast("refresca!", getApplicationContext());
-            }
-        });
-        mSwipeLayout.setColorScheme(R.color.light_white_font, R.color.light_laika_red,
-                R.color.light_white_font, R.color.dark_laika_red);
-        mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
-        
-        storiesListView.setAdapter(adapter);
-        storiesListView.setItemsCanFocus(true);
-        storiesListView.setOnScrollListener(new EndlessScrollListener(storiesListView, mSwipeLayout));
-
-        emptyTextView.setText(R.string.stories_no_results);
+        mStoriesListView.setOnScrollListener(refreshListener);
+        onCreateSwipeRefresh(mSwipeLayout, refreshListener);
     }
 
     @Override
@@ -94,31 +109,54 @@ public class StoriesActivity extends ActionBarActivity {
 
     }
 
-    private List<Story> getStories(Context context) {
+    private void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
+                                      SwipeRefreshLayout.OnRefreshListener listener) {
 
-        //FIXME cambiar por la lógica de la API
-        String[] stories = context.getResources().getStringArray(R.array.example_tips);
-        List<Story> storiesList = new ArrayList<Story>(stories.length);
+        refreshLayout.setOnRefreshListener(listener);
+        refreshLayout.setColorScheme(
+                R.color.light_laika_red, R.color.light_white_font,
+                R.color.dark_laika_red, R.color.light_white_font);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
-        Story cholito = new Story("Pinky y los Abuelitos", "Valentina Cornejo", "25 de Marzo de 2015, 12:59",
-                "Después del fallecimiento de \"Tati\", la perrita de mis abuelos, me propuso " +
-                        "buscarles otra para animarlos nuevamente. Así supe de Laika y me puse a " +
-                        "investigar de qué se trataba. Hoy puedo decir que Pinky, como le pusieron ellos," +
-                        " era la Perrita ideal para acompañarse. Una perra de 6 años, super cariñosa y " +
-                        "que te acompaña a todos lados. Ellos están felices y ella con nueva casita",
-                R.drawable.abuelo, Story.ID++);
+    }
 
-        Story gaspar = new Story("Mi Mamá y Gaspar", "Fabiola Muñoz", "29 de Febrero de 2018, 12:59",
-                "Esta foto se la tomé a mi mamá con su querido Gaspar. Ella ese día tuvo complicaciones médicas" +
-                        "debido a su edad, nosotros no sabíamos como animarla hasta que cuando Laika" +
-                        " me mandó una notificación en que Gaspar tenía que almorzar, se me ocurrió llevarlo al " +
-                        " hospital. Los encargados me ayudaron a que eso pasara y aquí el resultado." +
-                        " Hoy mi mamá está en su casa junto a Gaspar.", R.drawable.abuela, Story.ID++);
+    private List<Story> getStories() {
 
-        storiesList.add(cholito);
-        storiesList.add(gaspar);
+        return Story.getStories();
+    }
 
-        return storiesList;
+    public void requestStories(int lastStoryId, int limit, Context context) {
+
+        Map<String, String> params = new HashMap<>();
+
+        if (lastStoryId > Tag.NONE) {
+            params.put(Story.API_LAST_STORY_ID, Integer.toString(lastStoryId));
+
+        }
+        params.put(Story.API_LIMIT, Integer.toString(limit));
+
+        StoriesResponse response = new StoriesResponse(this);
+
+        Request storiesRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_STORIES,
+                response, response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(storiesRequest, TAG);
+
+    }
+
+    public void refreshList() {
+
+        mEmptyLinearLayout.setVisibility(View.GONE);
+
+        if (!mStories.isEmpty()) {
+            mStories.clear();
+
+        }
+
+        mStories.addAll(getStories());
+        mStoriesAdapter.notifyDataSetChanged();
+
     }
 
 }

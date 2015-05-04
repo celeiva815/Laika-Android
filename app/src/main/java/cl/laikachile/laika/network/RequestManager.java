@@ -41,8 +41,10 @@ public class RequestManager {
 
     public static final String ADDRESS_LOGIN = "log_in/";
     public static final String ADDRESS_REGISTER = "sign_up/";
+    public static final String ADDRESS_PUBLICATIONS = "publications/";
     public static final String ADDRESS_EVENTS = "events/";
     public static final String ADDRESS_TIPS = "tips/";
+    public static final String ADDRESS_STORIES = "stories/";
 
     public static final int METHOD_GET = Request.Method.GET;
     public static final int METHOD_POST = Request.Method.POST;

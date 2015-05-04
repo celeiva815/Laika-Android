@@ -46,7 +46,7 @@ public class PublicationScreenSlideFragment extends Fragment {
 
         Context context = v.getContext();
         Intent intent = new Intent(context, WebActivity.class);
-        intent.putExtra(WebActivity.URL, publication.mUrlNews);
+        intent.putExtra(WebActivity.URL, publication.mUrlPublication);
         context.startActivity(intent);
 
             }

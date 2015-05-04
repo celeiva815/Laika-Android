@@ -7,27 +7,42 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.PublicationsAdapter;
 import cl.laikachile.laika.listeners.EndlessScrollListener;
+import cl.laikachile.laika.listeners.PublicationsRefreshListener;
 import cl.laikachile.laika.models.Publication;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.PublicationsResponse;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Tag;
 
 public class PublicationsActivity extends ActionBarActivity {
 
+    public static final String TAG = PublicationsActivity.class.getSimpleName();
     public static String KEY_FAVORITE = "favorite";
 
     public int mIdLayout;
     public List<Publication> mPublications;
     public SwipeRefreshLayout mSwipeLayout;
-    public SwipeRefreshLayout mEmptySwipeLayout;
+    public LinearLayout mEmptyLinearLayout;
+    public ListView mPublicationsListView;
+    public PublicationsAdapter mPublicationsAdapter;
     public boolean mIsFavorite = false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,38 +65,33 @@ public class PublicationsActivity extends ActionBarActivity {
         @Override
     public void onStart() {
 
-        super.onStart();
+            if (mPublicationsListView.getCount() == 0) {
+
+                mEmptyLinearLayout.setVisibility(View.VISIBLE);
+                requestPublications(Tag.NONE, Tag.LIMIT, getApplicationContext());
+            }
+
+            super.onStart();super.onStart();
     }
 
     public void setActivityView() {
 
-        final ListView publicationsListView = (ListView) findViewById(R.id.main_listview);
-        TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
-        PublicationsAdapter adapter = new PublicationsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mPublications);
+        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
+        mPublicationsListView = (ListView) findViewById(R.id.main_listview);
+        mPublicationsAdapter = new PublicationsAdapter(getApplicationContext(), R.layout.lk_events_adapter, mPublications);
 
-        publicationsListView.setAdapter(adapter);
-        publicationsListView.setItemsCanFocus(true);
-        emptyTextView.setText(R.string.publications_no_results);
+        mPublicationsListView.setAdapter(mPublicationsAdapter);
+        mPublicationsListView.setItemsCanFocus(true);
+        mPublicationsListView.setEmptyView(mEmptyLinearLayout);
 
         if (!mIsFavorite) {
 
             mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-            mSwipeLayout.setSize(SwipeRefreshLayout.LARGE);
-            mSwipeLayout.setColorScheme(R.color.light_white_font,
-                                        R.color.light_laika_red,
-                                        R.color.light_white_font,
-                                        R.color.dark_laika_red);
-            mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-                @Override
-                public void onRefresh() {
+            PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
 
-                    //TODO la actualización con la API
-                    Do.showToast("refresca", getApplicationContext());
-                }
-            });
-            publicationsListView.setOnScrollListener(new EndlessScrollListener(publicationsListView, mSwipeLayout));
-            publicationsListView.setEmptyView(mEmptySwipeLayout);
+            mPublicationsListView.setOnScrollListener(refreshListener);
+            onCreateSwipeRefresh(mSwipeLayout, refreshListener);
         }
 
 
@@ -112,37 +122,35 @@ public class PublicationsActivity extends ActionBarActivity {
 
     }
 
-    private List<Publication> getPublications(Context context) {
+    private void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
+                                      SwipeRefreshLayout.OnRefreshListener listener) {
 
-        //FIXME cambiar por la lógica de la API
-        String[] publications = context.getResources().getStringArray(R.array.example_tips);
-        /* List<Publication> publicationList = new ArrayList<Publication>(publications.length);
+        refreshLayout.setOnRefreshListener(listener);
+        refreshLayout.setColorScheme(
+                R.color.light_laika_red, R.color.light_white_font,
+                R.color.dark_laika_red, R.color.light_white_font);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
-        Publication maipu = new Publication(
-                "Municipio de Maipú: \"La nueva brigada de perros callejeros dará inclusión a " +
-                        "todos\"", "Pach News", "25 de marzo de 2015, 11:02","La Municipalidad de "+
-                "Maipú, trabaja en conjunto con una serie de agrupaciones de animalistas con las " +
-                "que se llevan a cabo políticas contra el maltrato animal, adopción...",
-                R.drawable.lk_news, 1, "http://pachnews.cl/?p=10480", false, false);
-
-        Publication ptaArenas = new Publication("Municipalidad de Punta Arenas contrata empresa para " +
-                "esterilizar y vacunar perros callejeros", "Prensa Animalista", "10 de enero de " +
-                "2015, 17:32","El alcalde de Punta Arenas, Emilio Boccazzi, presentó en la " +
-                "sesión del Concejo Municipal una propuesta que contempla un contrato que " +
-                "permitirá la captura, esterilización, desparasitación y vacunación de perros...",
-                R.drawable.lk_news_picture_two, 2, "http://www.prensanimalista.cl/web/2015/03/16/" +
-                "perla-primera-pelicula-chilena-donde-un-kiltro-es-su-protagonista/",true,true);
-
-        publicationList.add(maipu);
-        publicationList.add(ptaArenas); */
-
-        List<Publication> publicationList = new ArrayList<Publication>();
-        return publicationList;
     }
 
-    private List<Publication> getFavoritePublications() {
+    public void requestPublications(int lastPublicationId, int limit, Context context) {
 
-        return Publication.getFavorites();
+        Map<String, String> params = new HashMap<>();
+
+        if (lastPublicationId > Tag.NONE) {
+            params.put(Publication.API_LAST_PUBLICATION_ID, Integer.toString(lastPublicationId));
+
+        }
+        params.put(Publication.API_LIMIT, Integer.toString(limit));
+
+        PublicationsResponse response = new PublicationsResponse(this);
+
+        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_PUBLICATIONS,
+                response, response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(eventsRequest, TAG);
+
     }
 
     public void viewSettings() {
@@ -153,9 +161,33 @@ public class PublicationsActivity extends ActionBarActivity {
 
         } else {
             mIdLayout = R.layout.lk_swipe_refresh_activity;
-            mPublications = getPublications(getApplicationContext());
+            mPublications = getPublications();
 
         }
+    }
+
+    public void refreshList() {
+
+        mEmptyLinearLayout.setVisibility(View.GONE);
+
+        if (!mPublications.isEmpty()) {
+            mPublications.clear();
+
+        }
+
+        mPublications.addAll(getPublications());
+        mPublicationsAdapter.notifyDataSetChanged();
+
+    }
+
+    private List<Publication> getPublications() {
+
+        return Publication.getPublications();
+    }
+
+    private List<Publication> getFavoritePublications() {
+
+        return Publication.getFavorites();
     }
 
 }

@@ -12,11 +12,10 @@ import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.Story;
-import cl.laikachile.laika.models.Story;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
 
-    private int mIdLayout = R.layout.lk_stories_screen_slide_fragment;
+    private int mIdLayout = R.layout.lk_stories_adapter;
     private Context context;
     private List<Story> mStories;
 

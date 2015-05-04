@@ -13,7 +13,7 @@ import cl.laikachile.laika.models.Story;
 
 public class StoriesScreenSlideFragment extends Fragment {
 	
-	private int mIdLayout = R.layout.lk_stories_screen_slide_fragment;
+	private int mIdLayout = R.layout.lk_stories_adapter;
 	Story mStory;
 	
 	public StoriesScreenSlideFragment(Story mStory) {

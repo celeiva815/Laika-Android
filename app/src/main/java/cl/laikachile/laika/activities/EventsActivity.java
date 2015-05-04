@@ -139,7 +139,7 @@ public class EventsActivity extends ActionBarActivity {
         EventsResponse response = new EventsResponse(this);
 
         Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_EVENTS,
-                 response, response, PrefsManager.getUserToken(context));
+                response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)
                 .addToRequestQueue(eventsRequest, TAG);
