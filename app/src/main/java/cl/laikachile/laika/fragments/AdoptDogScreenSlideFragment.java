@@ -45,7 +45,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         Button postulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
 
         nameTextView.setText(mDog.mName);
-        sizeTextView.setText(mDog.mSize);
+        sizeTextView.setText(mDog.getSize().mName);
         genderTextView.setText(mDog.getGender(view.getContext()));
         yearsTextView.setText(mDog.mBirth);
         sterilizedTextView.setText(mDog.getSterilized(view.getContext()));

@@ -7,15 +7,15 @@ import android.widget.Spinner;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.LocationsAdapter;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.indexes.Location;
 
 public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelectedListener{
 
-	Spinner mLocationSpinner;
+	Spinner mCitySpinner;
 
-	public ChangeRegionLocationsOnItemSelectedListener(Spinner mLocationSpinner) {
+	public ChangeRegionLocationsOnItemSelectedListener(Spinner mCitySpinner) {
 	
-		this.mLocationSpinner = mLocationSpinner;
+		this.mCitySpinner = mCitySpinner;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelect
 
 		LocationsAdapter locationAdapter = new LocationsAdapter(view.getContext(),
                 R.layout.ai_simple_textview_for_adapter, Location.getLocation(region));
-		mLocationSpinner.setAdapter(locationAdapter);
+		mCitySpinner.setAdapter(locationAdapter);
 		
 	}
 

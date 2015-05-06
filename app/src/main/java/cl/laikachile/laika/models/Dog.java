@@ -10,7 +10,14 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.utils.DB;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
@@ -25,10 +32,9 @@ public class Dog extends Model {
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_NAME = "name";
     public final static String COLUMN_BIRTHDATE = "birthdate";
-    public final static String COLUMN_BREED = "breed";
+    public final static String COLUMN_BREED_ID = "breed_id";
     public final static String COLUMN_GENDER = "gender";
-    public final static String COLUMN_SIZE = "size";
-    public final static String COLUMN_PERSONALITY = "personality";
+    public final static String COLUMN_PERSONALITY_ID = "personality_id";
     public final static String COLUMN_STERILIZED = "sterilized";
     public final static String COLUMN_CHIP_CODE = "chip_code";
     public final static String COLUMN_STATUS = "status";
@@ -36,6 +42,8 @@ public class Dog extends Model {
     public final static String COLUMN_TRAINED = "trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_OWNER_ID = "owner_id";
+
+    public final static String API_DOGS = "dogs";
 
     public final static int STATUS_OWN = 1;
     public final static int STATUS_ADOPTED = 2;
@@ -50,17 +58,14 @@ public class Dog extends Model {
     @Column(name = COLUMN_BIRTHDATE)
     public String mBirth;
 
-    @Column(name = COLUMN_BREED)
-    public String mBreed;
+    @Column(name = COLUMN_BREED_ID)
+    public int mBreedId;
 
     @Column(name = COLUMN_GENDER)
     public int mGender;
 
-    @Column(name = COLUMN_SIZE)
-    public String mSize; //FIXME cambiar por enteros
-
-    @Column(name = COLUMN_PERSONALITY)
-    public String mPersonality; //FIXME cambiar por enteros
+    @Column(name = COLUMN_PERSONALITY_ID)
+    public int mPersonalityId;
 
     @Column(name = COLUMN_STERILIZED)
     public boolean mSterilized;
@@ -86,22 +91,58 @@ public class Dog extends Model {
     public Dog() {
     }
 
-    public Dog(int mDogId, String mName, String mBirth, String mBreed, int mGender, String mSize,
-               String mPersonality, boolean mSterilized, boolean mTrained, String mChipCode,
+    public Dog(int mDogId, String mName, String mBirth, int mBreedId, int mGender,
+               int mPersonalityId, boolean mSterilized, boolean mTrained, String mChipCode,
                int mStatus, int mOwnerId) {
 
         this.mDogId = mDogId;
         this.mName = mName;
         this.mBirth = mBirth;
-        this.mBreed = mBreed;
+        this.mBreedId = mBreedId;
         this.mGender = mGender;
-        this.mSize = mSize;
-        this.mPersonality = mPersonality;
+        this.mPersonalityId = mPersonalityId;
         this.mSterilized = mSterilized;
         this.mTrained = mTrained;
         this.mChipCode = mChipCode;
         this.mStatus = mStatus;
         this.mOwnerId = mOwnerId;
+    }
+
+    public Dog(JSONObject jsonObject, int status) {
+
+        try {
+            this.mDogId = jsonObject.getInt(COLUMN_DOG_ID);
+            this.mName = jsonObject.getString(COLUMN_NAME);
+            this.mBirth = jsonObject.getString(COLUMN_BIRTHDATE);
+            this.mBreedId = jsonObject.getInt(COLUMN_BREED_ID);
+            this.mGender = jsonObject.getInt(COLUMN_GENDER);
+            this.mPersonalityId = jsonObject.getInt(COLUMN_PERSONALITY_ID);
+            this.mSterilized = jsonObject.getBoolean(COLUMN_STERILIZED);
+            this.mTrained = jsonObject.getBoolean(COLUMN_TRAINED);
+            this.mChipCode = jsonObject.getString(COLUMN_CHIP_CODE);
+            this.mStatus = status;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Dog dog) {
+
+        this.mDogId = dog.mDogId;
+        this.mName = dog.mName;
+        this.mBirth = dog.mBirth;
+        this.mBreedId = dog.mBreedId;
+        this.mGender = dog.mGender;
+        this.mPersonalityId = dog.mPersonalityId;
+        this.mSterilized = dog.mSterilized;
+        this.mTrained = dog.mTrained;
+        this.mChipCode = dog.mChipCode;
+        this.mStatus = dog.mStatus;
+        this.mOwnerId = dog.mOwnerId;
+
+        this.save();
+
     }
 
     public String getAge() {
@@ -204,6 +245,64 @@ public class Dog extends Model {
             return Do.getRString(context, R.string.is_not_trained);
 
         }
+    }
+
+    public Size getSize() {
+
+        Breed breed = getBreed();
+        return Size.getSingleSize(breed.mSizeId);
+
+    }
+
+    public Breed getBreed() {
+
+        return Breed.getSingleBreed(mBreedId);
+
+    }
+
+    public Personality getPersonality() {
+
+        return Personality.getSinglePersonality(mPersonalityId);
+    }
+
+    //DataBase 
+
+    public static void saveDog(JSONObject jsonObject, int status) {
+
+        try {
+            JSONArray jsonDogs = jsonObject.getJSONArray(API_DOGS);
+
+            for (int i = 0; i < jsonDogs.length(); i++) {
+
+                JSONObject jsonDog = jsonDogs.getJSONObject(i);
+                Dog event = new Dog(jsonDog, status);
+
+                createOrUpdate(event);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void createOrUpdate(Dog dog) {
+
+        if (!Dog.isSaved(dog)) {
+            dog.save();
+
+        } else {
+            Dog oldDog = getSingleDog(dog.mDogId);
+            oldDog.update(dog);
+
+        }
+    }
+
+    public static boolean isSaved(Dog dog) {
+
+        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dog.mDogId;
+        return new Select().from(Dog.class).where(condition).exists();
+
     }
 
     public static Dog getSingleDog(int dogId) {

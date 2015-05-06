@@ -3,35 +3,29 @@ package cl.laikachile.laika.activities;
 import android.content.Intent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-
-import com.fourmob.datetimepicker.date.DatePickerDialog;
-
-import java.util.ArrayList;
-import java.util.Calendar;
+import android.widget.AdapterView;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.fragments.PlaceHolderFragment;
-import cl.laikachile.laika.listeners.AddDogOnClickListener;
+import cl.laikachile.laika.adapters.BreedAdapter;
+import cl.laikachile.laika.adapters.PersonalityAdapter;
+import cl.laikachile.laika.adapters.SizeAdapter;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.EditDogOnClickListener;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
 public class EditDogRegisterActivity extends NewDogRegisterActivity {
-
-    public Dog mDog;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         completeDogForm();
+        mIsSizeSelected = false;
     }
 
     public void completeDogForm() {
@@ -42,38 +36,19 @@ public class EditDogRegisterActivity extends NewDogRegisterActivity {
         mNameEditText.setText(mDog.mName);
         mBirthButton.setText(mDog.mBirth);
 
-        ArrayList<String> sizeList = getSizeList();
+        Breed breed = mDog.getBreed();
+        Size size = mDog.getSize();
+        Personality personality = mDog.getPersonality();
 
-        for (int i = 0; i < sizeList.size(); i++) {
+        int sizePosition = ((SizeAdapter) mSizeSpinner.getAdapter()).getPosition(size);
+        mSizeSpinner.setSelection(sizePosition);
 
-            if (sizeList.get(i).equals(mDog.mSize)) {
+        int breedPosition = ((BreedAdapter) mBreedSpinner.getAdapter()).getPosition(breed);
+        mBreedSpinner.setSelection(breedPosition);
 
-                mSizeSpinner.setSelection(i);
-                break;
-            }
-        }
-
-        String[] breedList = getBreedList(mSizeSpinner);
-
-        for (int i = 0; i < breedList.length; i++) {
-
-            if (breedList[i].equals(mDog.mSize)) {
-
-                mBreedSpinner.setSelection(i);
-                break;
-            }
-        }
-
-        String[] personalityList = getPersonalityList();
-
-        for (int i = 0; i < personalityList.length; i++) {
-
-            if (personalityList[i].equals(mDog.mSize)) {
-
-                mPersonalitySpinner.setSelection(i);
-                break;
-            }
-        }
+        int personalityPosition = ((PersonalityAdapter) mPersonalitySpinner.getAdapter()).
+                getPosition(personality);
+        mPersonalitySpinner.setSelection(personalityPosition);
 
         if (mDog.mGender == Tag.GENDER_MALE) {
             mGenderRadioGroup.check(R.id.male_new_dog_register_radiobutton);
@@ -99,7 +74,7 @@ public class EditDogRegisterActivity extends NewDogRegisterActivity {
             mChipEditText.setText(mDog.mChipCode);
         }
 
-        mAddButton.setText("Guardar");
+        mAddButton.setText("Guardar"); //XXX agregar el string respectivo
         mAddButton.setOnClickListener(new EditDogOnClickListener(this, mDog));
 
     }

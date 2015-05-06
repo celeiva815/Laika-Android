@@ -3,6 +3,8 @@ package cl.laikachile.laika.listeners;
 import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.activities.NewDogRegisterActivity;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.indexes.Personality;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -25,16 +27,15 @@ public class AddDogOnClickListener implements OnClickListener {
 		//FIXME crear los valores posibles, Esperar por la API
 		String name = mActivity.mNameEditText.getText().toString();
 	    String birth = mActivity.mBirthButton.getText().toString();
-		String breed = mActivity.mBreedSpinner.getSelectedItem().toString();
-		String size = mActivity.mSizeSpinner.getSelectedItem().toString();
-        String personality = mActivity.mPersonalitySpinner.getSelectedItem().toString();
+		int breed = (int) mActivity.mBreedSpinner.getSelectedItemId();
+        int personality = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
         boolean sterilized = mActivity.mSterilized;
         String chipCode = mActivity.mChipEditText.getText().toString();
         int gender = mActivity.mGender;
         int status = Tag.PROCESS_OWNED;
         int userId = PrefsManager.getUserId(v.getContext());
 		
-		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, size, personality, sterilized,
+		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
 		newDog.save();

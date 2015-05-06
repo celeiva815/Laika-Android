@@ -1,8 +1,11 @@
 package cl.laikachile.laika.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,17 +14,40 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.adapters.FreeTimeAdapter;
+import cl.laikachile.laika.adapters.PersonalityAdapter;
+import cl.laikachile.laika.adapters.SizeAdapter;
+import cl.laikachile.laika.adapters.SpaceAdapter;
 import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.AdoptDogForm;
+import cl.laikachile.laika.models.indexes.FreeTime;
+import cl.laikachile.laika.models.indexes.Location;
+import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.indexes.Space;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.AdoptDogFormResponse;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogFormActivity extends ActionBarActivity {
-	
-	private int mIdLayout = R.layout.lk_adopt_dog_form_activity;
+
+    public static final String TAG = AdoptDogFormActivity.class.getSimpleName();
+    private int mIdLayout = R.layout.lk_adopt_dog_form_activity;
     public Spinner mSizeSpinner;
     public Spinner mPersonalitySpinner;
     public Spinner mRegionSpinner;
@@ -29,12 +55,16 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public Spinner mHomeSpinner;
     public EditText mPartnersEditText;
     public Spinner mFreeTimeSpinner;
+    public RadioGroup mKidsRadioGroup;
+    public RadioGroup mElderlyRadioGroup;
+    public RadioGroup mPetsRadioGroup;
     public Button mSearchButton;
     public Location mLocation;
     public int mGender;
     public boolean mKids;
     public boolean mElderly;
     public boolean mPets;
+    public ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,24 +112,32 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
         mPartnersEditText = (EditText) findViewById(R.id.partners_dog_form_edittext);
         mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
+        mKidsRadioGroup = (RadioGroup) findViewById(R.id.kids_dog_form_radiogroup);
+        mElderlyRadioGroup = (RadioGroup) findViewById(R.id.elderly_dog_form_radiogroup);
+        mPetsRadioGroup = (RadioGroup) findViewById(R.id.pets_dog_form_radiogroup);
         mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
 
         //Adapters creation
-        ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.dog_size_adopt));
-        ArrayAdapter<String> personalityAdapter = new ArrayAdapter<String>(
-                this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.personality_adopt));
+        SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                getSizes());
+
+        PersonalityAdapter personalityAdapter = new PersonalityAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                getPersonalities());
+
+        SpaceAdapter spaceAdapter = new SpaceAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                getSpaces(getApplicationContext()));
+
+        FreeTimeAdapter freeTimeAdapter = new FreeTimeAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                getFreeTimes(getApplicationContext()));
+
         ArrayAdapter<String> regionAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.available_chilean_regions));
-        ArrayAdapter<String> spaceAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.home_size_adopt));
-        ArrayAdapter<String> freeTimeAdapter = new ArrayAdapter<String>(
-                this.getApplicationContext(),R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.free_time_adopt));
+
         SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
 
         //Setting the adapters
@@ -128,13 +166,30 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
     }
 
+    public void requestDogsForAdoption(AdoptDogForm adoptDogForm) {
+
+        mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this,
+                "Espera un momento", "Estamos buscando mascotas que se adecúen a tu perfil");
+
+        JSONObject jsonParams = adoptDogForm.getJsonObject();
+        AdoptDogFormResponse response = new AdoptDogFormResponse(this);
+
+        Request adoptDogRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
+                RequestManager.METHOD_POST, response, response,
+                PrefsManager.getUserToken(getApplicationContext()));
+
+        VolleyManager.getInstance(getApplicationContext())
+                .addToRequestQueue(adoptDogRequest, TAG);
+
+    }
+
     public void setGenderFormRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         this.mGender = Tag.GENDER_BOTH;
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.male_dog_form_radiobutton:
                 if (checked) {
                     mGender = Tag.GENDER_MALE;
@@ -161,7 +216,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         this.mKids = false;
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.yes_kid_dog_form_radiobutton:
                 if (checked) {
                     mKids = true;
@@ -183,7 +238,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         this.mElderly = false;
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.yes_elderly_dog_form_radiobutton:
                 if (checked) {
                     mElderly = true;
@@ -204,10 +259,11 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         this.mPets = false;
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.yes_pet_dog_form_radiobutton:
                 if (checked) {
                     mPets = true;
+
                 }
                 break;
 
@@ -218,4 +274,22 @@ public class AdoptDogFormActivity extends ActionBarActivity {
                 break;
         }
     }
+
+    public List<Size> getSizes() {
+        return Size.getSizes();
+    }
+
+    public List<Personality> getPersonalities() {
+        return Personality.getPersonalities();
+    }
+
+    public List<Space> getSpaces(Context context) {
+        return Space.getSpaces(context);
+    }
+
+    public List<FreeTime> getFreeTimes(Context context) {
+
+        return FreeTime.getFreeTimes(context);
+    }
+
 }

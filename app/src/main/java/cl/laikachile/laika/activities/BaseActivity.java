@@ -67,7 +67,6 @@ public class BaseActivity extends ActionBarActivity
     }
 
 
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
@@ -75,7 +74,7 @@ public class BaseActivity extends ActionBarActivity
 
         Intent intent;
 
-        if(Do.isLoggedIn(this)){
+        if (Do.isLoggedIn(this)) {
             //Logged in menu
             switch (position) {
                 case 0: // Añadir nueva mascota
@@ -111,39 +110,9 @@ public class BaseActivity extends ActionBarActivity
 
                     break;
             }
-        } else {
-            //Logged out menu
-            switch (position) {
-                case 0:
-                    Do.changeActivity(getApplicationContext(), MyDogsActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    break;
 
-                case 1:
-                    Do.changeActivity(getApplicationContext(), NewDogRegisterActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    break;
-
-                case 2:
-                    Do.changeActivity(getApplicationContext(), GiveInAdoptionActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    break;
-
-                case 3:
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
-
-                case 4:
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
-
-                default:
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
-            }
         }
     }
-
     public void setActivityView(View view) {
 
     }

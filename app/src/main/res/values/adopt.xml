@@ -2,35 +2,36 @@
 <resources>
     <string-array name="home_size_adopt">
         <item>Departamento pequeño</item>
-		<item>Departamento mediano</item>
-		<item>Departamento grande</item>
-		<item>Casa pequeña</item>
-		<item>Casa mediana</item>
-		<item>Casa grande</item>
-		<item>Parcela abierta</item>
+        <item>Departamento mediano</item>
+        <item>Departamento grande</item>
+        <item>Casa pequeña</item>
+        <item>Casa mediana</item>
+        <item>Casa grande</item>
+        <item>Parcela abierta</item>
         <item>Parcela con cerco perimetral</item>
     </string-array>
-	    
+
     <string-array name="free_time_adopt">
         <item>0 a 2 horas</item>
         <item>2 a 3 horas</item>
         <item>3 a 4 horas</item>
-		<item>4 a 5 horas</item>
-		<item>6 o más horas</item>
+        <item>4 a 5 horas</item>
+        <item>6 o más horas</item>
     </string-array>
-        
+
     <string-array name="dog_size_adopt">
         <item>Muy pequeño</item>
-		<item>Pequeño</item>
-		<item>Mediano</item>
-		<item>Grande</item>
-		<item>Muy grande</item>
-	</string-array>
-        
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
+        <item>Muy grande</item>
+    </string-array>
+
     <string-array name="personality_adopt">
-            <item>Tímido</item>
-            <item>Sociable</item>
-            <item>Juguetón</item>
-            <item>Guardián</item>
-	</string-array>
+        <item>Otro</item>
+        <item>Tímido</item>
+        <item>Sociable</item>
+        <item>Juguetón</item>
+        <item>Guardián</item>
+    </string-array>
 </resources>

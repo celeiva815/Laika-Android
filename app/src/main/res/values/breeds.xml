@@ -10,6 +10,7 @@
 		<item>Lulú de Pomerania</item>
 		<item>Yorshire Terrier</item>
 		<item>Fox Terrier Toy </item>
+		<item>Otro</item>
     </string-array>
     
     <string-array name="small_breed">
@@ -47,6 +48,7 @@
 		<item>Volpino Italiano</item>
 		<item>West Highland</item>
 		<item>Yorkshire Terrier</item>
+		<item>Otro</item>
     </string-array>
     
     <string-array name="middle_breed">
@@ -74,6 +76,7 @@
 		<item>Spaniel Ruso</item>
 		<item>Staffordshire Bull Terrier</item>
 		<item>Terrier Irlandés</item>
+		<item>Otro</item>
     </string-array>
     
     <string-array name="big_breed">
@@ -103,6 +106,7 @@
 		<item>Rottweiler</item>
 		<item>Samoyedo </item>
 		<item>Setter Inglés</item>
+		<item>Otro</item>
     </string-array>
     
     <string-array name="bigger_breed">
@@ -123,6 +127,7 @@
 		<item>Komondor</item>
 		<item>Borzoi</item>
 		<item>Bullmastiff</item>
-		<item>Lebrel Irlandés</item>        
+		<item>Lebrel Irlandés</item>
+		<item>Otro</item>
     </string-array>
 </resources>

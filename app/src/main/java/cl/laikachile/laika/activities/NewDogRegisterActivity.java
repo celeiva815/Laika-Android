@@ -2,6 +2,7 @@ package cl.laikachile.laika.activities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -20,9 +21,16 @@ import android.widget.Spinner;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.adapters.BreedAdapter;
+import cl.laikachile.laika.adapters.PersonalityAdapter;
+import cl.laikachile.laika.adapters.SizeAdapter;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
 import cl.laikachile.laika.listeners.AddDogOnClickListener;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
+import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
@@ -31,9 +39,11 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
     public static final String KEY_DOG_ID = "dog_id";
     protected int mIdLayout = R.layout.lk_new_dog_register_activity;
 
+    public Dog mDog;
     public EditText mNameEditText;
     public Spinner mSizeSpinner;
     public Spinner mBreedSpinner;
+    public BreedAdapter mBreedAdapter;
     public Button mBirthButton;
     public Spinner mPersonalitySpinner;
     public EditText mChipEditText;
@@ -46,6 +56,8 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
     public boolean mChip;
     public String mChipCode;
     public String mDate;
+
+    public boolean mIsSizeSelected = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +108,13 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
         mChipRadioGroup =(RadioGroup) findViewById(R.id.chip_new_dog_register_radiogroup);
         mAddButton = (Button) findViewById(R.id.add_dog_new_dog_register_button);
 
-        ArrayAdapter<String> sizeAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getSizeList());
-        ArrayAdapter<String> breedAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getBreedList(mSizeSpinner));
-        ArrayAdapter<String> personalityAdapter = new ArrayAdapter<String>(this.getApplicationContext(), R.layout.ai_simple_textview_for_adapter, getPersonalityList());
-        ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(mBreedSpinner);
+        SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getSizeList());
+        mBreedAdapter = new BreedAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getBreedList(mSizeSpinner));
+        PersonalityAdapter personalityAdapter = new PersonalityAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getPersonalityList());
+        ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(this);
         AddDogOnClickListener addListener = new AddDogOnClickListener(this);
 
         final Calendar calendar = Calendar.getInstance();
@@ -122,7 +137,7 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
         mBirthButton.setText(mDate);
 
         mSizeSpinner.setAdapter(sizeAdapter);
-        mBreedSpinner.setAdapter(breedAdapter);
+        mBreedSpinner.setAdapter(mBreedAdapter);
         mSizeSpinner.setOnItemSelectedListener(breedListener);
         mPersonalitySpinner.setAdapter(personalityAdapter);
 
@@ -134,57 +149,22 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
 
     }
 
-    protected String[] getPersonalityList() {
+    public List<Personality> getPersonalityList() {
 
-        return this.getResources().getStringArray(R.array.personality_adopt);
+        return Personality.getPersonalities();
     }
 
 
-    protected ArrayList<String> getSizeList() {
+    public List<Size> getSizeList() {
 
-        ArrayList<String> sizeList = new ArrayList<String>();
-        sizeList.add(Do.getRString(getApplicationContext(), R.string.smaller_new_dog_register));
-        sizeList.add(Do.getRString(getApplicationContext(), R.string.small_new_dog_register));
-        sizeList.add(Do.getRString(getApplicationContext(), R.string.middle_new_dog_register));
-        sizeList.add(Do.getRString(getApplicationContext(), R.string.big_new_dog_register));
-        sizeList.add(Do.getRString(getApplicationContext(), R.string.bigger_new_dog_register));
-
-        return sizeList;
+        return Size.getSizes();
     }
 
-    protected String[] getBreedList(Spinner sizeSpinner) {
+    public List<Breed> getBreedList(Spinner sizeSpinner) {
 
-        int position = sizeSpinner.getSelectedItemPosition();
-        int resource;
+        int sizeId = (int) sizeSpinner.getSelectedItemId();
 
-        switch (position) {
-            case 0:
-
-                resource = R.array.smaller_breed;
-
-                break;
-            case 1:
-                resource = R.array.small_breed;
-
-                break;
-            case 2:
-                resource = R.array.middle_breed;
-
-                break;
-            case 3:
-
-                resource = R.array.big_breed;
-                break;
-            case 4:
-
-                resource = R.array.bigger_breed;
-                break;
-            default:
-                resource = R.array.smaller_breed;
-                break;
-        }
-
-        return getResources().getStringArray(resource);
+        return Breed.getBreeds(sizeId);
 
     }
 

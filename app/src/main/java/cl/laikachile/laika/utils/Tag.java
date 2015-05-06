@@ -38,7 +38,6 @@ public class Tag {
     public static final int ASSISTANCE_REFUSE = 2;
     public static final int ASSISTANCE_NOT_ANSWERED = 3;
 
-
     //Picker
     public static final String TIME_PICKER = "time_picker";
     public static final String DATE_PICKER = "date_picker";
@@ -48,13 +47,46 @@ public class Tag {
     public static final String REGION_METROPOLITANA = "Región Metropolitana de Santiago";
     public static final String REGION_VALPARAISO = "Valparaíso";
 
-    //TIP
+    //Tip
     public static final int TIP_FOOD = 1;
     public static final int TIP_HEALTH = 2;
     public static final int TIP_HYGIENE = 3;
     public static final int TIP_WALK = 4;
 
+    //Size
+    public static final int SIZE_SMALLER = 1;
+    public static final int SIZE_SMALL = 2;
+    public static final int SIZE_MIDDLE = 3;
+    public static final int SIZE_BIG = 4;
+    public static final int SIZE_BIGGER = 5;
+
+    //Personalities
+    public static final int PERSONALITY_OTHER = 0;
+    public static final int PERSONALITY_SHY = 1;
+    public static final int PERSONALITY_SOCIAL = 2;
+    public static final int PERSONALITY_PLAYER = 3;
+    public static final int PERSONALITY_KEEPER = 4;
+
+    //Home Space
+    public static final int SPACE_APARTMENT_SMALL= 1;
+    public static final int SPACE_APARTMENT_MIDDLE= 2;
+    public static final int SPACE_APARTMENT_BIG= 3;
+    public static final int SPACE_HOUSE_SMALL= 4;
+    public static final int SPACE_HOUSE_MIDDLE= 5;
+    public static final int SPACE_HOUSE_BIG= 6;
+    public static final int SPACE_PLOT_OPEN= 7;
+    public static final int SPACE_PLOT_CLOSE= 8;
+
+    //Free-Time
+    public static final int TIME_ZERO= 0;
+    public static final int TIME_MIN= 1;
+    public static final int TIME_NORMAL= 2;
+    public static final int TIME_GREAT= 3;
+    public static final int TIME_MAX= 4;
+
     //MISC
     public static final int NONE = 0;
     public static final int LIMIT = 5;
+
+
 }

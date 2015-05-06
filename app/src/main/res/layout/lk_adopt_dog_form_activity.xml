@@ -57,7 +57,8 @@
            android:gravity="center"
            android:text="@string/whatever_adopt_dog_form"
            android:textColor="#fff"
-           android:onClick="setGenderFormRadioButtonClicked"/>
+           android:onClick="setGenderFormRadioButtonClicked"
+           android:checked="true" />
        
     </RadioGroup>
 
@@ -163,7 +164,10 @@
         android:textSize="20sp"
         android:textColor="@color/dark_white_font"
         android:inputType="number"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:text="0"
+        android:paddingLeft="5dp"
+        android:padding="3dp" />
 
     <TextView
         android:id="@+id/textView15"
@@ -178,7 +182,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_gravity="center_horizontal|top"
+        android:id="@+id/kids_dog_form_radiogroup">
 
         <RadioButton
             android:id="@+id/yes_kid_dog_form_radiobutton"
@@ -198,7 +203,8 @@
             android:text="@string/no_adopt_dog_form"
             android:textColor="#fff"
             android:layout_marginLeft="10dp"
-            android:onClick="setKidsRadioButtonClicked"/>
+            android:onClick="setKidsRadioButtonClicked"
+            android:checked="true" />
 
     </RadioGroup>
 
@@ -215,7 +221,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_gravity="center_horizontal|top"
+        android:id="@+id/elderly_dog_form_radiogroup">
 
         <RadioButton
             android:id="@+id/yes_elderly_dog_form_radiobutton"
@@ -235,7 +242,8 @@
             android:text="@string/no_adopt_dog_form"
             android:textColor="#fff"
             android:layout_marginLeft="10dp"
-            android:onClick="setElderlyRadioButtonClicked"/>
+            android:onClick="setElderlyRadioButtonClicked"
+            android:checked="true" />
 
     </RadioGroup>
 
@@ -252,7 +260,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_gravity="center_horizontal|top"
+        android:id="@+id/pets_dog_form_radiogroup">
 
         <RadioButton
             android:id="@+id/yes_pet_dog_form_radiobutton"
@@ -272,7 +281,8 @@
             android:text="@string/no_adopt_dog_form"
             android:textColor="#fff"
             android:layout_marginLeft="10dp"
-            android:onClick="setPetsRadioButtonClicked"/>
+            android:onClick="setPetsRadioButtonClicked"
+            android:checked="true" />
 
     </RadioGroup>
 

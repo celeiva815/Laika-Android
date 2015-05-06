@@ -96,19 +96,19 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	this.mDogs = new ArrayList<Dog>();
     	
     	//XXX hardcoded
-        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013","Mestizo",1,"Grande","Juguetón",true, false,"", Tag.PROCESS_ADOPTED,1000);
+        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013",69,1,Tag.PERSONALITY_PLAYER,true, false,"", Tag.PROCESS_ADOPTED,1000);
     	blanquito.mImage = R.drawable.lk_blanquito_picture;
         blanquito.save();
 
-    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013","Mestizo",2,"Mediano","Sociable",true, true,"", Tag.PROCESS_ADOPTED,1001);
+    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013",9,2,Tag.PERSONALITY_SOCIAL,true, true,"", Tag.PROCESS_ADOPTED,1001);
         pulguita.mImage = R.drawable.lk_miko_picture;
         pulguita.save();
 
-    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014","Mestizo",2,"Mediano","Sociable",true, false,"", Tag.PROCESS_ADOPTED,1002);
+    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014",44,2,Tag.PERSONALITY_SOCIAL,true, false,"", Tag.PROCESS_ADOPTED,1002);
         filipa.mImage = R.drawable.lk_milo_picture;
         filipa.save();
 
-    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014","Mestizo",2,"Mediano","Sociable",true, true,"", Tag.PROCESS_ADOPTED,1003);
+    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014",9,2,Tag.PERSONALITY_SOCIAL,true, true,"", Tag.PROCESS_ADOPTED,1003);
         alba.mImage = R.drawable.lk_lolo_picture;
         alba.save();
 

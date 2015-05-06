@@ -193,15 +193,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GiveInAdoptionActivity"
-            android:exported="false"
-            android:label="@string/give_in_adoption_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activities.StoriesActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
