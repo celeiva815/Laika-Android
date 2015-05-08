@@ -8,6 +8,7 @@ import java.util.List;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -15,9 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.utils.DB;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
@@ -304,6 +302,12 @@ public class Dog extends Model {
 
         String condition = COLUMN_STATUS + DB.EQUALS + process;
         return new Select().from(Dog.class).where(condition).execute();
+
+    }
+
+    public static void deleteAll() {
+
+        new Delete().from(Dog.class).execute();
 
     }
 }

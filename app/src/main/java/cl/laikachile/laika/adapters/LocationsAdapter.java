@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.models.indexes.Location;
+import cl.laikachile.laika.models.Location;
 
 public class LocationsAdapter extends ArrayAdapter<Location> {
 

@@ -167,5 +167,8 @@ public class Tip extends Model {
         return new Select().from(Tip.class).where(condition).exists();
 
     }
-    
+
+    public static void deleteAll() {
+
+    }
 }

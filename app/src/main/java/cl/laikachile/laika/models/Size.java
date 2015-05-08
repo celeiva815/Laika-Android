@@ -1,4 +1,4 @@
-package cl.laikachile.laika.models.indexes;
+package cl.laikachile.laika.models;
 
 import android.content.Context;
 

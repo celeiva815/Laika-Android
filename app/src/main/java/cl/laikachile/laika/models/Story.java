@@ -167,6 +167,10 @@ public class Story extends Model {
         return new Select().from(Story.class).where(condition).exists();
 
     }
+
+    public static void deleteAll() {
+
+    }
 }
 
 

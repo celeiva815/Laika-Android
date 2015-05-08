@@ -1,17 +1,14 @@
 package cl.laikachile.laika.activities;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -24,13 +21,12 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.BreedAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
-import cl.laikachile.laika.fragments.PlaceHolderFragment;
 import cl.laikachile.laika.listeners.AddDogOnClickListener;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.Breed;
+import cl.laikachile.laika.models.Personality;
+import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 

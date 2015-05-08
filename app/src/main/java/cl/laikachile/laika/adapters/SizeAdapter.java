@@ -4,14 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.Size;
 
 /**
  * Created by Tito_Leiva on 04-05-15.
@@ -23,7 +21,7 @@ public class SizeAdapter extends BaseAdapter {
     public int mIdLayout;
     public int mIdTextview;
 
-    public SizeAdapter(Context context, int resource, int textViewResourceId, List objects) {
+    public SizeAdapter(Context context, int resource, int textViewResourceId, List<Size> objects) {
 
         mContext = context;
         mIdLayout = resource;

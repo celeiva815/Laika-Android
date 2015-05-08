@@ -10,9 +10,9 @@ import cl.laikachile.laika.adapters.PersonalityAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
 import cl.laikachile.laika.listeners.EditDogOnClickListener;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.Breed;
+import cl.laikachile.laika.models.Personality;
+import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 

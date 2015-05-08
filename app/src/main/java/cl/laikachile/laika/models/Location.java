@@ -1,4 +1,4 @@
-package cl.laikachile.laika.models.indexes;
+package cl.laikachile.laika.models;
 
 import android.content.Context;
 
@@ -84,9 +84,7 @@ public class Location extends Model {
     public static List<Location> getLocation(String region) {
 
         String clause = COLUMN_STATE + DB._EQUALS_QUESTION;
-        List<Location> locations = new Select().from(Location.class).where(clause, region).execute();
-
-        return locations;
+        return new Select().from(Location.class).where(clause, region).execute();
 
     }
 }

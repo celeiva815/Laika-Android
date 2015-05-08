@@ -3,7 +3,7 @@ package cl.laikachile.laika.listeners;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.NewDogRegisterActivity;
 import cl.laikachile.laika.adapters.BreedAdapter;
-import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.Breed;
 
 import android.view.View;
 import android.widget.AdapterView;

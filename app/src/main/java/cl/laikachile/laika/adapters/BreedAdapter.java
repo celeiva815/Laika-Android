@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.Breed;
 
 /**
  * Created by Tito_Leiva on 04-05-15.
@@ -21,7 +21,7 @@ public class BreedAdapter extends BaseAdapter {
     public int mIdLayout;
     public int mIdTextview;
 
-    public BreedAdapter(Context context, int resource, int textViewResourceId, List objects) {
+    public BreedAdapter(Context context, int resource, int textViewResourceId, List<Breed> objects) {
 
         mContext = context;
         mIdLayout = resource;

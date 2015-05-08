@@ -3,6 +3,7 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -204,6 +205,10 @@ public class Event extends Model {
         String condition = COLUMN_EVENT_ID + DB.EQUALS + event.mEventId;
 
         return new Select().from(Event.class).where(condition).exists();
+
+    }
+
+    public static void deleteAll() {
 
     }
 }

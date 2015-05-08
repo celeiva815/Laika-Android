@@ -5,10 +5,11 @@ package cl.laikachile.laika.utils;
  */
 public class DB {
 
-    public final static String _IN_ = " IN ";
+    public final static String IN = " IN ";
     public final static String AND = " AND ";
-    public final static String _OR_ = " OR ";
+    public final static String OR = " OR ";
     public final static String EQUALS = " = ";
+    public final static String NOT_EQUALS = " != ";
     public final static String _EQUALS_QUESTION = " = ?";
     public final static String ORDER_BY = "ORDER BY";
     public final static String TRUE = "1";

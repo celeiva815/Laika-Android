@@ -2,7 +2,6 @@ package cl.laikachile.laika.network.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -12,12 +11,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.LoginActivity;
-import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.models.Owner;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.Breed;
+import cl.laikachile.laika.models.Personality;
+import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyErrorHelper;
 import cl.laikachile.laika.network.VolleyManager;
@@ -60,8 +57,8 @@ public class ResponseHandler {
 
         if (!PrefsManager.isUserLoggedIn(context)) {
 
-            String fullName = "", email = "", token = "";
-            int userId = 0;
+            String fullName, email, token;
+            int userId;
 
             try {
 

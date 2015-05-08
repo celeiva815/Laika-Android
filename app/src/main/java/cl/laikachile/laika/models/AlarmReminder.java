@@ -5,6 +5,7 @@ import android.content.Context;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -392,9 +393,7 @@ public class AlarmReminder extends Model {
     public static List<AlarmReminder> getDogReminders(int dogId) {
 
         String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
-        List<AlarmReminder> reminders = new Select().from(AlarmReminder.class).where(condition).execute();
-
-        return reminders;
+        return new Select().from(AlarmReminder.class).where(condition).execute();
     }
 
     public static List<AlarmReminder> getAllReminders() {
@@ -405,8 +404,12 @@ public class AlarmReminder extends Model {
     public static AlarmReminder getSingleReminder(int reminderId) {
 
         String condition = AlarmReminder.COLUMN_ALARM_REMINDER_ID + DB.EQUALS + reminderId;
-        AlarmReminder reminder = new Select().from(AlarmReminder.class).where(condition).executeSingle();
+        return new Select().from(AlarmReminder.class).where(condition).executeSingle();
+    }
 
-        return reminder;
+    public static void deleteAlarmReminders() {
+
+        new Delete().from(AlarmReminder.class).execute();
+
     }
 }

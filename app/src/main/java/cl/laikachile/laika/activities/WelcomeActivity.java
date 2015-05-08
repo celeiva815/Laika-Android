@@ -11,11 +11,7 @@ import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.SimpleFragment;
 import cl.laikachile.laika.listeners.ToLoginActivityOnCLickListener;
 import cl.laikachile.laika.listeners.ToMainActivityOnCLickListener;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.utils.PrefsManager;
-import cl.laikachile.laika.utils.Tag;
 
 public class WelcomeActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

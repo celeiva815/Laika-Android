@@ -5,6 +5,7 @@ import android.content.Context;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -122,16 +123,18 @@ public class CalendarReminder extends Model {
     public static List<CalendarReminder> getDogReminders(int dogId) {
 
         String condition = CalendarReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
-        List<CalendarReminder> reminders = new Select().from(CalendarReminder.class).where(condition).execute();
-
-        return reminders;
+        return new Select().from(CalendarReminder.class).where(condition).execute();
     }
 
     public static CalendarReminder getSingleReminder(int reminderId) {
 
         String condition = CalendarReminder.COLUMN_CALENDAR_REMINDER_ID + DB.EQUALS + reminderId;
-        CalendarReminder reminder = new Select().from(CalendarReminder.class).where(condition).executeSingle();
+        return new Select().from(CalendarReminder.class).where(condition).executeSingle();
+    }
 
-        return reminder;
+    public static void deleteAll() {
+
+        new Delete().from(CalendarReminder.class).execute();
+
     }
 }

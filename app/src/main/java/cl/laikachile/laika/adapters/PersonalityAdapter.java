@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.Personality;
 
 /**
  * Created by Tito_Leiva on 04-05-15.
@@ -21,7 +21,7 @@ public class PersonalityAdapter extends BaseAdapter {
     public int mIdLayout;
     public int mIdTextview;
 
-    public PersonalityAdapter(Context context, int resource, int textViewResourceId, List objects) {
+    public PersonalityAdapter(Context context, int resource, int textViewResourceId, List<Personality> objects) {
 
         mContext = context;
         mIdLayout = resource;

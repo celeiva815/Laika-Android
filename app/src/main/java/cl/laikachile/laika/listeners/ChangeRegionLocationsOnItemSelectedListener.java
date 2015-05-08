@@ -7,7 +7,7 @@ import android.widget.Spinner;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.LocationsAdapter;
-import cl.laikachile.laika.models.indexes.Location;
+import cl.laikachile.laika.models.Location;
 
 public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelectedListener{
 

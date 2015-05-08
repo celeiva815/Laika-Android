@@ -20,16 +20,11 @@ import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ToActivityOnCLickListener;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.FirstInformationResponse;
 import cl.laikachile.laika.responses.LoginResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
-import cl.laikachile.laika.utils.Tag;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -122,7 +117,7 @@ public class LoginActivity extends ActionBarActivity {
         mLoginProgressBar.setVisibility(View.VISIBLE);
         enableViews(false);
 
-        Map<String, String> params = new HashMap<String, String>(2);
+        Map<String, String> params = new HashMap<>(2);
         params.put(API_EMAIL, email);
         params.put(API_PASSWORD, password);
 

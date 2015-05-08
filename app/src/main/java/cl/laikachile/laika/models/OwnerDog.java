@@ -3,6 +3,7 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -51,9 +52,7 @@ public class OwnerDog extends Model {
     public static List<OwnerDog> getOwnerDogs(Dog dog) {
 
         String condition = COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
-        List<OwnerDog> ownerDogs = new Select().from(OwnerDog.class).where(condition).execute();
-
-        return ownerDogs;
+        return new Select().from(OwnerDog.class).where(condition).execute();
     }
 
     public static void createOrUpdate(OwnerDog ownerDog) {
@@ -76,6 +75,11 @@ public class OwnerDog extends Model {
 
         return new Select().from(OwnerDog.class).where(condition).executeSingle();
 
+    }
+
+    public static void deleteAll() {
+
+        new Delete().from(OwnerDog.class).execute();
     }
 }
 

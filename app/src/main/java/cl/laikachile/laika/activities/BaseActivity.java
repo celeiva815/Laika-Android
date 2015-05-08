@@ -9,9 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.activeandroid.Model;
+
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
+import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Publication;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -74,45 +77,42 @@ public class BaseActivity extends ActionBarActivity
 
         Intent intent;
 
-        if (Do.isLoggedIn(this)) {
-            //Logged in menu
-            switch (position) {
-                case 0: // Añadir nueva mascota
-                    Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    break;
+        switch (position) {
+            case 0: // Añadir nueva mascota
+                Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                break;
 
-                case 1: // Mis postulaciones
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
+            case 1: // Mis postulaciones
+                Do.showToast("Por implementar", this.getApplicationContext());
+                break;
 
-                case 2: // Favoritos
+            case 2: // Favoritos
 
-                    intent = new Intent(this.getApplicationContext(), PublicationsActivity.class);
-                    intent.putExtra(PublicationsActivity.KEY_FAVORITE, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    break;
+                intent = new Intent(this.getApplicationContext(), PublicationsActivity.class);
+                intent.putExtra(PublicationsActivity.KEY_FAVORITE, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
 
-                case 3: // Mi perfil
-                    Do.showToast("Por implementar", this.getApplicationContext());
-                    break;
+            case 3: // Mi perfil
+                Do.showToast("Por implementar", this.getApplicationContext());
+                break;
 
-                case 4: // Cerrar Sesión
-                    PrefsManager.clearPrefs(getApplicationContext());
-                    Do.changeActivity(this.getApplicationContext(), LoginActivity.class,
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-                    break;
+            case 4: // Cerrar Sesión
+                PrefsManager.clearPrefs(getApplicationContext());
+                Do.changeActivity(this.getApplicationContext(), LoginActivity.class,
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                break;
 
-                default:
-                    intent = new Intent(this.getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+            default:
+                intent = new Intent(this.getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
-                    break;
-            }
-
+                break;
         }
     }
+
     public void setActivityView(View view) {
 
     }
@@ -122,5 +122,10 @@ public class BaseActivity extends ActionBarActivity
         //FIXME agregar la clase hija
         mFragment = new PlaceHolderFragment(layoutId, this);
         getFragmentManager().beginTransaction().add(R.id.container, mFragment).commit();
+    }
+
+    private void clearDataBase() {
+
+
     }
 }

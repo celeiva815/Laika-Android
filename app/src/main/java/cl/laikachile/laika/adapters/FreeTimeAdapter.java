@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import cl.laikachile.laika.models.indexes.FreeTime;
-import cl.laikachile.laika.models.indexes.Size;
 
 /**
  * Created by Tito_Leiva on 04-05-15.
@@ -22,7 +21,7 @@ public class FreeTimeAdapter extends BaseAdapter {
     public int mIdLayout;
     public int mIdTextview;
 
-    public FreeTimeAdapter(Context context, int resource, int textViewResourceId, List objects) {
+    public FreeTimeAdapter(Context context, int resource, int textViewResourceId, List<FreeTime> objects) {
 
         mContext = context;
         mIdLayout = resource;

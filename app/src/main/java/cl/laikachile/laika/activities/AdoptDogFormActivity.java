@@ -31,9 +31,9 @@ import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener
 import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
 import cl.laikachile.laika.models.AdoptDogForm;
 import cl.laikachile.laika.models.indexes.FreeTime;
-import cl.laikachile.laika.models.indexes.Location;
-import cl.laikachile.laika.models.indexes.Personality;
-import cl.laikachile.laika.models.indexes.Size;
+import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.Personality;
+import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.models.indexes.Space;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
