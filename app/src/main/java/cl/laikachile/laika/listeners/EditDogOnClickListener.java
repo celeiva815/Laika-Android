@@ -25,11 +25,11 @@ public class EditDogOnClickListener implements OnClickListener {
 		mDog.mName = mActivity.mNameEditText.getText().toString();
         mDog.mBirth = mActivity.mBirthButton.getText().toString();
         mDog.mBreedId = (int) mActivity.mBreedSpinner.getSelectedItemId();
-        mDog.mPersonalityId = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
-        mDog.mSterilized = mActivity.mSterilized;
+        mDog.mPersonality = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
+        mDog.mIsSterilized = mActivity.mSterilized;
         mDog.mChipCode = mActivity.mChipEditText.getText().toString();
         mDog.mGender = mActivity.mGender;
-        mDog.mStatus = Tag.PROCESS_OWNED;
+        mDog.mStatus = Tag.DOG_OWNED;
 
 		mDog.save();
 		

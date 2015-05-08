@@ -37,10 +37,12 @@ public class Breed extends Model {
     public Breed() { }
 
     public Breed(int mBreedId, int mBreedNumber, int mSizeId, String mName) {
+
         this.mBreedId = mBreedId;
         this.mBreedNumber = mBreedNumber;
         this.mSizeId = mSizeId;
         this.mName = mName;
+
     }
 
     public String getSizeName() {
@@ -55,7 +57,7 @@ public class Breed extends Model {
 
     public static Breed getSingleBreed(int breedId) {
 
-        String condition = COLUMN_BREED_ID + DB._EQUALS_ + breedId;
+        String condition = COLUMN_BREED_ID + DB.EQUALS + breedId;
         return new Select().from(Breed.class).where(condition).executeSingle();
 
     }
@@ -64,7 +66,7 @@ public class Breed extends Model {
 
         if (size > 0) {
 
-            String condition = COLUMN_SIZE_ID + DB._EQUALS_ + size;
+            String condition = COLUMN_SIZE_ID + DB.EQUALS + size;
             return new Select().from(Breed.class).where(condition).execute();
 
         } else {

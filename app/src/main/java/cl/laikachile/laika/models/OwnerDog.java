@@ -5,7 +5,6 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.utils.DB;
@@ -39,13 +38,44 @@ public class OwnerDog extends Model {
         this.mRole = mRole;
     }
 
+    public void update(OwnerDog ownerDog) {
+
+        this.mOwnerId = ownerDog.mOwnerId;
+        this.mDogId = ownerDog.mDogId;
+        this.mRole = ownerDog.mRole;
+
+        this.save();
+    }
+
 
     public static List<OwnerDog> getOwnerDogs(Dog dog) {
 
-        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dog.mDogId;
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
         List<OwnerDog> ownerDogs = new Select().from(OwnerDog.class).where(condition).execute();
 
         return ownerDogs;
+    }
+
+    public static void createOrUpdate(OwnerDog ownerDog) {
+
+        OwnerDog oldOwnerDog = getSingleOwnerDog(ownerDog.mDogId, ownerDog.mOwnerId);
+
+        if (oldOwnerDog == null) {
+            ownerDog.save();
+
+        } else {
+            oldOwnerDog.update(ownerDog);
+
+        }
+    }
+
+    public static OwnerDog getSingleOwnerDog(int dogId, int ownerId) {
+
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
+        condition += DB.AND + COLUMN_OWNER_ID + DB.EQUALS + ownerId;
+
+        return new Select().from(OwnerDog.class).where(condition).executeSingle();
+
     }
 }
 

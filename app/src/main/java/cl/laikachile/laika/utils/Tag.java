@@ -6,9 +6,11 @@ package cl.laikachile.laika.utils;
 public class Tag {
 
     //Dog
-    public static final int PROCESS_ADOPTED = 1;
-    public static final int PROCESS_OWNED = 2;
-    public static final int PROCESS_POSTULATED = 3;
+    public static final int DOG_FOUNDATION = 1;
+    public static final int DOG_OWNED = 2;
+    public static final int DOG_LOST = 3;
+    public static final int DOG_DEAD = 4;
+    public static final int DOG_POSTULATED = 5;
 
     //Owners
     public static final int GENDER_MALE = 1;

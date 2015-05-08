@@ -5,18 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.LoginActivity;
 import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.models.Owner;
+import cl.laikachile.laika.models.indexes.Breed;
+import cl.laikachile.laika.models.indexes.Personality;
+import cl.laikachile.laika.models.indexes.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyErrorHelper;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.FirstInformationResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Tag;
 
 
 /**
@@ -24,6 +32,7 @@ import cl.laikachile.laika.utils.PrefsManager;
  */
 public class ResponseHandler {
 
+    public static final String TAG = ResponseHandler.class.getSimpleName();
     public final static int TYPE_SYNC = 1;
     public final static int TYPE_ASYNC = 2;
 
@@ -56,20 +65,18 @@ public class ResponseHandler {
 
             try {
 
-                fullName = response.getString(RequestManager.EMAIL);
+                fullName = response.getString(RequestManager.FULL_NAME);
                 email = response.getString(RequestManager.EMAIL);
                 token = response.getString(RequestManager.ACCESS_TOKEN);
                 userId = response.getInt(RequestManager.ID);
 
                 PrefsManager.saveUser(context, fullName, email, token, userId);
-                Do.changeActivity(activity.getApplicationContext(), MainActivity.class, activity,
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Owner userOwner = new Owner(userId, fullName, "", "", "", "",
-                        "", 1, email, "", "", "", "",
-                        "Ñuñoa", "Santiago", "Chile"); //FIXME aqui deberia ir el location_id
+                Owner userOwner = new Owner(userId, fullName, fullName, "", fullName, "", "",
+                        Tag.GENDER_MALE, email, "", 1); //FIXME solicitar los datos correctos
 
                 Owner.createOrUpdate(userOwner);
+                restartDataBase(context);
+                requestFirstInformation(context, activity);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -80,6 +87,62 @@ public class ResponseHandler {
             String message = Do.getRString(context, R.string.auth_failure_error);
             Do.showToast(message, context);
 
+        }
+    }
+
+    public static void requestFirstInformation(Context context, Activity activity) {
+
+        String token = PrefsManager.getUserToken(context);
+        FirstInformationResponse response = new FirstInformationResponse(activity);
+
+        //FIXME cambiar el address o agregar más requests
+        Request firstRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_DOGS,
+                response, response, token);
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(firstRequest, TAG);
+
+    }
+
+    public static void restartDataBase(Context context) {
+
+        Size.setSizes(context);
+        Personality.setPersonalities(context);
+
+        //FIXME hacer el metodo de la API
+        for (int i = Tag.SIZE_SMALLER, id = 1; i <= Tag.SIZE_BIGGER; i++) {
+
+            String[] breedNames;
+
+            if (i == Tag.SIZE_SMALLER) {
+                breedNames = context.getResources().getStringArray(R.array.smaller_breed);
+
+            } else if (i == Tag.SIZE_SMALL) {
+                breedNames = context.getResources().getStringArray(R.array.small_breed);
+
+            } else if (i == Tag.SIZE_MIDDLE) {
+                breedNames = context.getResources().getStringArray(R.array.middle_breed);
+
+            } else if (i == Tag.SIZE_BIG) {
+                breedNames = context.getResources().getStringArray(R.array.big_breed);
+
+            } else {
+                breedNames = context.getResources().getStringArray(R.array.bigger_breed);
+
+            }
+
+            for (int j = 0; j < breedNames.length; j++, id++) {
+
+                int number = j;
+
+                if (breedNames[j].equals("Otro")) {
+                    number = -1;
+                }
+
+                Breed breed = new Breed(id, number, i, breedNames[j]);
+                breed.save();
+
+            }
         }
     }
 }

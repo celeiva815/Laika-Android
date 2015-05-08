@@ -78,7 +78,7 @@ public class PrefsManager {
     public static Owner getLoggedOwner(Context context) {
 
         SharedPreferences prefs = getPrefs(context);
-        return Owner.getUser(prefs.getInt(PREF_USER_ID, 0));
+        return Owner.getSingleOwner(prefs.getInt(PREF_USER_ID, 0));
     }
 
     public static boolean isUserLoggedIn(Context context) {
@@ -141,11 +141,11 @@ public class PrefsManager {
 
         SharedPreferences prefs = getPrefs(context);
 
-        return prefs.getBoolean("firstboot", true);
+        return prefs.getBoolean(PREF_FIRST_BOOT, true);
 
     }
 
-    public static void setFirstBoot(Context context) {
+    public static void finishFirstBoot(Context context) {
 
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putBoolean(PREF_FIRST_BOOT, false);

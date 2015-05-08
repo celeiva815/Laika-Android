@@ -3,8 +3,6 @@ package cl.laikachile.laika.listeners;
 import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.activities.NewDogRegisterActivity;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.indexes.Breed;
-import cl.laikachile.laika.models.indexes.Personality;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -32,7 +30,7 @@ public class AddDogOnClickListener implements OnClickListener {
         boolean sterilized = mActivity.mSterilized;
         String chipCode = mActivity.mChipEditText.getText().toString();
         int gender = mActivity.mGender;
-        int status = Tag.PROCESS_OWNED;
+        int status = Tag.DOG_OWNED;
         int userId = PrefsManager.getUserId(v.getContext());
 		
 		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, personality, sterilized,

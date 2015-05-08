@@ -66,7 +66,7 @@ public class Size extends Model {
 
     public static Size getSingleSize(int size) {
 
-        String condition = COLUMN_SIZE_ID + DB._EQUALS_ + size;
+        String condition = COLUMN_SIZE_ID + DB.EQUALS + size;
         return new Select().from(Size.class).where(condition).executeSingle();
 
     }

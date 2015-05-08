@@ -193,7 +193,7 @@ public class Event extends Model {
 
     public static Event getSingleEvent(Event event) {
 
-        String condition = COLUMN_EVENT_ID + DB._EQUALS_ + event.mEventId;
+        String condition = COLUMN_EVENT_ID + DB.EQUALS + event.mEventId;
 
         return new Select().from(Event.class).where(condition).executeSingle();
 
@@ -201,7 +201,7 @@ public class Event extends Model {
 
     public static boolean isSaved(Event event) {
 
-        String condition = COLUMN_EVENT_ID + DB._EQUALS_ + event.mEventId;
+        String condition = COLUMN_EVENT_ID + DB.EQUALS + event.mEventId;
 
         return new Select().from(Event.class).where(condition).exists();
 

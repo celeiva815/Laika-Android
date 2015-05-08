@@ -1,7 +1,5 @@
 package cl.laikachile.laika.models;
 
-import android.content.Context;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -156,7 +154,7 @@ public class Tip extends Model {
 
     public static Tip getSingleTip(Tip tip) {
 
-        String condition = COLUMN_TIP_ID + DB._EQUALS_ + tip.mTipId;
+        String condition = COLUMN_TIP_ID + DB.EQUALS + tip.mTipId;
 
         return new Select().from(Tip.class).where(condition).executeSingle();
 
@@ -164,7 +162,7 @@ public class Tip extends Model {
 
     public static boolean isSaved(Tip tip) {
 
-        String condition = COLUMN_TIP_ID + DB._EQUALS_ + tip.mTipId;
+        String condition = COLUMN_TIP_ID + DB.EQUALS + tip.mTipId;
 
         return new Select().from(Tip.class).where(condition).exists();
 

@@ -6,12 +6,7 @@ import android.widget.Toast;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ToActivityOnCLickListener;
-import cl.laikachile.laika.listeners.ToDogFormOnCLickListener;
-import cl.laikachile.laika.listeners.ToEventsOnCLickListener;
 import cl.laikachile.laika.listeners.ToMyDogOnCLickListener;
-import cl.laikachile.laika.listeners.ToNewsOnCLickListener;
-import cl.laikachile.laika.listeners.ToStoriesOnCLickListener;
-import cl.laikachile.laika.listeners.ToTipsOnCLickListener;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
@@ -46,7 +41,7 @@ public class MainActivity extends BaseActivity {
                     ", ¿Cómo están tus perritos?", this.getApplicationContext(), Toast.LENGTH_LONG);
 
             // 2) Then save the state
-            PrefsManager.setFirstBoot(getApplicationContext());
+            PrefsManager.finishFirstBoot(getApplicationContext());
         }
 
         super.onStart();

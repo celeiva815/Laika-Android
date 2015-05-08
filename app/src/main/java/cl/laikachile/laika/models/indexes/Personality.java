@@ -63,7 +63,7 @@ public class Personality extends Model {
 
     public static Personality getSinglePersonality(int personalityId) {
 
-        String condition = COLUMN_PERSONALITY_ID + DB._EQUALS_ + personalityId;
+        String condition = COLUMN_PERSONALITY_ID + DB.EQUALS + personalityId;
         return new Select().from(Personality.class).where(condition).executeSingle();
     }
 }

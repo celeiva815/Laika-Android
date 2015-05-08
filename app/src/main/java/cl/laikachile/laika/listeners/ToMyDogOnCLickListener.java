@@ -11,7 +11,6 @@ import cl.laikachile.laika.utils.Tag;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +29,7 @@ public class ToMyDogOnCLickListener implements OnClickListener {
     public void onClick(View v) {
 
         Context context = v.getContext();
-        mDogs = Dog.getDogs(Tag.PROCESS_OWNED);
+        mDogs = Dog.getDogs(Tag.DOG_OWNED);
 
         if (mDogs == null || mDogs.isEmpty()) {
             Do.changeActivity(context, NewDogRegisterActivity.class);

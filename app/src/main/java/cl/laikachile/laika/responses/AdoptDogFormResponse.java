@@ -6,11 +6,10 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.AdoptDogFormActivity;
-import cl.laikachile.laika.activities.EventsActivity;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Event;
 import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -28,7 +27,7 @@ public class AdoptDogFormResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         mActivity.mProgressDialog.dismiss();
-        Dog.saveDog(response, Dog.STATUS_PUBLISH);
+        Dog.saveDogs(response, Tag.DOG_FOUNDATION);
 
     }
 

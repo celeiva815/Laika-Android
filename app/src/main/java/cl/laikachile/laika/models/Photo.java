@@ -1,11 +1,8 @@
 package cl.laikachile.laika.models;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -15,7 +12,6 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 import cl.laikachile.laika.utils.DB;
-import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 13-03-15.
@@ -106,7 +102,7 @@ public class Photo extends Model {
 
     public static List<Photo> getPhotos(int dogId) {
 
-        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dogId;
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
         return new Select().from(Photo.class).where(condition).execute();
 
     }

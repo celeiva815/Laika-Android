@@ -31,23 +31,19 @@ public class Dog extends Model {
     public final static String TABLE_NAME = "dogs";
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_NAME = "name";
-    public final static String COLUMN_BIRTHDATE = "birthdate";
+    public final static String COLUMN_BIRTHDATE = "birth";
     public final static String COLUMN_BREED_ID = "breed_id";
     public final static String COLUMN_GENDER = "gender";
-    public final static String COLUMN_PERSONALITY_ID = "personality_id";
-    public final static String COLUMN_STERILIZED = "sterilized";
+    public final static String COLUMN_PERSONALITY = "personality";
+    public final static String COLUMN_IS_STERILIZED = "is_sterilized";
     public final static String COLUMN_CHIP_CODE = "chip_code";
     public final static String COLUMN_STATUS = "status";
     public final static String COLUMN_WEIGHT = "weight";
-    public final static String COLUMN_TRAINED = "trained";
+    public final static String COLUMN_IS_TRAINED = "is_trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_OWNER_ID = "owner_id";
 
     public final static String API_DOGS = "dogs";
-
-    public final static int STATUS_OWN = 1;
-    public final static int STATUS_ADOPTED = 2;
-    public final static int STATUS_PUBLISH = 3;
 
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
@@ -64,14 +60,14 @@ public class Dog extends Model {
     @Column(name = COLUMN_GENDER)
     public int mGender;
 
-    @Column(name = COLUMN_PERSONALITY_ID)
-    public int mPersonalityId;
+    @Column(name = COLUMN_PERSONALITY)
+    public int mPersonality;
 
-    @Column(name = COLUMN_STERILIZED)
-    public boolean mSterilized;
+    @Column(name = COLUMN_IS_STERILIZED)
+    public boolean mIsSterilized;
 
-    @Column(name = COLUMN_TRAINED)
-    public boolean mTrained;
+    @Column(name = COLUMN_IS_TRAINED)
+    public boolean mIsTrained;
 
     @Column(name = COLUMN_CHIP_CODE)
     public String mChipCode;
@@ -92,7 +88,7 @@ public class Dog extends Model {
     }
 
     public Dog(int mDogId, String mName, String mBirth, int mBreedId, int mGender,
-               int mPersonalityId, boolean mSterilized, boolean mTrained, String mChipCode,
+               int mPersonality, boolean mIsSterilized, boolean mIsTrained, String mChipCode,
                int mStatus, int mOwnerId) {
 
         this.mDogId = mDogId;
@@ -100,9 +96,9 @@ public class Dog extends Model {
         this.mBirth = mBirth;
         this.mBreedId = mBreedId;
         this.mGender = mGender;
-        this.mPersonalityId = mPersonalityId;
-        this.mSterilized = mSterilized;
-        this.mTrained = mTrained;
+        this.mPersonality = mPersonality;
+        this.mIsSterilized = mIsSterilized;
+        this.mIsTrained = mIsTrained;
         this.mChipCode = mChipCode;
         this.mStatus = mStatus;
         this.mOwnerId = mOwnerId;
@@ -114,13 +110,13 @@ public class Dog extends Model {
             this.mDogId = jsonObject.getInt(COLUMN_DOG_ID);
             this.mName = jsonObject.getString(COLUMN_NAME);
             this.mBirth = jsonObject.getString(COLUMN_BIRTHDATE);
-            this.mBreedId = jsonObject.getInt(COLUMN_BREED_ID);
+            this.mBreedId = getBreedIdFromJson(jsonObject.getJSONObject("breed")); //FIXME
             this.mGender = jsonObject.getInt(COLUMN_GENDER);
-            this.mPersonalityId = jsonObject.getInt(COLUMN_PERSONALITY_ID);
-            this.mSterilized = jsonObject.getBoolean(COLUMN_STERILIZED);
-            this.mTrained = jsonObject.getBoolean(COLUMN_TRAINED);
-            this.mChipCode = jsonObject.getString(COLUMN_CHIP_CODE);
-            this.mStatus = status;
+            this.mPersonality = jsonObject.getInt(COLUMN_PERSONALITY);
+            this.mIsSterilized = jsonObject.getBoolean(COLUMN_IS_STERILIZED);
+            this.mIsTrained = jsonObject.getBoolean(COLUMN_IS_TRAINED);
+            this.mChipCode = Boolean.toString(jsonObject.getBoolean(COLUMN_CHIP_CODE));//jsonObject.getString(COLUMN_CHIP_CODE);
+            this.mStatus = jsonObject.getInt(COLUMN_STATUS);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -134,9 +130,9 @@ public class Dog extends Model {
         this.mBirth = dog.mBirth;
         this.mBreedId = dog.mBreedId;
         this.mGender = dog.mGender;
-        this.mPersonalityId = dog.mPersonalityId;
-        this.mSterilized = dog.mSterilized;
-        this.mTrained = dog.mTrained;
+        this.mPersonality = dog.mPersonality;
+        this.mIsSterilized = dog.mIsSterilized;
+        this.mIsTrained = dog.mIsTrained;
         this.mChipCode = dog.mChipCode;
         this.mStatus = dog.mStatus;
         this.mOwnerId = dog.mOwnerId;
@@ -166,28 +162,6 @@ public class Dog extends Model {
         return Integer.toString(age) + " años";
     }
 
-    public String getNameAndStatus() {
-
-        switch (mStatus) {
-            case Dog.STATUS_OWN:
-
-                return this.mName;
-
-            case Dog.STATUS_ADOPTED:
-
-                return this.mName + " - (Adoptado)";
-
-            case Dog.STATUS_PUBLISH:
-
-                return this.mName + " - (En adopción)";
-
-            default:
-
-                return this.mName;
-        }
-
-    }
-
     public void addOwner(Owner owner, int role) {
 
         OwnerDog ownerDog = new OwnerDog(owner.mOwnerId, this.mDogId, role);
@@ -215,7 +189,7 @@ public class Dog extends Model {
 
     public String getSterilized(Context context) {
 
-        if (mSterilized) {
+        if (mIsSterilized) {
             return Do.getRString(context, R.string.is_sterilized);
 
         } else {
@@ -238,7 +212,7 @@ public class Dog extends Model {
 
     public String getTrained(Context context) {
 
-        if (mTrained) {
+        if (mIsTrained) {
             return Do.getRString(context, R.string.is_trained);
 
         } else {
@@ -260,14 +234,28 @@ public class Dog extends Model {
 
     }
 
+    public int getBreedIdFromJson(JSONObject jsonObject) {
+
+        int breedId = -1;
+
+        try {
+            breedId = jsonObject.getInt(COLUMN_BREED_ID);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return breedId;
+    }
+
     public Personality getPersonality() {
 
-        return Personality.getSinglePersonality(mPersonalityId);
+        return Personality.getSinglePersonality(mPersonality);
     }
 
     //DataBase 
 
-    public static void saveDog(JSONObject jsonObject, int status) {
+    public static void saveDogs(JSONObject jsonObject, int status) {
 
         try {
             JSONArray jsonDogs = jsonObject.getJSONArray(API_DOGS);
@@ -300,21 +288,21 @@ public class Dog extends Model {
 
     public static boolean isSaved(Dog dog) {
 
-        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dog.mDogId;
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
         return new Select().from(Dog.class).where(condition).exists();
 
     }
 
     public static Dog getSingleDog(int dogId) {
 
-        String condition = COLUMN_DOG_ID + DB._EQUALS_ + dogId;
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
         return new Select().from(Dog.class).where(condition).executeSingle();
 
     }
 
     public static List<Dog> getDogs(int process) {
 
-        String condition = COLUMN_STATUS + DB._EQUALS_ + process;
+        String condition = COLUMN_STATUS + DB.EQUALS + process;
         return new Select().from(Dog.class).where(condition).execute();
 
     }

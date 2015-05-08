@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,9 +20,7 @@ import com.android.volley.Request;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.FreeTimeAdapter;
@@ -174,9 +171,8 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         JSONObject jsonParams = adoptDogForm.getJsonObject();
         AdoptDogFormResponse response = new AdoptDogFormResponse(this);
 
-        Request adoptDogRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
-                RequestManager.METHOD_POST, response, response,
-                PrefsManager.getUserToken(getApplicationContext()));
+        Request adoptDogRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
+                response, response, PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(adoptDogRequest, TAG);

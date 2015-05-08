@@ -3,13 +3,11 @@ package cl.laikachile.laika.activities;
 import android.content.Intent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.BreedAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
-import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.EditDogOnClickListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.indexes.Breed;
@@ -58,7 +56,7 @@ public class EditDogRegisterActivity extends NewDogRegisterActivity {
 
         }
 
-        if (mDog.mSterilized) {
+        if (mDog.mIsSterilized) {
             mSterilizedRadioGroup.check(R.id.sterilized_new_dog_register_radiobutton);
 
         } else {

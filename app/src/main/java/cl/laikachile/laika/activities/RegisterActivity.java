@@ -157,11 +157,11 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         params.put(API_PASSWORD, password);
         params.put(API_PASSWORD_CONFIRMATION, password);
 
-        JSONObject jsonParams = RequestManager.getParams(params);
+        JSONObject jsonParams = RequestManager.getJsonParams(params);
         RegisterResponse response = new RegisterResponse(this);
 
-        Request registerRequest = RequestManager.defaultRequest(jsonParams, RequestManager.ADDRESS_REGISTER,
-                RequestManager.METHOD_POST, response, response, null);
+        Request registerRequest = RequestManager.postRequest(jsonParams,
+                RequestManager.ADDRESS_REGISTER, response, response, null);
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(registerRequest, TAG);

@@ -39,20 +39,27 @@ public class RequestManager {
     public static final String ADDRESS_UPLOADED_IMAGES = "/"; //TODO add the url for the images if exists
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
-    public static final String ADDRESS_LOGIN = "log_in/";
-    public static final String ADDRESS_REGISTER = "sign_up/";
-    public static final String ADDRESS_PUBLICATIONS = "publications/";
+    //API Address
+    public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_EVENTS = "events/";
-    public static final String ADDRESS_TIPS = "tips/";
+    public static final String ADDRESS_LOGIN = "log_in/";
+    public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
+    public static final String ADDRESS_PUBLICATIONS = "publications/";
+    public static final String ADDRESS_REGISTER = "sign_up/";
     public static final String ADDRESS_STORIES = "stories/";
+    public static final String ADDRESS_TIPS = "tips/";
 
+    //Request Methods
     public static final int METHOD_GET = Request.Method.GET;
     public static final int METHOD_POST = Request.Method.POST;
+    public static final int METHOD_PUT = Request.Method.PUT;
 
     public static final String URL_SPACE = "%20";
     public static final String NORMAL_SPACE = " ";
     public static final String ID = "id";
+
     public static final String USER_ID = "user_id";
+    public static final String FULL_NAME = "full_name";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String EMAIL = "email";
 
@@ -63,20 +70,14 @@ public class RequestManager {
         this.apiRelativeUrl = API_URL;
     }
 
-    public static String buildImageUrl(String relativeUrl) {
+    public static Request getRequest(Map<String,String> params, String address,
+                                     Response.Listener<JSONObject> listener,
+                                     Response.ErrorListener errorListener, final String token) {
 
-        String url = BASE_URL + ADDRESS_UPLOADED_IMAGES + relativeUrl;
-        Log.d(TAG, url);
-        return url;
-    }
+        String url = addParamsToURL(getURL(address), params);
+        Log.d(RequestManager.TAG, url);
 
-    public static Request defaultRequest(JSONObject jsonParams, String address, int method,
-                                         Response.Listener<JSONObject> listener,
-                                         Response.ErrorListener errorListener, final String token) {
-        String url = getURL(address);
-        Log.d(RequestManager.TAG, address);
-
-        return new JsonObjectRequest(method, url, jsonParams, listener, errorListener) {
+        return new JsonObjectRequest(METHOD_GET, url, null, listener, errorListener) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -96,14 +97,13 @@ public class RequestManager {
         };
     }
 
-    public static Request getRequest(Map<String,String> params, String address,
-                                     Response.Listener<JSONObject> listener,
-                                     Response.ErrorListener errorListener, final String token) {
+    public static Request postRequest(JSONObject jsonParams, String address,
+                                      Response.Listener<JSONObject> listener,
+                                      Response.ErrorListener errorListener, final String token) {
+        String url = getURL(address);
+        Log.d(RequestManager.TAG, address);
 
-        String url = addParamsToURL(getURL(address), params);
-        Log.d(RequestManager.TAG, url);
-
-        return new JsonObjectRequest(METHOD_GET, url, null, listener, errorListener) {
+        return new JsonObjectRequest(METHOD_POST, url, jsonParams, listener, errorListener) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -157,9 +157,16 @@ public class RequestManager {
         return request;
     }
 
+    public static String buildImageUrl(String relativeUrl) {
+
+        String url = BASE_URL + ADDRESS_UPLOADED_IMAGES + relativeUrl;
+        Log.d(TAG, url);
+        return url;
+    }
+
     // ############## Utils ################ //
 
-    public static JSONObject getParams(Map<String, String> params) {
+    public static JSONObject getJsonParams(Map<String, String> params) {
 
         JSONObject jsonParams = new JSONObject(params);
 
@@ -174,20 +181,22 @@ public class RequestManager {
 
     private static String addParamsToURL(String url, Map<String, String> params) {
 
-        if(!url.endsWith("?"))
-            url += "?";
+        if (params != null) {
+            if (!url.endsWith("?"))
+                url += "?";
 
-        for(Map.Entry<String, String> entry : params.entrySet()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
 
-            String key = entry.getKey();
-            String value = entry.getValue();
+                String key = entry.getKey();
+                String value = entry.getValue();
 
-            url += key + "=" + value + "&";
-        }
+                url += key + "=" + value + "&";
+            }
 
-        if (url.charAt(url.length()-1) == '&') {
+            if (url.charAt(url.length() - 1) == '&') {
 
-            url = url.substring(0, url.length()-1);
+                url = url.substring(0, url.length() - 1);
+            }
         }
 
         return url;

@@ -52,7 +52,7 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
 
                         progressDialog.dismiss();
 
-                        mDog.mStatus = Tag.PROCESS_POSTULATED;
+                        mDog.mStatus = Tag.DOG_POSTULATED;
                         mDog.save();
 
                         Intent intent = new Intent(context, AdoptDogSuccessActivity.class);

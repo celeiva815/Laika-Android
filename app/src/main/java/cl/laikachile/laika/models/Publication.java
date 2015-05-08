@@ -172,7 +172,7 @@ public class Publication extends Model {
 
     public static Publication getSinglePublication(Publication publication) {
 
-        String condition = COLUMN_PUBLICATION_ID + DB._EQUALS_ + publication.mPublicationId;
+        String condition = COLUMN_PUBLICATION_ID + DB.EQUALS + publication.mPublicationId;
 
         return new Select().from(Publication.class).where(condition).executeSingle();
 
@@ -180,7 +180,7 @@ public class Publication extends Model {
 
     public static boolean isSaved(Publication publication) {
 
-        String condition = COLUMN_PUBLICATION_ID + DB._EQUALS_ + publication.mPublicationId;
+        String condition = COLUMN_PUBLICATION_ID + DB.EQUALS + publication.mPublicationId;
 
         return new Select().from(Publication.class).where(condition).exists();
 
@@ -195,7 +195,7 @@ public class Publication extends Model {
 
     public static List<Publication> getFavorites() {
 
-        String condition = COLUMN_IS_FAVORITE + DB._EQUALS_ + DB.TRUE;
+        String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.TRUE;
         return new Select().from(Publication.class).where(condition).execute();
 
     }

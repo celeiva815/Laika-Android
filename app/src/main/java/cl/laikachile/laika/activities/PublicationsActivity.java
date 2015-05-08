@@ -71,7 +71,7 @@ public class PublicationsActivity extends ActionBarActivity {
                 requestPublications(Tag.NONE, Tag.LIMIT, getApplicationContext());
             }
 
-            super.onStart();super.onStart();
+            super.onStart();
     }
 
     public void setActivityView() {

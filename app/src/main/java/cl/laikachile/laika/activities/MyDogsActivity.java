@@ -24,12 +24,11 @@ import java.io.IOException;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AlbumMyDogFragment;
 import cl.laikachile.laika.fragments.HistoryMyDogFragment;
-import cl.laikachile.laika.fragments.OwnerMyDogFragment;
+import cl.laikachile.laika.fragments.OwnersFragment;
 import cl.laikachile.laika.fragments.RemindersMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -49,7 +48,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public HistoryMyDogFragment mHistoryFragment;
     public RemindersMyDogFragment mRemindersFragment;
-    public OwnerMyDogFragment mOwnerFragment;
+    public OwnersFragment mOwnerFragment;
     public AlbumMyDogFragment mAlbumFragment;
     public Fragment mCurrentFragment;
 
@@ -331,7 +330,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         if (mOwnerFragment == null) {
 
-            mOwnerFragment = new OwnerMyDogFragment(mDog);
+            mOwnerFragment = new OwnersFragment(mDog);
 
             if (mCurrentFragment != null) {
                 getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();

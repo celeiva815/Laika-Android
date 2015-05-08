@@ -9,4 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/owner_my_dog_listview" />
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/events_no_results"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

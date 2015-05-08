@@ -154,7 +154,7 @@ public class Story extends Model {
 
     public static Story getSingleStory(Story story) {
 
-        String condition = COLUMN_STORY_ID + DB._EQUALS_ + story.mStoryId;
+        String condition = COLUMN_STORY_ID + DB.EQUALS + story.mStoryId;
 
         return new Select().from(Story.class).where(condition).executeSingle();
 
@@ -162,7 +162,7 @@ public class Story extends Model {
 
     public static boolean isSaved(Story story) {
 
-        String condition = COLUMN_STORY_ID + DB._EQUALS_ + story.mStoryId;
+        String condition = COLUMN_STORY_ID + DB.EQUALS + story.mStoryId;
 
         return new Select().from(Story.class).where(condition).exists();
 

@@ -17,7 +17,7 @@ public class PostulatedAdoptDogFragmentActivity extends AdoptDogFragmentActivity
     @Override
     protected void setDogList() {
 
-        mDogs = Dog.getDogs(Tag.PROCESS_POSTULATED);
+        mDogs = Dog.getDogs(Tag.DOG_POSTULATED);
 
     }
 
