@@ -9,13 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.activeandroid.Model;
-
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
+import cl.laikachile.laika.models.AlarmReminder;
+import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Publication;
+import cl.laikachile.laika.models.Owner;
+import cl.laikachile.laika.models.OwnerDog;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
@@ -79,7 +80,7 @@ public class BaseActivity extends ActionBarActivity
 
         switch (position) {
             case 0: // Añadir nueva mascota
-                Do.changeActivity(this.getApplicationContext(), NewDogRegisterActivity.class,
+                Do.changeActivity(this.getApplicationContext(), NewDogActivity.class,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 
@@ -100,8 +101,9 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 4: // Cerrar Sesión
-                PrefsManager.clearPrefs(getApplicationContext());
-                Do.changeActivity(this.getApplicationContext(), LoginActivity.class,
+
+                clearDataBase();
+                Do.changeActivity(this.getApplicationContext(), LoginActivity.class, this,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 
@@ -126,6 +128,12 @@ public class BaseActivity extends ActionBarActivity
 
     private void clearDataBase() {
 
+        PrefsManager.clearPrefs(getApplicationContext());
+        Dog.deleteAll();
+        Owner.deleteAll();
+        OwnerDog.deleteAll();
+        CalendarReminder.deleteAll();
+        AlarmReminder.deleteAll();
 
     }
 }

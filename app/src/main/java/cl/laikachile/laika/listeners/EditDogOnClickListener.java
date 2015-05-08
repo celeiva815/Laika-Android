@@ -3,7 +3,7 @@ package cl.laikachile.laika.listeners;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import cl.laikachile.laika.activities.EditDogRegisterActivity;
+import cl.laikachile.laika.activities.EditDogActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
@@ -11,9 +11,9 @@ import cl.laikachile.laika.utils.Tag;
 public class EditDogOnClickListener implements OnClickListener {
 
     Dog mDog;
-	EditDogRegisterActivity mActivity;
+	EditDogActivity mActivity;
 
-	public EditDogOnClickListener(EditDogRegisterActivity mActivity, Dog mDog) {
+	public EditDogOnClickListener(EditDogActivity mActivity, Dog mDog) {
 		
 		this.mActivity = mActivity;
         this.mDog = mDog;

@@ -16,7 +16,7 @@ import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
-public class EditDogRegisterActivity extends NewDogRegisterActivity {
+public class EditDogActivity extends NewDogActivity {
 
     @Override
     protected void onResume() {

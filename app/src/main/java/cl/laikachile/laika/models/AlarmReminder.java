@@ -407,7 +407,7 @@ public class AlarmReminder extends Model {
         return new Select().from(AlarmReminder.class).where(condition).executeSingle();
     }
 
-    public static void deleteAlarmReminders() {
+    public static void deleteAll() {
 
         new Delete().from(AlarmReminder.class).execute();
 

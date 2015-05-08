@@ -1,7 +1,7 @@
 package cl.laikachile.laika.listeners;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.NewDogRegisterActivity;
+import cl.laikachile.laika.activities.NewDogActivity;
 import cl.laikachile.laika.adapters.BreedAdapter;
 import cl.laikachile.laika.models.Breed;
 
@@ -14,10 +14,10 @@ import java.util.List;
 
 public class ChangeDogBreedsOnItemSelectedListener implements OnItemSelectedListener {
 
-    public NewDogRegisterActivity mActivity;
+    public NewDogActivity mActivity;
     public Spinner mBreedSpinner;
 
-    public ChangeDogBreedsOnItemSelectedListener(NewDogRegisterActivity mActivity) {
+    public ChangeDogBreedsOnItemSelectedListener(NewDogActivity mActivity) {
 
         this.mActivity = mActivity;
         this.mBreedSpinner = mActivity.mBreedSpinner;

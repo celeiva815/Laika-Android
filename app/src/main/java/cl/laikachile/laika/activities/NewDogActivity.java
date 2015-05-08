@@ -15,23 +15,31 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+
+import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.BreedAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
-import cl.laikachile.laika.listeners.AddDogOnClickListener;
+import cl.laikachile.laika.listeners.NewDogOnClickListener;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Breed;
 import cl.laikachile.laika.models.Personality;
 import cl.laikachile.laika.models.Size;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.NewDogResponse;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
-public class NewDogRegisterActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+public class NewDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
 
+    public static final String TAG = NewDogActivity.class.getSimpleName();
     public static final String KEY_DOG_ID = "dog_id";
     protected int mIdLayout = R.layout.lk_new_dog_register_activity;
 
@@ -111,7 +119,7 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
         PersonalityAdapter personalityAdapter = new PersonalityAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getPersonalityList());
         ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(this);
-        AddDogOnClickListener addListener = new AddDogOnClickListener(this);
+        NewDogOnClickListener addListener = new NewDogOnClickListener(this);
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this,
@@ -145,21 +153,31 @@ public class NewDogRegisterActivity extends ActionBarActivity implements DatePic
 
     }
 
-    public List<Personality> getPersonalityList() {
+    public void requestNewDog(Dog dog, String message) {
 
+        JSONObject jsonObject = dog.getJsonObject();
+
+        NewDogResponse response = new NewDogResponse(this, message);
+        Request loginRequest = RequestManager.postRequest(jsonObject, RequestManager.ADDRESS_DOGS,
+                response, response, PrefsManager.getUserToken(getApplicationContext()));
+
+        VolleyManager.getInstance(getApplicationContext())
+                .addToRequestQueue(loginRequest, TAG);
+
+    }
+
+    public List<Personality> getPersonalityList() {
         return Personality.getPersonalities();
     }
 
 
     public List<Size> getSizeList() {
-
         return Size.getSizes();
     }
 
     public List<Breed> getBreedList(Spinner sizeSpinner) {
 
         int sizeId = (int) sizeSpinner.getSelectedItemId();
-
         return Breed.getBreeds(sizeId);
 
     }

@@ -1,20 +1,18 @@
 package cl.laikachile.laika.listeners;
 
-import cl.laikachile.laika.activities.MainActivity;
-import cl.laikachile.laika.activities.NewDogRegisterActivity;
+import cl.laikachile.laika.activities.NewDogActivity;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class AddDogOnClickListener implements OnClickListener {
+public class NewDogOnClickListener implements OnClickListener {
 
-	NewDogRegisterActivity mActivity;
+	NewDogActivity mActivity;
 	
-	public AddDogOnClickListener(NewDogRegisterActivity mActivity) {
+	public NewDogOnClickListener(NewDogActivity mActivity) {
 		
 		this.mActivity = mActivity;
 	}
@@ -33,13 +31,10 @@ public class AddDogOnClickListener implements OnClickListener {
         int status = Tag.DOG_OWNED;
         int userId = PrefsManager.getUserId(v.getContext());
 		
-		Dog newDog = new Dog(Dog.ID++, name, birth, breed, gender, personality, sterilized,
+		Dog newDog = new Dog(name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
-		newDog.save();
-		
-		Do.changeActivity(v.getContext(), MainActivity.class, mActivity);
-		Do.showToast("Felicitaciones! haz registrado una nueva mascota: "+ name, v.getContext());
-	}
+		mActivity.requestNewDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ");
 
+	}
 }

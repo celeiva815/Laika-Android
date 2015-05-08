@@ -130,8 +130,8 @@ public class MyDogsActivity extends ActionBarActivity {
 
             case R.id.dog_settings:
 
-                Intent intent = new Intent(getApplicationContext(), EditDogRegisterActivity.class);
-                intent.putExtra(EditDogRegisterActivity.KEY_DOG_ID, mDog.mDogId);
+                Intent intent = new Intent(getApplicationContext(), EditDogActivity.class);
+                intent.putExtra(EditDogActivity.KEY_DOG_ID, mDog.mDogId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 

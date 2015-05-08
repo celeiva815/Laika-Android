@@ -107,7 +107,7 @@ public class ResponseHandler {
         Personality.setPersonalities(context);
 
         //FIXME hacer el metodo de la API
-        for (int i = Tag.SIZE_SMALLER, id = 1; i <= Tag.SIZE_BIGGER; i++) {
+        for (int i = Tag.SIZE_SMALLER, id = 0; i <= Tag.SIZE_BIGGER; i++) {
 
             String[] breedNames;
 

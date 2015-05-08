@@ -104,7 +104,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.NewDogRegisterActivity"
+            android:name=".activities.NewDogActivity"
             android:exported="false"
             android:label="@string/new_dog_register_activity_name"
             android:screenOrientation="portrait" >
@@ -113,7 +113,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.EditDogRegisterActivity"
+            android:name=".activities.EditDogActivity"
             android:exported="false"
             android:label="@string/edit_dog_register_activity_name"
             android:screenOrientation="portrait" >

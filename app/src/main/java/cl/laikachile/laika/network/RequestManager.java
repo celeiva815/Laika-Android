@@ -7,19 +7,16 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.network.requests.LaikaRequest;
 import cl.laikachile.laika.utils.PrefsManager;
 
 /**
@@ -40,6 +37,7 @@ public class RequestManager {
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
     //API Address
+    public static final String ADDRESS_DOG = "dog/";
     public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_EVENTS = "events/";
     public static final String ADDRESS_LOGIN = "log_in/";
@@ -77,50 +75,30 @@ public class RequestManager {
         String url = addParamsToURL(getURL(address), params);
         Log.d(RequestManager.TAG, url);
 
-        return new JsonObjectRequest(METHOD_GET, url, null, listener, errorListener) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                if (!Do.isNullOrEmpty(token)) {
-
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    headers.put(ACCESS_TOKEN, token);
-                    return headers;
-
-                } else {
-
-                    return super.getHeaders();
-                }
-            }
-        };
+        return new LaikaRequest(METHOD_GET, url, null, listener, errorListener, token);
     }
 
     public static Request postRequest(JSONObject jsonParams, String address,
                                       Response.Listener<JSONObject> listener,
                                       Response.ErrorListener errorListener, final String token) {
+
+        return defaultRequest(METHOD_POST,jsonParams,address,listener,errorListener,token);
+    }
+
+    public static Request putRequest(JSONObject jsonParams, String address,
+                                      Response.Listener<JSONObject> listener,
+                                      Response.ErrorListener errorListener, final String token) {
+
+        return defaultRequest(METHOD_PUT, jsonParams, address, listener, errorListener, token);
+    }
+
+    public static Request defaultRequest(int method, JSONObject jsonParams, String address,
+                                      Response.Listener<JSONObject> listener,
+                                      Response.ErrorListener errorListener, final String token) {
         String url = getURL(address);
         Log.d(RequestManager.TAG, address);
 
-        return new JsonObjectRequest(METHOD_POST, url, jsonParams, listener, errorListener) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                if (!Do.isNullOrEmpty(token)) {
-
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    headers.put(ACCESS_TOKEN, token);
-                    return headers;
-
-                } else {
-
-                    return super.getHeaders();
-                }
-            }
-        };
+        return new LaikaRequest(method, url, jsonParams, listener, errorListener, token);
     }
 
     /**
@@ -227,6 +205,4 @@ public class RequestManager {
 
         return request;
     }
-
-
 }

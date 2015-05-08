@@ -2,7 +2,7 @@ package cl.laikachile.laika.listeners;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MyDogsActivity;
-import cl.laikachile.laika.activities.NewDogRegisterActivity;
+import cl.laikachile.laika.activities.NewDogActivity;
 import cl.laikachile.laika.adapters.DogsAdapter;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Do;
@@ -32,7 +32,7 @@ public class ToMyDogOnCLickListener implements OnClickListener {
         mDogs = Dog.getDogs(Tag.DOG_OWNED);
 
         if (mDogs == null || mDogs.isEmpty()) {
-            Do.changeActivity(context, NewDogRegisterActivity.class);
+            Do.changeActivity(context, NewDogActivity.class);
 
         } else if (mDogs.size() == 1) {
             goToMyDogsActivity(context, mDogs.get(0).mDogId);

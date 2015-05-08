@@ -43,6 +43,9 @@ public class Dog extends Model {
 
     public final static String API_DOGS = "dogs";
 
+    public final static int ID_NOT_SET = 0;
+
+
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
 
@@ -102,9 +105,27 @@ public class Dog extends Model {
         this.mOwnerId = mOwnerId;
     }
 
+    public Dog(String mName, String mBirth, int mBreedId, int mGender,
+               int mPersonality, boolean mIsSterilized, boolean mIsTrained, String mChipCode,
+               int mStatus, int mOwnerId) {
+
+        this.mDogId = ID_NOT_SET;
+        this.mName = mName;
+        this.mBirth = mBirth;
+        this.mBreedId = mBreedId;
+        this.mGender = mGender;
+        this.mPersonality = mPersonality;
+        this.mIsSterilized = mIsSterilized;
+        this.mIsTrained = mIsTrained;
+        this.mChipCode = mChipCode;
+        this.mStatus = mStatus;
+        this.mOwnerId = mOwnerId;
+    }
+
     public Dog(JSONObject jsonObject, int status) {
 
         try {
+
             this.mDogId = jsonObject.getInt(COLUMN_DOG_ID);
             this.mName = jsonObject.getString(COLUMN_NAME);
             this.mBirth = jsonObject.getString(COLUMN_BIRTHDATE);
@@ -136,6 +157,54 @@ public class Dog extends Model {
         this.mOwnerId = dog.mOwnerId;
 
         this.save();
+
+    }
+
+    public JSONObject getJsonObject() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            if (mDogId > ID_NOT_SET) {
+                jsonObject.put(COLUMN_DOG_ID, this.mDogId);
+            }
+
+            jsonObject.put(COLUMN_NAME, this.mName);
+            jsonObject.put(COLUMN_BIRTHDATE, this.mBirth);
+            jsonObject.put("breed", getJsonBreed()); //FIXME tiene que quedar solo el breed_id
+            jsonObject.put(COLUMN_GENDER, this.mGender);
+            jsonObject.put(COLUMN_PERSONALITY, this.mPersonality);
+            jsonObject.put(COLUMN_IS_STERILIZED, this.mIsSterilized);
+            jsonObject.put(COLUMN_IS_TRAINED, this.mIsTrained);
+            jsonObject.put(COLUMN_CHIP_CODE, false); //FIXME tiene que ser un string
+            jsonObject.put(COLUMN_STATUS, this.mStatus);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    /**
+     * Este método es un parche, mientras se repara la API
+     *
+     * @return un objeto breed mal hecho
+     */
+    private JSONObject getJsonBreed() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("breed_id", mBreedId);
+            jsonObject.put("size_id", getSize().mSizeId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
 
     }
 
@@ -259,16 +328,21 @@ public class Dog extends Model {
             JSONArray jsonDogs = jsonObject.getJSONArray(API_DOGS);
 
             for (int i = 0; i < jsonDogs.length(); i++) {
+                saveDog(jsonDogs.getJSONObject(i), status);
 
-                JSONObject jsonDog = jsonDogs.getJSONObject(i);
-                Dog event = new Dog(jsonDog, status);
-
-                createOrUpdate(event);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static Dog saveDog(JSONObject jsonDog, int status) {
+
+        Dog dog = new Dog(jsonDog, status);
+        createOrUpdate(dog);
+
+        return dog;
 
     }
 
@@ -310,4 +384,6 @@ public class Dog extends Model {
         new Delete().from(Dog.class).execute();
 
     }
+
+
 }
