@@ -32,14 +32,15 @@ public class NewDogResponse implements Response.ErrorListener,
 
         Context context = mActivity.getApplicationContext();
         Dog dog = Dog.saveDog(response, Tag.DOG_OWNED);
-        mActivity.onBackPressed();
         Do.showToast(mMessage + dog.mName, context);
+        mActivity.onBackPressed();
 
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
+        mActivity.enableViews(true);
         ResponseHandler.error(error, mActivity);
         Do.showToast("Hubo un error", mActivity);
 

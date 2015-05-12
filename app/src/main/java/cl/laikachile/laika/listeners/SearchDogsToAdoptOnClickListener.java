@@ -42,7 +42,7 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
         AdoptDogForm adoptDogForm = new AdoptDogForm(ownerId,locationId,homeType,familyCount,hasPet,
                 hasElderly,hasKids,gender,dogSize,dogPersonality);
 
-        mActivity.requestDogsForAdoption(adoptDogForm);
+        mActivity.requestAdoptionDogForm(adoptDogForm);
 
     }
 

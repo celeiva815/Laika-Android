@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:cropToPadding="false"
-            android:src="@drawable/lk_blanquito_picture"
             android:baselineAlignBottom="false" />
 
     </RelativeLayout>

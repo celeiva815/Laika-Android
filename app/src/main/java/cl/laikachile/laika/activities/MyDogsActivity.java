@@ -67,8 +67,6 @@ public class MyDogsActivity extends ActionBarActivity {
 
         int dogId = getIntent().getIntExtra(DOG_ID, 0);
         mDog = Dog.getSingleDog(dogId);
-
-        setTitle(mDog.mName);
     }
 
     @Override
@@ -86,8 +84,8 @@ public class MyDogsActivity extends ActionBarActivity {
         super.onStart();
 
         if (mCurrentFragment == null) {
-
             setHistoryFragment(mDog);
+            setTitle(mDog.mName);
         }
     }
 

@@ -5,6 +5,7 @@ import android.view.View.OnClickListener;
 
 import cl.laikachile.laika.activities.EditDogActivity;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
@@ -32,9 +33,9 @@ public class EditDogOnClickListener implements OnClickListener {
         mDog.mStatus = Tag.DOG_OWNED;
 
 		mDog.save();
-		
-		mActivity.finish();
-		Do.showToast("Haz editado la información de "+ mDog.mName, v.getContext());
+
+		mActivity.requestNewOrEditDog(mDog, "Haz editado la información de "+ mDog.mName,
+				RequestManager.METHOD_PUT);
 	}
 
 }

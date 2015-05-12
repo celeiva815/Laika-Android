@@ -1,12 +1,15 @@
 package cl.laikachile.laika.network;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
@@ -40,12 +43,14 @@ public class RequestManager {
     public static final String ADDRESS_DOG = "dog/";
     public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_EVENTS = "events/";
+    public static final String ADDRESS_GET_MATCHING_DOGS = "get_matching_dogs/";
     public static final String ADDRESS_LOGIN = "log_in/";
     public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
     public static final String ADDRESS_PUBLICATIONS = "publications/";
     public static final String ADDRESS_REGISTER = "sign_up/";
     public static final String ADDRESS_STORIES = "stories/";
     public static final String ADDRESS_TIPS = "tips/";
+    public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
 
     //Request Methods
     public static final int METHOD_GET = Request.Method.GET;
@@ -99,6 +104,16 @@ public class RequestManager {
         Log.d(RequestManager.TAG, address);
 
         return new LaikaRequest(method, url, jsonParams, listener, errorListener, token);
+    }
+
+    public static Request imageRequest(String url, ImageView imageView,
+                                       Response.Listener<Bitmap> listener,
+                                       Response.ErrorListener errorListener) {
+
+        int maxWidth = imageView.getMaxWidth();
+        int maxHeight = imageView.getMaxHeight();
+
+        return new ImageRequest(url, listener, maxWidth, maxHeight, null, errorListener);
     }
 
     /**
@@ -205,4 +220,6 @@ public class RequestManager {
 
         return request;
     }
+
+
 }

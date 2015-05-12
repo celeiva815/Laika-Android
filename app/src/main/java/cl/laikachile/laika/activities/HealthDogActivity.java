@@ -10,17 +10,19 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ToMapHairOnClickListener;
 import cl.laikachile.laika.listeners.ToMapOnClickListener;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.responses.ImageResponse;
 
 public class HealthDogActivity extends BaseActivity {
 	
 	private int mIdLayout;
-	private Dog dog;
+	private Dog mDog;
 	
 	 @Override
 		public void onStart() {
 		 	
 			Bundle b = getIntent().getExtras();
-			this.dog = Dog.load(Dog.class, b.getLong("DogId"));
+			this.mDog = Dog.load(Dog.class, b.getLong("DogId"));
 		 
 	    	createFragmentView(mIdLayout);
 			super.onStart();		
@@ -36,13 +38,15 @@ public class HealthDogActivity extends BaseActivity {
 		 Button barberButton = (Button) view.findViewById(R.id.barber_shop_my_dog_health_button);
 		 Button dealsButton = (Button) view.findViewById(R.id.deals_my_dog_health_button);
 		 
-		 nameTextView.setText(dog.mName);
-	     profileImageView.setImageResource(dog.mImage);
+		 nameTextView.setText(mDog.mName);
 	     ToMapOnClickListener mapListener = new ToMapOnClickListener();
 	     ToMapHairOnClickListener mapHairListener = new ToMapHairOnClickListener();
 	     searchButton.setOnClickListener(mapListener);
 	     barberButton.setOnClickListener(mapHairListener);
-		 
+
+		 ImageResponse response = new ImageResponse(this, profileImageView);
+		 RequestManager.imageRequest(mDog.mUrlImage, profileImageView, response, response);
+
 	 }
 
 }

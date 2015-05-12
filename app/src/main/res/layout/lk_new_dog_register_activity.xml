@@ -268,14 +268,29 @@
                 android:layout_marginBottom="20dp"
                 android:src="@drawable/happydog" />
 
-            <Button
-                android:id="@+id/add_dog_new_dog_register_button"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/laika_button"
-                android:text="@string/add_new_dog_register"
-                android:textSize="20sp" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingBottom="20dp">
+
+                <Button
+                    android:id="@+id/add_dog_new_dog_register_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/laika_button"
+                    android:text="@string/add_new_dog_register"
+                    android:textSize="20sp" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_dog_progressbar"
+                    android:visibility="gone"
+                    android:focusableInTouchMode="false" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

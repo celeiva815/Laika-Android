@@ -2,6 +2,7 @@ package cl.laikachile.laika.listeners;
 
 import cl.laikachile.laika.activities.NewDogActivity;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -34,7 +35,8 @@ public class NewDogOnClickListener implements OnClickListener {
 		Dog newDog = new Dog(name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
-		mActivity.requestNewDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ");
+		mActivity.requestNewOrEditDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ",
+				RequestManager.METHOD_POST);
 
 	}
 }

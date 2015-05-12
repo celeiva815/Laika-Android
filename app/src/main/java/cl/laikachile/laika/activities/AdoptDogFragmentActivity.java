@@ -91,36 +91,7 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     
     protected void setDogList() {
     	
-    	//FIXME aqu� deber�a tener la l�gica de la API, etc.
-    	
-    	this.mDogs = new ArrayList<Dog>();
-    	
-    	//XXX hardcoded
-        Dog blanquito = new Dog(Dog.ID++,"Blanquito","13-02-2013",69,1,Tag.PERSONALITY_PLAYER,true, false,"", Tag.DOG_FOUNDATION,1000);
-    	blanquito.mImage = R.drawable.lk_blanquito_picture;
-        blanquito.save();
-
-    	Dog pulguita = new Dog(Dog.ID++,"Pulguita","17-10-2013",9,2,Tag.PERSONALITY_SOCIAL,true, true,"", Tag.DOG_FOUNDATION,1001);
-        pulguita.mImage = R.drawable.lk_miko_picture;
-        pulguita.save();
-
-    	Dog filipa =new Dog(Dog.ID++,"Filipa","01-08-2014",44,2,Tag.PERSONALITY_SOCIAL,true, false,"", Tag.DOG_FOUNDATION,1002);
-        filipa.mImage = R.drawable.lk_milo_picture;
-        filipa.save();
-
-    	Dog alba = new Dog(Dog.ID++,"Alba","05-05-2014",9,2,Tag.PERSONALITY_SOCIAL,true, true,"", Tag.DOG_FOUNDATION,1003);
-        alba.mImage = R.drawable.lk_lolo_picture;
-        alba.save();
-
-    	blanquito.setDetail("Es un perrito de 3 años, rescatado de la calle. Es un perro tamaño grande, buen carácter, excelente para guardián. Necesita un hogar cariñoso que lo reciba como uno más de la familia.");
-    	filipa.setDetail("Es una perrita tamaño medio, muy cariñosa y juguetona. Ella fue rescatada muy enferma, hoy 100% recuperada pero debe comer comida renal, por lo que quien la adopte debe tener eso en consideración. Esterilizada.");
-    	pulguita.setDetail("Es una perrita de 4 meses, juguetona y cariñosa rescatada de la calle a punto de ser atropellada. Está vacunada y desparasitada y se entrega con compromiso de esterilización para cuando cumpla 6 meses.");
-    	alba.setDetail("Es una perrita mestiza tamaño mediano que necesita un hogar para vivir. Le gusta mucho que le den cariño y se lleva muy bien con otros perros y gatos.");
-    	
-    	mDogs.add(blanquito);
-    	mDogs.add(pulguita);
-    	mDogs.add(filipa);
-    	mDogs.add(alba);
+    	mDogs = Dog.getDogs(Tag.DOG_FOUNDATION);
 
     }
     

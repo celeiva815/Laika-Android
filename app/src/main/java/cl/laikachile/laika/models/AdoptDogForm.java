@@ -8,6 +8,8 @@ import com.activeandroid.query.Select;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cl.laikachile.laika.utils.DB;
+
 @Table(name = AdoptDogForm.TABLE_ADOPT_DOG_FORM)
 public class AdoptDogForm extends Model {
 
@@ -25,6 +27,8 @@ public class AdoptDogForm extends Model {
     public final static String COLUMN_DOG_PERSONALITY = "dog_personality";
 
     public final static String API_ADOPTION_FORM = "adoption_form";
+    public final static String API_ID = "id";
+    public final static String API_USER_ID = "user_id";
 
     @Column(name = COLUMN_ADOPT_DOG_FORM_ID)
     public int mAdoptDogFormId;
@@ -77,6 +81,21 @@ public class AdoptDogForm extends Model {
         this.mDogPersonality = mDogPersonality;
     }
 
+    public AdoptDogForm(JSONObject jsonObject) {
+
+        this.mAdoptDogFormId = jsonObject.optInt(API_ID);
+        this.mOwnerId = jsonObject.optInt(API_USER_ID);
+        this.mLocationId = jsonObject.optInt(COLUMN_LOCATION_ID);
+        this.mHomeType = jsonObject.optInt(COLUMN_HOME_TYPE);
+        this.mFamilyCount = jsonObject.optInt(COLUMN_FAMILY_COUNT);
+        this.mHasPet = jsonObject.optBoolean(COLUMN_HAS_PET);
+        this.mHasElderly = jsonObject.optBoolean(COLUMN_HAS_ELDERLY);
+        this.mHasKids = jsonObject.optBoolean(COLUMN_HAS_KIDS);
+        this.mDogGender = jsonObject.optInt(COLUMN_DOG_GENDER);
+        this.mDogSize = jsonObject.optInt(COLUMN_DOG_SIZE);
+        this.mDogPersonality = jsonObject.optInt(COLUMN_DOG_PERSONALITY);
+    }
+
     public void update(AdoptDogForm dogForm, int adoptDogFormId) {
 
         this.mAdoptDogFormId = adoptDogFormId;
@@ -101,22 +120,40 @@ public class AdoptDogForm extends Model {
 
     }
 
-    public static void createOrUpdate(AdoptDogForm dogForm) {
+    public boolean hasId(){
 
-        AdoptDogForm oldDogForm = getSingleDogForm();
+        return mAdoptDogFormId > 0;
+    }
+
+    // Data Base
+
+    public static AdoptDogForm saveAdoptForm(JSONObject jsonObject) {
+
+        AdoptDogForm adoptDogForm = new AdoptDogForm(jsonObject);
+        return createOrUpdate(adoptDogForm);
+
+    }
+
+    public static AdoptDogForm createOrUpdate(AdoptDogForm dogForm) {
+
+        AdoptDogForm oldDogForm = getSingleDogForm(dogForm.mAdoptDogFormId);
 
         if (oldDogForm == null) {
+
             dogForm.save();
+            return dogForm;
 
         } else {
-            oldDogForm.update(dogForm);
 
+            oldDogForm.update(dogForm);
+            return oldDogForm;
         }
     }
 
-    public static AdoptDogForm getSingleDogForm() {
+    public static AdoptDogForm getSingleDogForm(int adoptDogFormId) {
 
-        return new Select().from(AdoptDogForm.class).executeSingle();
+        String condition = COLUMN_ADOPT_DOG_FORM_ID + DB.EQUALS + adoptDogFormId;
+        return new Select().from(AdoptDogForm.class).where(condition).executeSingle();
 
     }
 

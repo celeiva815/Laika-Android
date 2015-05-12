@@ -37,7 +37,7 @@ public class DogsAdapter extends ArrayAdapter<Dog> {
         ImageView typeImageView = (ImageView) rowView.findViewById(R.id.dog_my_dog_imageview);
 
         nameTextView.setText(dog.mName);
-        typeImageView.setImageResource(dog.mImage);
+        typeImageView.setImageResource(R.drawable.lk_blanquito_picture); //XXX foto default
 
         return rowView;
 

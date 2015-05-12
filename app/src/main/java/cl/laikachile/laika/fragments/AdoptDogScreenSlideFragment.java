@@ -10,16 +10,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ConfirmAdoptionDialogOnClickListener;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.ImageResponse;
 import cl.laikachile.laika.utils.Do;
 
 public class AdoptDogScreenSlideFragment extends Fragment {
-	
+
+    public static final String TAG = AdoptDogScreenSlideFragment.class.getSimpleName();
+
 	private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
 	private Dog mDog;
 	private Activity activity;
+    public ImageView mPictureImageView;
 	
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 		
@@ -27,13 +35,13 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 		this.activity = activity;
 	}
 
-	@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
+        mPictureImageView = (ImageView) view.findViewById(R.id.picture_dogs_screen_slide_imageview);
         TextView matchTextView = (TextView) view.findViewById(R.id.match_dogs_screen_slide_textview);
-        ImageView pictureImageView = (ImageView) view.findViewById(R.id.picture_dogs_screen_slide_imageview);
         TextView nameTextView = (TextView) view.findViewById(R.id.name_dogs_screen_slide_textview);
         TextView genderTextView = (TextView) view.findViewById(R.id.gender_dogs_screen_slide_textview);
         TextView sterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dogs_screen_slide_textview);
@@ -52,14 +60,31 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         chipTextView.setText(mDog.getChip(view.getContext()));
         trainedTextView.setText(mDog.getTrained(view.getContext()));
         matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME
-        pictureImageView.setImageResource(mDog.mImage);
         detailsTextView.setText(mDog.mDetail);
-        
+
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
                 mDog, this.activity);
         postulateButton.setOnClickListener(listener);
         
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        requestDogImage(mPictureImageView);
+    }
+
+    public void requestDogImage(ImageView imageView) {
+
+        ImageResponse response = new ImageResponse(getActivity(), imageView);
+        Request imageRequest = RequestManager.imageRequest(mDog.mUrlImage, imageView, response,
+                response);
+
+        VolleyManager.getInstance(getActivity().getApplicationContext())
+                .addToRequestQueue(imageRequest, TAG);
+
     }
 	
 	

@@ -79,9 +79,8 @@ public class Dog extends Model {
     @Column(name = COLUMN_OWNER_ID)
     public int mOwnerId;
 
-    //FIXME cambiar a un string de URL
     @Column(name = COLUMN_URL_IMAGE)
-    public int mImage;
+    public String mUrlImage;
 
     public String mDetail;
 
@@ -124,22 +123,20 @@ public class Dog extends Model {
 
     public Dog(JSONObject jsonObject, int status) {
 
-        try {
 
-            this.mDogId = jsonObject.getInt(COLUMN_DOG_ID);
-            this.mName = jsonObject.getString(COLUMN_NAME);
-            this.mBirth = jsonObject.getString(COLUMN_BIRTHDATE);
-            this.mBreedId = getBreedIdFromJson(jsonObject.getJSONObject("breed")); //FIXME
-            this.mGender = jsonObject.getInt(COLUMN_GENDER);
-            this.mPersonality = jsonObject.getInt(COLUMN_PERSONALITY);
-            this.mIsSterilized = jsonObject.getBoolean(COLUMN_IS_STERILIZED);
-            this.mIsTrained = jsonObject.getBoolean(COLUMN_IS_TRAINED);
-            this.mChipCode = Boolean.toString(jsonObject.getBoolean(COLUMN_CHIP_CODE));//jsonObject.getString(COLUMN_CHIP_CODE);
-            this.mStatus = jsonObject.getInt(COLUMN_STATUS);
+        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
+        this.mName = jsonObject.optString(COLUMN_NAME);
+        this.mBirth = jsonObject.optString(COLUMN_BIRTHDATE);
+        this.mBreedId = jsonObject.optInt(COLUMN_BREED_ID);
+        this.mGender = jsonObject.optInt(COLUMN_GENDER);
+        this.mPersonality = jsonObject.optInt(COLUMN_PERSONALITY);
+        this.mIsSterilized = jsonObject.optBoolean(COLUMN_IS_STERILIZED);
+        this.mIsTrained = jsonObject.optBoolean(COLUMN_IS_TRAINED);
+        this.mChipCode = Boolean.toString(jsonObject.optBoolean(COLUMN_CHIP_CODE));//jsonObject.optString(COLUMN_CHIP_CODE);
+        this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE,
+                "http://cdn.labioguia.com/wp-content/uploads/2015/01/2046566.jpg"); //XXX poner otro link
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update(Dog dog) {
@@ -172,12 +169,12 @@ public class Dog extends Model {
 
             jsonObject.put(COLUMN_NAME, this.mName);
             jsonObject.put(COLUMN_BIRTHDATE, this.mBirth);
-            jsonObject.put("breed", getJsonBreed()); //FIXME tiene que quedar solo el breed_id
+            jsonObject.put(COLUMN_BREED_ID, this.mBreedId);
             jsonObject.put(COLUMN_GENDER, this.mGender);
             jsonObject.put(COLUMN_PERSONALITY, this.mPersonality);
             jsonObject.put(COLUMN_IS_STERILIZED, this.mIsSterilized);
             jsonObject.put(COLUMN_IS_TRAINED, this.mIsTrained);
-            jsonObject.put(COLUMN_CHIP_CODE, false); //FIXME tiene que ser un string
+            jsonObject.put(COLUMN_CHIP_CODE, false);
             jsonObject.put(COLUMN_STATUS, this.mStatus);
 
         } catch (JSONException e) {
@@ -320,7 +317,11 @@ public class Dog extends Model {
         return Personality.getSinglePersonality(mPersonality);
     }
 
-    //DataBase 
+    public void setUrlImage(String mUrlImage) {
+        this.mUrlImage = mUrlImage;
+    }
+
+    //DataBase
 
     public static void saveDogs(JSONObject jsonObject, int status) {
 

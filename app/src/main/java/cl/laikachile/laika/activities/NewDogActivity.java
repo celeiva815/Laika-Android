@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -55,6 +56,7 @@ public class NewDogActivity extends ActionBarActivity implements DatePickerDialo
     public RadioGroup mGenderRadioGroup ;
     public RadioGroup mSterilizedRadioGroup;
     public RadioGroup mChipRadioGroup;
+    public ProgressBar mProgressBar;
     public int mGender;
     public boolean mSterilized;
     public boolean mChip;
@@ -111,6 +113,7 @@ public class NewDogActivity extends ActionBarActivity implements DatePickerDialo
         mChipEditText = (EditText) findViewById(R.id.chip_code_new_dog_register_edittext);
         mChipRadioGroup =(RadioGroup) findViewById(R.id.chip_new_dog_register_radiogroup);
         mAddButton = (Button) findViewById(R.id.add_dog_new_dog_register_button);
+        mProgressBar = (ProgressBar) findViewById(R.id.new_dog_progressbar);
 
         SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getSizeList());
@@ -153,13 +156,15 @@ public class NewDogActivity extends ActionBarActivity implements DatePickerDialo
 
     }
 
-    public void requestNewDog(Dog dog, String message) {
+    public void requestNewOrEditDog(Dog dog, String message, int method) {
 
+        enableViews(false);
         JSONObject jsonObject = dog.getJsonObject();
 
         NewDogResponse response = new NewDogResponse(this, message);
-        Request loginRequest = RequestManager.postRequest(jsonObject, RequestManager.ADDRESS_DOGS,
-                response, response, PrefsManager.getUserToken(getApplicationContext()));
+        Request loginRequest = RequestManager.defaultRequest(method, jsonObject,
+                RequestManager.ADDRESS_DOGS, response, response,
+                PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(loginRequest, TAG);
@@ -252,6 +257,32 @@ public class NewDogActivity extends ActionBarActivity implements DatePickerDialo
 
         mDate = Do.getToStringDate(day, month, year);
         mBirthButton.setText(mDate);
+
+    }
+
+    public void enableViews(boolean enabled) {
+
+        mSizeSpinner.setEnabled(enabled);
+        mNameEditText.setEnabled(enabled);
+        mPersonalitySpinner.setEnabled(enabled);
+        mChipEditText.setEnabled(enabled);
+        mBreedSpinner.setEnabled(enabled);
+        mAddButton.setEnabled(enabled);
+        mBirthButton.setEnabled(enabled);
+        mGenderRadioGroup .setEnabled(enabled);
+        mSterilizedRadioGroup.setEnabled(enabled);
+        mChipRadioGroup.setEnabled(enabled);
+        mProgressBar.setEnabled(!enabled);
+
+        if (enabled) {
+            mAddButton.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+
+        } else {
+            mAddButton.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+
+        }
 
     }
 }

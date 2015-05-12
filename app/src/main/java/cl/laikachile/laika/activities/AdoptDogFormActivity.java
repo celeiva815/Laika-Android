@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +21,9 @@ import com.android.volley.Request;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.FreeTimeAdapter;
@@ -38,12 +41,15 @@ import cl.laikachile.laika.models.indexes.Space;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.AdoptDogFormResponse;
+import cl.laikachile.laika.responses.DogForAdoptionResponse;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogFormActivity extends ActionBarActivity {
 
     public static final String TAG = AdoptDogFormActivity.class.getSimpleName();
+    public static final String API_LIMIT = "limit";
+
     private int mIdLayout = R.layout.lk_adopt_dog_form_activity;
     public Spinner mSizeSpinner;
     public Spinner mPersonalitySpinner;
@@ -97,6 +103,13 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     public void setActivityView() {
@@ -159,11 +172,9 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
             }
         });
-
-
     }
 
-    public void requestDogsForAdoption(AdoptDogForm adoptDogForm) {
+    public void requestAdoptionDogForm(AdoptDogForm adoptDogForm) {
 
         mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this,
                 "Espera un momento", "Estamos buscando mascotas que se adecúen a tu perfil");
@@ -171,8 +182,25 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         JSONObject jsonParams = adoptDogForm.getJsonObject();
         AdoptDogFormResponse response = new AdoptDogFormResponse(this);
 
-        Request adoptDogRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
-                response, response, PrefsManager.getUserToken(getApplicationContext()));
+        Request adoptDogRequest = RequestManager.postRequest(jsonParams,
+                RequestManager.ADDRESS_UPLOAD_ADOPTION_FORM, response, response,
+                PrefsManager.getUserToken(getApplicationContext()));
+
+        VolleyManager.getInstance(getApplicationContext())
+                .addToRequestQueue(adoptDogRequest, TAG);
+
+    }
+
+    public void requestDogsForAdoption() {
+
+        Map<String,String> params = new HashMap<>();
+        DogForAdoptionResponse response = new DogForAdoptionResponse(this);
+
+        params.put(API_LIMIT, Integer.toString(10));
+
+        Request adoptDogRequest = RequestManager.getRequest(params,
+                RequestManager.ADDRESS_GET_MATCHING_DOGS, response, response,
+                PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(adoptDogRequest, TAG);
