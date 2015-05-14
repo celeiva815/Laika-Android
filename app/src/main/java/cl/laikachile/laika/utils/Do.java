@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.activeandroid.Model;
@@ -252,5 +253,17 @@ public class Do {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public static void ableView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+    }
+
+    public static void showView(View view) {
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideView(View view) {
+        view.setVisibility(View.GONE);
     }
 }

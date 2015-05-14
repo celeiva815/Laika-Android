@@ -16,13 +16,13 @@ import cl.laikachile.laika.utils.Tag;
 /**
  * Created by Tito_Leiva on 13-04-15.
  */
-public class NewDogResponse implements Response.ErrorListener,
+public class CreateDogResponse implements Response.ErrorListener,
         Response.Listener<JSONObject>  {
 
     public NewDogActivity mActivity;
     public String mMessage;
 
-    public NewDogResponse(NewDogActivity mActivity, String mMessage) {
+    public CreateDogResponse(NewDogActivity mActivity, String mMessage) {
         this.mActivity = mActivity;
         this.mMessage = mMessage;
     }

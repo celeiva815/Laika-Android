@@ -33,7 +33,7 @@ import cl.laikachile.laika.models.Personality;
 import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.NewDogResponse;
+import cl.laikachile.laika.responses.CreateDogResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -161,7 +161,7 @@ public class NewDogActivity extends ActionBarActivity implements DatePickerDialo
         enableViews(false);
         JSONObject jsonObject = dog.getJsonObject();
 
-        NewDogResponse response = new NewDogResponse(this, message);
+        CreateDogResponse response = new CreateDogResponse(this, message);
         Request loginRequest = RequestManager.defaultRequest(method, jsonObject,
                 RequestManager.ADDRESS_DOGS, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));

@@ -13,8 +13,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MyDogsActivity;
@@ -23,12 +27,19 @@ import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.History;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.AlarmRemindersResponse;
+import cl.laikachile.laika.responses.CalendarRemindersResponse;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
 public class HistoryMyDogFragment extends Fragment {
+
+    public static final String TAG = HistoryMyDogFragment.class.getSimpleName();
 
     public String mTag;
     private int mIdLayout = R.layout.lk_history_my_dog_fragment;
@@ -70,22 +81,28 @@ public class HistoryMyDogFragment extends Fragment {
             }
         });
 
-
-
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (mHistories.isEmpty()) {
+            requestAlarmReminders();
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        mHistories = getHistories(getActivity().getApplicationContext());
-        mHistoryAdapter.notifyDataSetChanged();
+        refreshHistories();
     }
 
     private List<History> getHistories(Context context) {
 
-        //FIXME cambiar por las historias sacadas de la API
         mHistories = new ArrayList<>();
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
@@ -131,6 +148,53 @@ public class HistoryMyDogFragment extends Fragment {
                 break;
 
         }
+    }
+
+    public void refreshHistories() {
+
+        if (!mHistories.isEmpty()) {
+            mHistories.clear();
+
+        }
+
+        mHistories.addAll(getHistories(getActivity().getApplicationContext()));
+        mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    public void requestAlarmReminders() {
+
+        Context context = getActivity().getApplicationContext();
+        Map<String,String> params = new HashMap<>();
+        AlarmRemindersResponse response = new AlarmRemindersResponse(this);
+
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+
+        Request request = RequestManager.getRequest(params,
+                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(request, TAG);
+
+
+    }
+
+    public void requestCalendarReminders() {
+
+        Context context = getActivity().getApplicationContext();
+        Map<String,String> params = new HashMap<>();
+        CalendarRemindersResponse response = new CalendarRemindersResponse(this);
+
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+
+        Request request = RequestManager.getRequest(params,
+                RequestManager.ADDRESS_CALENDAR_REMINDERS, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(request, TAG);
+
+
     }
 
 }

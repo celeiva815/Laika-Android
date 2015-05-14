@@ -8,17 +8,22 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.utils.DB;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 @Table(name = AlarmReminder.TABLE_NAME)
 public class AlarmReminder extends Model {
 
-    public static int ID = 100;
+    public final static int ID_NOT_SET = 0;
 
 	public final static String TABLE_NAME = "alarm_reminder";
     public final static String COLUMN_ALARM_REMINDER_ID = "alarm_reminder_id";
@@ -37,6 +42,9 @@ public class AlarmReminder extends Model {
 	public final static String COLUMN_TIME = "time";
 	public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
+
+    public final static String API_ALERT_REMINDERS = "alert_reminders";
+    public final static String API_USER_ID = "user_id";
 
     @Column(name = COLUMN_ALARM_REMINDER_ID)
     public int mAlarmReminderId;
@@ -86,13 +94,12 @@ public class AlarmReminder extends Model {
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
 
-    public AlarmReminder(int mAlarmReminderId, int mType, int mCategory, String mTitle,
+    public AlarmReminder(int mType, int mCategory, String mTitle,
                          String mDetail, int mStatus, boolean mHasMonday, boolean mHasTuesday,
                          boolean mHasWednesday, boolean mHasThursday, boolean mHasFriday,
                          boolean mHasSaturday, boolean mHasSunday, String mTime, int mOwnerId,
                          int mDogId) {
 
-        this.mAlarmReminderId = mAlarmReminderId;
         this.mType = mType;
         this.mCategory = mCategory;
         this.mTitle = mTitle;
@@ -110,18 +117,108 @@ public class AlarmReminder extends Model {
         this.mDogId = mDogId;
     }
 
+    public AlarmReminder(JSONObject jsonObject, int mDogId, Context context) {
+
+        this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
+        this.mCategory = jsonObject.optInt(COLUMN_CATEGORY, Tag.CATEGORY_FOOD);
+        this.mTitle = jsonObject.optString(COLUMN_TITLE);
+        this.mDetail = jsonObject.optString(COLUMN_DETAIL);
+        this.mStatus = jsonObject.optInt(COLUMN_STATUS, Tag.STATUS_IN_PROGRESS);
+        this.mHasMonday = jsonObject.optBoolean(COLUMN_HAS_MONDAY);
+        this.mHasTuesday = jsonObject.optBoolean(COLUMN_HAS_TUESDAY);
+        this.mHasWednesday = jsonObject.optBoolean(COLUMN_HAS_WEDNESDAY);
+        this.mHasThursday = jsonObject.optBoolean(COLUMN_HAS_THURSDAY);
+        this.mHasFriday = jsonObject.optBoolean(COLUMN_HAS_FRIDAY);
+        this.mHasSaturday = jsonObject.optBoolean(COLUMN_HAS_SATURDAY);
+        this.mHasSunday = jsonObject.optBoolean(COLUMN_HAS_SUNDAY);
+        this.mTime = jsonObject.optString(COLUMN_TIME);
+        this.mOwnerId = jsonObject.optInt(API_USER_ID, PrefsManager.getUserId(context));
+        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID, mDogId);
+    }
+
     public AlarmReminder() { }
-	
+
+    public JSONObject getJsonObject() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            jsonObject.put(COLUMN_DOG_ID, this.mDogId);
+            jsonObject.put(TABLE_NAME, getAlarmJsonObject());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+
+    }
+
+    public JSONObject getAlarmJsonObject() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            if (mAlarmReminderId > ID_NOT_SET) {
+                jsonObject.put(COLUMN_ALARM_REMINDER_ID, this.mAlarmReminderId);
+            }
+
+            jsonObject.put(COLUMN_TYPE, mType);
+            jsonObject.put(COLUMN_CATEGORY, mCategory);
+            jsonObject.put(COLUMN_TITLE, mTitle);
+            jsonObject.put(COLUMN_DETAIL, mDetail);
+            jsonObject.put(COLUMN_STATUS, mStatus);
+            jsonObject.put(COLUMN_HAS_MONDAY, mHasMonday);
+            jsonObject.put(COLUMN_HAS_TUESDAY, mHasTuesday);
+            jsonObject.put(COLUMN_HAS_WEDNESDAY, mHasWednesday);
+            jsonObject.put(COLUMN_HAS_THURSDAY, mHasThursday);
+            jsonObject.put(COLUMN_HAS_FRIDAY, mHasFriday);
+            jsonObject.put(COLUMN_HAS_SATURDAY, mHasSaturday);
+            jsonObject.put(COLUMN_HAS_SUNDAY, mHasSunday);
+            jsonObject.put(COLUMN_TIME, mTime);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+
+    }
+
+    public void update(AlarmReminder alarmReminder) {
+
+        this.mType = alarmReminder.mType;
+        this.mCategory = alarmReminder.mCategory;
+        this.mTitle = alarmReminder.mTitle;
+        this.mDetail = alarmReminder.mDetail;
+        this.mStatus = alarmReminder.mStatus;
+        this.mHasMonday = alarmReminder.mHasMonday;
+        this.mHasTuesday = alarmReminder.mHasTuesday;
+        this.mHasWednesday = alarmReminder.mHasWednesday;
+        this.mHasThursday = alarmReminder.mHasThursday;
+        this.mHasFriday = alarmReminder.mHasFriday;
+        this.mHasSaturday = alarmReminder.mHasSaturday;
+        this.mHasSunday = alarmReminder.mHasSunday;
+        this.mTime = alarmReminder.mTime;
+        this.mOwnerId = alarmReminder.mOwnerId;
+        this.mDogId = alarmReminder.mDogId;
+
+        this.save();
+
+    }
+
 	public int getImageResource() {
-		
+
 		switch (this.mCategory) {
 
         case Tag.CATEGORY_FOOD:
-			
+
 			return R.drawable.lk_food_tips;
-			
+
 		case Tag.CATEGORY_MEDICINE:
-			
+
 			return R.drawable.lk_health_tips;
 			
 		case Tag.CATEGORY_POO:
@@ -389,6 +486,48 @@ public class AlarmReminder extends Model {
     }
 
     // DATABASE METHODS
+
+    public static void saveReminders(JSONObject jsonObject, int dogId, Context context) {
+
+        try {
+            JSONArray jsonReminders = jsonObject.getJSONArray(API_ALERT_REMINDERS);
+
+            for (int i = 0; i < jsonReminders.length(); i++) {
+                saveReminder(jsonReminders.getJSONObject(i), dogId, context);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static AlarmReminder saveReminder(JSONObject jsonReminder, int dogId, Context context) {
+
+        AlarmReminder reminder = new AlarmReminder(jsonReminder, dogId, context);
+        createOrUpdate(reminder);
+
+        return reminder;
+
+    }
+
+    public static void createOrUpdate(AlarmReminder reminder) {
+
+        if (!AlarmReminder.isSaved(reminder)) {
+            reminder.save();
+
+        } else {
+            AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
+            oldReminder.update(reminder);
+
+        }
+    }
+
+    public static boolean isSaved(AlarmReminder reminder) {
+
+        String condition = AlarmReminder.COLUMN_ALARM_REMINDER_ID + DB.EQUALS + reminder.mAlarmReminderId;
+        return new Select().from(AlarmReminder.class).where(condition).exists();
+    }
 
     public static List<AlarmReminder> getDogReminders(int dogId) {
 

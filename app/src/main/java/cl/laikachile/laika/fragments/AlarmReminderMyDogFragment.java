@@ -1,5 +1,6 @@
 package cl.laikachile.laika.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,15 +10,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.AlarmRemindersResponse;
+import cl.laikachile.laika.responses.CreateAlarmReminderResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -27,12 +37,15 @@ import cl.laikachile.laika.utils.Tag;
  */
 public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDialog.OnTimeSetListener{
 
+    public static final String TAG = AlarmReminderMyDogFragment.class.getSimpleName();
+    public static final String TIMEPICKER_TAG = "timepicker";
+
     private int mIdLayout = R.layout.lk_alarm_reminder_my_dog_fragment;
     public Dog mDog;
     public int mReminderCategory;
     public Fragment mFragment;
-    public AlarmReminder mAlarmReminder;
 
+    public AlarmReminder mAlarmReminder;
     public EditText mTitleEditText;
     public EditText mDetailEditText;
     public Button mTimeButton;
@@ -43,8 +56,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public Button mThursdayButton;
     public Button mFridayButton;
     public Button mSaturdayButton;
-    public Button mSundayButton;
 
+    public Button mSundayButton;
     public boolean mMonday = false;
     public boolean mTuesday = false;
     public boolean mWednesday = false;
@@ -52,9 +65,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public boolean mFriday = false;
     public boolean mSaturday = false;
     public boolean mSunday = false;
-    public String mTime;
 
-    public static final String TIMEPICKER_TAG = "timepicker";
+    public String mTime;
 
     public AlarmReminderMyDogFragment(Dog mDog, int mReminderCategory) {
 
@@ -109,9 +121,11 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
-                //FIXME agregar el owner otras variables y verificar que no sean nullOrEmpty.
+                //TODO agregar el owner otras variables y verificar que no sean nullOrEmpty.
 
                 if (mAlarmReminder != null) {
+
+                    //FIXME este es el método para actualizar en la API
 
                     mAlarmReminder.mTitle = title;
                     mAlarmReminder.mDetail = detail;
@@ -132,18 +146,13 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
                 } else {
 
-                    AlarmReminder reminder = new AlarmReminder(AlarmReminder.ID++, Tag.TYPE_ALARM,
+                    AlarmReminder reminder = new AlarmReminder(Tag.TYPE_ALARM,
                             mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday,
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
                             PrefsManager.getUserId(v.getContext()), mDog.mDogId);
 
-                    reminder.save();
-
-                    String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                    Do.showToast(message, v.getContext(), Toast.LENGTH_LONG);
+                    createAlarmReminders(reminder, RequestManager.METHOD_POST);
                 }
-
-                ((MyDogsActivity) getActivity()).setHistoryFragment(mDog);
             }
         });
 
@@ -221,6 +230,21 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
         return view;
+    }
+
+    public void createAlarmReminders(AlarmReminder alarmReminder, int method) {
+
+        Context context = getActivity().getApplicationContext();
+        JSONObject jsonParams = alarmReminder.getJsonObject();
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(this);
+
+        Request createRequest = RequestManager.defaultRequest(method, jsonParams,
+                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(createRequest, TAG);
+
     }
 
     @Override
@@ -344,4 +368,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             mSundayButton.setBackgroundColor(getSemiTransparentColor());
         }
     }
+
+    //Data Base
+
+
+
 }
