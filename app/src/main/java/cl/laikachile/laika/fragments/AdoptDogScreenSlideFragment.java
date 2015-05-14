@@ -1,6 +1,7 @@
 package cl.laikachile.laika.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,13 +27,14 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
 	private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
 	private Dog mDog;
-	private Activity activity;
+	private Activity mActivity;
     public ImageView mPictureImageView;
+    public ProgressDialog mProgressDialog;
 	
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 		
 		this.mDog = mDog;
-		this.activity = activity;
+		this.mActivity = activity;
 	}
 
     @Override
@@ -63,7 +65,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         detailsTextView.setText(mDog.mDetail);
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
-                mDog, this.activity);
+                mDog, mActivity, mProgressDialog);
         postulateButton.setOnClickListener(listener);
         
         return view;

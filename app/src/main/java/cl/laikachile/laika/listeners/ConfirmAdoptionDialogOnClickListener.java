@@ -3,6 +3,9 @@ package cl.laikachile.laika.listeners;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.responses.ConfirmAdoptionResponse;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 import android.app.Activity;
@@ -18,16 +21,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
 
     private int mIdLayout = R.layout.ai_simple_textview_for_dialog;
     private final Dog mDog;
     private final Activity mActivity;
+    public ProgressDialog mProgressDialog;
 
-    public ConfirmAdoptionDialogOnClickListener(Dog mDog, Activity activity) {
+    public ConfirmAdoptionDialogOnClickListener(Dog mDog, Activity activity,
+                                                ProgressDialog mProgressDialog) {
 
         this.mDog = mDog;
         this.mActivity = activity;
+        this.mProgressDialog = mProgressDialog;
     }
 
     @Override
@@ -41,31 +52,11 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                // TODO Hacer la lógica de la API
+                mProgressDialog = ProgressDialog.show(context, "Postulación Enviada",
+                        "Enviando notificación de adopción");
 
-                final ProgressDialog progressDialog = ProgressDialog.show(context, "Mascota Adoptada", "Enviando notificación de adopción");
-
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        progressDialog.dismiss();
-
-                        mDog.mStatus = Tag.DOG_POSTULATED;
-                        mDog.save();
-
-                        Intent intent = new Intent(context, AdoptDogSuccessActivity.class);
-                        Bundle b = new Bundle();
-
-                        b.putInt("DogId", mDog.mDogId); //Your id
-                        intent.putExtras(b); //Put your id to your next Intent
-                        context.startActivity(intent);
-                        mActivity.finish();
-                    }
-                }, 3000);
-
-
+                requestPostulation();
+                dialog.dismiss();
             }
         });
         dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
@@ -89,6 +80,23 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
         question.setText("¿Desea realmente adoptar a " + mDog.mName + "?");
 
         return view;
+
+    }
+
+    public void requestPostulation() {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Dog.COLUMN_DOG_ID, mDog.mDogId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ConfirmAdoptionResponse response = new ConfirmAdoptionResponse(mActivity,
+                mProgressDialog, mDog);
+        RequestManager.postRequest(jsonObject, RequestManager.ADDRESS_CONFIRM_POSTULATION, response,
+                response, PrefsManager.getUserToken(mActivity.getApplicationContext()));
 
     }
 

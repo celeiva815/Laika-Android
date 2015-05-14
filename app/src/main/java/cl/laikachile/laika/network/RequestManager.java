@@ -42,6 +42,7 @@ public class RequestManager {
     //API Address
     public static final String ADDRESS_DOG = "dog/";
     public static final String ADDRESS_DOGS = "dogs/";
+    public static final String ADDRESS_CONFIRM_POSTULATION = "confirm_postulation/";
     public static final String ADDRESS_EVENTS = "events/";
     public static final String ADDRESS_GET_MATCHING_DOGS = "get_matching_dogs/";
     public static final String ADDRESS_LOGIN = "log_in/";

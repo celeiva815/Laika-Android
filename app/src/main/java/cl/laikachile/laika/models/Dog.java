@@ -40,6 +40,7 @@ public class Dog extends Model {
     public final static String COLUMN_IS_TRAINED = "is_trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_OWNER_ID = "owner_id";
+    public final static String COLUMN_USER_ADOPT_DOG_ID = "user_adopt_dog_id";
 
     public final static String API_DOGS = "dogs";
 
@@ -78,6 +79,9 @@ public class Dog extends Model {
 
     @Column(name = COLUMN_OWNER_ID)
     public int mOwnerId;
+
+    @Column(name = COLUMN_USER_ADOPT_DOG_ID)
+    public int mUserAdoptDogId;
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
@@ -135,7 +139,7 @@ public class Dog extends Model {
         this.mChipCode = Boolean.toString(jsonObject.optBoolean(COLUMN_CHIP_CODE));//jsonObject.optString(COLUMN_CHIP_CODE);
         this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE,
-                "http://cdn.labioguia.com/wp-content/uploads/2015/01/2046566.jpg"); //XXX poner otro link
+                "https://mongrelsoftheworld.files.wordpress.com/2011/05/mongrel-bali.jpg"); //XXX poner otro link
 
     }
 
