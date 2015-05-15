@@ -80,7 +80,7 @@ public class BaseActivity extends ActionBarActivity
 
         switch (position) {
             case 0: // Añadir nueva mascota
-                Do.changeActivity(this.getApplicationContext(), NewDogActivity.class,
+                Do.changeActivity(this.getApplicationContext(), CreateDogActivity.class,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 

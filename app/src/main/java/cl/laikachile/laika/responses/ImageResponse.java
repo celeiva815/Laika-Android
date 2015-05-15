@@ -1,9 +1,11 @@
 package cl.laikachile.laika.responses;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,15 +24,28 @@ public class ImageResponse implements Response.ErrorListener,
 
     public Activity mActivity;
     public ImageView mImageView;
+    public ProgressBar mProgressBar;
 
     public ImageResponse(Activity mActivity, ImageView mImageView) {
         this.mActivity = mActivity;
         this.mImageView = mImageView;
     }
 
+    public ImageResponse(Activity mActivity, ImageView mImageView, ProgressBar mProgressBar) {
+        this.mActivity = mActivity;
+        this.mImageView = mImageView;
+        this.mProgressBar = mProgressBar;
+    }
+
     @Override
     public void onResponse(Bitmap response) {
+
         mImageView.setImageBitmap(response);
+
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+
+        }
 
     }
 

@@ -285,6 +285,7 @@
 
     <!-- StoriesFragmentActivity -->
     <string name="stories_fragment_activity_name">Historias</string>
+    <string name="create_story_activity_name">Envía tu historia</string>
     <string name="hygiene_my_dog">Higiene</string>
     <string name="vet_my_dog">Veterinario</string>
     <string name="title_stories_activity">\"Cholito y los abuelitos\"</string>

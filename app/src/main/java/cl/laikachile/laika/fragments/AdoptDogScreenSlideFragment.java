@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 	private Activity mActivity;
     public ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
+    public ProgressBar mProgressBar;
 	
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 		
@@ -43,6 +45,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
         mPictureImageView = (ImageView) view.findViewById(R.id.picture_dogs_screen_slide_imageview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         TextView matchTextView = (TextView) view.findViewById(R.id.match_dogs_screen_slide_textview);
         TextView nameTextView = (TextView) view.findViewById(R.id.name_dogs_screen_slide_textview);
         TextView genderTextView = (TextView) view.findViewById(R.id.gender_dogs_screen_slide_textview);
@@ -75,12 +78,19 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        requestDogImage(mPictureImageView);
+        if (mDog.mDogImage == null) {
+            requestDogImage(mPictureImageView);
+
+        } else {
+            mPictureImageView.setImageBitmap(mDog.mDogImage);
+
+        }
     }
 
     public void requestDogImage(ImageView imageView) {
 
-        ImageResponse response = new ImageResponse(getActivity(), imageView);
+        mProgressBar.setVisibility(View.VISIBLE);
+        ImageResponse response = new ImageResponse(getActivity(), imageView, mProgressBar);
         Request imageRequest = RequestManager.imageRequest(mDog.mUrlImage, imageView, response,
                 response);
 

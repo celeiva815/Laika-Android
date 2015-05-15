@@ -104,7 +104,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.NewDogActivity"
+            android:name=".activities.CreateDogActivity"
             android:exported="false"
             android:label="@string/new_dog_register_activity_name"
             android:screenOrientation="portrait" >
@@ -196,6 +196,15 @@
             android:name=".activities.StoriesActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CreateStoryActivity"
+            android:exported="false"
+            android:label="@string/create_story_activity_name"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -38,9 +38,9 @@ import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
-public class NewDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+public class CreateDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
 
-    public static final String TAG = NewDogActivity.class.getSimpleName();
+    public static final String TAG = CreateDogActivity.class.getSimpleName();
     public static final String KEY_DOG_ID = "dog_id";
     protected int mIdLayout = R.layout.lk_new_dog_register_activity;
 

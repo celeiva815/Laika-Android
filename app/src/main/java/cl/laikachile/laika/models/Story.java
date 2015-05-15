@@ -19,7 +19,7 @@ public class Story extends Model {
 
     public static int ID = 1;
 
-	public final static String TABLE_NAME = "stories";
+    public final static String TABLE_NAME = "stories";
     public final static String COLUMN_STORY_ID = "story_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_USER_ID = "user_id";
@@ -58,7 +58,8 @@ public class Story extends Model {
     @Column(name = COLUMN_URL_IMAGE)
     public int mImage;
 
-    public Story() { }
+    public Story() {
+    }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,
                  String mTime, String mBody, int mImage) {
@@ -72,21 +73,25 @@ public class Story extends Model {
         this.mImage = mImage;
     }
 
+    public Story(String mTitle, String mDate, String mTime, String mBody) {
+
+        this.mTitle = mTitle;
+        this.mDate = mDate;
+        this.mTime = mTime;
+        this.mBody = mBody;
+    }
+
     public Story(JSONObject jsonObject) {
 
-        try {
-            this.mStoryId = jsonObject.getInt(COLUMN_STORY_ID);
-            this.mTitle = jsonObject.getString(COLUMN_TITLE);
-            this.mUserId = jsonObject.getInt(COLUMN_USER_ID);
-            this.mOwnerName = jsonObject.getString(COLUMN_OWNER_NAME);
-            this.mDate = jsonObject.getString(COLUMN_DATE);
-            this.mTime = jsonObject.getString(COLUMN_TIME);
-            this.mBody = jsonObject.getString(COLUMN_BODY);
-            this.mImage = R.drawable.abuelo; //FIXME jsonObject.getString(COLUMN_URL_IMAGE);
-            
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        this.mStoryId = jsonObject.optInt(COLUMN_STORY_ID);
+        this.mTitle = jsonObject.optString(COLUMN_TITLE);
+        this.mUserId = jsonObject.optInt(COLUMN_USER_ID);
+        this.mOwnerName = jsonObject.optString(COLUMN_OWNER_NAME);
+        this.mDate = jsonObject.optString(COLUMN_DATE);
+        this.mTime = jsonObject.optString(COLUMN_TIME);
+        this.mBody = jsonObject.optString(COLUMN_BODY);
+        this.mImage = R.drawable.abuelo; //FIXME jsonObject.optString(COLUMN_URL_IMAGE);
+
     }
 
     public String getOwnerName() {
@@ -169,6 +174,27 @@ public class Story extends Model {
     }
 
     public static void deleteAll() {
+
+    }
+
+    public JSONObject getJsonObject() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            jsonObject.put(COLUMN_TITLE, mTitle);
+            jsonObject.put(COLUMN_BODY, mBody);
+            jsonObject.put(COLUMN_DATE, mDate);
+            jsonObject.put(COLUMN_TIME, mTime);
+
+
+        }  catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+
+        return jsonObject;
 
     }
 }

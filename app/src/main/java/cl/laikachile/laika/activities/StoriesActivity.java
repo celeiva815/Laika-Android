@@ -1,6 +1,7 @@
 package cl.laikachile.laika.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -24,6 +25,7 @@ import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.StoriesResponse;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -89,7 +91,7 @@ public class StoriesActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.activity_main, menu);
+            getMenuInflater().inflate(R.menu.activity_stories, menu);
 
         return true;
     }
@@ -105,6 +107,15 @@ public class StoriesActivity extends ActionBarActivity {
             super.onBackPressed();
             return true;
         }
+
+        if (id == R.id.create_story) {
+
+            Do.changeActivity(getApplicationContext(), CreateStoryActivity.class,
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
 
     }

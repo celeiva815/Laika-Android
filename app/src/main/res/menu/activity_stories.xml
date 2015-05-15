@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cl.laikachile.laika.ActivityMain">
+
+    <item
+        android:id="@+id/create_story"
+        android:title="Envía tu Historia"
+        android:orderInCategory="99"
+        app:showAsAction="always" />
+
+</menu>

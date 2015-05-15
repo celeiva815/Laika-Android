@@ -1,6 +1,7 @@
 package cl.laikachile.laika.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.util.Calendar;
 import java.util.List;
@@ -87,6 +88,7 @@ public class Dog extends Model {
     public String mUrlImage;
 
     public String mDetail;
+    public Bitmap mDogImage;
 
     public Dog() {
     }
@@ -139,7 +141,7 @@ public class Dog extends Model {
         this.mChipCode = Boolean.toString(jsonObject.optBoolean(COLUMN_CHIP_CODE));//jsonObject.optString(COLUMN_CHIP_CODE);
         this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE,
-                "https://mongrelsoftheworld.files.wordpress.com/2011/05/mongrel-bali.jpg"); //XXX poner otro link
+                "http://www.k9ambassador.com/dogs-for-sale/wolf/wolfnew3.jpg"); //XXX poner otro link
 
     }
 

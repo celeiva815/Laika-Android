@@ -1,6 +1,6 @@
 package cl.laikachile.laika.listeners;
 
-import cl.laikachile.laika.activities.NewDogActivity;
+import cl.laikachile.laika.activities.CreateDogActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -11,9 +11,9 @@ import android.view.View.OnClickListener;
 
 public class NewDogOnClickListener implements OnClickListener {
 
-	NewDogActivity mActivity;
+	CreateDogActivity mActivity;
 	
-	public NewDogOnClickListener(NewDogActivity mActivity) {
+	public NewDogOnClickListener(CreateDogActivity mActivity) {
 		
 		this.mActivity = mActivity;
 	}
