@@ -43,6 +43,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mContext);
+        //Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if (mActivity instanceof LoginActivity) {
             ((LoginActivity) mActivity).enableViews(true);

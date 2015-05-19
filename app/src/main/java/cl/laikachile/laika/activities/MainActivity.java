@@ -31,6 +31,7 @@ public class MainActivity extends BaseActivity {
 			createFragmentView(mIdLayout);
 		}
 		*/
+        setTitle(mTitle);
         createFragmentView(mIdLayout);
 
         boolean firstboot = PrefsManager.isFirstBoot(getApplicationContext());

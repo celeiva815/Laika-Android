@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register_background"
     android:orientation="vertical">
 
 <LinearLayout
@@ -21,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/name_surname_question"
-        android:textColor="#fff"
-        android:textSize="@dimen/min_text"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -32,7 +31,7 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/name_and_surname"
         android:minHeight="30dp"
-        android:textSize="@dimen/small_text"
+        android:textSize="@dimen/laika_small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -45,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/email_question"
-        android:textColor="#fff"
-        android:textSize="@dimen/min_text"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -56,7 +55,7 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/user_log_in"
         android:minHeight="30dp"
-        android:textSize="@dimen/small_text"
+        android:textSize="@dimen/laika_small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -70,8 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/add_a_password_question"
-        android:textColor="#fff"
-        android:textSize="@dimen/min_text"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -82,7 +81,31 @@
         android:background="@color/dark_trans_black_background"
         android:hint="@string/password_log_in"
         android:minHeight="30dp"
-        android:textSize="@dimen/small_text"
+        android:textSize="@dimen/laika_small_text"
+        android:textColor="@color/dark_white_font"
+        android:textColorHint="@color/darker_white_font"
+        android:padding="5dp"
+        android:inputType="textPassword"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/repeat_password_question"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/dark_trans_black_background"
+        android:hint="@string/password_log_in"
+        android:minHeight="30dp"
+        android:textSize="@dimen/laika_small_text"
         android:textColor="@color/dark_white_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
@@ -95,8 +118,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/birthdate_question"
-        android:textColor="#fff"
-        android:textSize="@dimen/min_text"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -109,13 +132,19 @@
         android:layout_gravity="center_horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textSize="@dimen/biggest_text"
+        android:textSize="@dimen/laika_biggest_text"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/dark_white_font"
+        android:textColor="@color/light_black_font"
         android:padding="0dp"
         android:layout_marginBottom="20dp" />
 
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
     <Button
         android:id="@+id/submit_register_button"
         android:layout_width="match_parent"
@@ -124,7 +153,8 @@
         android:background="@drawable/laika_button"
         android:text="@string/register_user"
         android:onClick="register"
-        android:textSize="@dimen/medium_text" />
+        android:textSize="@dimen/laika_big_text"
+        android:textColor="@color/dark_white_font" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
@@ -135,70 +165,57 @@
         android:visibility="gone"
         android:indeterminate="false" />
 
-</LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/darkest_trans_black_background">
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_with_social_networks"
-            android:textColor="#fff"
-            android:textSize="@dimen/min_text"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/textView24"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:background="@color/darkest_trans_black_background">
 
-            <ImageView
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView15"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/facebook_white_icon"
-                android:adjustViewBounds="false"
-                android:layout_weight="1"
-                android:scaleType="centerInside" />
+                android:text="@string/sign_up_with_social_networks"
+                android:textColor="@color/dark_white_font"
+                android:textSize="@dimen/laika_min_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView16"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/twitter_white_icon"
-                android:adjustViewBounds="false"
-                android:layout_weight="1"
-                android:scaleType="centerInside" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/textView24"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="center">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView17"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/google_plus_white_icon2"
-                android:adjustViewBounds="false"
-                android:layout_weight="1"
-                android:scaleType="centerInside" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView15"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/facebook_white_icon"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:layout_marginRight="20dp" />
 
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView17"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/google_plus_white_icon2"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

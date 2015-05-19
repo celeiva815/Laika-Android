@@ -8,19 +8,20 @@
     <LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-        android:paddingTop="50dp"
-	    android:orientation="vertical" >
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingBottom="50dp">
       
     
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:weightSum="2"
             android:layout_marginLeft="20dp"
-            android:weightSum="2" >
+            android:layout_marginRight="20dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -31,7 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/lk_adopt_me_logo" />
+                    android:src="@drawable/lk_adopt_me_logo"
+                    android:adjustViewBounds="true" />
 
                 <TextView
                     android:id="@+id/name_my_dog_profile_activity_textview"
@@ -45,7 +47,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -56,7 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/lk_my_dog_logo" />
+                    android:src="@drawable/lk_my_dog_logo"
+                    android:adjustViewBounds="false" />
 
                 <TextView
                     android:id="@+id/size_dogs_screen_slide_textview"
@@ -74,16 +77,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
             android:paddingTop="30dp"
-            android:weightSum="4" >
+            android:weightSum="4"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/news_main_imageview"
@@ -106,20 +112,19 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/tips_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:src="@drawable/lk_tips_logo" />
 
                 <TextView
                     android:id="@+id/owners_my_dog_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
                     android:layout_marginTop="3dp"
                     android:text="@string/tips_main"
                     android:textColor="#fff" />
@@ -130,20 +135,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/events_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:src="@drawable/lk_events_logo" />
 
                 <TextView
                     android:id="@+id/TextView02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/events_main"
                     android:textColor="#fff" />
@@ -154,21 +158,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/stories_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/lk_stories_logo" />
 
                 <TextView
                     android:id="@+id/TextView03"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:text="@string/stories_main"
                     android:textColor="#fff" />
 

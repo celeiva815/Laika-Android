@@ -59,7 +59,6 @@ public class LoginActivity extends ActionBarActivity {
         mLoginProgressBar = (ProgressBar) findViewById(R.id.login_progressbar);
 
         mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
-
     }
 
     @Override

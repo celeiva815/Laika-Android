@@ -41,30 +41,30 @@
         android:id="@+id/email_login_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_trans_black_background"
         android:hint="@string/user_log_in"
         android:minHeight="30dp"
         android:textSize="20sp"
-        android:textColor="@color/dark_white_font"
+        android:textColor="@color/light_black_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
         android:singleLine="true"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:background="@color/dark_white_font" />
 
     <EditText
         android:id="@+id/password_login_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@color/dark_trans_black_background"
         android:hint="@string/password_log_in"
         android:minHeight="30dp"
         android:textSize="20sp"
-        android:textColor="@color/dark_white_font"
+        android:textColor="@color/light_black_font"
         android:textColorHint="@color/darker_white_font"
         android:padding="5dp"
         android:inputType="textPassword"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:background="@color/dark_white_font" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -79,7 +79,8 @@
             android:background="@drawable/laika_button"
             android:text="@string/action_sign_in_short"
             android:onClick="requestLogIn"
-            android:textSize="20sp" />
+            android:textSize="@dimen/laika_big_text"
+            android:textColor="@color/dark_white_font" />
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
