@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
@@ -33,7 +35,10 @@ public class Do {
     public static final String HOUR_MINUTE = "HH:mm";
     public static final String FIRST_TIME_OF_DAY = " 00:00:00";
     public static final String LAST_TIME_OF_DAY = " 23:59:59";
-
+    public static final int HOURS = 24;
+    public static final int MINUTES = 60;
+    public static final int SECONDS = 60;
+    public static final int MILLIS = 1000;
 
     /**
      *
@@ -161,7 +166,7 @@ public class Do {
         return date;
     }
 
-    public static int[] nowTimeInArray() {
+    public static int[] timeInArray() {
 
         Calendar cal = Calendar.getInstance();
 
@@ -252,5 +257,12 @@ public class Do {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

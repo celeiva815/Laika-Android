@@ -15,6 +15,7 @@ import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 /**
@@ -42,6 +43,11 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mContext);
+
+        if (mActivity instanceof LoginActivity) {
+            ((LoginActivity) mActivity).enableViews(true);
+            PrefsManager.clearPrefs(mContext);
+        }
 
     }
 }

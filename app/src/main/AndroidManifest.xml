@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name='android.permission.WAKE_LOCK'/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -219,6 +220,9 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="cl.laikachile.laika.utils.AlarmReceiver">
+        </receiver>
 
         <!-- [AI] agregar la metadata de la base de datos -->
         <meta-data

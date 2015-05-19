@@ -70,6 +70,7 @@
     <string name="name_and_surname">Nombre y Apellido</string>
     <string name="email_question">¿Cuál es tu correo electrónico?</string>
     <string name="add_a_password_question">Agrega una contraseña</string>
+    <string name="repeat_password_question">Repite tu contraseña</string>
     <string name="birthdate_question">¿Cuando estás de cumpleaños?</string>
     <string name="sign_up_with_social_networks">o ingresa con tus redes sociales</string>
     <string name="register_user">Registrarse</string>

@@ -1,6 +1,9 @@
 package cl.laikachile.laika.models;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -8,17 +11,20 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.utils.AlarmReceiver;
 import cl.laikachile.laika.utils.DB;
+import cl.laikachile.laika.utils.DateFormatter;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
 @Table(name = AlarmReminder.TABLE_NAME)
 public class AlarmReminder extends Model {
-
-    public static int ID = 100;
 
 	public final static String TABLE_NAME = "alarm_reminder";
     public final static String COLUMN_ALARM_REMINDER_ID = "alarm_reminder_id";
@@ -37,6 +43,11 @@ public class AlarmReminder extends Model {
 	public final static String COLUMN_TIME = "time";
 	public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
+
+    public final static String LOCAL_ID = "local_id";
+    public final static String WEEKDAY = "weekday";
+    public final static String USER = "user";
+    public static int ID = 1;
 
     @Column(name = COLUMN_ALARM_REMINDER_ID)
     public int mAlarmReminderId;
@@ -386,6 +397,80 @@ public class AlarmReminder extends Model {
 
         return new History(mAlarmReminderId, mCategory, mType, mTitle, mDetail, toDate(context),
                 mTime);
+    }
+
+    public void setAlarm(Context context) {
+
+        int[] time = DateFormatter.parseTimeFromString(mTime);
+        int hour = time[0];
+        int minutes = time[1];
+
+        if (mHasMonday) {
+            setIntentAlarm(context, Calendar.MONDAY, hour, minutes);
+        }
+
+        if (mHasTuesday) {
+            setIntentAlarm(context, Calendar.TUESDAY, hour, minutes);
+        }
+
+        if (mHasWednesday) {
+            setIntentAlarm(context, Calendar.WEDNESDAY, hour, minutes);
+        }
+
+        if (mHasThursday) {
+            setIntentAlarm(context, Calendar.THURSDAY, hour, minutes);
+        }
+
+        if (mHasFriday) {
+            setIntentAlarm(context, Calendar.FRIDAY, hour, minutes);
+        }
+
+        if (mHasSaturday) {
+            setIntentAlarm(context, Calendar.SATURDAY, hour, minutes);
+        }
+
+        if (mHasSunday) {
+            setIntentAlarm(context, Calendar.SUNDAY, hour, minutes);
+        }
+    }
+
+    public void setAlarm(Context context, int i)
+    {
+        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(AlarmReceiver.ONE_TIME, Boolean.FALSE);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        //After after 5 seconds
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 5 , pi);
+    }
+
+
+    public void setIntentAlarm(Context context, int week, int hour, int minutes) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, week);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+
+        intent.putExtra(LOCAL_ID, this.getId());
+        intent.putExtra(COLUMN_TIME, this.mTime);
+        intent.putExtra(WEEKDAY, week);
+        intent.putExtra(USER, PrefsManager.getUserName(context));
+
+        long id = getId();
+        int requestCode = (int) id * 10 + week;
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, requestCode, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                Do.HOURS * Do.MINUTES * Do.SECONDS * Do.MILLIS, pendingIntent);
+
     }
 
     // DATABASE METHODS

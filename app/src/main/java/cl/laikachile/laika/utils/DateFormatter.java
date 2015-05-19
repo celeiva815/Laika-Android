@@ -9,10 +9,10 @@ import java.util.TimeZone;
 /**
  * Created by Benjamin on 06-11-2014.
  */
-public class MagnetDateFormat {
+public class DateFormatter {
 
-    private static final SimpleDateFormat API_DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss a");
-    private static final SimpleDateFormat LOCAL_DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy'T'HH:mm:ss a");
+    private static final SimpleDateFormat API_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    private static final SimpleDateFormat LOCAL_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
     public static String shortDateFormat(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -59,7 +59,7 @@ public class MagnetDateFormat {
         return API_DATE_FORMAT.format(date);
     }
 
-    public static Date apiDateFromString(String stringDate) throws ParseException {
+    public static Date dateFromString(String stringDate) throws ParseException {
         return API_DATE_FORMAT.parse(stringDate);
     }
 
@@ -68,7 +68,13 @@ public class MagnetDateFormat {
         return simpleDateFormat.format(date);
     }
 
+ public static int[] parseTimeFromString(String time) {
 
+     int hour = Integer.parseInt(time.substring(0, 2));
+     int minute = Integer.parseInt(time.substring(3, 5));
 
+     return new int[] {hour, minute};
+
+ }
 
 }

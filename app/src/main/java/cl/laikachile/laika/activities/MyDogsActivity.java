@@ -439,7 +439,7 @@ public class MyDogsActivity extends ActionBarActivity {
     public String getImageName(int dogId) {
 
         int[] dateArray = Do.nowDateInArray();
-        int[] timeArray = Do.nowTimeInArray();
+        int[] timeArray = Do.timeInArray();
 
         String date = "";
 

@@ -138,6 +138,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                             PrefsManager.getUserId(v.getContext()), mDog.mDogId);
 
                     reminder.save();
+                    reminder.setAlarm(view.getContext(),1);
 
                     String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
                     Do.showToast(message, v.getContext(), Toast.LENGTH_LONG);
