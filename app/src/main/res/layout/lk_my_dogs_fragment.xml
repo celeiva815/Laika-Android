@@ -97,11 +97,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/owner_my_dog_imageview"
-                    android:scaleType="fitStart"
                     android:baselineAlignBottom="false"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/owner"
-                    android:padding="7dp" />
+                    android:adjustViewBounds="false"
+                    android:src="@drawable/ic_owner" />
 
             </LinearLayout>
 

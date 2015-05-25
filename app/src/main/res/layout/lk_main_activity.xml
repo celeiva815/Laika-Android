@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="0dp"
-    android:background="@drawable/lk_adoption_background"
+    android:background="@drawable/lk_owners_background"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -10,7 +10,8 @@
 	    android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingBottom="50dp">
+        android:paddingBottom="50dp"
+        android:background="@color/dark_trans_black_background">
       
     
         <LinearLayout
@@ -32,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/lk_adopt_me_logo"
+                    android:src="@drawable/adopt_white"
                     android:adjustViewBounds="true" />
 
                 <TextView
@@ -96,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scrollbarAlwaysDrawVerticalTrack="false"
-                    android:src="@drawable/lk_news_logo" />
+                    android:src="@drawable/news_white" />
 
                 <TextView
                     android:id="@+id/breed_my_dog_profile_textview"

@@ -66,7 +66,4 @@ public class Personality extends Model {
         String condition = COLUMN_PERSONALITY_ID + DB.EQUALS + personalityId;
         return new Select().from(Personality.class).where(condition).executeSingle();
     }
-
-
-
 }

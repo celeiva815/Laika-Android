@@ -138,7 +138,7 @@ public class Dog extends Model {
         this.mPersonality = jsonObject.optInt(COLUMN_PERSONALITY);
         this.mIsSterilized = jsonObject.optBoolean(COLUMN_IS_STERILIZED);
         this.mIsTrained = jsonObject.optBoolean(COLUMN_IS_TRAINED);
-        this.mChipCode = Boolean.toString(jsonObject.optBoolean(COLUMN_CHIP_CODE));//jsonObject.optString(COLUMN_CHIP_CODE);
+        this.mChipCode = jsonObject.optString(COLUMN_CHIP_CODE);
         this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE,
                 "http://www.k9ambassador.com/dogs-for-sale/wolf/wolfnew3.jpg"); //XXX poner otro link

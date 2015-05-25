@@ -28,8 +28,8 @@
     </string-array>
 
     <string-array name="personality_adopt">
-        <item>Otro</item>
-        <item>Tímido</item>
+        <item>Me da igual</item>
+        <item>Tranquilo</item>
         <item>Sociable</item>
         <item>Juguetón</item>
         <item>Guardián</item>

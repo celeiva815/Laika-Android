@@ -1,5 +1,7 @@
 package cl.laikachile.laika.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -144,6 +146,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
                 getFreeTimes(getApplicationContext()));
 
+        //TODO el adapter para el spinner de los locations una vez que sean enviados por la API
         ArrayAdapter<String> regionAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter,
                 this.getResources().getStringArray(R.array.available_chilean_regions));
@@ -177,7 +180,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public void requestAdoptionDogForm(AdoptDogForm adoptDogForm) {
 
         mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this,
-                "Espera un momento", "Estamos buscando mascotas que se adecúen a tu perfil");
+                "Esperanos un momento", "Estamos buscando perritos...");
 
         JSONObject jsonParams = adoptDogForm.getJsonObject();
         AdoptDogFormResponse response = new AdoptDogFormResponse(this);
@@ -314,6 +317,17 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public List<FreeTime> getFreeTimes(Context context) {
 
         return FreeTime.getFreeTimes(context);
+    }
+
+    public void showDialog(String title, String message) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
+
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setCancelable(true);
+        dialog.show();
+
     }
 
 }

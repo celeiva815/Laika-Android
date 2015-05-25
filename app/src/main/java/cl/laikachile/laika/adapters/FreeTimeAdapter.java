@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.indexes.FreeTime;
 
 /**
@@ -50,6 +51,7 @@ public class FreeTimeAdapter extends BaseAdapter {
 
         TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
         textView.setText(mSizes.get(position).mName);
+        textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
         return textView;
 
     }

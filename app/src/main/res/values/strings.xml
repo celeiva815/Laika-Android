@@ -108,7 +108,7 @@
     <string name="region_adopt_dog_form">¿A qué región perteneces?</string>
     <string name="city_adopt_dog_form">¿En qué comuna vives?</string>
     <string name="space_adopt_dog_form">¿Cómo es tu hogar?</string>
-    <string name="free_time_adopt_dog_form">¿Cuánto tiempo tendrás para tu perro?</string>
+    <string name="free_time_adopt_dog_form">¿Cuánto tiempo diario tendrás para tu perro?</string>
     <string name="kids_adopt_dog_form">¿Vives con niños menores de 10 años?</string>
     <string name="elderly_adopt_dog_form">¿Vives con adultos mayores?</string>
     <string name="pets_adopt_dog_form">¿Vives con otras mascotas?</string>
