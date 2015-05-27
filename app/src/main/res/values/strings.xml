@@ -41,7 +41,7 @@
     <string name="search_button">Buscar</string>
 
     <!-- ERRORS -->
-    <string	name="error_invalid_phone">Número de celular inválido</string>
+    <string name="error_invalid_phone">Número de celular inválido</string>
 
     <!-- LOGIN -->
     <string name="log_in_activity_name">Inicio de Sesión</string>
@@ -53,7 +53,7 @@
     <string name="log_in">Ingresar</string>
     <string name="log_in2">Enviar</string>
     <string name="back_to_menu">Volver al menú principal</string>
-    <string	name="registered_description"></string>
+    <string name="registered_description"></string>
     <string name="sign_in">Ingresa</string>
     <string name="sign_up">Regístrate</string>
     <string name="g_plus_log_in">Google</string>
@@ -126,11 +126,10 @@
     <!-- AdoptDogSuccessActivity -->
     <string name="congrats_adopt_dog_success">¡Felicidades</string>
     <string name="happy_news_adopt_dog_success">estará feliz con la noticia</string>
-    <string name="contact_news_adopt_dog_success">Dentro de 48 horas te llegará un mail confirmando
-    tu postulación y la Fundación a cargo te contactará. Felicidades!!</string>
-    <string name="contact_news_adopt_dog_success_first">Dentro de 48 horas te llegará un mail confirmando
-    tu postulación y la</string>
-    <string name="contact_news_adopt_dog_success_second">te contactará. Felicidades!!</string>
+    <string name="contact_news_adopt_dog_success"></string>
+    <string name="contact_news_adopt_dog_success_first">La</string>
+    <string name="contact_news_adopt_dog_success_second">se contactará contigo dentro de 48 hrs.
+                                                    a través de un correo. Enhorabuena!</string>
     <string name="mail_adopt_dog_success">Revisa tu correo para confirmar y nos contactaremos contigo</string>
 
     <!-- NewDogRegisterActivity -->

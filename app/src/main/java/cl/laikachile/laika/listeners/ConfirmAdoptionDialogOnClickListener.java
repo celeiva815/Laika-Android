@@ -4,6 +4,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.ConfirmAdoptionResponse;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -14,11 +15,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,17 +32,22 @@ import org.json.JSONObject;
 
 public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
 
+    public static final String TAG = ConfirmAdoptionDialogOnClickListener.class.getSimpleName();
+
     private int mIdLayout = R.layout.ai_simple_textview_for_dialog;
     private final Dog mDog;
     private final Activity mActivity;
+    private final ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
 
     public ConfirmAdoptionDialogOnClickListener(Dog mDog, Activity activity,
-                                                ProgressDialog mProgressDialog) {
+                                                ProgressDialog mProgressDialog,
+                                                ImageView mPictureImageView) {
 
         this.mDog = mDog;
         this.mActivity = activity;
         this.mProgressDialog = mProgressDialog;
+        this.mPictureImageView = mPictureImageView;
     }
 
     @Override
@@ -52,8 +61,8 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                mProgressDialog = ProgressDialog.show(context, "Postulación Enviada",
-                        "Enviando notificación de adopción");
+                mProgressDialog = ProgressDialog.show(context, "Postulando...",
+                        "Enviando notificación de postulación");
 
                 requestPostulation();
                 dialog.dismiss();
@@ -77,7 +86,7 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
         View view = inflater.inflate(mIdLayout, null, false);
 
         TextView question = (TextView) view.findViewById(R.id.simple_textview);
-        question.setText("¿Desea realmente adoptar a " + mDog.mName + "?");
+        question.setText("¿Estás seguro de que deseas postular por la adopción de " + mDog.mName + "?");
 
         return view;
 
@@ -94,9 +103,19 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
         }
 
         ConfirmAdoptionResponse response = new ConfirmAdoptionResponse(mActivity,
-                mProgressDialog, mDog);
-        RequestManager.postRequest(jsonObject, RequestManager.ADDRESS_CONFIRM_POSTULATION, response,
-                response, PrefsManager.getUserToken(mActivity.getApplicationContext()));
+                mProgressDialog, mDog, getDogBitmap());
+
+        Request postulationRequest = RequestManager.postRequest(jsonObject,
+                RequestManager.ADDRESS_CONFIRM_POSTULATION, response, response,
+                PrefsManager.getUserToken(mActivity.getApplicationContext()));
+
+        VolleyManager.getInstance(mActivity.getApplicationContext())
+                .addToRequestQueue(postulationRequest, TAG);
+    }
+
+    public Bitmap getDogBitmap() {
+
+        return ((BitmapDrawable) mPictureImageView.getDrawable()).getBitmap();
 
     }
 

@@ -44,6 +44,7 @@ public class Dog extends Model {
     public final static String COLUMN_USER_ADOPT_DOG_ID = "user_adopt_dog_id";
 
     public final static String API_DOGS = "dogs";
+    public final static String IMAGE = "image";
 
     public final static int ID_NOT_SET = 0;
 
@@ -229,7 +230,22 @@ public class Dog extends Model {
             age--;
         }
 
-        return Integer.toString(age) + " años";
+        if (age == 0) {
+
+            int months = today.get(Calendar.MONTH) - dateOfBirth.get(Calendar.MONTH);
+
+            if (months == 1) {
+                return Integer.toString(months) + "mes";
+            }
+
+            return Integer.toString(months) + "meses";
+
+        } else if (age == 1) {
+            return Integer.toString(age) + " año";
+
+        } else {
+            return Integer.toString(age) + " años";
+        }
     }
 
     public void addOwner(Owner owner, int role) {
@@ -327,6 +343,13 @@ public class Dog extends Model {
         this.mUrlImage = mUrlImage;
     }
 
+    public void setPostulatedDog() {
+
+        this.mStatus = Tag.DOG_POSTULATED;
+        this.save();
+
+    }
+
     //DataBase
 
     public static void saveDogs(JSONObject jsonObject, int status) {
@@ -355,7 +378,7 @@ public class Dog extends Model {
 
     public static void createOrUpdate(Dog dog) {
 
-        if (!Dog.isSaved(dog)) {
+        if (!isSaved(dog)) {
             dog.save();
 
         } else {

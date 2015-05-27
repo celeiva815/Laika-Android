@@ -8,27 +8,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.PublicationsAdapter;
-import cl.laikachile.laika.listeners.EndlessScrollListener;
 import cl.laikachile.laika.listeners.PublicationsRefreshListener;
 import cl.laikachile.laika.models.Publication;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.PublicationsResponse;
-import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -102,7 +97,7 @@ public class PublicationsActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.activity_main, menu);
+            getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
     }

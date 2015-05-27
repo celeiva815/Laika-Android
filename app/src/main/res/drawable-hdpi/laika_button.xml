@@ -3,12 +3,13 @@
       <solid
           android:color="@color/laika_red" />
       <size
+          android:width="50dp"
           />
        <stroke android:width="2px"/>
       <padding
           android:left="10dp"
-          android:top="5dp"
+          android:top="15dp"
           android:right="10dp"
-          android:bottom="5dp" />
+          android:bottom="15dp" />
         
 </shape>

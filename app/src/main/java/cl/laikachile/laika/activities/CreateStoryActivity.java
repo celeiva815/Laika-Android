@@ -4,19 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Request;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.CreateStoryOnClickListener;
@@ -60,7 +55,7 @@ public class CreateStoryActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.activity_main, menu);
+            getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
     }

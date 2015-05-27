@@ -1,6 +1,5 @@
 package cl.laikachile.laika.activities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -57,7 +56,7 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		if (!this.getClass().equals(MainActivity.class))
-			getMenuInflater().inflate(R.menu.activity_main, menu);
+			getMenuInflater().inflate(R.menu.main_menu, menu);
 		
 		return true;
 	}

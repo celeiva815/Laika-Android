@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container_adopt_dog_success_linearlayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="5dp">
 
     <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:gravity="center|top"
-        android:layout_marginBottom="15dp">
+        android:gravity="center|top">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/laika_red"
+        android:gravity="center"
+        android:weightSum="10"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView18"
+            android:src="@drawable/mail"
+            android:adjustViewBounds="true"
+            android:layout_weight="1.5" />
+
+        <TextView
+            android:id="@+id/contact_news_adopt_dog_success_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_news_adopt_dog_success"
+            android:textColor="#fff"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_below="@+id/textView26"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:layout_weight="8" />
+    </LinearLayout>
 
         <ImageView
             android:id="@+id/picture_adopt_dog_success_imageview"
@@ -19,8 +47,18 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:cropToPadding="false"
-            android:src="@drawable/lk_blanquito_picture"
+            android:src="@drawable/white_image"
             android:baselineAlignBottom="false" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_image_progressbar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:focusableInTouchMode="false" />
 
 
         <TextView
@@ -83,36 +121,4 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/laika_red"
-        android:gravity="center"
-        android:weightSum="10"
-        android:padding="5dp">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView18"
-            android:src="@drawable/mail"
-            android:adjustViewBounds="true"
-            android:layout_weight="1.5" />
-
-        <TextView
-            android:id="@+id/contact_news_adopt_dog_success_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/contact_news_adopt_dog_success"
-            android:textColor="#fff"
-            android:textSize="@dimen/laika_min_text"
-            android:layout_below="@+id/textView26"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:gravity="center"
-            android:layout_weight="8" />
-    </LinearLayout>
-</LinearLayout>

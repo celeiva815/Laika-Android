@@ -2,6 +2,8 @@ package cl.laikachile.laika.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +34,8 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
-	
+
+
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 		
 		this.mDog = mDog;
@@ -60,15 +63,17 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         nameTextView.setText(mDog.mName);
         sizeTextView.setText(mDog.getSize().mName);
         genderTextView.setText(mDog.getGender(view.getContext()));
-        yearsTextView.setText(mDog.mBirth);
+        yearsTextView.setText(mDog.getAge());
         sterilizedTextView.setText(mDog.getSterilized(view.getContext()));
         chipTextView.setText(mDog.getChip(view.getContext()));
         trainedTextView.setText(mDog.getTrained(view.getContext()));
         matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME
-        detailsTextView.setText(mDog.mDetail);
+
+        if (!Do.isNullOrEmpty(mDog.mDetail)) //XXX
+            detailsTextView.setText(mDog.mDetail);
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
-                mDog, mActivity, mProgressDialog);
+                mDog, mActivity, mProgressDialog, mPictureImageView);
         postulateButton.setOnClickListener(listener);
         
         return view;
@@ -98,6 +103,4 @@ public class AdoptDogScreenSlideFragment extends Fragment {
                 .addToRequestQueue(imageRequest, TAG);
 
     }
-	
-	
 }
