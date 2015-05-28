@@ -52,6 +52,7 @@ public class FreeTimeAdapter extends BaseAdapter {
         TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
         textView.setText(mSizes.get(position).mName);
         textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
+        textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
         return textView;
 
     }

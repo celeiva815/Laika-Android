@@ -21,10 +21,10 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/name_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <EditText
@@ -32,15 +32,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:background="@color/dark_trans_black_background"
                 android:hint="@string/name_hint_new_dog_register"
                 android:inputType="textPersonName"
                 android:minHeight="30dp"
                 android:paddingLeft="5dp"
                 android:singleLine="true"
-                android:textColor="@color/dark_white_font"
-                android:textColorHint="@color/lighter_black_font"
-                android:textSize="20sp" />
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_medium_text"
+                android:background="@drawable/laikatheme_edit_text_holo_light" />
 
             <RadioGroup
                 android:id="@+id/gender_new_dog_register_radiogroup"
@@ -78,44 +77,42 @@
                 android:id="@+id/size_new_dog_register_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/size_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <Spinner
                 android:id="@+id/size_new_dog_register_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/dark_trans_black_background" />
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:id="@+id/type_new_dog_register_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/breed_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <Spinner
                 android:id="@+id/type_new_dog_register_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/dark_trans_black_background" />
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:id="@+id/birth_new_dog_register_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/birth_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <Button
@@ -126,7 +123,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:background="@android:color/transparent"
-                android:padding="0dp"
+                android:padding="15dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
@@ -139,34 +136,33 @@
                 android:id="@+id/personality_new_dog_register_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/personality_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <Spinner
                 android:id="@+id/personality_new_dog_register_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/dark_trans_black_background" />
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/steralized_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <RadioGroup
                 android:id="@+id/sterilized_new_dog_register_radiogroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|left"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -199,17 +195,17 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/code_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <RadioGroup
                 android:id="@+id/chip_new_dog_register_radiogroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|left"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -257,10 +253,10 @@
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|left"
                 android:layout_marginBottom="5dp"
                 android:text="@string/picture_new_dog_register"
-                android:textColor="@color/light_black_font"
+                android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
             <ImageView

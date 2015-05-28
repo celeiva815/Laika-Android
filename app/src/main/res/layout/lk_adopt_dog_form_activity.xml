@@ -171,7 +171,7 @@
                 android:singleLine="true"
                 android:text="0"
                 android:textColor="@color/light_black_font"
-                android:textSize="20sp"
+                android:textSize="@dimen/laika_medium_text"
                 android:background="@drawable/laikatheme_edit_text_holo_light" />
 
             <TextView

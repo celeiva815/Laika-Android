@@ -57,6 +57,7 @@ public class PersonalityAdapter extends BaseAdapter {
         TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
         textView.setText(mPersonalities.get(position).mName);
         textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
+        textView.setBackground(mContext.getResources().getDrawable(R.drawable.laikatheme_textfield_default_holo_light));
         return textView;
 
     }
