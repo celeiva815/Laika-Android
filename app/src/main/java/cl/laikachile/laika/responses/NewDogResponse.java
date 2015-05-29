@@ -32,7 +32,7 @@ public class NewDogResponse implements Response.ErrorListener,
 
         Context context = mActivity.getApplicationContext();
         Dog dog = Dog.saveDog(response, Tag.DOG_OWNED);
-        Do.showToast(mMessage + dog.mName, context);
+        Do.showShortToast(mMessage + dog.mName, context);
         mActivity.onBackPressed();
 
     }
@@ -42,7 +42,7 @@ public class NewDogResponse implements Response.ErrorListener,
 
         mActivity.enableViews(true);
         ResponseHandler.error(error, mActivity);
-        Do.showToast("Hubo un error", mActivity);
+        Do.showShortToast("Hubo un error", mActivity);
 
     }
 

@@ -114,7 +114,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                     } catch (IOException ex) {
                         // Error occurred while creating the File
-                        Do.showToast("Problem creating the picture", getApplicationContext());
+                        Do.showShortToast("Problem creating the picture", getApplicationContext());
                     }
                     // Continue only if the File was successfully created
                     if (photoFile != null) {

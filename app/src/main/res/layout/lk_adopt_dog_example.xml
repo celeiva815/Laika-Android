@@ -27,7 +27,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/name_dogs_screen_slide_textview"
+                    android:id="@+id/name_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -67,7 +67,7 @@
                 android:src="@drawable/arrow_down" />
 
             <TextView
-                android:id="@+id/match_dogs_screen_slide_textview"
+                android:id="@+id/match_adopt_dog_screen_slide_textview"
                 android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
@@ -85,8 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/linearLayout2"
-                android:layout_alignEnd="@+id/match_dogs_screen_slide_textview"
-                android:layout_alignRight="@+id/match_dogs_screen_slide_textview"
+                android:layout_alignEnd="@+id/match_adopt_dog_screen_slide_textview"
+                android:layout_alignRight="@+id/match_adopt_dog_screen_slide_textview"
                 android:drawableLeft="@drawable/yellow_circle"
                 android:paddingLeft="5dp"
                 android:text="En espera"
@@ -118,7 +118,7 @@
                     android:src="@drawable/lk_gender_icon" />
 
                 <TextView
-                    android:id="@+id/gender_dogs_screen_slide_textview"
+                    android:id="@+id/gender_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -140,7 +140,7 @@
                     android:src="@drawable/lk_age_icon" />
 
                 <TextView
-                    android:id="@+id/years_dogs_screen_slide_textview"
+                    android:id="@+id/years_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -173,7 +173,7 @@
                     android:src="@drawable/lk_size_icon" />
 
                 <TextView
-                    android:id="@+id/size_dogs_screen_slide_textview"
+                    android:id="@+id/size_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -195,7 +195,7 @@
                     android:src="@drawable/hospital16small" />
 
                 <TextView
-                    android:id="@+id/sterilized_dogs_screen_slide_textview"
+                    android:id="@+id/sterilized_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -227,7 +227,7 @@
                     android:src="@drawable/lk_gender_icon" />
 
                 <TextView
-                    android:id="@+id/chip_dogs_screen_slide_textview"
+                    android:id="@+id/chip_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -249,7 +249,7 @@
                     android:src="@drawable/lk_gender_icon" />
 
                 <TextView
-                    android:id="@+id/trained_dogs_screen_slide_textview"
+                    android:id="@+id/trained_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

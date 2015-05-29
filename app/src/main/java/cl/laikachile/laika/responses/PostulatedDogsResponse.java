@@ -13,37 +13,35 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
+import cl.laikachile.laika.activities.PostulatedDogsFragmentActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.UserAdoptDog;
 import cl.laikachile.laika.network.utils.ResponseHandler;
+import cl.laikachile.laika.utils.Do;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
  */
-public class ConfirmAdoptionResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class PostulatedDogsResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     public Activity mActivity;
     public ProgressDialog mProgressDialog;
-    public Dog mDog;
     public Context mContext;
     public Bitmap mDogBitmap;
 
-    public ConfirmAdoptionResponse(Activity mActivity, ProgressDialog mProgressDialog, Dog mDog,
-                                   Bitmap mDogBitmap) {
+    public PostulatedDogsResponse(Activity mActivity, ProgressDialog mProgressDialog) {
+
         this.mActivity = mActivity;
         this.mProgressDialog = mProgressDialog;
-        this.mDog = mDog;
         this.mContext = mActivity.getApplicationContext();
-        this.mDogBitmap = mDogBitmap;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        UserAdoptDog userAdoptDog = UserAdoptDog.createOrUpdate(new UserAdoptDog(response));
+        UserAdoptDog.saveUserAdoptDogs(response);
         mProgressDialog.dismiss();
-        mDog.setPostulatedDog();
-        changeActivity(userAdoptDog);
+        changeActivity();
     }
 
     @Override
@@ -54,16 +52,10 @@ public class ConfirmAdoptionResponse implements Response.Listener<JSONObject>, R
 
     }
 
-    private void changeActivity(UserAdoptDog userAdoptDog) {
+    private void changeActivity() {
 
-        Intent intent = new Intent(mContext, AdoptDogSuccessActivity.class);
-        Bundle b = new Bundle();
-
-        b.putInt(Dog.COLUMN_DOG_ID, mDog.mDogId);
-        b.putInt(UserAdoptDog.COLUMN_USER_ADOPT_DOG_ID, userAdoptDog.mUserAdoptDogId);
-        intent.putExtras(b); //Put your id to your next Intent
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+        Do.changeActivity(mContext, PostulatedDogsFragmentActivity.class,
+                Intent.FLAG_ACTIVITY_NEW_TASK);
 
     }
 

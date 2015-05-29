@@ -1,22 +1,15 @@
 package cl.laikachile.laika.listeners;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.utils.Do;
@@ -194,13 +187,13 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
 
     public void viewProfile(Context context) {
 
-        Do.showToast("Por implementar", context);
+        Do.showShortToast("Por implementar", context);
 
     }
 
     public void editProfile(Context context) {
 
-        Do.showToast("Por implementar", context);
+        Do.showShortToast("Por implementar", context);
 
     }
 
@@ -247,7 +240,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showToast("Por implementar", context);
+                Do.showShortToast("Por implementar", context);
                 dialog.dismiss();
             }
         });
@@ -275,7 +268,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showToast("Por implementar", context);
+                Do.showShortToast("Por implementar", context);
                 dialog.dismiss();
             }
         });

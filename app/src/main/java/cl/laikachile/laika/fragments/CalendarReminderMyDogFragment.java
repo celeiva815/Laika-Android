@@ -116,7 +116,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                     mCalendarReminder.save();
 
                     String message = Do.getRString(v.getContext(), R.string.edit_reminder_added);
-                    Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
+                    Do.showLongToast(message, v.getContext());
 
                 } else {
 
@@ -126,7 +126,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
 
                     reminder.save();
                     String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                    Do.showToast(message,v.getContext(), Toast.LENGTH_LONG);
+                    Do.showLongToast(message, v.getContext());
                 }
 
                 ((MyDogsActivity) getActivity()).setHistoryFragment(mDog);

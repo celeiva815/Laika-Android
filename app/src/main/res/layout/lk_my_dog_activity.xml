@@ -51,7 +51,7 @@
                 android:src="@drawable/lk_walk_logo" />
 
             <TextView
-                android:id="@+id/size_dogs_screen_slide_textview"
+                android:id="@+id/size_adopt_dog_screen_slide_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -82,7 +82,7 @@
                     android:src="@drawable/lk_health_logo" />
 
                 <TextView
-                    android:id="@+id/years_dogs_screen_slide_textview"
+                    android:id="@+id/years_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
@@ -106,7 +106,7 @@
                     android:src="@drawable/lk_school_logo" />
 
                 <TextView
-                    android:id="@+id/gender_dogs_screen_slide_textview"
+                    android:id="@+id/gender_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

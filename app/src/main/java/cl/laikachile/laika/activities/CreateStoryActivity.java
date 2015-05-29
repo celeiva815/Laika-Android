@@ -19,16 +19,19 @@ import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.CreateStoryResponse;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
 public class CreateStoryActivity extends ActionBarActivity {
 
     public static final String TAG = CreateStoryActivity.class.getSimpleName();
+    public static final int LOCAL_ID = 0;
     
     private int mIdLayout = R.layout.lk_create_story_activity;
     public EditText mTitleEditText;
     public EditText mBodyEditText;
     public Button mCreateButton;
+    public Story mStory;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,15 @@ public class CreateStoryActivity extends ActionBarActivity {
         mBodyEditText = (EditText) findViewById(R.id.body_create_story_edittext);
         mCreateButton = (Button) findViewById(R.id.create_story_button);
 
-        mCreateButton.setOnClickListener(new CreateStoryOnClickListener(this    ));
+        mCreateButton.setOnClickListener(new CreateStoryOnClickListener(this));
 
+        mStory = getSavedStory();
+
+        if (mStory != null) {
+
+            mTitleEditText.setText(mStory.mTitle);
+            mBodyEditText.setText(mStory.mBody);
+        }
     }
 
     @Override
@@ -55,7 +65,7 @@ public class CreateStoryActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.main_menu, menu);
+            getMenuInflater().inflate(R.menu.create_story_menu, menu);
 
         return true;
     }
@@ -67,12 +77,21 @@ public class CreateStoryActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
-            super.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        switch (id) {
 
+            case android.R.id.home:
+
+                super.onBackPressed();
+                return true;
+
+            case R.id.save_story:
+
+                saveStory();
+                Do.showLongToast("La historia ha sido guardada", CreateStoryActivity.this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void requestStory(Story story, Context context) {
@@ -86,6 +105,28 @@ public class CreateStoryActivity extends ActionBarActivity {
 
         VolleyManager.getInstance(context)
                 .addToRequestQueue(storyRequest, TAG);
+
+    }
+
+    public void saveStory() {
+
+        int storyId = LOCAL_ID;
+        String title = mTitleEditText.getText().toString();
+        int userId = PrefsManager.getUserId(getApplicationContext());
+        String ownerName = PrefsManager.getUserName(getApplicationContext());
+        String date = Do.today();
+        String time = Do.now();
+        String body = mBodyEditText.getText().toString();
+        int image = R.drawable.abuela; //FIXME cambiarlo a String cuando se implementen las imagenes
+
+        Story story = new Story(storyId,title,userId,ownerName,date,time,body, image);
+        mStory = Story.createOrUpdate(story);
+
+    }
+
+    public Story getSavedStory(){
+
+        return Story.getSingleStory(LOCAL_ID);
 
     }
 

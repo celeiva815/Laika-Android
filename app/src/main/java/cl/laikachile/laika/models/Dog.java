@@ -3,6 +3,7 @@ package cl.laikachile.laika.models;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -370,21 +371,20 @@ public class Dog extends Model {
     public static Dog saveDog(JSONObject jsonDog, int status) {
 
         Dog dog = new Dog(jsonDog, status);
-        createOrUpdate(dog);
-
-        return dog;
+        return createOrUpdate(dog);
 
     }
 
-    public static void createOrUpdate(Dog dog) {
+    public static Dog createOrUpdate(Dog dog) {
 
         if (!isSaved(dog)) {
             dog.save();
+            return dog;
 
         } else {
             Dog oldDog = getSingleDog(dog.mDogId);
             oldDog.update(dog);
-
+            return oldDog;
         }
     }
 

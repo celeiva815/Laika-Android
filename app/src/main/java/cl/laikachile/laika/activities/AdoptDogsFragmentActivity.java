@@ -19,7 +19,7 @@ import cl.laikachile.laika.fragments.AdoptDogScreenSlideFragment;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.utils.Tag;
 
-public class AdoptDogFragmentActivity extends ActionBarActivity{
+public class AdoptDogsFragmentActivity extends ActionBarActivity{
 	
 	protected int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
@@ -44,11 +44,8 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
-        mPager.setAdapter(mPagerAdapter);
-        
+        setViewPager();
+
     }
     
 	@Override
@@ -93,13 +90,22 @@ public class AdoptDogFragmentActivity extends ActionBarActivity{
     	mDogs = Dog.getDogs(Tag.DOG_FOUNDATION);
 
     }
-    
+
+    protected void setViewPager() {
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
+        mPager.setAdapter(mPagerAdapter);
+
+    }
+
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
      */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    protected class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     	
     	Activity activity;
         public ScreenSlidePagerAdapter(FragmentManager fm, Activity activity) {

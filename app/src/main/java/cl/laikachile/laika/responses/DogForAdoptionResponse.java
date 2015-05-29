@@ -1,6 +1,5 @@
 package cl.laikachile.laika.responses;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,8 +9,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.AdoptDogFormActivity;
-import cl.laikachile.laika.activities.AdoptDogFragmentActivity;
-import cl.laikachile.laika.activities.MainActivity;
+import cl.laikachile.laika.activities.AdoptDogsFragmentActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
@@ -35,7 +33,7 @@ public class DogForAdoptionResponse implements Response.Listener<JSONObject>, Re
 
         Dog.saveDogs(response, Tag.DOG_FOUNDATION);
         mActivity.mProgressDialog.dismiss();
-        Do.changeActivity(mContext, AdoptDogFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+        Do.changeActivity(mContext, AdoptDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
 
 
     }

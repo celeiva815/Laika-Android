@@ -82,7 +82,7 @@ public class ResponseHandler {
         } else {
 
             String message = Do.getRString(context, R.string.auth_failure_error);
-            Do.showToast(message, context);
+            Do.showShortToast(message, context);
 
         }
     }

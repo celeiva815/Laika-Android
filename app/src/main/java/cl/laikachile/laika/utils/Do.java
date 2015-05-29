@@ -84,12 +84,12 @@ public class Do {
         activity.getFragmentManager().beginTransaction().add(container, added, tag).commit();
     }
 
-    public static void showToast(String message,Context context){
+    public static void showShortToast(String message, Context context){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public static void showToast(String message,Context context, int lenght){
-        Toast.makeText(context, message, lenght).show();
+    public static void showLongToast(String message, Context context){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     public static String getToken(Context context){

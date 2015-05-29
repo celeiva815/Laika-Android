@@ -58,6 +58,7 @@ public class Story extends Model {
     @Column(name = COLUMN_URL_IMAGE)
     public int mImage;
 
+
     public Story() {
     }
 
@@ -112,7 +113,6 @@ public class Story extends Model {
         this.mBody = story.mBody;
         this.mImage = story.mImage;
 
-
         this.save();
 
     }
@@ -145,21 +145,32 @@ public class Story extends Model {
 
     }
 
-    public static void createOrUpdate(Story story) {
+    public static Story createOrUpdate(Story story) {
 
         if (!Story.isSaved(story)) {
             story.save();
+
+            return story;
 
         } else {
             Story oldStory = getSingleStory(story);
             oldStory.update(story);
 
+            return oldStory;
         }
     }
 
     public static Story getSingleStory(Story story) {
 
         String condition = COLUMN_STORY_ID + DB.EQUALS + story.mStoryId;
+
+        return new Select().from(Story.class).where(condition).executeSingle();
+
+    }
+
+    public static Story getSingleStory(int storyId) {
+
+        String condition = COLUMN_STORY_ID + DB.EQUALS + storyId;
 
         return new Select().from(Story.class).where(condition).executeSingle();
 

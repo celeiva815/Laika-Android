@@ -2,14 +2,10 @@ package cl.laikachile.laika.listeners;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.AdoptDogFormActivity;
-import cl.laikachile.laika.activities.AdoptDogFragmentActivity;
 import cl.laikachile.laika.models.AdoptDogForm;
-import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;

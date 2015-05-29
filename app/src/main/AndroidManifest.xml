@@ -87,7 +87,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AdoptDogFragmentActivity"
+            android:name=".activities.AdoptDogsFragmentActivity"
+            android:exported="false"
+            android:label="@string/adopt_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.PostulatedDogsFragmentActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >

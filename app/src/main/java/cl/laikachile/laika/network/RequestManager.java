@@ -52,6 +52,7 @@ public class RequestManager {
     public static final String ADDRESS_STORIES = "stories/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
+    public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
 
     //Request Methods
     public static final int METHOD_GET = Request.Method.GET;

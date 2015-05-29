@@ -5,11 +5,15 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.utils.DB;
+import cl.laikachile.laika.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 25-05-15.
@@ -25,6 +29,9 @@ public class UserAdoptDog extends Model {
     public final static String COLUMN_COMPATIBILITY = "compatibility";
     public final static String COLUMN_STATUS = "status";
     public final static String COLUMN_DOG_ID = "dog_id";
+
+    public final static String API_POSTULATIONS = "postulations";
+    public final static String API_DOG = "dog";
 
     @Column(name = COLUMN_USER_ADOPT_DOG_ID)
     public int mUserAdoptDogId;
@@ -83,6 +90,31 @@ public class UserAdoptDog extends Model {
 
     //DATA BASE
 
+    public static void saveUserAdoptDogs(JSONObject jsonObject){
+
+        try {
+            JSONArray jsonDogs = jsonObject.getJSONArray(API_POSTULATIONS);
+
+            for (int i = 0; i < jsonDogs.length(); i++) {
+                saveUserAdoptDog(jsonDogs.getJSONObject(i));
+
+                if (jsonDogs.getJSONObject(i).has(API_DOG)) {
+                    Dog.saveDog(jsonObject.optJSONObject(API_DOG), Tag.DOG_POSTULATED);
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static UserAdoptDog saveUserAdoptDog(JSONObject jsonObject) {
+
+        UserAdoptDog userAdoptDog = new UserAdoptDog(jsonObject);
+        return createOrUpdate(userAdoptDog);
+
+    }
+
     public static UserAdoptDog createOrUpdate(UserAdoptDog userAdoptDog) {
 
         if (!isSaved(userAdoptDog)) {
@@ -125,5 +157,16 @@ public class UserAdoptDog extends Model {
 
     }
 
+    public static List<UserAdoptDog> getUserAdoptDogs(List<Dog> dogs) {
+
+        List<UserAdoptDog> userAdoptDogs = new ArrayList<>();
+
+        for (Dog dog : dogs) {
+
+            userAdoptDogs.add(getSingleUserAdoptDog(dog));
+        }
+
+        return userAdoptDogs;
+    }
 }
 

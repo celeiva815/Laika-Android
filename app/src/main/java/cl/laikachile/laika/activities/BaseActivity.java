@@ -1,5 +1,7 @@
 package cl.laikachile.laika.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Request;
+
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
@@ -17,6 +21,9 @@ import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.OwnerDog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.PostulatedDogsResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
@@ -25,6 +32,8 @@ import cl.laikachile.laika.utils.PrefsManager;
  */
 public class BaseActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static final String TAG = BaseActivity.class.getSimpleName();
 
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle;
@@ -84,7 +93,8 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 1: // Mis postulaciones
-                Do.showToast("Por implementar", this.getApplicationContext());
+                openPostulatedDogs();
+
                 break;
 
             case 2: // Favoritos
@@ -96,7 +106,7 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 3: // Mi perfil
-                Do.showToast("Por implementar", this.getApplicationContext());
+                Do.showShortToast("Por implementar", this.getApplicationContext());
                 break;
 
             case 4: // Cerrar Sesión
@@ -133,6 +143,35 @@ public class BaseActivity extends ActionBarActivity
         OwnerDog.deleteAll();
         CalendarReminder.deleteAll();
         AlarmReminder.deleteAll();
+
+    }
+
+    private void openPostulatedDogs() {
+
+        Context context = getApplicationContext();
+
+        if (Do.isNetworkAvailable(context)){
+            //requestPostulations(context); FIXME cuando arreglen la API
+            Do.changeActivity(context, PostulatedDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        } else {
+            Do.changeActivity(context, PostulatedDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        }
+    }
+
+    private void requestPostulations(Context context) {
+
+        ProgressDialog dialog = ProgressDialog.show(context, "Espere un momento",
+                "Estamos actualizando el estado de tus postulaciones...");
+
+        PostulatedDogsResponse response = new PostulatedDogsResponse(this, dialog);
+        Request adoptDogRequest = RequestManager.getRequest(null,
+                RequestManager.ADDRESS_USER_POSTULATIONS, response, response,
+                PrefsManager.getUserToken(getApplicationContext()));
+
+        VolleyManager.getInstance(getApplicationContext())
+                .addToRequestQueue(adoptDogRequest, TAG);
 
     }
 }

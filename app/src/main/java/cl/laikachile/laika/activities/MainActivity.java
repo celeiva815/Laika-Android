@@ -38,8 +38,8 @@ public class MainActivity extends BaseActivity {
 
         if (firstboot) {
             // 1) Launch the authentication activity
-            Do.showToast("Bienvenido " + PrefsManager.getUserName(this.getApplicationContext()) +
-                    ", ¿Cómo están tus perritos?", this.getApplicationContext(), Toast.LENGTH_LONG);
+            Do.showLongToast("Bienvenido " + PrefsManager.getUserName(this.getApplicationContext()) +
+                    ", ¿Cómo están tus perritos?", this.getApplicationContext());
 
             // 2) Then save the state
             PrefsManager.finishFirstBoot(getApplicationContext());

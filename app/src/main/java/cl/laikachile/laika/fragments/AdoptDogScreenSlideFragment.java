@@ -2,8 +2,6 @@ package cl.laikachile.laika.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,10 +32,22 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
-
+    public TextView mMatchTextView;
+    public TextView mNameTextView;
+    public TextView mGenderTextView;
+    public TextView mSterilizedTextView;
+    public TextView mChipTextView;
+    public TextView mTrainedTextView;
+    public TextView mSizeTextView;
+    public TextView mYearsTextView;
+    public TextView mDetailsTextView;
+    public TextView mFoundationTextView;
+    public TextView mIdTextView;
+    public TextView mStatusTextView;
+    public Button mPostulateButton;
 
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
-		
+
 		this.mDog = mDog;
 		this.mActivity = activity;
 	}
@@ -47,34 +57,39 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
-        mPictureImageView = (ImageView) view.findViewById(R.id.picture_dogs_screen_slide_imageview);
+        mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
-        TextView matchTextView = (TextView) view.findViewById(R.id.match_dogs_screen_slide_textview);
-        TextView nameTextView = (TextView) view.findViewById(R.id.name_dogs_screen_slide_textview);
-        TextView genderTextView = (TextView) view.findViewById(R.id.gender_dogs_screen_slide_textview);
-        TextView sterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dogs_screen_slide_textview);
-        TextView chipTextView = (TextView) view.findViewById(R.id.chip_dogs_screen_slide_textview);
-        TextView trainedTextView = (TextView) view.findViewById(R.id.trained_dogs_screen_slide_textview);
-        TextView sizeTextView = (TextView) view.findViewById(R.id.size_dogs_screen_slide_textview);
-        TextView yearsTextView = (TextView) view.findViewById(R.id.years_dogs_screen_slide_textview);
-        TextView detailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
-        Button postulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
+        mMatchTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
+        mNameTextView = (TextView) view.findViewById(R.id.name_adopt_dog_screen_slide_textview);
+        mGenderTextView = (TextView) view.findViewById(R.id.gender_adopt_dog_screen_slide_textview);
+        mSterilizedTextView = (TextView) view.findViewById(R.id.sterilized_adopt_dog_screen_slide_textview);
+        mChipTextView = (TextView) view.findViewById(R.id.chip_adopt_dog_screen_slide_textview);
+        mTrainedTextView = (TextView) view.findViewById(R.id.trained_adopt_dog_screen_slide_textview);
+        mSizeTextView = (TextView) view.findViewById(R.id.size_adopt_dog_screen_slide_textview);
+        mYearsTextView = (TextView) view.findViewById(R.id.years_adopt_dog_screen_slide_textview);
+        mDetailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
+        mFoundationTextView = (TextView) view.findViewById(R.id.foundation_adopt_dog_screen_slide_textview);
+        mIdTextView = (TextView) view.findViewById(R.id.id_adopt_dog_screen_slide_textview);
+        mStatusTextView = (TextView) view.findViewById(R.id.status_adopt_dog_textview);
+        mPostulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
 
-        nameTextView.setText(mDog.mName);
-        sizeTextView.setText(mDog.getSize().mName);
-        genderTextView.setText(mDog.getGender(view.getContext()));
-        yearsTextView.setText(mDog.getAge());
-        sterilizedTextView.setText(mDog.getSterilized(view.getContext()));
-        chipTextView.setText(mDog.getChip(view.getContext()));
-        trainedTextView.setText(mDog.getTrained(view.getContext()));
-        matchTextView.setText(Integer.toString(Do.randomInteger(50,100)) + "%"); //FIXME
+        mNameTextView.setText(mDog.mName);
+        mSizeTextView.setText(mDog.getSize().mName);
+        mGenderTextView.setText(mDog.getGender(view.getContext()));
+        mYearsTextView.setText(mDog.getAge());
+        mSterilizedTextView.setText(mDog.getSterilized(view.getContext()));
+        mChipTextView.setText(mDog.getChip(view.getContext()));
+        mTrainedTextView.setText(mDog.getTrained(view.getContext()));
+        mMatchTextView.setText(Integer.toString(Do.randomInteger(50, 100)) + "%"); //FIXME
 
         if (!Do.isNullOrEmpty(mDog.mDetail)) //XXX
-            detailsTextView.setText(mDog.mDetail);
+            mDetailsTextView.setText(mDog.mDetail);
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
                 mDog, mActivity, mProgressDialog, mPictureImageView);
-        postulateButton.setOnClickListener(listener);
+        mPostulateButton.setOnClickListener(listener);
+
+        setUserAdoptDog();
         
         return view;
     }
@@ -101,6 +116,11 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
         VolleyManager.getInstance(getActivity().getApplicationContext())
                 .addToRequestQueue(imageRequest, TAG);
+
+    }
+
+    public void setUserAdoptDog() {
+
 
     }
 }
