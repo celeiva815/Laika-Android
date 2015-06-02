@@ -5,27 +5,9 @@
     android:background="@android:color/transparent">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:padding="5dp"
-        android:background="@android:color/transparent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/dog_my_dog_imageview"
-            android:src="@drawable/register_background"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="centerCrop" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="80dp"
         android:padding="10dp"
         android:gravity="center_vertical"
         android:background="@android:color/transparent"

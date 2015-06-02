@@ -35,4 +35,5 @@ dependencies {
     compile 'com.sothree.slidinguppanel:library:3.0.0'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
     compile 'com.splunk.mint:mint:4.0.7'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
 }

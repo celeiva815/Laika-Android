@@ -322,6 +322,8 @@ public class MyDogsActivity extends ActionBarActivity {
     public void setHealthFragment() {
 
 
+
+
     }
 
     public void setOwnerFragment(Dog mDog) {

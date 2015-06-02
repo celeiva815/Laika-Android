@@ -32,12 +32,9 @@ public class DogsAdapter extends ArrayAdapter<Dog> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(mIdLayout, parent, false);
         Dog dog = dogs.get(position);
-
         TextView nameTextView = (TextView) rowView.findViewById(R.id.name_dog_my_dog_textview);
-        ImageView typeImageView = (ImageView) rowView.findViewById(R.id.dog_my_dog_imageview);
 
         nameTextView.setText(dog.mName);
-        typeImageView.setImageResource(R.drawable.lk_blanquito_picture); //XXX foto default
 
         return rowView;
 

@@ -112,7 +112,7 @@ public class BaseActivity extends ActionBarActivity
             case 4: // Cerrar Sesión
 
                 clearDataBase();
-                Do.changeActivity(this.getApplicationContext(), LoginActivity.class, this,
+                Do.changeActivity(this.getApplicationContext(), TutorialActivity.class, this,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 

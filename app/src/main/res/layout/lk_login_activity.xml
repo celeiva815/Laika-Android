@@ -14,7 +14,7 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="40dp"
-    android:layout_weight="7"
+    android:layout_weight="6"
     android:gravity="bottom">
 
     <LinearLayout
@@ -98,7 +98,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:background="@color/dark_trans_black_background"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:paddingBottom="5dp">
 
         <Button
@@ -108,9 +108,10 @@
             android:id="@+id/register_login_button"
             android:background="@android:color/transparent"
             android:textColor="@color/dark_white_font"
-            android:textSize="12sp"
-            android:layout_above="@+id/button2"
-            android:layout_centerHorizontal="true" />
+            android:textSize="@dimen/laika_min_text"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -119,8 +120,8 @@
             android:id="@+id/button2"
             android:background="@android:color/transparent"
             android:textColor="@color/dark_white_font"
-            android:textSize="12sp"
-            android:layout_alignParentBottom="true"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_below="@+id/register_login_button"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 

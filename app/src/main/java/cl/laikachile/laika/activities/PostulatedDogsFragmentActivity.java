@@ -23,7 +23,6 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
 
         mDogs = Dog.getDogs(Tag.DOG_POSTULATED);
         mUserAdoptDogs = UserAdoptDog.getUserAdoptDogs(mDogs);
-        //TODO decirle al grupo 1 que tiene que haber solo una relación perro - userAdoptDog - user.
         //TODO manejar el caso con el emptyView.
     }
 

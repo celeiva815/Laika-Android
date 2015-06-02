@@ -1,7 +1,9 @@
 package cl.laikachile.laika.responses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -9,6 +11,8 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.LoginActivity;
+import cl.laikachile.laika.activities.TutorialActivity;
+import cl.laikachile.laika.fragments.TutorialFragment;
 import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
@@ -17,16 +21,25 @@ import cl.laikachile.laika.network.utils.ResponseHandler;
 public class LoginResponse implements Response.ErrorListener,
         Response.Listener<JSONObject>  {
 
-    public LoginActivity mActivity;
+    public Activity mActivity;
+    public TutorialFragment mFragment;
+    public ProgressBar mLoginProgressBar;
+
+    public LoginResponse(TutorialFragment mFragment) {
+        this.mFragment = mFragment;
+        this.mActivity = mFragment.getActivity();
+        this.mLoginProgressBar = mFragment.mLoginProgressBar;
+    }
 
     public LoginResponse(LoginActivity mActivity) {
         this.mActivity = mActivity;
+        this.mLoginProgressBar = mActivity.mLoginProgressBar;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        mActivity.mLoginProgressBar.setVisibility(View.GONE);
+        mLoginProgressBar.setVisibility(View.GONE);
         ResponseHandler.successLogin(mActivity, response);
     }
 
@@ -34,8 +47,16 @@ public class LoginResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mActivity);
-        mActivity.mLoginProgressBar.setVisibility(View.GONE);
-        mActivity.enableViews(true);
+        mLoginProgressBar.setVisibility(View.GONE);
+
+        if (mFragment != null) {
+            mFragment.enableViews(true);
+
+        } else {
+            ((LoginActivity) mActivity).enableViews(true);
+        }
+
+
     }
 
 }

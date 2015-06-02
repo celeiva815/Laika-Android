@@ -88,6 +88,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     public void enableViews(boolean enable) {
+
         mEmailEditText.setEnabled(enable);
         mPasswordEditText.setEnabled(enable);
         mLoginButton.setEnabled(enable);
