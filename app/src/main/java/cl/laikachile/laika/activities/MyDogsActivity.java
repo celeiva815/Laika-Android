@@ -9,7 +9,11 @@ import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,6 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.viewpagerindicator.IconPagerAdapter;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +45,7 @@ public class MyDogsActivity extends ActionBarActivity {
     public static final String DOG_ID = "dog_id";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
-    private int mIdLayout = R.layout.lk_my_dogs_fragment;
+    private int mIdLayout = R.layout.activity_my_dog;
     public Dog mDog;
     public LinearLayout mHistoryLinearLayout;
     public LinearLayout mRemindersLinearLayout;
@@ -54,12 +61,25 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public String mCurrentPhotoPath;
 
+    private static final int NUM_PAGES = 5;
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
+    private TabPageIndicator mIndicator;
+
+    private static final String[] CONTENT = new String[] {"Historial", "Recordatorios", "Dueños", "Album"};
+    private static final int[] ICONS = new int[]{
+            R.drawable.laika_profile_red_light,
+            R.drawable.laika_alarm_red_light,
+            R.drawable.laika_user_red_light,
+            R.drawable.laika_album_red_light,
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(mIdLayout);
-        setActivityView();
+        //setActivityView();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -67,6 +87,14 @@ public class MyDogsActivity extends ActionBarActivity {
 
         int dogId = getIntent().getIntExtra(DOG_ID, 0);
         mDog = Dog.getSingleDog(dogId);
+
+        // Instantiate a ViewPager and a PagerAdapter
+        mPager = (ViewPager) findViewById(R.id.my_dog_pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+        mIndicator = (TabPageIndicator) findViewById(R.id.my_dog_indicator);
+        mIndicator.setViewPager(mPager);
     }
 
     @Override
@@ -83,10 +111,7 @@ public class MyDogsActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        if (mCurrentFragment == null) {
-            setHistoryFragment(mDog);
-            setTitle(mDog.mName);
-        }
+
     }
 
     @Override
@@ -217,7 +242,7 @@ public class MyDogsActivity extends ActionBarActivity {
         }
     }
 
-    public void setHistoryFragment(Dog mDog) {
+    public Fragment setHistoryFragment(Dog mDog) {
 
         if (mHistoryFragment == null) {
 
@@ -247,9 +272,10 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
+        return mCurrentFragment;
     }
 
-    public void setReminderFragment(Dog mDog) {
+    public Fragment setReminderFragment(Dog mDog) {
 
         if (mRemindersFragment == null) {
 
@@ -278,9 +304,10 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
+        return mCurrentFragment;
     }
 
-    public void setReminderFragment(AlarmReminder alarmReminder) {
+    public Fragment setReminderFragment(AlarmReminder alarmReminder) {
 
         mRemindersFragment = new RemindersMyDogFragment(mDog, alarmReminder);
 
@@ -296,9 +323,10 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
+        return mCurrentFragment;
     }
 
-    public void setReminderFragment(CalendarReminder calendarReminder) {
+    public Fragment setReminderFragment(CalendarReminder calendarReminder) {
 
         mRemindersFragment = new RemindersMyDogFragment(mDog, calendarReminder);
 
@@ -317,16 +345,15 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
 
+        return mCurrentFragment;
     }
 
     public void setHealthFragment() {
 
 
-
-
     }
 
-    public void setOwnerFragment(Dog mDog) {
+    public Fragment setOwnerFragment(Dog mDog) {
 
         if (mOwnerFragment == null) {
 
@@ -357,9 +384,10 @@ public class MyDogsActivity extends ActionBarActivity {
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color, Color.TRANSPARENT);
 
+        return mCurrentFragment;
     }
 
-    public void setAlbumFragment(Dog mDog) {
+    public Fragment setAlbumFragment(Dog mDog) {
 
         if (mAlbumFragment == null) {
 
@@ -389,6 +417,8 @@ public class MyDogsActivity extends ActionBarActivity {
 
         int color = getResources().getColor(R.color.semi_trans_black_background);
         setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
+
+        return mCurrentFragment;
     }
 
 
@@ -459,6 +489,78 @@ public class MyDogsActivity extends ActionBarActivity {
 
         return date;
 
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
+
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position) {
+
+                case 0:
+
+                    if (mHistoryFragment == null) {
+                        mHistoryFragment = new HistoryMyDogFragment(mDog);
+                    }
+
+                    return mHistoryFragment;
+
+                case 1:
+
+                    if (mRemindersFragment == null) {
+                        mRemindersFragment = new RemindersMyDogFragment(mDog);
+
+                    }
+
+                    return mRemindersFragment;
+
+                case 2:
+
+                    if (mOwnerFragment == null) {
+                        mOwnerFragment = new OwnersFragment(mDog);
+
+                    }
+
+                    return mOwnerFragment = new OwnersFragment(mDog);
+
+                case 3:
+
+                    if (mAlbumFragment == null) {
+                        mAlbumFragment = new AlbumMyDogFragment(mDog);
+
+                    }
+
+                    return mAlbumFragment;
+
+                default:
+                    if (mHistoryFragment == null) {
+                        mHistoryFragment = new HistoryMyDogFragment(mDog);
+                    }
+
+                    return mHistoryFragment;
+
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return CONTENT[position % CONTENT.length].toUpperCase();
+        }
+
+        @Override
+        public int getIconResId(int index) {
+            return ICONS[index];
+        }
+
+        @Override
+        public int getCount() {
+            return CONTENT.length;
+        }
     }
 
 }
