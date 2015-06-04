@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.viewpagerindicator.IconPagerAdapter;
-import com.viewpagerindicator.TabPageIndicator;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +38,7 @@ import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.views.CustomTabPageIndicator;
 
 public class MyDogsActivity extends ActionBarActivity {
 
@@ -64,7 +64,7 @@ public class MyDogsActivity extends ActionBarActivity {
     private static final int NUM_PAGES = 5;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private TabPageIndicator mIndicator;
+    private CustomTabPageIndicator mIndicator;
 
     private static final String[] CONTENT = new String[] {"Historial", "Recordatorios", "Dueños", "Album"};
     private static final int[] ICONS = new int[]{
@@ -93,7 +93,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        mIndicator = (TabPageIndicator) findViewById(R.id.my_dog_indicator);
+        mIndicator = (CustomTabPageIndicator) findViewById(R.id.my_dog_indicator);
         mIndicator.setViewPager(mPager);
     }
 
@@ -549,7 +549,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return CONTENT[position % CONTENT.length].toUpperCase();
+            return null;
         }
 
         @Override
@@ -559,7 +559,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return CONTENT.length;
+            return ICONS.length;
         }
     }
 

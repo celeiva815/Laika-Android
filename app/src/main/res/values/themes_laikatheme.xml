@@ -3,46 +3,120 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="LaikaTheme" parent="@style/_LaikaTheme"/>
+    <style name="LaikaTheme" parent="@style/_LaikaTheme" />
 
-  <style name="_LaikaTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="_LaikaTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-    <item name="android:editTextStyle">@style/EditTextLaikaTheme</item>
+        <item name="android:editTextStyle">@style/EditTextLaikaTheme</item>
+        <item name="android:textColorHighlight">#99f75b5b</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLaikaTheme</item>
+        <item name="android:checkboxStyle">@style/CheckBoxLaikaTheme</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonLaikaTheme</item>
+        <item name="android:buttonStyle">@style/ButtonLaikaTheme</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonLaikaTheme</item>
+        <item name="android:spinnerStyle">@style/SpinnerLaikaTheme</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemLaikaTheme</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarLaikaTheme</item>
+        <item name="android:seekBarStyle">@style/SeekBarLaikaTheme</item>
+        <item name="android:ratingBarStyle">@style/RatingBarLaikaTheme</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLaikaTheme</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLaikaTheme</item>
+        <item name="android:buttonStyleToggle">@style/ToggleLaikaTheme</item>
+        <item name="android:listViewStyle">@style/ListViewLaikaTheme</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewLaikaTheme.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemLaikaTheme</item>
 
-    <item name="android:textColorHighlight">#99f75b5b</item>
+    </style>
 
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLaikaTheme</item>
+    <style name="StyledIndicators" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
+        <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="laikaTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="vpiUnderlinePageIndicatorStyle">@style/CustomUnderlinePageIndicator</item>
+    </style>
 
-    <item name="android:checkboxStyle">@style/CheckBoxLaikaTheme</item>
+    <style name="CustomTitlePageIndicator">
+        <item name="android:background">#18FF0000</item>
+        <item name="footerColor">#FFAA2222</item>
+        <item name="footerLineHeight">1dp</item>
+        <item name="footerIndicatorHeight">3dp</item>
+        <item name="footerIndicatorStyle">underline</item>
+        <item name="android:textColor">#AA000000</item>
+        <item name="selectedColor">#FF000000</item>
+        <item name="selectedBold">true</item>
+    </style>
 
-    <item name="android:radioButtonStyle">@style/RadioButtonLaikaTheme</item>
+    <style name="CustomLinePageIndicator">
+        <item name="strokeWidth">4dp</item>
+        <item name="lineWidth">30dp</item>
+        <item name="unselectedColor">#FF888888</item>
+        <item name="selectedColor">#FF880000</item>
+    </style>
 
-    <item name="android:buttonStyle">@style/ButtonLaikaTheme</item>
+    <style name="CustomCirclePageIndicator">
+        <item name="fillColor">#FF888888</item>
+        <item name="strokeColor">#FF000000</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="radius">10dp</item>
+        <item name="centered">true</item>
+    </style>
 
-    <item name="android:imageButtonStyle">@style/ImageButtonLaikaTheme</item>
+    <style name="CustomTabPageIndicator" parent="CustomWidget.TabPageIndicator">
+        <item name="android:background">@drawable/custom_tab_indicator</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textColor">#FF555555</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:divider">@drawable/custom_tab_indicator_divider</item>
+        <item name="android:dividerPadding">10dp</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
+    </style>
 
-    <item name="android:spinnerStyle">@style/SpinnerLaikaTheme</item>
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+    </style>
 
-    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemLaikaTheme</item>
+    <style name="CustomUnderlinePageIndicator">
+        <item name="selectedColor">@color/laika_red</item>
+        <item name="android:background">#FFCCCCCC</item>
+        <item name="fadeLength">1000</item>
+        <item name="fadeDelay">1000</item>
+    </style>
 
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBarLaikaTheme</item>
+    <style name="PageIndicatorDefaults" parent="@style/_LaikaTheme">
+        <item name="laikaTabPageIndicatorStyle">@style/CustomWidget.TabPageIndicator</item>
+    </style>
 
-    <item name="android:seekBarStyle">@style/SeekBarLaikaTheme</item>
+    <style name="CustomWidget">
+    </style>
 
-    <item name="android:ratingBarStyle">@style/RatingBarLaikaTheme</item>
+    <style name="CustomWidget.TabPageIndicator" parent="CustomWidget">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/vpi__tab_indicator</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
 
-    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLaikaTheme</item>
+    <style name="TextAppearance.TabPageIndicator" parent="CustomWidget">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
+    </style>
 
-    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLaikaTheme</item>
-
-    <item name="android:buttonStyleToggle">@style/ToggleLaikaTheme</item>
-
-    <item name="android:listViewStyle">@style/ListViewLaikaTheme</item>
-
-    <item name="android:listViewWhiteStyle">@style/ListViewLaikaTheme.White</item>
-
-    <item name="android:spinnerItemStyle">@style/SpinnerItemLaikaTheme</item>
-
-  </style>
+    <style name="Widget.IconPageIndicator" parent="CustomWidget">
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
 
 </resources>

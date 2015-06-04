@@ -6,7 +6,7 @@
     tools:context="cl.laikachile.laika.activities.MyDogsActivity">
 
     <!-- activity_screen_slide.xml -->
-    <com.viewpagerindicator.TabPageIndicator
+    <cl.laikachile.laika.utils.views.CustomTabPageIndicator
         android:id="@+id/my_dog_indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -9,4 +9,9 @@
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="CustomViewPagerIndicator">
+
+        <attr name="laikaTabPageIndicatorStyle" format="reference" />
+
+    </declare-styleable>
 </resources>
