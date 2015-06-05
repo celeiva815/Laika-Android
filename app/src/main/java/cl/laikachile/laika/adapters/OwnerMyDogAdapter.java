@@ -63,13 +63,13 @@ public class OwnerMyDogAdapter extends ArrayAdapter<Owner> {
 
             case Tag.GENDER_MALE:
 
-                profileImageView.setImageResource(R.drawable.man_white);
+                profileImageView.setImageResource(R.drawable.laika_usermale_grey);
 
                 break;
 
             case Tag.GENDER_FEMALE:
 
-                profileImageView.setImageResource(R.drawable.woman_white);
+                profileImageView.setImageResource(R.drawable.laika_userfemale_grey);
 
                 break;
         }

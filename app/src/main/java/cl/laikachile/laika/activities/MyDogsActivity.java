@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.viewpagerindicator.IconPagerAdapter;
 
 import java.io.File;
@@ -38,6 +39,7 @@ import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.views.CustomPagerSlidingTabStrip;
 import cl.laikachile.laika.utils.views.CustomTabPageIndicator;
 
 public class MyDogsActivity extends ActionBarActivity {
@@ -61,17 +63,22 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public String mCurrentPhotoPath;
 
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private CustomTabPageIndicator mIndicator;
+    private CustomPagerSlidingTabStrip mIndicator;
 
-    private static final String[] CONTENT = new String[] {"Historial", "Recordatorios", "Dueños", "Album"};
+    private static final String HISTORY = "Historial";
+    private static final String REMINDERS = "Recordatorios";
+    private static final String OWNERS = "Dueños";
+    private static final String ALBUM = "Album";
+
+    private static final String[] CONTENT = new String[] {HISTORY, REMINDERS, OWNERS, ALBUM};
     private static final int[] ICONS = new int[]{
-            R.drawable.laika_profile_red_light,
-            R.drawable.laika_alarm_red_light,
-            R.drawable.laika_user_red_light,
-            R.drawable.laika_album_red_light,
+            R.drawable.laika_history_selector,
+            R.drawable.laika_reminder_selector,
+            R.drawable.laika_owner_selector,
+            R.drawable.laika_album_selector,
     };
 
     @Override
@@ -93,7 +100,7 @@ public class MyDogsActivity extends ActionBarActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        mIndicator = (CustomTabPageIndicator) findViewById(R.id.my_dog_indicator);
+        mIndicator = (CustomPagerSlidingTabStrip) findViewById(R.id.my_dog_indicator);
         mIndicator.setViewPager(mPager);
     }
 
@@ -219,18 +226,8 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 photo.save();
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                mPagerAdapter.notifyDataSetChanged();
 
-                if (mCurrentFragment != null) {
-                    transaction.detach(mCurrentFragment);
-                }
-
-                mCurrentFragment = new AlbumMyDogFragment(mDog);
-                transaction.add(R.id.container_my_dog_framelayout, mCurrentFragment);
-                transaction.commitAllowingStateLoss();
-
-                int color = getResources().getColor(R.color.semi_trans_black_background);
-                setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
 
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -491,7 +488,19 @@ public class MyDogsActivity extends ActionBarActivity {
 
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
+    public int getPagerPosition(String tab) {
+
+        for (int i = 0 ; i < CONTENT.length ; i++) {
+
+            if (CONTENT[i].equals(tab)) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter implements CustomPagerSlidingTabStrip.IconTabProvider {
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -500,12 +509,14 @@ public class MyDogsActivity extends ActionBarActivity {
         @Override
         public Fragment getItem(int position) {
 
+            int dogId = mDog.mDogId;
+
             switch (position) {
 
                 case 0:
 
                     if (mHistoryFragment == null) {
-                        mHistoryFragment = new HistoryMyDogFragment(mDog);
+                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
                     }
 
                     return mHistoryFragment;
@@ -513,7 +524,7 @@ public class MyDogsActivity extends ActionBarActivity {
                 case 1:
 
                     if (mRemindersFragment == null) {
-                        mRemindersFragment = new RemindersMyDogFragment(mDog);
+                        mRemindersFragment = RemindersMyDogFragment.newInstance(dogId);
 
                     }
 
@@ -522,16 +533,16 @@ public class MyDogsActivity extends ActionBarActivity {
                 case 2:
 
                     if (mOwnerFragment == null) {
-                        mOwnerFragment = new OwnersFragment(mDog);
+                        mOwnerFragment = OwnersFragment.newInstance(dogId);
 
                     }
 
-                    return mOwnerFragment = new OwnersFragment(mDog);
+                    return mOwnerFragment;
 
                 case 3:
 
                     if (mAlbumFragment == null) {
-                        mAlbumFragment = new AlbumMyDogFragment(mDog);
+                        mAlbumFragment = AlbumMyDogFragment.newInstance(dogId);
 
                     }
 
@@ -539,7 +550,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                 default:
                     if (mHistoryFragment == null) {
-                        mHistoryFragment = new HistoryMyDogFragment(mDog);
+                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
                     }
 
                     return mHistoryFragment;
@@ -548,18 +559,13 @@ public class MyDogsActivity extends ActionBarActivity {
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            return null;
-        }
-
-        @Override
-        public int getIconResId(int index) {
-            return ICONS[index];
-        }
-
-        @Override
         public int getCount() {
             return ICONS.length;
+        }
+
+        @Override
+        public int getPageIconResId(int position) {
+            return ICONS[position];
         }
     }
 

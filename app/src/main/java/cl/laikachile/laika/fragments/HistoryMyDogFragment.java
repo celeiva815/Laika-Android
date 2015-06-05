@@ -30,6 +30,8 @@ import cl.laikachile.laika.utils.Tag;
  */
 public class HistoryMyDogFragment extends Fragment {
 
+    public static final String KEY_DOG = "dog";
+
     public String mTag;
     private int mIdLayout = R.layout.lk_history_my_dog_fragment;
     public Dog mDog;
@@ -44,6 +46,25 @@ public class HistoryMyDogFragment extends Fragment {
     }
 
     public HistoryMyDogFragment() {
+
+    }
+
+    public static final HistoryMyDogFragment newInstance(int dogId)
+    {
+        HistoryMyDogFragment f = new HistoryMyDogFragment();
+        Bundle bdl = new Bundle(1);
+        bdl.putInt(KEY_DOG, dogId);
+        f.setArguments(bdl);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        int dogId = getArguments().getInt(KEY_DOG);
+        mDog = Dog.getSingleDog(dogId);
+
+        super.onCreate(savedInstanceState);
 
     }
 

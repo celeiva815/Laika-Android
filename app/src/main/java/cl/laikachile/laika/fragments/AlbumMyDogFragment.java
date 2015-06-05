@@ -1,18 +1,14 @@
 package cl.laikachile.laika.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.R;
@@ -27,11 +23,16 @@ import cl.laikachile.laika.utils.Do;
  */
 public class AlbumMyDogFragment extends Fragment {
 
+    public static final String KEY_DOG = "dog";
+
     private int mIdLayout = R.layout.lk_album_my_dog_fragment;
     public Dog mDog;
     public List<Photo> mPhotos;
     public GridView mGridView;
     public AlbumAdapter mAlbumAdapter;
+
+
+    public AlbumMyDogFragment() { }
 
     public AlbumMyDogFragment(Dog mDog) {
         this.mDog = mDog;
@@ -44,6 +45,25 @@ public class AlbumMyDogFragment extends Fragment {
 
         mPhotos = getPhotos();
         mAlbumAdapter.notifyDataSetChanged();
+    }
+
+    public static final AlbumMyDogFragment newInstance(int dogId)
+    {
+        AlbumMyDogFragment f = new AlbumMyDogFragment();
+        Bundle bdl = new Bundle(1);
+        bdl.putInt(KEY_DOG, dogId);
+        f.setArguments(bdl);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        int dogId = getArguments().getInt(KEY_DOG);
+        mDog = Dog.getSingleDog(dogId);
+        mPhotos = getPhotos();
+
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override

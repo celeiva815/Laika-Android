@@ -32,6 +32,7 @@ import cl.laikachile.laika.utils.PrefsManager;
 public class OwnersFragment extends Fragment {
 
     public static final String TAG = OwnersFragment.class.getSimpleName();
+    public static final String KEY_DOG = "dog";
 
     public int mIdLayout = R.layout.lk_owner_my_dog_fragment;
     public Dog mDog;
@@ -42,8 +43,29 @@ public class OwnersFragment extends Fragment {
     public TextView mEmptyTextView;
 
 
+    public OwnersFragment() {
+    }
+
     public OwnersFragment(Dog mDog) {
         this.mDog = mDog;
+    }
+
+    public static final OwnersFragment newInstance(int dogId)
+    {
+        OwnersFragment f = new OwnersFragment();
+        Bundle bdl = new Bundle(1);
+        bdl.putInt(KEY_DOG, dogId);
+        f.setArguments(bdl);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        int dogId = getArguments().getInt(KEY_DOG);
+        mDog = Dog.getSingleDog(dogId);
+
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override

@@ -21,6 +21,10 @@ import cl.laikachile.laika.utils.Tag;
  */
 public class RemindersMyDogFragment extends Fragment {
 
+    public static final String KEY_DOG = "dog";
+    public static final String KEY_ALARM = "alarm";
+    public static final String KEY_CALENDAR = "calendar";
+
     private int mIdLayout = R.layout.lk_reminders_my_dog_fragment;
     public Dog mDog;
     public Fragment mFragment;
@@ -34,6 +38,9 @@ public class RemindersMyDogFragment extends Fragment {
     public ImageView mHygieneImageView;
     public ImageView mVetImageView;
     public ImageView mVaccineImageView;
+
+    public RemindersMyDogFragment() {
+    }
 
     public RemindersMyDogFragment(Dog mDog) {
         this.mDog = mDog;
@@ -51,6 +58,47 @@ public class RemindersMyDogFragment extends Fragment {
         this.mDog = mDog;
         this.mCalendarReminder = calendarReminder;
     }
+
+    public static final RemindersMyDogFragment newInstance(int dogId)
+    {
+        RemindersMyDogFragment f = new RemindersMyDogFragment();
+        Bundle bdl = new Bundle(1);
+        bdl.putInt(KEY_DOG, dogId);
+        f.setArguments(bdl);
+        return f;
+    }
+
+    public static final RemindersMyDogFragment newInstance(int dogId, int reminderId, String key)
+    {
+        RemindersMyDogFragment f = new RemindersMyDogFragment();
+        Bundle bundle = new Bundle(1);
+        bundle.putInt(KEY_DOG, dogId);
+        bundle.putInt(key, reminderId);
+
+        f.setArguments(bundle);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        int dogId = getArguments().getInt(KEY_DOG);
+        mDog = Dog.getSingleDog(dogId);
+
+        int alarmReminderId = getArguments().getInt(KEY_ALARM, 0);
+        int calendarReminderId = getArguments().getInt(KEY_CALENDAR, 0);
+
+        if (alarmReminderId > 0) {
+
+            mAlarmReminder = AlarmReminder.getSingleReminder(alarmReminderId);
+
+        } else if (calendarReminderId > 0) {
+
+            mCalendarReminder = CalendarReminder.getSingleReminder(calendarReminderId);
+        }
+
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -202,41 +250,21 @@ public class RemindersMyDogFragment extends Fragment {
     public void setCheckedImage(boolean food, boolean poo, boolean walk, boolean medicine,
                                 boolean hygiene, boolean vet, boolean vaccine) {
 
-        mFoodImageView.setImageDrawable(getResources().getDrawable(R.drawable.dog51_trans));
-        mPooImageView.setImageDrawable(getResources().getDrawable(R.drawable.poo_trans));
-        mWalkImageView.setImageDrawable(getResources().getDrawable(R.drawable.walk_trans));
-        mMedicineImageView.setImageDrawable(getResources().getDrawable(R.drawable.pill_trans));
-        mHygieneImageView.setImageDrawable(getResources().getDrawable(R.drawable.hygiene_trans));
-        mVetImageView.setImageDrawable(getResources().getDrawable(R.drawable.cross_trans));
-        mVaccineImageView.setImageDrawable(getResources().getDrawable(R.drawable.medicine_trans));
+        mFoodImageView.setImageDrawable(getResources().getDrawable(food? R.drawable.laika_food_grey
+                : R.drawable.laika_food_grey_light));
+        mPooImageView.setImageDrawable(getResources().getDrawable(poo? R.drawable.laika_poop_grey
+                : R.drawable.laika_poop_grey_light));
+        mWalkImageView.setImageDrawable(getResources().getDrawable(walk?
+                R.drawable.laika_walk_grey : R.drawable.laika_walk_grey_light));
+        mMedicineImageView.setImageDrawable(getResources().getDrawable(medicine?
+                R.drawable.laika_pill_grey : R.drawable.laika_pill_grey_light ));
+        mHygieneImageView.setImageDrawable(getResources().getDrawable(hygiene?
+                R.drawable.laika_hygiene_grey : R.drawable.laika_hygiene_grey_light ));
+        mVetImageView.setImageDrawable(getResources().getDrawable(vet?
+                R.drawable.laika_vetalarm_grey : R.drawable.laika_vetalarm_grey_light));
+        mVaccineImageView.setImageDrawable(getResources().getDrawable(vaccine?
+                R.drawable.laika_vaccine_grey : R.drawable.laika_vaccine_grey_light));
 
-        if (food) {
-            mFoodImageView.setImageDrawable(getResources().getDrawable(R.drawable.dog51_white));
-        }
-
-        if (poo) {
-            mPooImageView.setImageDrawable(getResources().getDrawable(R.drawable.poo_white));
-        }
-
-        if (walk) {
-            mWalkImageView.setImageDrawable(getResources().getDrawable(R.drawable.walk_white));
-        }
-
-        if (medicine) {
-            mMedicineImageView.setImageDrawable(getResources().getDrawable(R.drawable.pill_white));
-        }
-
-        if (hygiene) {
-            mHygieneImageView.setImageDrawable(getResources().getDrawable(R.drawable.hygiene_white));
-        }
-
-        if (vet) {
-            mVetImageView.setImageDrawable(getResources().getDrawable(R.drawable.cross_white));
-        }
-
-        if (vaccine) {
-            mVaccineImageView.setImageDrawable(getResources().getDrawable(R.drawable.medicine_white));
-        }
     }
 
     public void getAlarmReminderFragment(AlarmReminder alarmReminder) {

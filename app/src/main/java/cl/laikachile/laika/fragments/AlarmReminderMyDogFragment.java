@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
@@ -236,8 +235,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         return getResources().getColor(R.color.semi_trans_background);
     }
 
-    public int getDarkWhiteColor() {
-        return getResources().getColor(R.color.dark_white_font);
+    public int getLightRedColor() {
+        return getResources().getColor(R.color.light_laika_red);
     }
 
     private String getTime(int hourOfDay, int minute) {
@@ -266,7 +265,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mMonday = true;
-            mMondayButton.setBackgroundColor(getDarkWhiteColor());
+            mMondayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mMonday = false;
@@ -279,7 +278,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mTuesday = true;
-            mTuesdayButton.setBackgroundColor(getDarkWhiteColor());
+            mTuesdayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mTuesday = false;
@@ -290,7 +289,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mWednesday = true;
-            mWednesdayButton.setBackgroundColor(getDarkWhiteColor());
+            mWednesdayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mWednesday = false;
@@ -302,7 +301,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mThursday = true;
-            mThursdayButton.setBackgroundColor(getDarkWhiteColor());
+            mThursdayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mThursday = false;
@@ -314,7 +313,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mFriday = true;
-            mFridayButton.setBackgroundColor(getDarkWhiteColor());
+            mFridayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mFriday = false;
@@ -326,7 +325,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mSaturday = true;
-            mSaturdayButton.setBackgroundColor(getDarkWhiteColor());
+            mSaturdayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mSaturday = false;
@@ -338,7 +337,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
 
         if (day) {
             mSunday = true;
-            mSundayButton.setBackgroundColor(getDarkWhiteColor());
+            mSundayButton.setBackgroundColor(getLightRedColor());
 
         } else {
             mSunday = false;

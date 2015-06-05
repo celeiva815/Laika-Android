@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title_history_my_dog_textview"
-            android:textColor="@color/dark_white_font"
+            android:textColor="@color/light_black_font"
             android:textSize="@dimen/laika_medium_text"
             android:text="@string/title_history_my_dog"
             android:paddingBottom="5dp"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/detail_history_my_dog"
             android:id="@+id/detail_history_my_dog_textview"
-            android:textColor="@color/dark_white_font"
+            android:textColor="@color/light_black_font"
             android:textSize="@dimen/laika_min_text"
             android:paddingBottom="3dp" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date_history_my_dog"
             android:id="@+id/date_history_my_dog_textview"
-            android:textColor="@color/dark_white_font"
+            android:textColor="@color/light_black_font"
             android:textSize="@dimen/date_history_my_dog"
             android:singleLine="false" />
     </LinearLayout>
