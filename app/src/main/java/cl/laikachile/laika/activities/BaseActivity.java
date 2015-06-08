@@ -151,18 +151,18 @@ public class BaseActivity extends ActionBarActivity
         Context context = getApplicationContext();
 
         if (Do.isNetworkAvailable(context)){
-            //requestPostulations(context); FIXME cuando arreglen la API
-            Do.changeActivity(context, PostulatedDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+            requestPostulations(context);
 
         } else {
             Do.changeActivity(context, PostulatedDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+            Do.showLongToast("Mostrando postulaciones guardadas", context);
 
         }
     }
 
     private void requestPostulations(Context context) {
 
-        ProgressDialog dialog = ProgressDialog.show(context, "Espere un momento",
+        ProgressDialog dialog = ProgressDialog.show(BaseActivity.this, "Espere un momento",
                 "Estamos actualizando el estado de tus postulaciones...");
 
         PostulatedDogsResponse response = new PostulatedDogsResponse(this, dialog);

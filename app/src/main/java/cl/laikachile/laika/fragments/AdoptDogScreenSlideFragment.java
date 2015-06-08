@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.listeners.ConfirmAdoptionDialogOnClickListener;
@@ -27,11 +28,12 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public static final String TAG = AdoptDogScreenSlideFragment.class.getSimpleName();
 
 	private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
-	private Dog mDog;
-	private Activity mActivity;
+	public Dog mDog;
+	public Activity mActivity;
     public ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
+    public SlidingUpPanelLayout mSlidingUpPanelLayout;
     public TextView mMatchTextView;
     public TextView mNameTextView;
     public TextView mGenderTextView;
@@ -57,6 +59,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
+        mSlidingUpPanelLayout  = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout); //TODO probar que funcione
         mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mMatchTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
@@ -70,7 +73,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mDetailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
         mFoundationTextView = (TextView) view.findViewById(R.id.foundation_adopt_dog_screen_slide_textview);
         mIdTextView = (TextView) view.findViewById(R.id.id_adopt_dog_screen_slide_textview);
-        mStatusTextView = (TextView) view.findViewById(R.id.status_adopt_dog_textview);
+        mStatusTextView = (TextView) view.findViewById(R.id.status_postulated_adopt_dog_textview);
         mPostulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
 
         mNameTextView.setText(mDog.mName);
@@ -105,6 +108,13 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             mPictureImageView.setImageBitmap(mDog.mDogImage);
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
     public void requestDogImage(ImageView imageView) {

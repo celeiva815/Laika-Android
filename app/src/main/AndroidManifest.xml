@@ -234,6 +234,15 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.StopAlarmActivity"
+            android:exported="false"
+            android:label="@string/stories_fragment_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name="cl.laikachile.laika.utils.AlarmReceiver">
         </receiver>

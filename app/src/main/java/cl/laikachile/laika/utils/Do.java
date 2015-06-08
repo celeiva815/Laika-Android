@@ -222,6 +222,10 @@ public class Do {
 
         return context.getResources().getString(resource);
     }
+    public static int getColor(Context context, int resource) {
+
+        return context.getResources().getColor(resource);
+    }
 
     public static int randomInteger(int min, int max) {
 

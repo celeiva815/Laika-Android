@@ -11,7 +11,6 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,7 +45,8 @@ public class AlarmReminder extends Model {
 
     public final static String LOCAL_ID = "local_id";
     public final static String WEEKDAY = "weekday";
-    public final static String USER = "user";
+    public final static String USER_ID = "user";
+
     public static int ID = 1;
 
     @Column(name = COLUMN_ALARM_REMINDER_ID)
@@ -441,7 +441,7 @@ public class AlarmReminder extends Model {
         intent.putExtra(AlarmReceiver.ONE_TIME, Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
         //After after 5 seconds
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 5 , pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 , pi);
     }
 
 
@@ -460,7 +460,7 @@ public class AlarmReminder extends Model {
         intent.putExtra(LOCAL_ID, this.getId());
         intent.putExtra(COLUMN_TIME, this.mTime);
         intent.putExtra(WEEKDAY, week);
-        intent.putExtra(USER, PrefsManager.getUserName(context));
+        intent.putExtra(USER_ID, PrefsManager.getUserId(context));
 
         long id = getId();
         int requestCode = (int) id * 10 + week;

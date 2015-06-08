@@ -21,6 +21,14 @@ public class Tag {
     public static final int ROLE_ADMIN = 1;
     public static final int ROLE_EDITOR = 2;
 
+    //UserAdoptDog
+    public static final int POSTULATION_WAITING = 1;
+    public static final int POSTULATION_DISABLED = 2;
+    public static final int POSTULATION_ACCEPTED = 3;
+    public static final int POSTULATION_REFUSED = 4;
+    public static final int POSTULATION_REVOKED = 5;
+
+
     //Reminders
     public static final int CATEGORY_FOOD = 1;
     public static final int CATEGORY_POO = 2;

@@ -132,6 +132,14 @@
                                                     a través de un correo. Enhorabuena!</string>
     <string name="mail_adopt_dog_success">Revisa tu correo para confirmar y nos contactaremos contigo</string>
 
+    <!-- PostulatedDogActivity -->
+    <string name="waiting_postulated_status">En espera</string>
+    <string name="disabled_postulated_status">No cumple requisitos</string>
+    <string name="accepted_postulated_status">Aceptada</string>
+    <string name="refused_postulated_status">Rechazada</string>
+    <string name="revoked_postulated_status">Revocada</string>
+    <string name="revoke_postulated_status">Revocar</string>
+
     <!-- NewDogRegisterActivity -->
     <string name="new_dog_register_activity_name">Registro de Mascotas</string>
     <string name="edit_dog_register_activity_name">Edita tu Mascota</string>

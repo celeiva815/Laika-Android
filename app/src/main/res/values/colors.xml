@@ -19,5 +19,8 @@
     <color name="light_white_font">#bbb</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="laika_blue">#5b5bF7</color>
+    <color name="laika_green">#5bF75b</color>
+    <color name="laika_yellow">#F7F75b</color>
 
 </resources>

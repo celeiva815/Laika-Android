@@ -141,9 +141,20 @@ public class Dog extends Model {
         this.mIsSterilized = jsonObject.optBoolean(COLUMN_IS_STERILIZED);
         this.mIsTrained = jsonObject.optBoolean(COLUMN_IS_TRAINED);
         this.mChipCode = jsonObject.optString(COLUMN_CHIP_CODE);
-        this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
-        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE,
-                "http://www.k9ambassador.com/dogs-for-sale/wolf/wolfnew3.jpg"); //XXX poner otro link
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
+
+        switch (status) {
+
+            case Tag.DOG_FOUNDATION:
+            case Tag.DOG_POSTULATED:
+                this.mStatus = status;
+                break;
+
+            default:
+                this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
+                break;
+        }
+
 
     }
 
@@ -412,6 +423,13 @@ public class Dog extends Model {
     public static void deleteAll() {
 
         new Delete().from(Dog.class).execute();
+
+    }
+
+    public static void deleteDog(Dog dog) {
+
+        String condition = COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
+        new Delete().from(Dog.class).where(condition).execute();
 
     }
 

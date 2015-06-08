@@ -7,23 +7,17 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.astuetz.PagerSlidingTabStrip;
-import com.viewpagerindicator.IconPagerAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,53 +34,40 @@ import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.views.CustomPagerSlidingTabStrip;
-import cl.laikachile.laika.utils.views.CustomTabPageIndicator;
 
 public class MyDogsActivity extends ActionBarActivity {
 
     public static final String DOG_ID = "dog_id";
+    public static final String HISTORY = "Historial";
+    public static final String REMINDERS = "Recordatorios";
+    public static final String OWNERS = "Dueños";
+    public static final String ALBUM = "Album";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+    public static final String[] CONTENT = new String[] {HISTORY, REMINDERS, OWNERS, ALBUM};
+    public static final int[] ICONS = new int[]{
+            R.drawable.laika_history_selector,
+            R.drawable.laika_reminder_selector,
+            R.drawable.laika_owner_selector,
+            R.drawable.laika_album_selector
+    };
 
-    private int mIdLayout = R.layout.activity_my_dog;
+    public int mIdLayout = R.layout.activity_my_dog;
     public Dog mDog;
-    public LinearLayout mHistoryLinearLayout;
-    public LinearLayout mRemindersLinearLayout;
-    public LinearLayout mHealthLinearLayout;
-    public LinearLayout mOwnerLinearLayout;
-    public LinearLayout mAlbumLinearLayout;
-
     public HistoryMyDogFragment mHistoryFragment;
     public RemindersMyDogFragment mRemindersFragment;
     public OwnersFragment mOwnerFragment;
     public AlbumMyDogFragment mAlbumFragment;
-    public Fragment mCurrentFragment;
-
     public String mCurrentPhotoPath;
+    public ViewPager mPager;
+    public PagerAdapter mPagerAdapter;
 
-    private static final int NUM_PAGES = 4;
-    private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
-    private CustomPagerSlidingTabStrip mIndicator;
-
-    private static final String HISTORY = "Historial";
-    private static final String REMINDERS = "Recordatorios";
-    private static final String OWNERS = "Dueños";
-    private static final String ALBUM = "Album";
-
-    private static final String[] CONTENT = new String[] {HISTORY, REMINDERS, OWNERS, ALBUM};
-    private static final int[] ICONS = new int[]{
-            R.drawable.laika_history_selector,
-            R.drawable.laika_reminder_selector,
-            R.drawable.laika_owner_selector,
-            R.drawable.laika_album_selector,
-    };
+    public CustomPagerSlidingTabStrip mIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(mIdLayout);
-        //setActivityView();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -171,43 +152,6 @@ public class MyDogsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setActivityView() {
-
-        mHistoryLinearLayout = (LinearLayout) findViewById(R.id.history_my_dog_linearlayout);
-        mRemindersLinearLayout = (LinearLayout) findViewById(R.id.reminders_my_dog_linearlayout);
-        mHealthLinearLayout = (LinearLayout) findViewById(R.id.health_my_dog_linearlayout);
-        mOwnerLinearLayout = (LinearLayout) findViewById(R.id.owner_my_dog_linearlayout);
-        mAlbumLinearLayout = (LinearLayout) findViewById(R.id.album_my_dog_linearlayout);
-
-        mHistoryLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setHistoryFragment(mDog);
-            }
-        });
-
-        mOwnerLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setOwnerFragment(mDog);
-            }
-        });
-
-        mRemindersLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setReminderFragment(mDog);
-            }
-        });
-
-        mAlbumLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAlbumFragment(mDog);
-            }
-        });
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -239,110 +183,33 @@ public class MyDogsActivity extends ActionBarActivity {
         }
     }
 
-    public Fragment setHistoryFragment(Dog mDog) {
+    public void setHistoryFragment(Dog mDog) {
 
-        if (mHistoryFragment == null) {
-
-            mHistoryFragment = new HistoryMyDogFragment(mDog);
-
-            if (mCurrentFragment != null) {
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-            }
-            mCurrentFragment = mHistoryFragment;
-
-            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                    mCurrentFragment).commit();
-
-            mCurrentFragment = mHistoryFragment;
+        if (mHistoryFragment != null) {
+            mHistoryFragment.mHistoryAdapter.notifyDataSetChanged();
 
         } else {
-
-            if (mHistoryFragment.isDetached()) {
-
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-                mCurrentFragment = mHistoryFragment;
-                mHistoryFragment.mHistoryAdapter.notifyDataSetChanged();
-                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
-            }
+            mHistoryFragment = HistoryMyDogFragment.newInstance(mDog.mDogId);
         }
 
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
+        mPager.setCurrentItem(getPagerPosition(HISTORY), true);
 
-        return mCurrentFragment;
     }
 
-    public Fragment setReminderFragment(Dog mDog) {
+    public void setReminderFragment(AlarmReminder alarmReminder) {
 
-        if (mRemindersFragment == null) {
+        mRemindersFragment = RemindersMyDogFragment.newInstance(mDog.mDogId,
+                alarmReminder.mAlarmReminderId, RemindersMyDogFragment.KEY_ALARM);
 
-            mRemindersFragment = new RemindersMyDogFragment(mDog);
-
-            if (mCurrentFragment != null) {
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-            }
-            mCurrentFragment = mRemindersFragment;
-
-            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                    mCurrentFragment).commit();
-
-            mCurrentFragment = mRemindersFragment;
-
-        } else {
-
-            if (mRemindersFragment.isDetached()) {
-
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-                mCurrentFragment = mRemindersFragment;
-                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
-            }
-        }
-
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
-
-        return mCurrentFragment;
+        mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
     }
 
-    public Fragment setReminderFragment(AlarmReminder alarmReminder) {
+    public void setReminderFragment(CalendarReminder calendarReminder) {
 
-        mRemindersFragment = new RemindersMyDogFragment(mDog, alarmReminder);
+        mRemindersFragment = RemindersMyDogFragment.newInstance(mDog.mDogId,
+                calendarReminder.mCalendarReminderId, RemindersMyDogFragment.KEY_CALENDAR);
 
-        if (mCurrentFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-        }
-
-        mCurrentFragment = mRemindersFragment;
-
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                mCurrentFragment).commit();
-
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
-
-        return mCurrentFragment;
-    }
-
-    public Fragment setReminderFragment(CalendarReminder calendarReminder) {
-
-        mRemindersFragment = new RemindersMyDogFragment(mDog, calendarReminder);
-
-        if (mCurrentFragment != null) {
-            getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-        }
-
-        mCurrentFragment = mRemindersFragment;
-
-        getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                mCurrentFragment).commit();
-
-        mCurrentFragment = mRemindersFragment;
-
-
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, color, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
-
-        return mCurrentFragment;
+        mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
     }
 
     public void setHealthFragment() {
@@ -350,83 +217,16 @@ public class MyDogsActivity extends ActionBarActivity {
 
     }
 
-    public Fragment setOwnerFragment(Dog mDog) {
+    public void setOwnerFragment(Dog mDog) {
 
-        if (mOwnerFragment == null) {
 
-            mOwnerFragment = new OwnersFragment(mDog);
-
-            if (mCurrentFragment != null) {
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-            }
-
-            mCurrentFragment = mOwnerFragment;
-
-            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                    mCurrentFragment).commit();
-
-            mCurrentFragment = mOwnerFragment;
-
-        } else {
-
-            if (mOwnerFragment.isDetached()) {
-
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-                mCurrentFragment = mOwnerFragment;
-                mOwnerFragment.mOwnerAdapter.notifyDataSetChanged();
-                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
-            }
-        }
-
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color, Color.TRANSPARENT);
-
-        return mCurrentFragment;
     }
 
-    public Fragment setAlbumFragment(Dog mDog) {
+    public void setAlbumFragment(Dog mDog) {
 
-        if (mAlbumFragment == null) {
 
-            mAlbumFragment = new AlbumMyDogFragment(mDog);
-
-            if (mCurrentFragment != null) {
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-            }
-
-            mCurrentFragment = mAlbumFragment;
-
-            getSupportFragmentManager().beginTransaction().add(R.id.container_my_dog_framelayout,
-                    mCurrentFragment).commit();
-
-            mCurrentFragment = mAlbumFragment;
-
-        } else {
-
-            if (mAlbumFragment.isDetached()) {
-
-                getSupportFragmentManager().beginTransaction().detach(mCurrentFragment).commit();
-                mCurrentFragment = mAlbumFragment;
-                mAlbumFragment.mAlbumAdapter.notifyDataSetChanged();
-                getSupportFragmentManager().beginTransaction().attach(mCurrentFragment).commit();
-            }
-        }
-
-        int color = getResources().getColor(R.color.semi_trans_black_background);
-        setBackgrounds(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, color);
-
-        return mCurrentFragment;
     }
 
-
-    public void setBackgrounds(int history, int reminders, int health, int owner, int album) {
-
-        mHistoryLinearLayout.setBackgroundColor(history);
-        mRemindersLinearLayout.setBackgroundColor(reminders);
-        mHealthLinearLayout.setBackgroundColor(health);
-        mOwnerLinearLayout.setBackgroundColor(owner);
-        mAlbumLinearLayout.setBackgroundColor(album);
-    }
 
     public File createImageFile() throws IOException {
         // Create an image file name

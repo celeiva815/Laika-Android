@@ -42,4 +42,11 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
 
         mPager.setAdapter(mPagerAdapter);
     }
+
+    public void updateDogs() {
+
+        setDogList();
+        mPagerAdapter.notifyDataSetChanged();
+        
+    }
 }

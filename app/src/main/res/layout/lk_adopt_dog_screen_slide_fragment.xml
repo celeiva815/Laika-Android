@@ -112,15 +112,13 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/status_adopt_dog_textview"
+                android:id="@+id/status_postulated_adopt_dog_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/linearLayout2"
                 android:layout_alignEnd="@+id/match_adopt_dog_screen_slide_textview"
                 android:layout_alignRight="@+id/match_adopt_dog_screen_slide_textview"
-                android:drawableLeft="@drawable/yellow_circle"
                 android:paddingLeft="5dp"
-                android:text="En espera"
                 android:textColor="@color/light_black_font"
                 android:textSize="@dimen/laika_min_text"
                 android:visibility="gone"/>

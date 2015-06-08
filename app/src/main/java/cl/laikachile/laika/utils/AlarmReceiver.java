@@ -3,16 +3,13 @@ package cl.laikachile.laika.utils;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.widget.Toast;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+
+import cl.laikachile.laika.activities.StopAlarmActivity;
+import cl.laikachile.laika.models.AlarmReminder;
 
 /**
  * Created by Tito_Leiva on 18-05-15.
@@ -31,15 +28,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //You can do the processing here.
         Bundle extras = intent.getExtras();
-        StringBuilder msgStr = new StringBuilder();
+        Intent scheduledIntent = new Intent(context, StopAlarmActivity.class);
+        scheduledIntent.putExtras(extras);
 
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
-
+        scheduledIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(scheduledIntent);
 
         //Release the lock
         wl.release();

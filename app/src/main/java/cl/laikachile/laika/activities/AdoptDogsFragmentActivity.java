@@ -1,6 +1,7 @@
 package cl.laikachile.laika.activities;
 
 import java.util.List;
+import java.util.Objects;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -123,6 +124,11 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
         @Override
         public int getCount() {
             return mDogs.size();
+        }
+
+        @Override
+        public int getItemPosition(Object object){
+            return PagerAdapter.POSITION_NONE;
         }
     }
 

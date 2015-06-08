@@ -3,6 +3,7 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -26,6 +27,7 @@ public class UserAdoptDog extends Model {
     public final static String COLUMN_USER_ADOPT_DOG_ID = "user_adopt_dog_id";
     public final static String COLUMN_FOUNDATION_ID = "foundation_id";
     public final static String COLUMN_FOUNDATION_NAME = "foundation_name";
+    public final static String COLUMN_FOUNDATION_EMAIL = "foundation_email";
     public final static String COLUMN_COMPATIBILITY = "compatibility";
     public final static String COLUMN_STATUS = "status";
     public final static String COLUMN_DOG_ID = "dog_id";
@@ -42,6 +44,9 @@ public class UserAdoptDog extends Model {
     @Column(name = COLUMN_FOUNDATION_NAME)
     public String mFoundationName;
 
+    @Column(name = COLUMN_FOUNDATION_EMAIL)
+    public String mFoundationEmail;
+
     @Column(name = COLUMN_COMPATIBILITY)
     public int mCompatibility;
 
@@ -54,10 +59,12 @@ public class UserAdoptDog extends Model {
     public UserAdoptDog() { }
 
     public UserAdoptDog(int mUserAdoptDogId, int mFoundationId, String mFoundationName,
-                        int mCompatibility, int mStatus, int mDogId) {
+                        String mFoundationEmail, int mCompatibility, int mStatus, int mDogId) {
+
         this.mUserAdoptDogId = mUserAdoptDogId;
         this.mFoundationId = mFoundationId;
         this.mFoundationName = mFoundationName;
+        this.mFoundationEmail = mFoundationEmail;
         this.mCompatibility = mCompatibility;
         this.mStatus = mStatus;
         this.mDogId = mDogId;
@@ -69,7 +76,12 @@ public class UserAdoptDog extends Model {
         this.mFoundationName = jsonObject.optString(COLUMN_FOUNDATION_NAME);
         this.mCompatibility = new Double(jsonObject.optDouble(COLUMN_COMPATIBILITY)).intValue();
         this.mStatus = jsonObject.optInt(COLUMN_STATUS);
-        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
+
+        if (jsonObject.has(API_DOG)) {
+            Dog dog = Dog.saveDog(jsonObject.optJSONObject(API_DOG), Tag.DOG_POSTULATED);
+            this.mDogId = dog.mDogId;
+
+        }
     }
 
 
@@ -78,6 +90,7 @@ public class UserAdoptDog extends Model {
         this.mUserAdoptDogId = userAdoptDog.mUserAdoptDogId;
         this.mFoundationId = userAdoptDog.mFoundationId;
         this.mFoundationName = userAdoptDog.mFoundationName;
+        this.mFoundationEmail = userAdoptDog.mFoundationEmail;
         this.mCompatibility = userAdoptDog.mCompatibility;
         this.mStatus = userAdoptDog.mStatus;
         this.mDogId = userAdoptDog.mDogId;
@@ -97,10 +110,6 @@ public class UserAdoptDog extends Model {
 
             for (int i = 0; i < jsonDogs.length(); i++) {
                 saveUserAdoptDog(jsonDogs.getJSONObject(i));
-
-                if (jsonDogs.getJSONObject(i).has(API_DOG)) {
-                    Dog.saveDog(jsonObject.optJSONObject(API_DOG), Tag.DOG_POSTULATED);
-                }
 
             }
         } catch (JSONException e) {
@@ -168,5 +177,13 @@ public class UserAdoptDog extends Model {
 
         return userAdoptDogs;
     }
+
+    public static void deleteUserAdoptDog(UserAdoptDog userAdoptDog) {
+
+        String condition = COLUMN_USER_ADOPT_DOG_ID + DB.EQUALS + userAdoptDog.mUserAdoptDogId;
+        new Delete().from(UserAdoptDog.class).where(condition);
+
+    }
+
 }
 
