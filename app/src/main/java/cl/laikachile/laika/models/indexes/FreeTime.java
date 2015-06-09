@@ -30,13 +30,11 @@ public class FreeTime {
         FreeTime min = new FreeTime(Tag.TIME_MIN, names[Tag.TIME_MIN]);
         FreeTime normal = new FreeTime(Tag.TIME_NORMAL, names[Tag.TIME_NORMAL]);
         FreeTime great = new FreeTime(Tag.TIME_GREAT, names[Tag.TIME_GREAT]);
-        FreeTime max = new FreeTime(Tag.TIME_MAX, names[Tag.TIME_MAX]);
 
         freeTimes.add(zero);
         freeTimes.add(min);
         freeTimes.add(normal);
         freeTimes.add(great);
-        freeTimes.add(max);
 
         return freeTimes;
 

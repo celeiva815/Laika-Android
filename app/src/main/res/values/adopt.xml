@@ -13,9 +13,8 @@
 
     <string-array name="free_time_adopt">
         <item>0 a 2 horas</item>
-        <item>2 a 3 horas</item>
-        <item>3 a 4 horas</item>
-        <item>4 a 5 horas</item>
+        <item>2 a 4 horas</item>
+        <item>4 a 6 horas</item>
         <item>6 o más horas</item>
     </string-array>
 

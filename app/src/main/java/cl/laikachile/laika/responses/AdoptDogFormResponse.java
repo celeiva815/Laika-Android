@@ -42,8 +42,6 @@ public class AdoptDogFormResponse implements Response.ErrorListener,
         mActivity.mProgressDialog.dismiss();
         ResponseHandler.error(error, mActivity);
 
-        Do.showShortToast("Hubo un error", mActivity);
-
     }
 
 }

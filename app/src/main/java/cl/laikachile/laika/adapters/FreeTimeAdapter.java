@@ -17,7 +17,7 @@ import cl.laikachile.laika.models.indexes.FreeTime;
  */
 public class FreeTimeAdapter extends BaseAdapter {
 
-    public List<FreeTime> mSizes;
+    public List<FreeTime> mFreeTimes;
     public Context mContext;
     public int mIdLayout;
     public int mIdTextview;
@@ -27,30 +27,30 @@ public class FreeTimeAdapter extends BaseAdapter {
         mContext = context;
         mIdLayout = resource;
         mIdTextview = textViewResourceId;
-        mSizes = objects;
+        mFreeTimes = objects;
 
     }
 
     @Override
     public int getCount() {
-        return mSizes.size();
+        return mFreeTimes.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mSizes.get(position);
+        return mFreeTimes.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return mSizes.get(position).mIndex;
+        return mFreeTimes.get(position).mIndex;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
-        textView.setText(mSizes.get(position).mName);
+        textView.setText(mFreeTimes.get(position).mName);
         textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
         textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
         return textView;
@@ -65,7 +65,7 @@ public class FreeTimeAdapter extends BaseAdapter {
             convertView = inflater.inflate(mIdLayout, null);
         }
 
-        ((TextView) convertView).setText(mSizes.get(position).mName);
+        ((TextView) convertView).setText(mFreeTimes.get(position).mName);
         return convertView;
 
 

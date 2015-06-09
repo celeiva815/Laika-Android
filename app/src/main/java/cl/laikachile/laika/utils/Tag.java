@@ -92,7 +92,6 @@ public class Tag {
     public static final int TIME_MIN= 1;
     public static final int TIME_NORMAL= 2;
     public static final int TIME_GREAT= 3;
-    public static final int TIME_MAX= 4;
 
     //MISC
     public static final int NONE = 0;

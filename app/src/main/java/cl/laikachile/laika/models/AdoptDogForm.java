@@ -25,6 +25,7 @@ public class AdoptDogForm extends Model {
     public final static String COLUMN_DOG_GENDER = "dog_gender";
     public final static String COLUMN_DOG_SIZE = "dog_size";
     public final static String COLUMN_DOG_PERSONALITY = "dog_personality";
+    public final static String COLUMN_FREE_TIME = "free_time";
 
     public final static String API_ADOPTION_FORM = "adoption_form";
     public final static String API_ID = "id";
@@ -63,12 +64,14 @@ public class AdoptDogForm extends Model {
     @Column(name = COLUMN_DOG_PERSONALITY)
     public int mDogPersonality;
 
+    @Column(name = COLUMN_FREE_TIME)
+    public int mFreeTime;
+
     public AdoptDogForm() { }
 
-    public AdoptDogForm(int mOwnerId, int mLocationId, int mHomeType, int mFamilyCount,
-                        boolean mHasPet, boolean mHasElderly, boolean mHasKids, int mDogGender,
-                        int mDogSize, int mDogPersonality) {
-
+    public AdoptDogForm(int mOwnerId, int mLocationId, int mHomeType,
+                        int mFamilyCount, boolean mHasPet, boolean mHasElderly, boolean mHasKids,
+                        int mDogGender, int mDogSize, int mDogPersonality, int mFreeTime) {
         this.mOwnerId = mOwnerId;
         this.mLocationId = mLocationId;
         this.mHomeType = mHomeType;
@@ -79,6 +82,7 @@ public class AdoptDogForm extends Model {
         this.mDogGender = mDogGender;
         this.mDogSize = mDogSize;
         this.mDogPersonality = mDogPersonality;
+        this.mFreeTime = mFreeTime;
     }
 
     public AdoptDogForm(JSONObject jsonObject) {
@@ -94,6 +98,7 @@ public class AdoptDogForm extends Model {
         this.mDogGender = jsonObject.optInt(COLUMN_DOG_GENDER);
         this.mDogSize = jsonObject.optInt(COLUMN_DOG_SIZE);
         this.mDogPersonality = jsonObject.optInt(COLUMN_DOG_PERSONALITY);
+        this.mFreeTime = jsonObject.optInt(COLUMN_FREE_TIME);
     }
 
     public void update(AdoptDogForm dogForm, int adoptDogFormId) {
@@ -115,6 +120,7 @@ public class AdoptDogForm extends Model {
         this.mDogGender = dogForm.mDogGender;
         this.mDogSize = dogForm.mDogSize;
         this.mDogPersonality = dogForm.mDogPersonality;
+        this.mFreeTime = dogForm.mFreeTime;
 
         this.save();
 
@@ -172,6 +178,7 @@ public class AdoptDogForm extends Model {
             jsonObject.put(COLUMN_DOG_GENDER, mDogGender);
             jsonObject.put(COLUMN_DOG_SIZE, mDogSize);
             jsonObject.put(COLUMN_DOG_PERSONALITY, mDogPersonality);
+            jsonObject.put(COLUMN_FREE_TIME, mFreeTime);
 
         } catch (JSONException e) {
             e.printStackTrace();

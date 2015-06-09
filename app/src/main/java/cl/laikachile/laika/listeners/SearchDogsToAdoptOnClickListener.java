@@ -34,9 +34,10 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
         int gender = mActivity.mGender;
         int dogSize = (int) mActivity.mSizeSpinner.getSelectedItemId();
         int dogPersonality = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
+        int freeTime = (int) mActivity.mFreeTimeSpinner.getSelectedItemId();
 
         AdoptDogForm adoptDogForm = new AdoptDogForm(ownerId,locationId,homeType,familyCount,hasPet,
-                hasElderly,hasKids,gender,dogSize,dogPersonality);
+                hasElderly,hasKids,gender,dogSize,dogPersonality, freeTime);
 
         mActivity.requestAdoptionDogForm(adoptDogForm);
 
