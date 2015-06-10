@@ -100,8 +100,6 @@ public class HistoryMyDogFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        mHistories = getHistories(getActivity().getApplicationContext());
-        mHistoryAdapter.notifyDataSetChanged();
     }
 
     private List<History> getHistories(Context context) {
@@ -154,4 +152,11 @@ public class HistoryMyDogFragment extends Fragment {
         }
     }
 
+    public void refreshList(Context context) {
+
+        mHistories.clear();
+        mHistories.addAll(getHistories(context));
+        mHistoryAdapter.notifyDataSetChanged();
+
+    }
 }

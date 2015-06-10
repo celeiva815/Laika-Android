@@ -362,6 +362,13 @@ public class Dog extends Model {
 
     }
 
+    public String getImage(String size) {
+
+        String url = mUrlImage.replaceAll("original", size);
+        return url;
+
+    }
+
     //DataBase
 
     public static void saveDogs(JSONObject jsonObject, int status) {
