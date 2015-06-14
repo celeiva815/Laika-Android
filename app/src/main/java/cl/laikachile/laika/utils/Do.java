@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.activeandroid.Model;
@@ -35,6 +36,7 @@ public class Do {
     public static final String HOUR_MINUTE = "HH:mm";
     public static final String FIRST_TIME_OF_DAY = " 00:00:00";
     public static final String LAST_TIME_OF_DAY = " 23:59:59";
+    public static final int WEEK = 7;
     public static final int HOURS = 24;
     public static final int MINUTES = 60;
     public static final int SECONDS = 60;
@@ -88,7 +90,7 @@ public class Do {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public static void showLongToast(String message, Context context){
+    public static void showLongToast(String message, Context context) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
@@ -268,5 +270,18 @@ public class Do {
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static void ableView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+    }
+
+    public static void showView(View view) {
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideView(View view) {
+        view.setVisibility(View.GONE);
+
     }
 }

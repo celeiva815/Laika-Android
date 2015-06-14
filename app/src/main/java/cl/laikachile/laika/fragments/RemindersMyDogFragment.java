@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
 /**
@@ -38,6 +40,8 @@ public class RemindersMyDogFragment extends Fragment {
     public ImageView mHygieneImageView;
     public ImageView mVetImageView;
     public ImageView mVaccineImageView;
+    public LinearLayout mAlarmLayout;
+    public LinearLayout mCalendarLayout;
 
     public RemindersMyDogFragment() {
     }
@@ -114,6 +118,8 @@ public class RemindersMyDogFragment extends Fragment {
         RelativeLayout vetLayout = (RelativeLayout) view.findViewById(R.id.vet_reminders_my_dog_layout);
         RelativeLayout vaccineLayout = (RelativeLayout) view.findViewById(R.id.vaccine_reminders_my_dog_layout);
 
+        mAlarmLayout = (LinearLayout) view.findViewById(R.id.alarms_reminders_layout);
+        mCalendarLayout = (LinearLayout) view.findViewById(R.id.calendar_reminders_layout);
         mFoodImageView = (ImageView) view.findViewById(R.id.food_reminders_my_dog_imageview);
         mPooImageView = (ImageView) view.findViewById(R.id.poo_reminders_my_dog_imageview);
         mWalkImageView = (ImageView) view.findViewById(R.id.walk_reminders_my_dog_imageview);
@@ -288,8 +294,8 @@ public class RemindersMyDogFragment extends Fragment {
                 break;
         }
 
+        Do.hideView(mCalendarLayout);
         openAlarmReminder(alarmReminder);
-
     }
 
     public void getCalendarReminderFragment(CalendarReminder calendarReminder) {
@@ -306,7 +312,7 @@ public class RemindersMyDogFragment extends Fragment {
                 setCheckedImage(false, false, false, false, false, false, true);
         }
 
+        Do.hideView(mAlarmLayout);
         openCalendarReminder(calendarReminder);
-
     }
 }

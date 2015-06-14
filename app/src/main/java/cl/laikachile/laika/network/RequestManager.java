@@ -40,6 +40,8 @@ public class RequestManager {
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
     //API Address
+    public static final String ADDRESS_ALERT_REMINDERS = "alert_reminders/";
+    public static final String ADDRESS_CALENDAR_REMINDERS = "calendar_reminders/";
     public static final String ADDRESS_DOG = "dog/";
     public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_CANCEL_POSTULATION = "cancel_postulation/";
@@ -56,7 +58,9 @@ public class RequestManager {
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
 
     //Request Methods
+    public static final int METHOD_DELETE = Request.Method.DELETE;
     public static final int METHOD_GET = Request.Method.GET;
+    public static final int METHOD_PATCH = Request.Method.PATCH;
     public static final int METHOD_POST = Request.Method.POST;
     public static final int METHOD_PUT = Request.Method.PUT;
 
@@ -98,6 +102,20 @@ public class RequestManager {
                                       Response.ErrorListener errorListener, final String token) {
 
         return defaultRequest(METHOD_PUT, jsonParams, address, listener, errorListener, token);
+    }
+
+    public static Request patchRequest(JSONObject jsonParams, String address,
+                                     Response.Listener<JSONObject> listener,
+                                     Response.ErrorListener errorListener, final String token) {
+
+        return defaultRequest(METHOD_PATCH, jsonParams, address, listener, errorListener, token);
+    }
+
+    public static Request deleteRequest(JSONObject jsonParams, String address,
+                                       Response.Listener<JSONObject> listener,
+                                       Response.ErrorListener errorListener, final String token) {
+
+        return defaultRequest(METHOD_PATCH, jsonParams, address, listener, errorListener, token);
     }
 
     public static Request defaultRequest(int method, JSONObject jsonParams, String address,
@@ -153,14 +171,14 @@ public class RequestManager {
         return request;
     }
 
+    // ############## Utils ################ //
+
     public static String buildImageUrl(String relativeUrl) {
 
         String url = BASE_URL + ADDRESS_UPLOADED_IMAGES + relativeUrl;
         Log.d(TAG, url);
         return url;
     }
-
-    // ############## Utils ################ //
 
     public static JSONObject getJsonParams(Map<String, String> params) {
 
