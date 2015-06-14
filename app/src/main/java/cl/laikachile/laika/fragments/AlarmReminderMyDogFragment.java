@@ -244,6 +244,21 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         return view;
     }
 
+    public void createAlarmReminders(AlarmReminder alarmReminder, int method) {
+
+        Context context = getActivity().getApplicationContext();
+        JSONObject jsonParams = alarmReminder.getJsonObject();
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(this);
+
+        Request createRequest = RequestManager.defaultRequest(method, jsonParams,
+                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(createRequest, TAG);
+
+    }
+
     @Override
     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hourOfDay, int minute) {
 

@@ -282,6 +282,5 @@ public class Do {
 
     public static void hideView(View view) {
         view.setVisibility(View.GONE);
-
     }
 }

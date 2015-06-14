@@ -12,6 +12,10 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.Calendar;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import org.json.JSONArray;
@@ -247,6 +251,7 @@ public class AlarmReminder extends Model {
 
         return R.drawable.lk_food_tips;
     }
+
 
     public String getCategoryName(Context context) {
 

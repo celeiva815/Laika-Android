@@ -178,5 +178,4 @@ public class HistoryMyDogFragment extends Fragment {
         mHistoryAdapter.notifyDataSetChanged();
     }
 
-
 }
