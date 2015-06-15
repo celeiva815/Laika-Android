@@ -244,6 +244,11 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".network.RemindersService"
+            android:exported="false" >
+        </service>
+
         <receiver android:name="cl.laikachile.laika.utils.AlarmReceiver">
         </receiver>
 

@@ -186,7 +186,7 @@ public class MyDogsActivity extends ActionBarActivity {
     public void setHistoryFragment(Dog mDog) {
 
         if (mHistoryFragment != null) {
-            mHistoryFragment.refreshList(getApplicationContext());
+            mHistoryFragment.refreshHistories();
 
         } else {
             mHistoryFragment = HistoryMyDogFragment.newInstance(mDog.mDogId);

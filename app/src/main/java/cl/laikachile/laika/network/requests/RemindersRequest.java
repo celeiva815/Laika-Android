@@ -26,17 +26,17 @@ public class RemindersRequest {
 
     private static final String TAG = RemindersRequest.class.getSimpleName();
 
-    public void createAlarmReminders(AlarmReminder alarmReminder, int method, Context context) {
+    public void createAlarmReminders(Dog dog, AlarmReminder alarmReminder, int method,
+                                     Context context) {
 
         JSONObject jsonParams = alarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context);
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, dog);
 
         Request createRequest = RequestManager.defaultRequest(method, jsonParams,
                 RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
                 PrefsManager.getUserToken(context));
 
-        VolleyManager.getInstance(context)
-                .addToRequestQueue(createRequest, TAG);
+        VolleyManager.getInstance(context).addToRequestQueue(createRequest, TAG);
 
     }
 

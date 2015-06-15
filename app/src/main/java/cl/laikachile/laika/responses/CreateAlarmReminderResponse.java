@@ -12,6 +12,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.fragments.AlarmReminderMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
+import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
 
@@ -22,28 +23,31 @@ public class CreateAlarmReminderResponse implements Response.Listener<JSONObject
 
     public AlarmReminderMyDogFragment mFragment;
     public Context mContext;
+    public Dog mDog;
 
     public CreateAlarmReminderResponse(AlarmReminderMyDogFragment mFragment) {
         this.mFragment = mFragment;
         this.mContext = mFragment.getActivity().getApplicationContext();
+        this.mDog = mFragment.mDog;
     }
 
-    public CreateAlarmReminderResponse(Context context) {
+    public CreateAlarmReminderResponse(Context context, Dog dog) {
+
         this.mContext = context;
+        this.mDog = dog;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        AlarmReminder.saveReminder(response, mFragment.mDog.mDogId, mContext);
+        AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
 
         if (mFragment != null) {
 
             String message = Do.getRString(mContext, R.string.new_reminder_added);
             Do.showLongToast(message, mContext);
-            ((MyDogsActivity) mFragment.getActivity()).setHistoryFragment(mFragment.mDog);
+            ((MyDogsActivity) mFragment.getActivity()).setHistoryFragment(mDog);
         }
-
     }
 
     @Override
