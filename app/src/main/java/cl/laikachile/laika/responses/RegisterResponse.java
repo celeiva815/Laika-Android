@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.RegisterActivity;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 13-04-15.

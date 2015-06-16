@@ -1,7 +1,6 @@
 package cl.laikachile.laika.responses;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +9,7 @@ import android.widget.ProgressBar;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.json.JSONObject;
-
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.LoginActivity;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 13-04-15.

@@ -29,11 +29,13 @@ import java.util.Map;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.FreeTimeAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
+import cl.laikachile.laika.adapters.RegionAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
 import cl.laikachile.laika.adapters.SpaceAdapter;
 import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
 import cl.laikachile.laika.models.AdoptDogForm;
+import cl.laikachile.laika.models.Region;
 import cl.laikachile.laika.models.indexes.FreeTime;
 import cl.laikachile.laika.models.Location;
 import cl.laikachile.laika.models.Personality;
@@ -145,10 +147,9 @@ public class AdoptDogFormActivity extends ActionBarActivity {
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
                 getFreeTimes(getApplicationContext()));
 
-        //TODO el adapter para el spinner de los locations una vez que sean enviados por la API
-        ArrayAdapter<String> regionAdapter = new ArrayAdapter<String>(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter,
-                this.getResources().getStringArray(R.array.available_chilean_regions));
+        RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                getRegions(getApplicationContext()));
 
         SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
 
@@ -313,9 +314,14 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         return Space.getSpaces(context);
     }
 
-    public List<FreeTime> getFreeTimes(Context context) {
+    public List<FreeTime> getFreeTimes(Context context) { return FreeTime.getFreeTimes(context);  }
 
-        return FreeTime.getFreeTimes(context);
+    public List<Region> getRegions(Context context) {
+
+        //TODO agregar el filtro por location del usuario
+        int locationId = 1;
+        Location location = Location.getSingleLocation(locationId);
+        return Region.getRegions(location.mCountryId);
     }
 
     public void showDialog(String title, String message) {

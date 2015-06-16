@@ -1,7 +1,6 @@
 package cl.laikachile.laika.responses;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,7 +12,6 @@ import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.fragments.AlarmReminderMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
 
 /**

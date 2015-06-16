@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.TipsActivity;
 import cl.laikachile.laika.models.Tip;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 13-04-15.

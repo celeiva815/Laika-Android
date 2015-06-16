@@ -3,13 +3,14 @@ package cl.laikachile.laika.activities;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
+import java.util.Collections;
 import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.PostulatedDogScreenSlideFragment;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.UserAdoptDog;
-import cl.laikachile.laika.utils.Tag;
+import cl.laikachile.laika.utils.DogSort;
 
 /**
  * Created by Tito_Leiva on 28-05-15.
@@ -21,9 +22,8 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
     @Override
     protected void setDogList() {
 
-        mDogs = Dog.getDogs(Tag.DOG_POSTULATED);
-        mUserAdoptDogs = UserAdoptDog.getUserAdoptDogs(mDogs);
-        //TODO manejar el caso con el emptyView.
+        mUserAdoptDogs = UserAdoptDog.getUserAdoptDogs();
+        mDogs = Dog.getDogs(mUserAdoptDogs);
     }
 
     @Override

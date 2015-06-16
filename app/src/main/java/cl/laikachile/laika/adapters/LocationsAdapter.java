@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,33 +13,59 @@ import java.util.List;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.Location;
 
-public class LocationsAdapter extends ArrayAdapter<Location> {
+public class LocationsAdapter extends BaseAdapter {
 
-	private int mIdLayout = R.layout.ai_simple_textview_for_adapter;
-	private Context context;
 	public List<Location> mLocations;
+	public Context mContext;
+	public int mIdLayout;
+	public int mIdTextview;
 
-	public LocationsAdapter(Context context, int resource, List<Location> objects) {
-		super(context, resource, objects);
-		
-		this.context = context;
-		this.mLocations = objects;
+	public LocationsAdapter(Context context, int resource, int textViewResourceId, List objects) {
+
+		mContext = context;
+		mIdLayout = resource;
+		mIdTextview = textViewResourceId;
+		mLocations = objects;
+
 	}
 
-    @Override
-    public View getDropDownView(int position, View convertView,ViewGroup parent) {
-        return getView(position, convertView, parent);
-    }
-	
 	@Override
-	  public View getView(int position, View containerView, ViewGroup parent) {
-		  
-	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    View view = inflater.inflate(mIdLayout, parent, false);
-		TextView cityTextView  = (TextView) view.findViewById(R.id.simple_textview);
-        cityTextView.setText(mLocations.get(position).mCity);
+	public int getCount() {
+		return mLocations.size();
+	}
 
-	    return view;
-	    
-	  } 
+	@Override
+	public Object getItem(int position) {
+		return mLocations.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return mLocations.get(position).mLocationId;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+
+		TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
+		textView.setText(mLocations.get(position).mCityName);
+		textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
+		textView.setBackground(mContext.getResources().getDrawable(R.drawable.laikatheme_textfield_default_holo_light));
+		return textView;
+
+	}
+
+	@Override
+	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+		if (convertView == null) {
+			LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = inflater.inflate(mIdLayout, null);
+		}
+
+		((TextView) convertView).setText(mLocations.get(position).mCityName);
+		return convertView;
+
+
+	}
 }

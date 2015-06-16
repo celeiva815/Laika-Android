@@ -22,17 +22,18 @@ public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelect
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 
-        String region = (String) parent.getItemAtPosition(position);
-
 		LocationsAdapter locationAdapter = new LocationsAdapter(view.getContext(),
-                R.layout.ai_simple_textview_for_adapter, Location.getLocation(region));
+				R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+				Location.getLocationsByRegions((int) id));
+
 		mCitySpinner.setAdapter(locationAdapter);
-		
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 
 	}
+
+
 	
 }

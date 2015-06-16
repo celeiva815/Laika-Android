@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.CreateStoryActivity;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
 
 /**

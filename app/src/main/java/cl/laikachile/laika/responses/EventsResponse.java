@@ -1,16 +1,12 @@
 package cl.laikachile.laika.responses;
 
-import android.view.View;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.EventsActivity;
-import cl.laikachile.laika.activities.LoginActivity;
 import cl.laikachile.laika.models.Event;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 13-04-15.

@@ -125,8 +125,8 @@ public class StoriesActivity extends ActionBarActivity {
 
         refreshLayout.setOnRefreshListener(listener);
         refreshLayout.setColorScheme(
-                R.color.light_laika_red, R.color.light_white_font,
-                R.color.dark_laika_red, R.color.light_white_font);
+                R.color.laika_light_red, R.color.light_white_font,
+                R.color.laika_dark_red, R.color.light_white_font);
         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
     }

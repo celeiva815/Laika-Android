@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.fragments.AlarmReminderMyDogFragment;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 07-05-15.

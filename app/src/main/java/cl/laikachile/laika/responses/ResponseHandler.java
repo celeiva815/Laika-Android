@@ -1,4 +1,4 @@
-package cl.laikachile.laika.network.utils;
+package cl.laikachile.laika.responses;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +18,6 @@ import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyErrorHelper;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.FirstInformationResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -72,8 +71,7 @@ public class ResponseHandler {
                         Tag.GENDER_MALE, email, "", 1); //FIXME solicitar los datos correctos
 
                 Owner.createOrUpdate(userOwner);
-                restartDataBase(context);
-                requestFirstInformation(context, activity);
+                refreshDataBase(context, activity);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -92,54 +90,31 @@ public class ResponseHandler {
         String token = PrefsManager.getUserToken(context);
         FirstInformationResponse response = new FirstInformationResponse(activity);
 
-        //FIXME cambiar el address o agregar más requests
-        Request firstRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_DOGS,
+        Request firstRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_SYNC,
                 response, response, token);
 
-        VolleyManager.getInstance(context)
-                .addToRequestQueue(firstRequest, TAG);
+        VolleyManager.getInstance(context).addToRequestQueue(firstRequest, TAG);
 
     }
 
-    public static void restartDataBase(Context context) {
+    public static void requestLocations(Context context, Activity activity) {
+
+        String token = PrefsManager.getUserToken(context);
+        FirstInformationResponse response = new FirstInformationResponse(activity);
+
+        Request locationsRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_LOCATIONS,
+                response, response, token);
+
+        VolleyManager.getInstance(context).addToRequestQueue(locationsRequest, TAG);
+
+    }
+
+    public static void refreshDataBase(Context context, Activity activity) {
 
         Size.setSizes(context);
         Personality.setPersonalities(context);
 
-        //FIXME hacer el metodo de la API
-        for (int i = Tag.SIZE_SMALLER, id = 0; i <= Tag.SIZE_BIGGER; i++) {
+        requestFirstInformation(context, activity);
 
-            String[] breedNames;
-
-            if (i == Tag.SIZE_SMALLER) {
-                breedNames = context.getResources().getStringArray(R.array.smaller_breed);
-
-            } else if (i == Tag.SIZE_SMALL) {
-                breedNames = context.getResources().getStringArray(R.array.small_breed);
-
-            } else if (i == Tag.SIZE_MIDDLE) {
-                breedNames = context.getResources().getStringArray(R.array.middle_breed);
-
-            } else if (i == Tag.SIZE_BIG) {
-                breedNames = context.getResources().getStringArray(R.array.big_breed);
-
-            } else {
-                breedNames = context.getResources().getStringArray(R.array.bigger_breed);
-
-            }
-
-            for (int j = 0; j < breedNames.length; j++, id++) {
-
-                int number = j;
-
-                if (breedNames[j].equals("Otro")) {
-                    number = -1;
-                }
-
-                Breed breed = new Breed(id, number, i, breedNames[j]);
-                breed.save();
-
-            }
-        }
     }
 }

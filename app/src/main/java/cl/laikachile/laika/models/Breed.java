@@ -3,7 +3,12 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -15,7 +20,7 @@ import cl.laikachile.laika.utils.DB;
 @Table(name = Breed.TABLE_BREED)
 public class Breed extends Model {
 
-    public final static String TABLE_BREED = "breed";
+    public final static String TABLE_BREED = "breeds";
 
     public final static String COLUMN_BREED_ID = "breed_id";
     public final static String COLUMN_BREED_NUMBER = "breed_number";
@@ -45,15 +50,75 @@ public class Breed extends Model {
 
     }
 
+    public Breed(JSONObject jsonObject) {
+
+        this.mBreedId = jsonObject.optInt(COLUMN_BREED_ID);
+        this.mBreedNumber = jsonObject.optInt(COLUMN_BREED_NUMBER);
+        this.mSizeId = jsonObject.optInt(COLUMN_SIZE_ID);
+        this.mName = jsonObject.optString(COLUMN_NAME);
+
+    }
+
     public String getSizeName() {
 
         Size size = Size.getSingleSize(mSizeId);
-
         return size.mName;
 
     }
 
-    //DataBase
+    private void update(Breed breed) {
+
+        this.mBreedId = breed.mBreedId;
+        this.mBreedNumber = breed.mBreedNumber;
+        this.mSizeId = breed.mSizeId;
+        this.mName = breed.mName;
+
+        this.save();
+    }
+
+    //DATABASE
+
+    public static void saveBreeds(JSONObject jsonObject) {
+
+        try {
+            JSONArray jsonBreeds = jsonObject.getJSONArray(TABLE_BREED);
+
+            for (int i = 0; i < jsonBreeds.length(); i++) {
+                saveBreed(jsonBreeds.getJSONObject(i));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static Breed saveBreed(JSONObject jsonObject) {
+
+        Breed breed = new Breed(jsonObject);
+        return createOrUpdate(breed);
+
+    }
+
+    public static Breed createOrUpdate(Breed breed) {
+
+        if (!isSaved(breed)) {
+            breed.save();
+            return breed;
+
+        } else {
+            Breed oldBreed = getSingleBreed(breed.mBreedId);
+            oldBreed.update(breed);
+            return oldBreed;
+        }
+    }
+
+    public static boolean isSaved(Breed breed) {
+
+        String condition = COLUMN_BREED_ID + DB.EQUALS + breed.mBreedId;
+        return new Select().from(Breed.class).where(condition).exists();
+
+    }
 
     public static Breed getSingleBreed(int breedId) {
 
@@ -73,6 +138,19 @@ public class Breed extends Model {
 
             return new Select().from(Breed.class).execute();
         }
+    }
+
+    public static void deleteAll() {
+
+        new Delete().from(Breed.class).execute();
+
+    }
+
+    public static void deleteBreed(Breed breed) {
+
+        String condition = COLUMN_BREED_ID + DB.EQUALS + breed.mBreedId;
+        new Delete().from(Breed.class).where(condition).execute();
+
     }
 
 }

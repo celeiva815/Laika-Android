@@ -16,16 +16,12 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.AlarmRemindersResponse;
 import cl.laikachile.laika.responses.CreateAlarmReminderResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -272,7 +268,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     }
 
     public int getLightRedColor() {
-        return getResources().getColor(R.color.light_laika_red);
+        return getResources().getColor(R.color.laika_light_red);
     }
 
     private String getTime(int hourOfDay, int minute) {

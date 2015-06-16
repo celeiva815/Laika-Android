@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import cl.laikachile.laika.activities.AdoptDogSuccessActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.UserAdoptDog;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 07-05-15.

@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import cl.laikachile.laika.activities.PublicationsActivity;
 import cl.laikachile.laika.models.Publication;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 
 /**
  * Created by Tito_Leiva on 13-04-15.

@@ -23,12 +23,12 @@ import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
 
-@Table(name = Dog.TABLE_NAME)
+@Table(name = Dog.TABLE_DOG)
 public class Dog extends Model {
 
     public static int ID = 1;
 
-    public final static String TABLE_NAME = "dogs";
+    public final static String TABLE_DOG = "dogs";
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_NAME = "name";
     public final static String COLUMN_BIRTHDATE = "birth";
@@ -44,7 +44,6 @@ public class Dog extends Model {
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_USER_ADOPT_DOG_ID = "user_adopt_dog_id";
 
-    public final static String API_DOGS = "dogs";
     public final static String IMAGE = "image";
 
     public final static int ID_NOT_SET = 0;
@@ -169,11 +168,13 @@ public class Dog extends Model {
         this.mIsSterilized = dog.mIsSterilized;
         this.mIsTrained = dog.mIsTrained;
         this.mChipCode = dog.mChipCode;
-        this.mStatus = dog.mStatus;
         this.mOwnerId = dog.mOwnerId;
 
-        this.save();
+        if (!(mStatus == Tag.DOG_OWNED && dog.mStatus == Tag.DOG_POSTULATED)) {
+            this.mStatus = dog.mStatus;
+        }
 
+        this.save();
     }
 
     public JSONObject getJsonObject() {
@@ -374,7 +375,7 @@ public class Dog extends Model {
     public static void saveDogs(JSONObject jsonObject, int status) {
 
         try {
-            JSONArray jsonDogs = jsonObject.getJSONArray(API_DOGS);
+            JSONArray jsonDogs = jsonObject.getJSONArray(TABLE_DOG);
 
             for (int i = 0; i < jsonDogs.length(); i++) {
                 saveDog(jsonDogs.getJSONObject(i), status);
@@ -424,6 +425,19 @@ public class Dog extends Model {
 
         String condition = COLUMN_STATUS + DB.EQUALS + process;
         return new Select().from(Dog.class).where(condition).execute();
+
+    }
+
+    public static List<Dog> getDogs(List<UserAdoptDog> userAdoptDogs) {
+
+        List<Dog> dogs = new ArrayList<>();
+
+        for (UserAdoptDog userAdoptDog : userAdoptDogs) {
+            dogs.add(Dog.getSingleDog(userAdoptDog.mDogId));
+
+        }
+
+        return dogs;
 
     }
 

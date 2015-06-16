@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import cl.laikachile.laika.activities.AdoptDogFormActivity;
 import cl.laikachile.laika.activities.AdoptDogsFragmentActivity;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.network.utils.ResponseHandler;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 

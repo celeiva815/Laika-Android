@@ -48,11 +48,13 @@ public class RequestManager {
     public static final String ADDRESS_CONFIRM_POSTULATION = "confirm_postulation/";
     public static final String ADDRESS_EVENTS = "events/";
     public static final String ADDRESS_GET_MATCHING_DOGS = "get_matching_dogs/";
+    public static final String ADDRESS_LOCATIONS = "locations/";
     public static final String ADDRESS_LOGIN = "log_in/";
     public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
     public static final String ADDRESS_PUBLICATIONS = "publications/";
     public static final String ADDRESS_REGISTER = "sign_up/";
     public static final String ADDRESS_STORIES = "stories/";
+    public static final String ADDRESS_SYNC = "sync/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";

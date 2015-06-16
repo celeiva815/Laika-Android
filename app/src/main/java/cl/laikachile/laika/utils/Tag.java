@@ -27,6 +27,7 @@ public class Tag {
     public static final int POSTULATION_ACCEPTED = 3;
     public static final int POSTULATION_REFUSED = 4;
     public static final int POSTULATION_REVOKED = 5;
+    public static final int POSTULATION_ADOPTED = 6;
 
 
     //Reminders

@@ -73,7 +73,7 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/happydog"
         android:padding="30dp"
-        android:background="@color/light_laika_red"
+        android:background="@color/laika_light_red"
         android:layout_below="@+id/linearLayout3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />

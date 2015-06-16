@@ -14,7 +14,7 @@ import cl.laikachile.laika.utils.Tag;
 /**
  * Created by Tito_Leiva on 28-05-15.
  */
-public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragment{
+public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragment {
 
     public UserAdoptDog mUserAdoptDog;
 
@@ -61,7 +61,12 @@ public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragmen
 
             case Tag.POSTULATION_ACCEPTED:
                 text = Do.getRString(context, R.string.accepted_postulated_status);
-                mStatusTextView.setTextColor(Do.getColor(context, R.color.laika_green));
+                mStatusTextView.setTextColor(Do.getColor(context, R.color.laika_dark_green));
+                break;
+
+            case Tag.POSTULATION_ADOPTED:
+                text = Do.getRString(context, R.string.adopted_postulated_status);
+                mStatusTextView.setTextColor(Do.getColor(context, R.color.laika_dark_green));
                 break;
 
             case Tag.POSTULATION_REFUSED:
