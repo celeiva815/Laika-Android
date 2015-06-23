@@ -115,6 +115,72 @@
             android:textSize="@dimen/laika_small_text" />
 
         <TextView
+            android:id="@+id/gender_question_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/gender_human_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="left" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/human_male_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:onClick="setGenderRadioButtonClicked"
+                android:text="@string/gender_human_male"
+                android:textColor="@color/light_black_font"
+                android:textSize="20sp"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/human_female_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:gravity="center"
+                android:onClick="setGenderRadioButtonClicked"
+                android:text="@string/gender_human_female"
+                android:textColor="@color/light_black_font"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/phone_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="center_horizontal|left" />
+
+        <EditText
+            android:id="@+id/phone_register_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/laikatheme_edit_text_holo_light"
+            android:hint="@string/phone_example"
+            android:inputType="textPassword"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text" />
+
+        <TextView
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

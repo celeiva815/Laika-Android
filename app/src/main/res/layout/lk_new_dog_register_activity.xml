@@ -259,13 +259,29 @@
                 android:textColor="@color/laika_red"
                 android:textSize="17sp" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/note32" />
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/picture_create_dog_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/note32" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/download_image_progressbar"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:focusableInTouchMode="false" />
+            </RelativeLayout>
 
         </LinearLayout>
 

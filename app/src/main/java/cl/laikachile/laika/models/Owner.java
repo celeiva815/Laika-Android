@@ -26,16 +26,17 @@ public class Owner extends Model {
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_FIRST_NAME = "first_name";
-    public final static String COLUMN_SECOND_NAME = "second_name";
-    public final static String COLUMN_FIRST_SURNAME = "first_surname";
-    public final static String COLUMN_SECOND_SURNAME = "second_surname";
-    public final static String COLUMN_BIRTHDATE = "birth_date";
+    public final static String COLUMN_LAST_NAME = "last_name";
+    public final static String COLUMN_SECOND_LAST_NAME = "second_last_name";
+    public final static String COLUMN_RUT = "rut";
+    public final static String COLUMN_BIRTH_DATE = "birth_date";
     public final static String COLUMN_GENDER = "gender";
-    public final static String COLUMN_EMAIL = "email";
     public final static String COLUMN_PHONE = "phone";
+    public final static String COLUMN_EMAIL = "email";
     public final static String COLUMN_LOCATION_ID = "location_id";
 
     public final static String API_OWNERS = "owners";
+    public final static String API_ID = "id";
     public final static String API_USER_ID = "user_id";
     public final static String API_LAST_NAME = "last_name";
 
@@ -48,16 +49,16 @@ public class Owner extends Model {
     @Column(name = COLUMN_FIRST_NAME)
     public String mFirstName;
 
-    @Column(name = COLUMN_SECOND_NAME)
-    public String mSecondName;
+    @Column(name = COLUMN_LAST_NAME)
+    public String mLastName;
 
-    @Column(name = COLUMN_FIRST_SURNAME)
-    public String mFirstSurname;
+    @Column(name = COLUMN_SECOND_LAST_NAME)
+    public String mSecondLastName;
 
-    @Column(name = COLUMN_SECOND_SURNAME)
-    public String mSecondSurname;
+    @Column(name = COLUMN_RUT)
+    public String mRut;
 
-    @Column(name = COLUMN_BIRTHDATE)
+    @Column(name = COLUMN_BIRTH_DATE)
     public String mBirthDate;
 
     @Column(name = COLUMN_GENDER)
@@ -79,16 +80,16 @@ public class Owner extends Model {
     public Owner() {
     }
 
-    public Owner(int mOwnerId, String mOwnerName, String mFirstName, String mSecondName,
-                 String mFirstSurname, String mSecondSurname, String mBirthDate, int mGender,
-                 String mEmail, String mPhone, int mLocationId) {
+    public Owner(int mOwnerId, String mOwnerName, String mFirstName, String mLastName,
+                 String mSecondLastName, String mRut, String mBirthDate, int mGender, String mEmail,
+                 String mPhone, int mLocationId) {
 
         this.mOwnerId = mOwnerId;
         this.mOwnerName = mOwnerName;
         this.mFirstName = mFirstName;
-        this.mSecondName = mSecondName;
-        this.mFirstSurname = mFirstSurname;
-        this.mSecondSurname = mSecondSurname;
+        this.mLastName = mLastName;
+        this.mSecondLastName = mSecondLastName;
+        this.mRut = mRut;
         this.mBirthDate = mBirthDate;
         this.mGender = mGender;
         this.mEmail = mEmail;
@@ -98,58 +99,22 @@ public class Owner extends Model {
 
     public Owner(JSONObject jsonObject) {
 
-
-        try {
-            this.mOwnerId = jsonObject.getInt(API_USER_ID);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.mFirstName = jsonObject.getString(COLUMN_FIRST_NAME);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.mSecondName = ""; //FIXME jsonObject.getString();
-        try {
-            this.mFirstSurname = jsonObject.getString(API_LAST_NAME);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.mSecondSurname = ""; //FIXME jsonObject.getString();
-        this.mOwnerName = mFirstName + " " + mFirstSurname;
-        try {
-            this.mBirthDate = jsonObject.getString(COLUMN_BIRTHDATE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.mGender = jsonObject.getInt(COLUMN_GENDER);
-        } catch (JSONException e) {
-            this.mGender = Tag.GENDER_MALE;
-            e.printStackTrace();
-        }
-        try {
-            this.mEmail = jsonObject.getString(COLUMN_EMAIL);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.mPhone = jsonObject.getString(COLUMN_PHONE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.mLocationId = jsonObject.getInt(COLUMN_LOCATION_ID);
-        } catch (JSONException e) {
-            this.mLocationId = 0;
-            e.printStackTrace();
-        }
+        this.mOwnerId = jsonObject.optInt(API_ID);
+        this.mFirstName = jsonObject.optString(COLUMN_FIRST_NAME, "");
+        this.mLastName = jsonObject.optString(COLUMN_LAST_NAME, "");
+        this.mSecondLastName = jsonObject.optString(COLUMN_SECOND_LAST_NAME, "");
+        this.mRut = jsonObject.optString(COLUMN_RUT);
+        this.mBirthDate = jsonObject.optString(COLUMN_BIRTH_DATE);
+        this.mGender = jsonObject.optInt(COLUMN_GENDER);
+        this.mEmail = jsonObject.optString(COLUMN_EMAIL);
+        this.mPhone = jsonObject.optString(COLUMN_PHONE);
+        this.mLocationId = jsonObject.optInt(COLUMN_LOCATION_ID);
 
     }
 
     public String getFullName() {
 
-        return mFirstName + " " + mFirstSurname + " " + mSecondSurname;
+        return mFirstName + " " + mLastName + " " + mSecondLastName;
     }
 
     public void addDog(Dog dog, int role) {
@@ -178,9 +143,9 @@ public class Owner extends Model {
         this.mOwnerId = owner.mOwnerId;
         this.mOwnerName = owner.mOwnerName;
         this.mFirstName = owner.mFirstName;
-        this.mSecondName = owner.mSecondName;
-        this.mFirstSurname = owner.mFirstSurname;
-        this.mSecondSurname = owner.mSecondSurname;
+        this.mLastName = owner.mLastName;
+        this.mSecondLastName = owner.mSecondLastName;
+        this.mRut = owner.mRut;
         this.mBirthDate = owner.mBirthDate;
         this.mGender = owner.mGender;
         this.mEmail = owner.mEmail;
@@ -189,6 +154,26 @@ public class Owner extends Model {
 
         this.save();
 
+    }
+
+    public JSONObject getJsonObject() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put(COLUMN_FIRST_NAME, mFirstName);
+            jsonObject.put(COLUMN_LAST_NAME, mLastName);
+            jsonObject.put(COLUMN_SECOND_LAST_NAME, mSecondLastName);
+            jsonObject.put(COLUMN_BIRTH_DATE, mBirthDate);
+            jsonObject.put(COLUMN_GENDER, mGender);
+            jsonObject.put(COLUMN_PHONE,mPhone);
+            jsonObject.put(COLUMN_LOCATION_ID, mLocationId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
     //Data Base

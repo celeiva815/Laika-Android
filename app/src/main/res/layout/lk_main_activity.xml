@@ -31,7 +31,7 @@
                 <ImageView
                     android:id="@+id/gender_new_dog_register_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_weight="1"
                     android:src="@drawable/adopt_white"
                     android:adjustViewBounds="true" />
@@ -40,7 +40,6 @@
                     android:id="@+id/name_my_dog_profile_activity_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-20dp"
                     android:layout_weight="1"
                     android:text="@string/adopt_me_main"
                     android:textColor="#fff" />
@@ -57,16 +56,15 @@
                 <ImageView
                     android:id="@+id/my_dog_main_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_weight="1"
-                    android:src="@drawable/lk_my_dog_logo"
+                    android:src="@drawable/laika_mydog_white"
                     android:adjustViewBounds="false" />
 
                 <TextView
                     android:id="@+id/size_adopt_dog_screen_slide_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-15dp"
                     android:layout_weight="1"
                     android:text="@string/my_dog_me_main"
                     android:textColor="#fff" />
@@ -95,9 +93,10 @@
                 <ImageView
                     android:id="@+id/news_main_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:scrollbarAlwaysDrawVerticalTrack="false"
-                    android:src="@drawable/news_white" />
+                    android:src="@drawable/news_white"
+                    android:adjustViewBounds="false" />
 
                 <TextView
                     android:id="@+id/breed_my_dog_profile_textview"
@@ -119,14 +118,14 @@
                 <ImageView
                     android:id="@+id/tips_main_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lk_tips_logo" />
+                    android:layout_height="60dp"
+                    android:src="@drawable/laika_tips_white"
+                    android:adjustViewBounds="false" />
 
                 <TextView
                     android:id="@+id/owners_my_dog_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
                     android:text="@string/tips_main"
                     android:textColor="#fff" />
 
@@ -142,14 +141,13 @@
                 <ImageView
                     android:id="@+id/events_main_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lk_events_logo" />
+                    android:layout_height="60dp"
+                    android:src="@drawable/laika_events_white" />
 
                 <TextView
                     android:id="@+id/TextView02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:text="@string/events_main"
                     android:textColor="#fff" />
 
@@ -165,8 +163,8 @@
                 <ImageView
                     android:id="@+id/stories_main_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lk_stories_logo" />
+                    android:layout_height="60dp"
+                    android:src="@drawable/laika_history_white" />
 
                 <TextView
                     android:id="@+id/TextView03"

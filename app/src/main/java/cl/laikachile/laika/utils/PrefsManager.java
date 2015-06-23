@@ -87,13 +87,12 @@ public class PrefsManager {
         return !TextUtils.isEmpty(email);
     }
 
-    public static void saveUser(Context context, String fullName, String email, String token,
-                                int id) {
+    public static void saveUser(Context context, String token, Owner owner) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
 
-        editor.putInt(PREF_USER_ID, id);
-        editor.putString(PREF_USER_NAME, fullName);
-        editor.putString(PREF_USER_EMAIL, email);
+        editor.putInt(PREF_USER_ID, owner.mOwnerId);
+        editor.putString(PREF_USER_NAME, owner.getFullName());
+        editor.putString(PREF_USER_EMAIL, owner.mEmail);
         editor.putString(PREF_USER_ACCESS_TOKEN, token);
 
         editor.apply();

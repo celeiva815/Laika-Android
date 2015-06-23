@@ -164,11 +164,7 @@ public class MyDogsActivity extends ActionBarActivity {
                 //FIXME agregar el nombre correcto del usuario
                 String ownerName = PrefsManager.getUserName(getApplicationContext());
                 int ownerId = PrefsManager.getUserId(getApplicationContext());
-                Photo photo = new Photo(Photo.ID++, ownerId, ownerName,
-                        mDog.mDogId, mCurrentPhotoPath, Do.now(), "foto de prueba",
-                        R.drawable.filipo1);
 
-                photo.save();
 
                 mPagerAdapter.notifyDataSetChanged();
 
@@ -263,6 +259,31 @@ public class MyDogsActivity extends ActionBarActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
         return bitmap;
+    }
+
+    public void takePicture() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the mPhoto should go
+            File photoFile = null;
+            try {
+
+                photoFile = createImageFile();
+
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Do.showShortToast("Problem creating the picture", getApplicationContext());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
+        }
+
     }
 
     public String getImageName(int dogId) {

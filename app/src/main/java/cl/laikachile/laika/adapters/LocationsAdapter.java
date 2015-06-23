@@ -12,6 +12,7 @@ import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.Region;
 
 public class LocationsAdapter extends BaseAdapter {
 
@@ -27,6 +28,11 @@ public class LocationsAdapter extends BaseAdapter {
 		mIdTextview = textViewResourceId;
 		mLocations = objects;
 
+	}
+
+	public int getPosition(Location location) {
+
+		return mLocations.indexOf(location);
 	}
 
 	@Override

@@ -32,6 +32,11 @@ public class ImageResponse implements Response.ErrorListener,
         this.mProgressBar = mProgressBar;
     }
 
+    public ImageResponse(ImageView mImageView, ProgressBar mProgressBar) {
+        this.mImageView = mImageView;
+        this.mProgressBar = mProgressBar;
+    }
+
     @Override
     public void onResponse(Bitmap response) {
 

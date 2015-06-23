@@ -106,7 +106,8 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 3: // Mi perfil
-                Do.showShortToast("Por implementar", this.getApplicationContext());
+                Do.changeActivity(this.getApplicationContext(), EditUserActivity.class,
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 
             case 4: // Cerrar Sesión

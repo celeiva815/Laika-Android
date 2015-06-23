@@ -1,5 +1,6 @@
 package cl.laikachile.laika.activities;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,32 +17,22 @@ public class MainActivity extends BaseActivity {
     private int mIdLayout = R.layout.lk_main_activity;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Do.showLongToast("Bienvenido " + PrefsManager.getUserName(this.getApplicationContext()) +
+                ", ¿Cómo están tus perritos?", this.getApplicationContext());
+    }
+
+    @Override
     public void onStart() {
-		/* FIXME
-		SessionManager session = new SessionManager(getApplicationContext());
-		if (session.isLoggedIn()) {
 
-			Intent i = new Intent(this, TeacherMainActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(i);
-			finish();
-
-		} else {
-
-			createFragmentView(mIdLayout);
-		}
-		*/
         setTitle(mTitle);
         createFragmentView(mIdLayout);
 
         boolean firstboot = PrefsManager.isFirstBoot(getApplicationContext());
 
         if (firstboot) {
-            // 1) Launch the authentication activity
-            Do.showLongToast("Bienvenido " + PrefsManager.getUserName(this.getApplicationContext()) +
-                    ", ¿Cómo están tus perritos?", this.getApplicationContext());
-
-            // 2) Then save the state
             PrefsManager.finishFirstBoot(getApplicationContext());
         }
 

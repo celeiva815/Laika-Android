@@ -59,6 +59,7 @@ public class AlarmReminder extends Model {
 
     public static int ID = 1;
     public final static String API_ALERT_REMINDERS = "alert_reminders";
+    public final static String API_ALERT_REMINDER = "alert_reminder";
     public final static String API_USER_ID = "user_id";
 
     @Column(name = COLUMN_ALARM_REMINDER_ID)
@@ -163,7 +164,7 @@ public class AlarmReminder extends Model {
         try {
 
             jsonObject.put(COLUMN_DOG_ID, this.mDogId);
-            jsonObject.put(TABLE_NAME, getAlarmJsonObject());
+            jsonObject.put(API_ALERT_REMINDER, getAlarmJsonObject());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -183,7 +184,6 @@ public class AlarmReminder extends Model {
                 jsonObject.put(COLUMN_ALARM_REMINDER_ID, this.mAlarmReminderId);
             }
 
-            jsonObject.put(COLUMN_TYPE, mType);
             jsonObject.put(COLUMN_CATEGORY, mCategory);
             jsonObject.put(COLUMN_TITLE, mTitle);
             jsonObject.put(COLUMN_DETAIL, mDetail);

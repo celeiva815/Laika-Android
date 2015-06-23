@@ -69,7 +69,7 @@ public class AlbumAdapter extends BaseAdapter {
             imageView.setImageBitmap(photo.getPicture(200));
 
         } else {
-            imageView.setImageResource(photo.mResource);
+            //imageView.setImageResource(photo.mResource);
         }
 
         return imageView;

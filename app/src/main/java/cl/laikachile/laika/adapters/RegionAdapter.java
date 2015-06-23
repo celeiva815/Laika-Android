@@ -31,6 +31,11 @@ public class RegionAdapter extends BaseAdapter {
 
     }
 
+    public int getPosition(Region region) {
+
+        return mRegions.indexOf(region);
+    }
+
     @Override
     public int getCount() {
         return mRegions.size();

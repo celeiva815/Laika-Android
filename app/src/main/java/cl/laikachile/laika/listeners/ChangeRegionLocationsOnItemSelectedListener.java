@@ -11,7 +11,14 @@ import cl.laikachile.laika.models.Location;
 
 public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelectedListener{
 
+	Location mLocation;
 	Spinner mCitySpinner;
+
+	public ChangeRegionLocationsOnItemSelectedListener(Spinner citySpinner, Location location) {
+
+		this.mCitySpinner = citySpinner;
+		this.mLocation = location;
+	}
 
 	public ChangeRegionLocationsOnItemSelectedListener(Spinner mCitySpinner) {
 	
@@ -27,6 +34,13 @@ public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelect
 				Location.getLocationsByRegions((int) id));
 
 		mCitySpinner.setAdapter(locationAdapter);
+
+		if (mLocation != null) {
+
+			int locationPosition = locationAdapter.getPosition(mLocation);
+			mCitySpinner.setSelection(locationPosition);
+
+		}
 	}
 
 	@Override

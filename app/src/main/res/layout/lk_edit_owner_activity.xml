@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_marginBottom="5dp"
+            android:text="@string/name_surname_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text" />
+
+        <EditText
+            android:id="@+id/name_edit_user_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/laikatheme_edit_text_holo_light"
+            android:hint="@string/name_and_surname"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/gender_human_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="left" />
+
+        <RadioGroup
+            android:id="@+id/gender_edit_user_radiogroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/human_male_edit_user_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:onClick="setHumanGenderRadioButtonClicked"
+                android:text="@string/gender_human_male"
+                android:textColor="@color/light_black_font"
+                android:textSize="20sp"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/human_female_edit_user_radiobutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:gravity="center"
+                android:onClick="setHumanGenderRadioButtonClicked"
+                android:text="@string/gender_human_female"
+                android:textColor="@color/light_black_font"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/phone_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="center_horizontal|left" />
+
+        <EditText
+            android:id="@+id/phone_edit_user_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/laikatheme_edit_text_holo_light"
+            android:hint="@string/phone_example"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text"
+            android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_marginBottom="5dp"
+            android:text="@string/birthdate_question"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text" />
+
+        <Button
+            android:id="@+id/birthdate_edit_user_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            android:padding="15dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/example_date_reminder"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_biggest_text" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/region_adopt_dog_form"
+            android:textColor="@color/laika_red" />
+
+        <Spinner
+            android:id="@+id/region_edit_user_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/city_adopt_dog_form"
+            android:textColor="@color/laika_red" />
+
+        <Spinner
+            android:id="@+id/location_edit_user_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/update_edit_user_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/laika_button"
+                android:onClick="register"
+                android:text="@string/update_user"
+                android:textColor="@color/dark_white_font"
+                android:textSize="@dimen/laika_big_text" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

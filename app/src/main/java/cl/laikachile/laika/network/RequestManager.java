@@ -10,7 +10,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
@@ -34,9 +33,7 @@ public class RequestManager {
     public static final String TAG = RequestManager.class.getSimpleName();
 
     public static final String BASE_URL = "http://laika-test.herokuapp.com/";
-    public static final String PROFILE_IMAGE_URL = ""; //TODO add the url for the images if exists
     public static final String TEST_BASE_URL = "api/";
-    public static final String ADDRESS_UPLOADED_IMAGES = "/"; //TODO add the url for the images if exists
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
     //API Address
@@ -57,6 +54,8 @@ public class RequestManager {
     public static final String ADDRESS_SYNC = "sync/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
+    public static final String ADDRESS_USER = "user/";
+    public static final String ADDRESS_USER_DOG_PHOTOS = "user_dog_photos/";
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
 
     //Request Methods
@@ -64,12 +63,12 @@ public class RequestManager {
     public static final int METHOD_GET = Request.Method.GET;
     public static final int METHOD_PATCH = Request.Method.PATCH;
     public static final int METHOD_POST = Request.Method.POST;
-    public static final int METHOD_PUT = Request.Method.PUT;
 
+    public static final int METHOD_PUT = Request.Method.PUT;
     public static final String URL_SPACE = "%20";
     public static final String NORMAL_SPACE = " ";
-    public static final String ID = "id";
 
+    public static final String ID = "id";
     public static final String USER_ID = "user_id";
     public static final String FULL_NAME = "full_name";
     public static final String ACCESS_TOKEN = "access_token";
@@ -177,7 +176,7 @@ public class RequestManager {
 
     public static String buildImageUrl(String relativeUrl) {
 
-        String url = BASE_URL + ADDRESS_UPLOADED_IMAGES + relativeUrl;
+        String url = BASE_URL + ADDRESS_USER_DOG_PHOTOS + relativeUrl;
         Log.d(TAG, url);
         return url;
     }

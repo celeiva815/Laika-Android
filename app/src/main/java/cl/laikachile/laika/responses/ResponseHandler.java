@@ -56,21 +56,16 @@ public class ResponseHandler {
 
         if (!PrefsManager.isUserLoggedIn(context)) {
 
-            String fullName, email, token;
-            int userId;
+            String token;
 
             try {
 
-                fullName = response.getString(RequestManager.FULL_NAME);
-                email = response.getString(RequestManager.EMAIL);
+                Owner owner = new Owner(response);
+                Owner.createOrUpdate(owner);
+
                 token = response.getString(RequestManager.ACCESS_TOKEN);
-                userId = response.getInt(RequestManager.ID);
+                PrefsManager.saveUser(context, token, owner);
 
-                PrefsManager.saveUser(context, fullName, email, token, userId);
-                Owner userOwner = new Owner(userId, fullName, fullName, "", fullName, "", "",
-                        Tag.GENDER_MALE, email, "", 1); //FIXME solicitar los datos correctos
-
-                Owner.createOrUpdate(userOwner);
                 refreshDataBase(context, activity);
 
             } catch (JSONException e) {

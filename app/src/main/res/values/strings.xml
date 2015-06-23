@@ -66,14 +66,21 @@
     <!-- Laika -->
 
     <!-- RegisterActivity -->
-    <string name="name_surname_question">¿Cuál es tu nombre y tu apellido?</string>
+    <string name="name_surname_question">¿Cuál es tu nombre completo?</string>
     <string name="name_and_surname">Nombre y Apellido</string>
     <string name="email_question">¿Cuál es tu correo electrónico?</string>
+    <string name="gender_human_question">¿Cuál es tu género?</string>
+    <string name="gender_human_male">Masculino</string>
+    <string name="gender_human_female">Femenino</string>
+    <string name="phone_question">¿Cuál es tu número de teléfono móvil?</string>
+    <string name="phone_example">Ejemplo: +56912345678</string>
     <string name="add_a_password_question">Agrega una contraseña</string>
     <string name="repeat_password_question">Repite tu contraseña</string>
     <string name="birthdate_question">¿Cuando estás de cumpleaños?</string>
     <string name="sign_up_with_social_networks">o ingresa con tus redes sociales</string>
     <string name="register_user">Registrarse</string>
+    <string name="update_user">Actualizar</string>
+    <string name="edit_user_activity_name">Edita tu Perfil</string>
 
     <!-- Main -->
     <string name="main_activity_name">Laika</string>
