@@ -15,7 +15,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cl.laikachile.laika.R;
 import cl.laikachile.laika.utils.DB;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -241,5 +243,19 @@ public class Owner extends Model {
     public static void deleteAll() {
 
         new Delete().from(Owner.class).execute();
+    }
+
+    public String getGender(Context context) {
+
+        switch (mGender) {
+
+            case Tag.GENDER_MALE:
+                return Do.getRString(context, R.string.gender_male);
+
+            case Tag.GENDER_FEMALE:
+                return Do.getRString(context, R.string.gender_female);
+        }
+
+        return "";
     }
 }

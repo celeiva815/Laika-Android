@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/dog_user_profile_imageview"
+            android:adjustViewBounds="false"
+            android:src="@drawable/laika_dog_thumb"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_dog_my_dog_textview"
+            android:textColor="@color/light_black_font"
+            android:text="Tony"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:textSize="@dimen/laika_medium_text" />
+
+    </LinearLayout>
+
+</LinearLayout>

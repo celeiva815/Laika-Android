@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -80,6 +81,13 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     public void setActivityView() {

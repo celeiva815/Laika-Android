@@ -98,6 +98,16 @@ public class PrefsManager {
         editor.apply();
     }
 
+    public static void editUser(Context context, Owner owner) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+
+        if (owner.mOwnerId == getUserId(context)) {
+            editor.putString(PREF_USER_NAME, owner.getFullName());
+        }
+
+        editor.apply();
+    }
+
     // ########################################
     // #########################################
 

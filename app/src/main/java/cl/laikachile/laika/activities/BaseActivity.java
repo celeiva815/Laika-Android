@@ -106,7 +106,7 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 3: // Mi perfil
-                Do.changeActivity(this.getApplicationContext(), EditUserActivity.class,
+                Do.changeActivity(this.getApplicationContext(), UserProfileActivity.class,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 

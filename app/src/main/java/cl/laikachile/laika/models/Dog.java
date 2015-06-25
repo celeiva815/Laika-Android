@@ -453,6 +453,4 @@ public class Dog extends Model {
         new Delete().from(Dog.class).where(condition).execute();
 
     }
-
-
 }

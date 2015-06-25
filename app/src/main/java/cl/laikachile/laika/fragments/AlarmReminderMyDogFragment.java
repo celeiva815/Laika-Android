@@ -51,7 +51,6 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public Button mThursdayButton;
     public Button mFridayButton;
     public Button mSaturdayButton;
-
     public Button mSundayButton;
     public boolean mMonday = false;
     public boolean mTuesday = false;
@@ -250,8 +249,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                 RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
                 PrefsManager.getUserToken(context));
 
-        VolleyManager.getInstance(context)
-                .addToRequestQueue(createRequest, TAG);
+        VolleyManager.getInstance(context).addToRequestQueue(createRequest, TAG);
 
     }
 
