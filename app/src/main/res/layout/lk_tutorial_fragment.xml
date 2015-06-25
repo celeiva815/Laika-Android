@@ -42,4 +42,15 @@
         android:layout_above="@+id/detail_tutorial_textview"
         android:layout_centerHorizontal="true"
         android:textStyle="bold" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saltar"
+        android:id="@+id/skip_tutorial_button"
+        android:background="@android:color/transparent"
+        android:textColor="@color/dark_white_font"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

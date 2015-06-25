@@ -22,6 +22,7 @@ import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.RegisterActivity;
+import cl.laikachile.laika.activities.TutorialActivity;
 import cl.laikachile.laika.listeners.ToActivityOnCLickListener;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
@@ -90,7 +91,7 @@ public class TutorialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment. The layout depends on the corresponding number
         // of the tutorial page
-        int layoutId = R.layout.fragment_tutorial;
+        int layoutId = R.layout.lk_tutorial_fragment;
         View view = inflater.inflate(layoutId, container, false);
         Context context = view.getContext();
         String title = "";
@@ -135,13 +136,24 @@ public class TutorialFragment extends Fragment {
 
     public View setTutorialLayout(View view, String title, String detail, int backgroundId) {
 
+        final TutorialActivity activity = (TutorialActivity) getActivity();
         TextView titleTextView = (TextView) view.findViewById(R.id.title_tutorial_textview);
         TextView detailTextView = (TextView) view.findViewById(R.id.detail_tutorial_textview);
         RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.tutorial_layout);
+        Button skipButton = (Button) view.findViewById(R.id.skip_tutorial_button);
 
         titleTextView.setText(title);
         detailTextView.setText(detail);
         relativeLayout.setBackgroundResource(backgroundId);
+
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                activity.mPager.setCurrentItem(TutorialActivity.NUM_PAGES - 1);
+
+            }
+        });
 
         return view;
     }

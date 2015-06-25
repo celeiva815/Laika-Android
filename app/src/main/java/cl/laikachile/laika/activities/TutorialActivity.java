@@ -23,11 +23,11 @@ import com.viewpagerindicator.CirclePageIndicator;
 public class TutorialActivity extends ActionBarActivity {
 
     // the number of pages of tutorial to be shown
-    private static final int NUM_PAGES = 5;
+    public static final int NUM_PAGES = 5;
 
     // The pager widget, which handles animation and allows swiping horizontally to access
     // previous and next pages
-    private ViewPager mPager;
+    public ViewPager mPager;
 
     // The pager adapter, which provides the pages to the view pager widget
     private PagerAdapter mPagerAdapter;
@@ -47,7 +47,7 @@ public class TutorialActivity extends ActionBarActivity {
 
 
         getSupportActionBar().hide(); // hide the actionbar
-        setContentView(R.layout.activity_tutorial);
+        setContentView(R.layout.lk_tutorial_activity);
 
         // Instantiate a ViewPager and a PagerAdapter
         mPager = (ViewPager) findViewById(R.id.tutorial_pager);
@@ -102,6 +102,7 @@ public class TutorialActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
+
             return TutorialFragment.newInstance(position);
         }
 
