@@ -123,7 +123,6 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
         mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
         mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
-        mPartnersEditText = (EditText) findViewById(R.id.partners_dog_form_edittext);
         mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
         mKidsRadioGroup = (RadioGroup) findViewById(R.id.kids_dog_form_radiogroup);
         mElderlyRadioGroup = (RadioGroup) findViewById(R.id.elderly_dog_form_radiogroup);

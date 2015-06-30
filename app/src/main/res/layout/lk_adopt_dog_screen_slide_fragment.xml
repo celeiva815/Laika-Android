@@ -329,7 +329,7 @@
                     android:layout_below="@+id/textView30"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="@string/view_more_story_adopt_dog"
+                    android:text=""
                     android:textColor="@color/light_black_font" />
 
             </LinearLayout>

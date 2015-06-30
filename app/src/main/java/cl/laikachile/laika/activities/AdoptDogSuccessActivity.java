@@ -76,7 +76,7 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
         congratsTextView.setText(getCongratsMessage());
         happyTextView.setText(getHappyNewsMessage());
         contactTextView.setText(getContactMessage());
-        matchTextView.setText(Integer.toString(Do.randomInteger(50, 100)) + "%"); //FIXME que sea el que viene desde el servidor.
+        matchTextView.setText(mDog.mCompatibility + "%");
 
     }
 
@@ -115,7 +115,7 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
     private String getContactMessage() {
 
         String first = Do.getRString(getApplicationContext(), R.string.contact_news_adopt_dog_success_first);
-        String foundation = "Fundación Stuka"; //FIXME agregar la fundación
+        String foundation = mDog.mFoundationName;
         String second = Do.getRString(getApplicationContext(), R.string.contact_news_adopt_dog_success_second);
 
         return first + " " + foundation + " " + second;

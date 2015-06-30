@@ -18,8 +18,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:id="@+id/imageView2"
-                android:src="@drawable/lk_news_picture_three"
+                android:id="@+id/user_profile_imageview"
                 android:adjustViewBounds="false"
                 android:scaleType="centerCrop" />
 

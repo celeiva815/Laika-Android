@@ -1,24 +1,24 @@
 package cl.laikachile.laika.fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.MyDogsActivity;
@@ -29,9 +29,8 @@ import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.History;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.AlarmRemindersResponse;
-import cl.laikachile.laika.responses.CalendarRemindersResponse;
-import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.responses.ImageResponse;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.Tag;
 
 /**
@@ -45,6 +44,10 @@ public class HistoryMyDogFragment extends Fragment {
     public String mTag;
     private int mIdLayout = R.layout.lk_history_my_dog_fragment;
     public Dog mDog;
+    public ImageView mDogImageView;
+    public TextView mNameTextView;
+    public ProgressBar mProgressBar;
+    public ListView mHistoryListView;
     public List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
     public Dialog mDialog;
@@ -84,22 +87,38 @@ public class HistoryMyDogFragment extends Fragment {
 
         View view = inflater.inflate(mIdLayout, container, false);
 
-        ListView historyListView = (ListView) view.findViewById(R.id.history_my_dog_listview);
+        mDogImageView = (ImageView) view.findViewById(R.id.dog_history_imageview);
+        mNameTextView = (TextView) view.findViewById(R.id.dog_name_history_textview);
+        mHistoryListView = (ListView) view.findViewById(R.id.history_my_dog_listview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mHistoryAdapter = new HistoryMyDogAdapter(view.getContext(), R.layout.lk_history_my_dog_row,
                 getHistories(view.getContext()));
 
-        historyListView.setAdapter(mHistoryAdapter);
+        mHistoryListView.setAdapter(mHistoryAdapter);
+        Do.setListViewHeightBasedOnChildren(mHistoryListView);
 
-        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mHistoryListView.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        mHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //FIXME solo para editar el recordatorio
+                //FIXME solo para editar el recordatorio, falta eliminarlo
                 editReminder(mHistories.get(position));
 
             }
         });
+
+        mNameTextView.setText(mDog.mName);
 
         return view;
     }
@@ -108,6 +127,7 @@ public class HistoryMyDogFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        requestDogImage();
 
     }
 
@@ -176,6 +196,18 @@ public class HistoryMyDogFragment extends Fragment {
 
         mHistories.addAll(getHistories(getActivity().getApplicationContext()));
         mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    public void requestDogImage() {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+        ImageResponse response = new ImageResponse(mDogImageView, mProgressBar);
+        Request request = RequestManager.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM_S),
+                mDogImageView, response, response);
+
+        VolleyManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);
+
+
     }
 
 }

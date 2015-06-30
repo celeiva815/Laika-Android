@@ -101,7 +101,13 @@ public class Owner extends Model {
 
     public Owner(JSONObject jsonObject) {
 
-        this.mOwnerId = jsonObject.optInt(API_ID);
+        if (jsonObject.has(API_ID)) {
+            this.mOwnerId = jsonObject.optInt(API_ID);
+
+        } else {
+            this.mOwnerId = jsonObject.optInt(API_USER_ID);
+        }
+
         this.mFirstName = jsonObject.optString(COLUMN_FIRST_NAME, "");
         this.mLastName = jsonObject.optString(COLUMN_LAST_NAME, "");
         this.mSecondLastName = jsonObject.optString(COLUMN_SECOND_LAST_NAME, "");

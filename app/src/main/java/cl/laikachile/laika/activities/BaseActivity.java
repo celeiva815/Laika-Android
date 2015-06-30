@@ -85,10 +85,11 @@ public class BaseActivity extends ActionBarActivity
         // update the main content by replacing fragments
 
         Intent intent;
+        Context context = getApplicationContext();
 
         switch (position) {
             case 0: // Añadir nueva mascota
-                Do.changeActivity(this.getApplicationContext(), CreateDogActivity.class,
+                Do.changeActivity(context, CreateDogActivity.class,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 
@@ -99,26 +100,31 @@ public class BaseActivity extends ActionBarActivity
 
             case 2: // Favoritos
 
-                intent = new Intent(this.getApplicationContext(), PublicationsActivity.class);
+                intent = new Intent(context, PublicationsActivity.class);
                 intent.putExtra(PublicationsActivity.KEY_FAVORITE, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
 
             case 3: // Mi perfil
-                Do.changeActivity(this.getApplicationContext(), UserProfileActivity.class,
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra(UserProfileActivity.KEY_OWNER_ID, PrefsManager.getUserId(context));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
                 break;
 
             case 4: // Cerrar Sesión
 
                 clearDataBase();
-                Do.changeActivity(this.getApplicationContext(), TutorialActivity.class, this,
+                Do.changeActivity(context, TutorialActivity.class, this,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
 
             default:
-                intent = new Intent(this.getApplicationContext(), MainActivity.class);
+                intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
 
                 break;

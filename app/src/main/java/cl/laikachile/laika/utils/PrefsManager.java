@@ -81,6 +81,11 @@ public class PrefsManager {
         return Owner.getSingleOwner(prefs.getInt(PREF_USER_ID, 0));
     }
 
+    public static boolean isLoggedOwner(Context context, Owner owner) {
+
+        return getLoggedOwner(context).mOwnerId == owner.mOwnerId;
+    }
+
     public static boolean isUserLoggedIn(Context context) {
         String email = getPrefs(context).getString(PREF_USER_EMAIL, "");
 

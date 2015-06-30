@@ -30,10 +30,10 @@ public class DogForAdoptionResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onResponse(JSONObject response) {
 
+        Dog.deleteDogs(Tag.DOG_FOUNDATION);
         Dog.saveDogs(response, Tag.DOG_FOUNDATION);
         mActivity.mProgressDialog.dismiss();
         Do.changeActivity(mContext, AdoptDogsFragmentActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
-
 
     }
 

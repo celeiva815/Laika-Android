@@ -38,6 +38,7 @@ public class LoginResponse implements Response.ErrorListener,
 
         mLoginProgressBar.setVisibility(View.GONE);
         ResponseHandler.successLogin(mActivity, response);
+        enableViews();
     }
 
     @Override
@@ -46,14 +47,18 @@ public class LoginResponse implements Response.ErrorListener,
         ResponseHandler.error(error, mActivity);
         mLoginProgressBar.setVisibility(View.GONE);
 
+        enableViews();
+
+    }
+
+    private void enableViews() {
+
         if (mFragment != null) {
             mFragment.enableViews(true);
 
         } else {
             ((LoginActivity) mActivity).enableViews(true);
         }
-
-
     }
 
 }

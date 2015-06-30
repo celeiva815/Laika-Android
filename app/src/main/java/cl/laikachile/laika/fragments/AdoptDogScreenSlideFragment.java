@@ -59,7 +59,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
-        mSlidingUpPanelLayout  = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout); //TODO probar que funcione
+        mSlidingUpPanelLayout  = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mMatchTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
@@ -83,9 +83,10 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mSterilizedTextView.setText(mDog.getSterilized(view.getContext()));
         mChipTextView.setText(mDog.getChip(view.getContext()));
         mTrainedTextView.setText(mDog.getTrained(view.getContext()));
-        mMatchTextView.setText(Integer.toString(Do.randomInteger(50, 100)) + "%"); //FIXME
+        mMatchTextView.setText(mDog.mCompatibility + "%");
+        mFoundationTextView.setText(mDog.mFoundationName);
 
-        if (!Do.isNullOrEmpty(mDog.mDetail)) //XXX
+        if (!Do.isNullOrEmpty(mDog.mDetail))
             mDetailsTextView.setText(mDog.mDetail);
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(

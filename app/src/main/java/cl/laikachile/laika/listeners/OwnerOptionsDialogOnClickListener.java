@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.EditUserActivity;
+import cl.laikachile.laika.activities.UserProfileActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.utils.Do;
@@ -187,13 +189,16 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
 
     public void viewProfile(Context context) {
 
-        Do.showShortToast("Por implementar", context);
+        Intent intent = new Intent(context, UserProfileActivity.class);
+
+
 
     }
 
     public void editProfile(Context context) {
 
-        Do.showShortToast("Por implementar", context);
+        Do.changeActivity(context, EditUserActivity.class,
+                Intent.FLAG_ACTIVITY_NEW_TASK);
 
     }
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -44,6 +45,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     public Button mBirthDateButton;
     public Button mRegisterButton;
     public ProgressBar mRegisterProgressBar;
+    public int mGender;
     public String mDate;
 
     @Override
@@ -165,6 +167,26 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(registerRequest, TAG);
+    }
+
+    public void setHumanGenderRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        this.mGender = Tag.GENDER_FEMALE;
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.human_male_edit_user_radiobutton:
+                if (checked)
+                    mGender = Tag.GENDER_MALE;
+
+                break;
+            case R.id.human_female_edit_user_radiobutton:
+                if (checked)
+                    mGender = Tag.GENDER_FEMALE;
+
+                break;
+        }
     }
 
     @Override

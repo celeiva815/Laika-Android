@@ -38,10 +38,13 @@ public class Dog extends Model {
     public final static String COLUMN_IS_STERILIZED = "is_sterilized";
     public final static String COLUMN_CHIP_CODE = "chip_code";
     public final static String COLUMN_STATUS = "status";
-    public final static String COLUMN_WEIGHT = "weight";
+    public final static String COLUMN_DETAILS = "details";
+    public final static String COLUMN_COMPATIBILITY = "compatibility";
     public final static String COLUMN_IS_TRAINED = "is_trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_OWNER_ID = "owner_id";
+    public final static String COLUMN_FOUNDATION_ID = "foundation_id";
+    public final static String COLUMN_FOUNDATION_NAME = "foundation_name";
     public final static String COLUMN_USER_ADOPT_DOG_ID = "user_adopt_dog_id";
 
     public final static String IMAGE = "image";
@@ -82,13 +85,24 @@ public class Dog extends Model {
     @Column(name = COLUMN_OWNER_ID)
     public int mOwnerId;
 
+    @Column(name = COLUMN_COMPATIBILITY)
+    public int mCompatibility;
+
     @Column(name = COLUMN_USER_ADOPT_DOG_ID)
     public int mUserAdoptDogId;
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
 
+    @Column(name = COLUMN_DETAILS)
     public String mDetail;
+
+    @Column(name = COLUMN_FOUNDATION_NAME)
+    public String mFoundationName;
+
+    @Column(name = COLUMN_FOUNDATION_ID)
+    public int mFoundationId;
+
     public Bitmap mDogImage;
 
     public Dog() {
@@ -141,6 +155,10 @@ public class Dog extends Model {
         this.mIsTrained = jsonObject.optBoolean(COLUMN_IS_TRAINED);
         this.mChipCode = jsonObject.optString(COLUMN_CHIP_CODE);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mDetail = jsonObject.optString(COLUMN_DETAILS, "");
+        this.mCompatibility = jsonObject.optInt(COLUMN_COMPATIBILITY, 1);
+        this.mFoundationId = jsonObject.optInt(COLUMN_FOUNDATION_ID);
+        this.mFoundationName = jsonObject.optString(COLUMN_FOUNDATION_NAME);
 
         switch (status) {
 
@@ -153,8 +171,6 @@ public class Dog extends Model {
                 this.mStatus = jsonObject.optInt(COLUMN_STATUS, status);
                 break;
         }
-
-
     }
 
     public void update(Dog dog) {
@@ -428,6 +444,14 @@ public class Dog extends Model {
 
     }
 
+    public static List<Dog> getDogs(int process, int ownerId) {
+
+        String condition = COLUMN_STATUS + DB.EQUALS + process + DB.AND;
+        condition += COLUMN_OWNER_ID + DB.EQUALS + ownerId;
+        return new Select().from(Dog.class).where(condition).execute();
+
+    }
+
     public static List<Dog> getDogs(List<UserAdoptDog> userAdoptDogs) {
 
         List<Dog> dogs = new ArrayList<>();
@@ -444,6 +468,13 @@ public class Dog extends Model {
     public static void deleteAll() {
 
         new Delete().from(Dog.class).execute();
+
+    }
+
+    public static void deleteDogs(int process) {
+
+        String condition = COLUMN_STATUS + DB.EQUALS + process;
+        new Delete().from(Dog.class).where(condition).execute();
 
     }
 

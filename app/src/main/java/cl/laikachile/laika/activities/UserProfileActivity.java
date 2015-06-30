@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,10 +32,11 @@ import cl.laikachile.laika.utils.Tag;
 
 public class UserProfileActivity extends ActionBarActivity {
 
-    public int mIdLayout = R.layout.lk_user_profile_activity;
-
     private static final String TAG = UserProfileActivity.class.getSimpleName();
+    public static final String KEY_OWNER_ID = "owner_id";
 
+    public int mIdLayout = R.layout.lk_user_profile_activity;
+    public ImageView mProfileImageView;
     public TextView mNameTextView;
     public TextView mGenderTextView;
     public TextView mEmailTextView;
@@ -46,6 +48,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public ListView mDogsListView;
     public DogsAdapter mDogsAdapter;
     public Location mLocation;
+    public int mOwnerId;
     public Owner mOwner;
     public List<Dog> mDogs;
 
@@ -53,10 +56,10 @@ public class UserProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
-        mLocation = Location.getSingleLocation(mOwner.mLocationId);
-        mDogs = Dog.getDogs(Tag.DOG_OWNED);
+        mOwnerId = getIntent().getExtras().getInt(KEY_OWNER_ID,
+                PrefsManager.getUserId(getApplicationContext()));
 
+        setInformation();
         setContentView(mIdLayout);
         setActivityView();
 
@@ -70,15 +73,14 @@ public class UserProfileActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
-        mLocation = Location.getSingleLocation(mOwner.mLocationId);
-
+        setOwnerInformation();
         setValues();
 
     }
 
     public void setActivityView() {
 
+        mProfileImageView = (ImageView) findViewById(R.id.user_profile_imageview);
         mNameTextView = (TextView) findViewById(R.id.name_user_profile_textview);
         mGenderTextView = (TextView) findViewById(R.id.gender_user_profile_textview);
         mEmailTextView = (TextView) findViewById(R.id.email_user_profile_textview);
@@ -99,6 +101,14 @@ public class UserProfileActivity extends ActionBarActivity {
             }
         });
 
+        mProfileImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     public void setValues() {
@@ -115,22 +125,23 @@ public class UserProfileActivity extends ActionBarActivity {
 
         mDogsAdapter = new DogsAdapter(context, R.layout.lk_dog_user_profile_row, mDogs);
         mDogsListView.setAdapter(mDogsAdapter);
-        setListViewHeightBasedOnChildren(mDogsListView);
-        mDogsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Do.setListViewHeightBasedOnChildren(mDogsListView);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (PrefsManager.isLoggedOwner(context, mOwner)) {
+            mDogsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                Intent intent = new Intent(getApplicationContext(), MyDogsActivity.class);
-                intent.putExtra(MyDogsActivity.DOG_ID, mDogs.get(position).mDogId);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
+                    Intent intent = new Intent(getApplicationContext(), MyDogsActivity.class);
+                    intent.putExtra(MyDogsActivity.DOG_ID, mDogs.get(position).mDogId);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
 
-
+                }
+            });
+        }
 
         setTitle("Perfil de " + mOwner.mFirstName);
     }
@@ -174,25 +185,22 @@ public class UserProfileActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
+    public void setInformation() {
+        setOwnerInformation();
+        setDogs();
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
+
+    public void setOwnerInformation() {
+
+        mOwner = Owner.getSingleOwner(mOwnerId);
+        mLocation = Location.getSingleLocation(mOwner.mLocationId);
+    }
+
+    public void setDogs() {
+
+        mDogs = Dog.getDogs(Tag.DOG_OWNED);
+
+    }
+
 }

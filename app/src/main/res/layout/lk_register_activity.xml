@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:onClick="setGenderRadioButtonClicked"
+                android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_male"
                 android:textColor="@color/light_black_font"
                 android:textSize="20sp"
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:gravity="center"
-                android:onClick="setGenderRadioButtonClicked"
+                android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_female"
                 android:textColor="@color/light_black_font"
                 android:textSize="20sp" />
