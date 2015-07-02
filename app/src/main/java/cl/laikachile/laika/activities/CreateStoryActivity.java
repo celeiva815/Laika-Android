@@ -1,20 +1,30 @@
 package cl.laikachile.laika.activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
+import com.soundcloud.android.crop.Crop;
 
 import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.interfaces.ImageHandlerInterface;
 import cl.laikachile.laika.listeners.CreateStoryOnClickListener;
+import cl.laikachile.laika.listeners.ImageHandler;
 import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
@@ -22,16 +32,18 @@ import cl.laikachile.laika.responses.CreateStoryResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 
-public class CreateStoryActivity extends ActionBarActivity {
+public class CreateStoryActivity extends ActionBarActivity implements ImageHandlerInterface {
 
     public static final String TAG = CreateStoryActivity.class.getSimpleName();
     public static final int LOCAL_ID = 0;
-    
+
     private int mIdLayout = R.layout.lk_create_story_activity;
     public EditText mTitleEditText;
     public EditText mBodyEditText;
+    public ImageView mStoryImageView;
     public Button mCreateButton;
     public Story mStory;
+    public ImageHandler mImageHandler;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +60,8 @@ public class CreateStoryActivity extends ActionBarActivity {
         mTitleEditText = (EditText) findViewById(R.id.title_create_story_edittext);
         mBodyEditText = (EditText) findViewById(R.id.body_create_story_edittext);
         mCreateButton = (Button) findViewById(R.id.create_story_button);
+        mStoryImageView = (ImageView) findViewById(R.id.adoption_story_imageview);
+        mImageHandler = new ImageHandler(mStoryImageView);
 
         mCreateButton.setOnClickListener(new CreateStoryOnClickListener(this));
 
@@ -58,6 +72,116 @@ public class CreateStoryActivity extends ActionBarActivity {
             mTitleEditText.setText(mStory.mTitle);
             mBodyEditText.setText(mStory.mBody);
         }
+
+        mStoryImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final Context context = v.getContext();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+                dialog.setTitle(R.string.choose_an_option);
+                dialog.setItems(mImageHandler.getOptions(),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                switch (which) {
+
+                                    case 0:
+
+                                        takePicture();
+
+                                        break;
+
+                                    case 1:
+
+                                        pickImage();
+
+                                        break;
+
+                                    case 2:
+
+                                        beginCrop(mImageHandler.mSourceImage);
+
+                                        break;
+                                }
+                            }
+                        });
+
+                dialog.show();
+
+            }
+        });
+
+        mStoryImageView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (mImageHandler.mSourceImage != null) {
+
+                    beginCrop(mImageHandler.mSourceImage);
+                    return true;
+
+                } else {
+
+                    return false;
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+
+        if (requestCode == ImageHandler.SQUARE_CAMERA_REQUEST_CODE &&
+                resultCode == RESULT_OK) {
+
+            if (result != null) {
+
+                beginCrop(result.getData());
+
+            } else if (mImageHandler.mSourceImage != null) {
+
+                beginCrop(mImageHandler.mSourceImage);
+
+            } else {
+                Do.showLongToast(R.string.generic_networking_error, getApplicationContext());
+            }
+
+            super.onActivityResult(requestCode, resultCode, result);
+
+        }
+
+        if (requestCode == Crop.REQUEST_PICK
+                && resultCode == RESULT_OK) {
+
+            beginCrop(result.getData());
+
+        }  else if (requestCode == Crop.REQUEST_CROP) {
+            mImageHandler.handleCrop(resultCode, result, this);
+
+        }
+    }
+
+    @Override
+    public void takePicture() {
+
+       mImageHandler.takePicture(this, getApplicationContext());
+
+    }
+
+    @Override
+    public void pickImage() {
+
+        mImageHandler.pickImage(this);
+    }
+
+    @Override
+    public void beginCrop(Uri source) {
+
+        mImageHandler.beginCrop(source, this);
     }
 
     @Override
@@ -119,15 +243,17 @@ public class CreateStoryActivity extends ActionBarActivity {
         String body = mBodyEditText.getText().toString();
         int image = R.drawable.abuela; //FIXME cambiarlo a String cuando se implementen las imagenes
 
-        Story story = new Story(storyId,title,userId,ownerName,date,time,body, image);
+        Story story = new Story(storyId, title, userId, ownerName, date, time, body, image);
         mStory = Story.createOrUpdate(story);
 
     }
 
-    public Story getSavedStory(){
+    public Story getSavedStory() {
 
         return Story.getSingleStory(LOCAL_ID);
 
     }
 
+
 }
+

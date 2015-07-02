@@ -99,6 +99,18 @@ public class Do {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
+    public static void showShortToast(int resource, Context context){
+
+        String message = getRString(context, resource);
+        showShortToast(message, context);
+    }
+
+    public static void showLongToast(int resource, Context context) {
+
+        String message = getRString(context, resource);
+        showLongToast(message, context);
+    }
+
     public static String getToken(Context context){
 
         return ""; //FIXME getToken

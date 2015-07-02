@@ -37,4 +37,5 @@ dependencies {
     compile 'com.splunk.mint:mint:4.0.7'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.soundcloud.android:android-crop:1.0.0@aar'
 }

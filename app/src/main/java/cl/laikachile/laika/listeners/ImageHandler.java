@@ -1,0 +1,207 @@
+package cl.laikachile.laika.listeners;
+
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.widget.ImageView;
+
+import com.soundcloud.android.crop.Crop;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.camera.CameraActivity;
+
+/**
+ * Created by Tito_Leiva on 01-07-15.
+ */
+public class ImageHandler {
+
+    public static final int SQUARE_CAMERA_REQUEST_CODE = 0;
+    public static final int TAKE_PICTURE_REQUEST_CODE = 1;
+
+    private ImageView mStoryImageView;
+    public Uri mSourceImage;
+    public String mCurrentPhotoPath;
+
+    public ImageHandler(ImageView mStoryImageView) {
+
+        this.mStoryImageView = mStoryImageView;
+    }
+
+    public CharSequence[] getOptions() {
+
+
+        if (mSourceImage != null) {
+
+            CharSequence[] sequence = {
+                    "Tomar una foto",
+                    "Elegir de la galería",
+                    "Editar foto actual"
+            };
+
+            return sequence;
+
+        } else {
+
+            CharSequence[] sequence = {
+                    "Tomar una foto",
+                    "Elegir de la galería"
+            };
+
+            return sequence;
+        }
+
+    }
+
+    public void pickImage(Activity activity) {
+
+        Crop.pickImage(activity);
+
+    }
+
+    public void beginCrop(Uri source, Activity activity) {
+
+        this.mSourceImage = source;
+        Uri destination = Uri.fromFile(new File(activity.getCacheDir(), "cropped"));
+        Crop.of(mSourceImage, destination).asSquare().start(activity);
+    }
+
+    public void handleCrop(int resultCode, Intent result, Activity activity) {
+        if (resultCode == activity.RESULT_OK) {
+            mStoryImageView.setImageURI(Crop.getOutput(result));
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Do.showShortToast(Crop.getError(result).getMessage(), activity.getApplicationContext());
+        }
+    }
+
+    public void takePicture(Activity activity, Context context) {
+
+        String fileName = getImageName(PrefsManager.getUserId(context)) + ".jpg";
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, fileName);
+        mSourceImage = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mSourceImage);
+        Intent startCustomCameraIntent = new Intent(activity, CameraActivity.class);
+        activity.startActivityForResult(startCustomCameraIntent, SQUARE_CAMERA_REQUEST_CODE);
+
+    }
+
+    public void takePicture(Activity activity) {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+            // Create the File where the mPhoto should go
+            File photoFile = null;
+            try {
+
+                photoFile = createImageFile(activity.getApplicationContext());
+
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Do.showShortToast("Hubo un problema creando la imagen", activity.getApplicationContext());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                activity.startActivityForResult(takePictureIntent, TAKE_PICTURE_REQUEST_CODE);
+            }
+        }
+
+    }
+
+    public File createImageFile(Context context) throws IOException {
+        // Create an image file name
+        mCurrentPhotoPath = "";
+
+        String imageFileName = getImageName(PrefsManager.getUserId(context)) + ".jpg";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = new File(storageDir, imageFileName);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+
+        return image;
+    }
+
+    public void galleryAddPic(Activity activity) {
+
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        mSourceImage = Uri.fromFile(f);
+        mediaScanIntent.setData(mSourceImage);
+        activity.sendBroadcast(mediaScanIntent);
+    }
+
+    public String getImageName(int userId) {
+
+        int[] dateArray = Do.nowDateInArray();
+        int[] timeArray = Do.timeInArray();
+
+        String date = "";
+
+        for (int i : dateArray) {
+
+            date += Integer.toString(i);
+        }
+
+        for (int i : timeArray) {
+
+            date += Integer.toString(i);
+        }
+
+        date += "user" + Integer.toString(userId);
+
+        return date;
+
+    }
+
+    public Bitmap setPicture() {
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / 640, photoH / 480);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+        bmOptions.inSampleSize = scaleFactor;
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        return bitmap;
+    }
+
+    public String encodeImage(Bitmap bitmap) {
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        return encoded;
+    }
+
+
+}

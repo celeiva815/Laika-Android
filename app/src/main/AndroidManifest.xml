@@ -262,6 +262,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
         <service
             android:name=".network.RemindersService"
             android:exported="false" >
