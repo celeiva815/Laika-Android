@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -218,6 +219,31 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
         return super.onOptionsItemSelected(item);
     }
 
+    public void sendStory(String imageUrl) {
+
+        String title = mTitleEditText.getText().toString();
+        String body = mBodyEditText.getText().toString();
+
+        if (TextUtils.isEmpty(title)) {
+            mBodyEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+        }
+
+        if (TextUtils.isEmpty(body)) {
+            mBodyEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+
+        }
+
+        String date = Do.today();
+        String time = Do.now();
+
+        Story story = new Story(title, date, time, body, imageUrl);
+        requestStory(story, getApplicationContext());
+
+    }
+
+
     public void requestStory(Story story, Context context) {
 
         JSONObject params = story.getJsonObject();
@@ -241,7 +267,7 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
         String date = Do.today();
         String time = Do.now();
         String body = mBodyEditText.getText().toString();
-        int image = R.drawable.abuela; //FIXME cambiarlo a String cuando se implementen las imagenes
+        String image = mImageHandler.getStringUri();
 
         Story story = new Story(storyId, title, userId, ownerName, date, time, body, image);
         mStory = Story.createOrUpdate(story);

@@ -36,7 +36,7 @@ public class StoriesScreenSlideFragment extends Fragment {
         sponsorTextView.setText(mStory.getOwnerName());
         dateTextView.setText(mStory.mDate);
         bodyTextView.setText(mStory.mBody);
-        mainImageView.setImageResource(mStory.mImage);
+        mainImageView.setImageResource(R.drawable.abuelo);
 
         return view;
     }

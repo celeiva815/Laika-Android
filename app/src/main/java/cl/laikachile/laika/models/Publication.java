@@ -55,7 +55,7 @@ public class Publication extends Model {
 	public String mBody;
 
 	@Column(name = COLUMN_URL_IMAGE)
-	public int mImage; //FIXME
+	public String mUrlImage;
 
     @Column(name = COLUMN_URL_PUBLICATION)
     public String mUrlPublication;
@@ -71,7 +71,7 @@ public class Publication extends Model {
 	public Publication(){ }
 
     public Publication(int mPublicationId, int mSponsorId, String mSponsor, String mTitle,
-                       String mDate, String mBody, int mImage, String mUrlPublication,
+                       String mDate, String mBody, String mUrlImage, String mUrlPublication,
                        boolean mIsPaid, boolean mIsFavorite) {
 
         this.mPublicationId = mPublicationId;
@@ -80,7 +80,7 @@ public class Publication extends Model {
         this.mTitle = mTitle;
         this.mDate = mDate;
         this.mBody = mBody;
-        this.mImage = mImage;
+        this.mUrlImage = mUrlImage;
         this.mUrlPublication = mUrlPublication;
         this.mIsPaid = mIsPaid;
         this.mIsFavorite = mIsFavorite;
@@ -96,7 +96,7 @@ public class Publication extends Model {
             this.mTitle = jsonObject.getString(COLUMN_TITLE);
             this.mDate = jsonObject.getString(COLUMN_DATE);
             this.mBody = jsonObject.getString(COLUMN_BODY);
-            this.mImage = R.drawable.lk_news_picture1;//FIXME jsonObject.getString(COLUMN_URL_IMAGE);
+            this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
             this.mUrlPublication = jsonObject.getString(COLUMN_URL_PUBLICATION);
             this.mIsPaid = jsonObject.getBoolean(COLUMN_IS_PAID);
             this.mIsFavorite = false;
@@ -128,7 +128,7 @@ public class Publication extends Model {
         this.mTitle = publication.mTitle;
         this.mDate = publication.mDate;
         this.mBody = publication.mBody;
-        this.mImage = publication.mImage;
+        this.mUrlImage = publication.mUrlImage;
         this.mUrlPublication = publication.mUrlPublication;
         this.mIsPaid = publication.mIsPaid;
         this.mIsFavorite = publication.mIsFavorite;

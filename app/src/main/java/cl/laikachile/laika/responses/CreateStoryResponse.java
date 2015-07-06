@@ -36,7 +36,8 @@ public class CreateStoryResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mActivity);
-        Do.showShortToast("Hubo un error", mActivity);
+        mActivity.saveStory();
+        Do.showShortToast("Hubo un error al subir tu historia, pero la hemos guardado!", mActivity);
 
     }
 

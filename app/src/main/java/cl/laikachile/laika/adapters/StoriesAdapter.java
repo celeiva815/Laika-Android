@@ -43,7 +43,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         sponsorTextView.setText(story.getOwnerName());
         dateTextView.setText(story.mDate);
         bodyTextView.setText(story.mBody);
-        mainImageView.setImageResource(story.mImage);
+        mainImageView.setImageResource(R.drawable.abuelo); //FIXME descargar la imagen y poner el bitmap
 
         return view;
 

@@ -79,7 +79,10 @@ public class ImageHandler {
 
     public void handleCrop(int resultCode, Intent result, Activity activity) {
         if (resultCode == activity.RESULT_OK) {
+
+            mStoryImageView.setImageDrawable(null);
             mStoryImageView.setImageURI(Crop.getOutput(result));
+
         } else if (resultCode == Crop.RESULT_ERROR) {
             Do.showShortToast(Crop.getError(result).getMessage(), activity.getApplicationContext());
         }
@@ -201,6 +204,26 @@ public class ImageHandler {
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
         return encoded;
+    }
+
+    public String getStringUri() {
+
+        if (mSourceImage != null) {
+
+            return mSourceImage.toString();
+
+        } else {
+
+            return "";
+        }
+    }
+
+    public Uri parseUri(String uriString) {
+
+        mSourceImage = Uri.parse(uriString);
+
+        return mSourceImage;
+
     }
 
 

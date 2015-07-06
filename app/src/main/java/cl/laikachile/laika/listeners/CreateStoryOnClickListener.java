@@ -1,5 +1,6 @@
 package cl.laikachile.laika.listeners;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -25,25 +26,6 @@ public class CreateStoryOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        String title = mActivity.mTitleEditText.getText().toString();
-        String body = mActivity.mBodyEditText.getText().toString();
-
-        if (TextUtils.isEmpty(title)) {
-            mActivity.mBodyEditText.setError(mActivity.getString(R.string.field_not_empty_error));
-            return;
-        }
-
-        if (TextUtils.isEmpty(body)) {
-            mActivity.mBodyEditText.setError(mActivity.getString(R.string.field_not_empty_error));
-            return;
-
-        }
-
-        String date = Do.today();
-        String time = Do.now();
-
-        Story story = new Story(title, date, time, body);
-        mActivity.requestStory(story, mActivity.getApplicationContext());
 
     }
 }

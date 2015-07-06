@@ -56,14 +56,14 @@ public class Story extends Model {
     public String mBody;
 
     @Column(name = COLUMN_URL_IMAGE)
-    public int mImage;
+    public String mImage;
 
 
     public Story() {
     }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,
-                 String mTime, String mBody, int mImage) {
+                 String mTime, String mBody, String mImage) {
         this.mStoryId = mStoryId;
         this.mTitle = mTitle;
         this.mUserId = mUserId;
@@ -74,12 +74,13 @@ public class Story extends Model {
         this.mImage = mImage;
     }
 
-    public Story(String mTitle, String mDate, String mTime, String mBody) {
+    public Story(String mTitle, String mDate, String mTime, String mBody, String mImage) {
 
         this.mTitle = mTitle;
         this.mDate = mDate;
         this.mTime = mTime;
         this.mBody = mBody;
+        this.mImage = mImage;
     }
 
     public Story(JSONObject jsonObject) {
@@ -91,7 +92,7 @@ public class Story extends Model {
         this.mDate = jsonObject.optString(COLUMN_DATE);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mBody = jsonObject.optString(COLUMN_BODY);
-        this.mImage = R.drawable.abuelo; //FIXME jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mImage = jsonObject.optString(COLUMN_URL_IMAGE, "http://www.uvhs.org/wp-content/uploads/2012/12/2013_08_AdoptionInformation.jpg");
 
     }
 
