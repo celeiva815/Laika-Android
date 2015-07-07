@@ -84,7 +84,14 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             }
         });
 
-        requestImage(publication, context);
+        if (!Do.isNullOrEmpty(publication.mUrlImage)) {
+
+            RequestManager.requestImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
+
+        } else {
+
+            mMainImageView.setImageResource(R.drawable.event_1); //TODO definir una imagen predeterminada
+        }
 
         mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
 
@@ -115,17 +122,4 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
     }
 
-    public void requestImage(Publication publication, Context context) {
-
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        ImageResponse response = new ImageResponse(mMainImageView, mProgressBar);
-
-        Request request = RequestManager.imageRequest(publication.mUrlImage, mMainImageView,
-                response, response);
-
-        VolleyManager.getInstance(context).addToRequestQueue(request, TAG);
-
-
-    }
 }

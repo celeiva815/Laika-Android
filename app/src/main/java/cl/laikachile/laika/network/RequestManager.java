@@ -3,7 +3,9 @@ package cl.laikachile.laika.network;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import cl.laikachile.laika.network.requests.LaikaRequest;
+import cl.laikachile.laika.responses.ImageResponse;
 import cl.laikachile.laika.utils.PrefsManager;
 
 /**
@@ -136,6 +139,16 @@ public class RequestManager {
         int maxHeight = imageView.getMaxHeight();
 
         return new ImageRequest(url, listener, maxWidth, maxHeight, null, errorListener);
+    }
+
+    public static void requestImage(String imageUrl, ProgressBar progressBar, ImageView imageView , Context context) {
+
+        ImageResponse response = new ImageResponse(imageView, progressBar);
+        Request request = imageRequest(imageUrl, imageView, response, response);
+
+        VolleyManager.getInstance(context).addToRequestQueue(request, TAG);
+        progressBar.setVisibility(View.VISIBLE);
+
     }
 
     /**

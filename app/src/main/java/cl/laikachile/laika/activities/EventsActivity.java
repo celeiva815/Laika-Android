@@ -61,6 +61,13 @@ public class EventsActivity extends ActionBarActivity {
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Event.deleteAll();
+        super.onBackPressed();
+    }
+
     public void setActivityView() {
 
         mEvents = getEvents();

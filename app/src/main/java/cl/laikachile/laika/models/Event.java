@@ -3,7 +3,6 @@ package cl.laikachile.laika.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -50,7 +49,7 @@ public class Event extends Model {
     public String mSponsorName;
 
     @Column(name = COLUMN_URL_IMAGE)
-    public String mURLImage;
+    public String mUrlImage;
 
     @Column(name = COLUMN_URL_EVENT)
     public String mUrlEvent;
@@ -77,14 +76,14 @@ public class Event extends Model {
     }
 
     public Event(int mEventId, String mName, int mSponsorId, String mSponsorName,
-                 String mURLImage, String mUrlEvent, int mLocationId, String mStartDate,
+                 String mUrlImage, String mUrlEvent, int mLocationId, String mStartDate,
                  String mFinishDate, String mStartTime, String mFinishTime, boolean mIsPaid) {
 
         this.mEventId = mEventId;
         this.mName = mName;
         this.mSponsorId = mSponsorId;
         this.mSponsorName = mSponsorName;
-        this.mURLImage = mURLImage;
+        this.mUrlImage = mUrlImage;
         this.mUrlEvent = mUrlEvent;
         this.mLocationId = mLocationId;
         this.mStartDate = mStartDate;
@@ -102,7 +101,7 @@ public class Event extends Model {
             this.mName = jsonObject.getString(COLUMN_NAME);
             this.mSponsorId = jsonObject.getInt(COLUMN_SPONSOR_ID);
             this.mSponsorName = jsonObject.getString(COLUMN_SPONSOR_NAME);
-            this.mURLImage = ""; //FIXME jsonObject.getString(COLUMN_URL_IMAGE);
+            this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
             this.mUrlEvent = jsonObject.getString(COLUMN_URL_EVENT);
             this.mLocationId = jsonObject.getInt(COLUMN_LOCATION_ID);
             this.mStartDate = jsonObject.getString(COLUMN_START_DATE);
@@ -139,7 +138,7 @@ public class Event extends Model {
         this.mName = event.mName;
         this.mSponsorId = event.mSponsorId;
         this.mSponsorName = event.mSponsorName;
-        this.mURLImage = event.mURLImage;
+        this.mUrlImage = event.mUrlImage;
         this.mUrlEvent = event.mUrlEvent;
         this.mLocationId = event.mLocationId;
         this.mStartDate = event.mStartDate;

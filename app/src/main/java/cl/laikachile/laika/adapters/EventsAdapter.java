@@ -7,20 +7,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.android.volley.Request;
 
 import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.activities.WebActivity;
 import cl.laikachile.laika.models.Event;
+import cl.laikachile.laika.models.Publication;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.ImageResponse;
 import cl.laikachile.laika.utils.Do;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
 
+    public static final String TAG = EventsAdapter.class.getSimpleName();
+
     private int mIdLayout = R.layout.lk_events_adapter;
     private Context context;
     private List<Event> mEvents;
+    public TextView mNameTextView;
+    public TextView mSponsorTextView;
+    public TextView mLocationTextView;
+    public TextView mDateTextView;
+    public TextView mTimeTextView;
+    public TextView mAnnounceTextView;
+    public ImageView mMainImageView;
+    public ProgressBar mProgressBar;
+
 
     public EventsAdapter(Context context, int resource, List<Event> objects) {
         super(context, resource, objects);
@@ -36,38 +54,39 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
-        ImageView photoImageView = (ImageView) view.findViewById(R.id.photo_events_imageview);
-        TextView nameTextView = (TextView) view.findViewById(R.id.name_events_textview);
-        TextView sponsorTextView = (TextView) view.findViewById(R.id.sponsor_events_textview);
-        TextView locationTextView = (TextView) view.findViewById(R.id.location_events_textview);
-        TextView dateTextView = (TextView) view.findViewById(R.id.date_events_textview);
-        TextView timeTextView = (TextView) view.findViewById(R.id.time_events_textview);
-        TextView announceTextView = (TextView) view.findViewById(R.id.announce_events_textview);
+        mMainImageView = (ImageView) view.findViewById(R.id.photo_events_imageview);
+        mNameTextView = (TextView) view.findViewById(R.id.name_events_textview);
+        mSponsorTextView = (TextView) view.findViewById(R.id.sponsor_events_textview);
+        mLocationTextView = (TextView) view.findViewById(R.id.location_events_textview);
+        mDateTextView = (TextView) view.findViewById(R.id.date_events_textview);
+        mTimeTextView = (TextView) view.findViewById(R.id.time_events_textview);
+        mAnnounceTextView = (TextView) view.findViewById(R.id.announce_events_textview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
 
-        nameTextView.setText(Integer.toString(event.mEventId) + " - " +event.mName); //FIXME
-        nameTextView.setSelected(true);
-        sponsorTextView.setText(event.mSponsorName);
-        sponsorTextView.setSelected(true);
-        locationTextView.setText(Integer.toString(event.mLocationId));
-        dateTextView.setText(event.getDate());
-        dateTextView.setSelected(true);
-        timeTextView.setText(event.getTime());
+        mNameTextView.setText(Integer.toString(event.mEventId) + " - " + event.mName); //FIXME
+        mNameTextView.setSelected(true);
+        mSponsorTextView.setText(event.mSponsorName);
+        mSponsorTextView.setSelected(true);
+        mLocationTextView.setText(Integer.toString(event.mLocationId));
+        mDateTextView.setText(event.getDate());
+        mDateTextView.setSelected(true);
+        mTimeTextView.setText(event.getTime());
 
-        if (Do.isNullOrEmpty(event.mURLImage)) {
+        if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            photoImageView.setImageResource(R.drawable.event_1);
+            RequestManager.requestImage(event.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 
-            //TODO solicitar la imagen por internet asincronamente.
+            // mMainImageView.setImageResource(R.drawable.event_1); TODO definir una imagen predeterminada
         }
 
         if (event.mIsPaid) {
-            announceTextView.setVisibility(View.VISIBLE);
-            sponsorTextView.setTextColor(view.getContext().getResources().getColor(R.color.laika_red));
+            mAnnounceTextView.setVisibility(View.VISIBLE);
+            mSponsorTextView.setTextColor(view.getContext().getResources().getColor(R.color.laika_red));
 
         } else {
-            announceTextView.setVisibility(View.INVISIBLE);
+            mAnnounceTextView.setVisibility(View.INVISIBLE);
         }
 
         final int pos = position;
@@ -89,4 +108,5 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         return view;
 
     }
+
 }
