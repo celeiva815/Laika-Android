@@ -155,7 +155,8 @@ public class Event extends Model {
 
     public static List<Event> getEvents() {
 
-        return new Select().from(Event.class).execute();
+        String order = COLUMN_EVENT_ID + DB.DESC;
+        return new Select().from(Event.class).orderBy(order).execute();
 
     }
 

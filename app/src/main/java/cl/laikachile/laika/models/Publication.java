@@ -190,7 +190,8 @@ public class Publication extends Model {
 
     public static List<Publication> getPublications() {
 
-        return new Select().from(Publication.class).execute();
+        String order = COLUMN_PUBLICATION_ID + DB.DESC;
+        return new Select().from(Publication.class).orderBy(order).execute();
 
     }
 

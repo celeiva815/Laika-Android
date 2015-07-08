@@ -14,6 +14,8 @@ public class DB {
     public final static String ORDER_BY = "ORDER BY";
     public final static String TRUE = "1";
     public final static String FALSE = "0";
+    public static final String ASC = " ASC";
+    public static final String DESC = " DESC";
 
     public static String values(int... integers) {
 

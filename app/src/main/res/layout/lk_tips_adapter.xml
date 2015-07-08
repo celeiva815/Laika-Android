@@ -25,14 +25,31 @@
             android:layout_marginRight="3dp"
             android:textColor="@color/lighter_black_font" />
 
+        <RelativeLayout
+            android:id="@+id/photo_events_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/picture_background">
+
         <ImageView
             android:id="@+id/main_tip_imageview"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/lk_news_picture_three"
+            android:layout_height="110dp"
             android:adjustViewBounds="false"
             android:scaleType="centerCrop" />
+
+        <ProgressBar
+            android:id="@+id/download_image_progressbar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusableInTouchMode="false"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
         <TextView
             android:id="@+id/title_tip_textview"

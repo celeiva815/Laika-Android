@@ -19,15 +19,15 @@ public class Tip extends Model {
 
     public static int ID = 1;
 
-	public static final String TABLE_NAME = "tips";
+    public static final String TABLE_NAME = "tips";
     public static final String COLUMN_TIP_ID = "tip_id";
     public static final String COLUMN_SPONSOR_ID = "sponsor_id";
     public static final String COLUMN_SPONSOR_NAME = "sponsor_name";
     public static final String COLUMN_TITLE = "title";
-	public static final String COLUMN_BODY = "body";
+    public static final String COLUMN_BODY = "body";
     public static final String COLUMN_URL_IMAGE = "url_image";
     public static final String COLUMN_URL_TIP = "url_tip";
-	public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_IS_PAID = "is_paid";
 
     public final static String API_TIPS = "tips";
@@ -51,22 +51,23 @@ public class Tip extends Model {
     public String mBody;
 
     @Column(name = COLUMN_URL_IMAGE)
-    public int mUrlImage; //FIXME
+    public String mUrlImage;
 
     @Column(name = COLUMN_URL_TIP)
     public String mUrlTip;
 
-	@Column(name = COLUMN_TYPE)
-	public int mType;
+    @Column(name = COLUMN_TYPE)
+    public int mType;
 
     @Column(name = COLUMN_IS_PAID)
     public boolean mIsPaid;
 
 
-	public Tip() { }
+    public Tip() {
+    }
 
     public Tip(int mTipId, int mSponsorId, String mSponsorName, String mTitle, String mBody,
-               int mUrlImage, String mUrlTip, int mType, boolean mIsPaid) {
+               String mUrlImage, String mUrlTip, int mType, boolean mIsPaid) {
 
         this.mTipId = mTipId;
         this.mSponsorId = mSponsorId;
@@ -81,21 +82,16 @@ public class Tip extends Model {
 
     public Tip(JSONObject jsonObject) {
 
-        try {
+        this.mTipId = jsonObject.optInt(API_ID);
+        this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
+        this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);
+        this.mTitle = jsonObject.optString(COLUMN_TITLE);
+        this.mBody = jsonObject.optString(COLUMN_BODY);
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mUrlTip = ""; //FIXME jsonObject.optString(COLUMN_URL_TIP);
+        this.mType = 0; //FIXME jsonObject.optString(COLUMN_TYPE);
+        this.mIsPaid = jsonObject.optBoolean(COLUMN_IS_PAID);
 
-            this.mTipId = jsonObject.getInt(API_ID);
-            this.mSponsorId = 0; //FIXME jsonObject.getInt(COLUMN_SPONSOR_ID); me llega un id null
-            this.mSponsorName = ""; //FIXME jsonObject.getString(COLUMN_SPONSOR_NAME);
-            this.mTitle = jsonObject.getString(COLUMN_TITLE);
-            this.mBody = jsonObject.getString(COLUMN_BODY);
-            this.mUrlImage = R.drawable.lk_news_picture_three; //FIXME jsonObject.getString(COLUMN_URL_IMAGE);
-            this.mUrlTip = ""; //FIXME jsonObject.getString(COLUMN_URL_TIP);
-            this.mType = 0; //FIXME jsonObject.getString(COLUMN_TYPE);
-            this.mIsPaid = jsonObject.getBoolean(COLUMN_IS_PAID);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -116,7 +112,8 @@ public class Tip extends Model {
 
     public static List<Tip> getTips() {
 
-        return new Select().from(Tip.class).execute();
+        String order = COLUMN_TIP_ID + DB.DESC;
+        return new Select().from(Tip.class).orderBy(order).execute();
 
     }
 

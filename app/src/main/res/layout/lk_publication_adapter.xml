@@ -59,7 +59,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/picture_background">
+            android:background="#666">
 
             <ImageView
                 android:id="@+id/main_news_imageview"
@@ -77,7 +77,8 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:visibility="gone"
-                android:focusableInTouchMode="false" />
+                android:focusableInTouchMode="false"
+                android:indeterminate="false" />
 
         </RelativeLayout>
 
