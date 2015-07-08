@@ -59,7 +59,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#666">
+            android:background="@color/picture_background">
 
             <ImageView
                 android:id="@+id/main_news_imageview"
@@ -70,7 +70,7 @@
                 android:minHeight="300dp" />
 
             <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
+                style="?android:attr/progressBarStyleLargeInverse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/download_image_progressbar"

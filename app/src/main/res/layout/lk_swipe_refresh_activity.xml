@@ -24,8 +24,10 @@
         android:gravity="center">
 
         <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false" />
 
         <TextView
             android:layout_width="match_parent"
@@ -33,7 +35,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/events_no_results"
+            android:text="@string/publications_searching_results"
             android:textSize="20sp" />
 
     </LinearLayout>

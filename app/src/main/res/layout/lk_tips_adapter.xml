@@ -40,14 +40,16 @@
             android:scaleType="centerCrop" />
 
         <ProgressBar
+            style="?android:attr/progressBarStyleInverse"
             android:id="@+id/download_image_progressbar"
-            style="?android:attr/progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:focusableInTouchMode="false"
             android:visibility="gone" />
+            <!--style="?android:attr/progressBarStyle" -->
+
 
     </RelativeLayout>
 

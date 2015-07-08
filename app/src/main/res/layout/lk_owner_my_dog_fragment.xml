@@ -29,7 +29,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@string/events_no_results"
+            android:text="@string/publications_searching_results"
             android:textSize="20sp" />
 
     </LinearLayout>
