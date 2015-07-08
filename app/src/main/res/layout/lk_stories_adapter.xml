@@ -58,13 +58,32 @@
                 android:layout_alignParentStart="true" />
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/main_stories_imageview"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/abuelo"
-            android:adjustViewBounds="true" />
+            android:background="@color/picture_background">
+
+            <ImageView
+                android:id="@+id/main_stories_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:minHeight="300dp"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/download_image_progressbar"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:focusableInTouchMode="false"
+                android:indeterminate="false" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/body_stories_textview"

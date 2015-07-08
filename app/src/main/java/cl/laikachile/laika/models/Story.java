@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import cl.laikachile.laika.R;
 import cl.laikachile.laika.utils.DB;
 
 @Table(name = Story.TABLE_NAME)
@@ -56,14 +55,14 @@ public class Story extends Model {
     public String mBody;
 
     @Column(name = COLUMN_URL_IMAGE)
-    public String mImage;
+    public String mUrlImage;
 
 
     public Story() {
     }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,
-                 String mTime, String mBody, String mImage) {
+                 String mTime, String mBody, String mUrlImage) {
         this.mStoryId = mStoryId;
         this.mTitle = mTitle;
         this.mUserId = mUserId;
@@ -71,16 +70,16 @@ public class Story extends Model {
         this.mDate = mDate;
         this.mTime = mTime;
         this.mBody = mBody;
-        this.mImage = mImage;
+        this.mUrlImage = mUrlImage;
     }
 
-    public Story(String mTitle, String mDate, String mTime, String mBody, String mImage) {
+    public Story(String mTitle, String mDate, String mTime, String mBody, String mUrlImage) {
 
         this.mTitle = mTitle;
         this.mDate = mDate;
         this.mTime = mTime;
         this.mBody = mBody;
-        this.mImage = mImage;
+        this.mUrlImage = mUrlImage;
     }
 
     public Story(JSONObject jsonObject) {
@@ -92,7 +91,7 @@ public class Story extends Model {
         this.mDate = jsonObject.optString(COLUMN_DATE);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mBody = jsonObject.optString(COLUMN_BODY);
-        this.mImage = jsonObject.optString(COLUMN_URL_IMAGE, "http://www.uvhs.org/wp-content/uploads/2012/12/2013_08_AdoptionInformation.jpg");
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE, "http://www.uvhs.org/wp-content/uploads/2012/12/2013_08_AdoptionInformation.jpg");
 
     }
 
@@ -112,7 +111,7 @@ public class Story extends Model {
         this.mDate = story.mDate;
         this.mTime = story.mTime;
         this.mBody = story.mBody;
-        this.mImage = story.mImage;
+        this.mUrlImage = story.mUrlImage;
 
         this.save();
 
@@ -122,7 +121,8 @@ public class Story extends Model {
 
     public static List<Story> getStories() {
 
-        return new Select().from(Story.class).execute();
+        String order = COLUMN_STORY_ID + DB.DESC;
+        return new Select().from(Story.class).orderBy(order).execute();
 
     }
 
