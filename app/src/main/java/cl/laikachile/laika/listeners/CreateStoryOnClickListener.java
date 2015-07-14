@@ -1,5 +1,6 @@
 package cl.laikachile.laika.listeners;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +26,9 @@ public class CreateStoryOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
+        mActivity.uploadPhoto();
+
 
 
     }

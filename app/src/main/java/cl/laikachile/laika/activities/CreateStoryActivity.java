@@ -1,12 +1,14 @@
 package cl.laikachile.laika.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -18,22 +20,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.Volley;
 import com.soundcloud.android.crop.Crop;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.interfaces.ImageHandlerInterface;
+import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.listeners.CreateStoryOnClickListener;
-import cl.laikachile.laika.listeners.ImageHandler;
+import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.responses.ImageUploadResponse;
+import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.CreateStoryResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Tag;
 
-public class CreateStoryActivity extends ActionBarActivity implements ImageHandlerInterface {
+public class CreateStoryActivity extends ActionBarActivity implements Photographable {
 
     public static final String TAG = CreateStoryActivity.class.getSimpleName();
     public static final int LOCAL_ID = 0;
@@ -44,7 +52,8 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
     public ImageView mStoryImageView;
     public Button mCreateButton;
     public Story mStory;
-    public ImageHandler mImageHandler;
+    public Photographer mPhotographer;
+    public ProgressDialog mProgressDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +71,7 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
         mBodyEditText = (EditText) findViewById(R.id.body_create_story_edittext);
         mCreateButton = (Button) findViewById(R.id.create_story_button);
         mStoryImageView = (ImageView) findViewById(R.id.adoption_story_imageview);
-        mImageHandler = new ImageHandler(mStoryImageView);
+        mPhotographer = new Photographer(mStoryImageView);
 
         mCreateButton.setOnClickListener(new CreateStoryOnClickListener(this));
 
@@ -83,7 +92,7 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
                 dialog.setTitle(R.string.choose_an_option);
-                dialog.setItems(mImageHandler.getOptions(),
+                dialog.setItems(mPhotographer.getOptions(),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -91,19 +100,19 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
 
                                     case 0:
 
-                                        takePicture();
+                                        takePhoto();
 
                                         break;
 
                                     case 1:
 
-                                        pickImage();
+                                        pickPhoto();
 
                                         break;
 
                                     case 2:
 
-                                        beginCrop(mImageHandler.mSourceImage);
+                                        cropPhoto(mPhotographer.mSourceImage);
 
                                         break;
                                 }
@@ -120,9 +129,9 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
             @Override
             public boolean onLongClick(View v) {
 
-                if (mImageHandler.mSourceImage != null) {
+                if (mPhotographer.mSourceImage != null) {
 
-                    beginCrop(mImageHandler.mSourceImage);
+                    cropPhoto(mPhotographer.mSourceImage);
                     return true;
 
                 } else {
@@ -136,16 +145,16 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
 
-        if (requestCode == ImageHandler.SQUARE_CAMERA_REQUEST_CODE &&
+        if (requestCode == Photographer.SQUARE_CAMERA_REQUEST_CODE &&
                 resultCode == RESULT_OK) {
 
             if (result != null) {
 
-                beginCrop(result.getData());
+                cropPhoto(result.getData());
 
-            } else if (mImageHandler.mSourceImage != null) {
+            } else if (mPhotographer.mSourceImage != null) {
 
-                beginCrop(mImageHandler.mSourceImage);
+                cropPhoto(mPhotographer.mSourceImage);
 
             } else {
                 Do.showLongToast(R.string.generic_networking_error, getApplicationContext());
@@ -158,31 +167,79 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
         if (requestCode == Crop.REQUEST_PICK
                 && resultCode == RESULT_OK) {
 
-            beginCrop(result.getData());
+            cropPhoto(result.getData());
 
         }  else if (requestCode == Crop.REQUEST_CROP) {
-            mImageHandler.handleCrop(resultCode, result, this);
+            mPhotographer.handleCrop(resultCode, result, this);
 
         }
     }
 
     @Override
-    public void takePicture() {
+    public void takePhoto() {
 
-       mImageHandler.takePicture(this, getApplicationContext());
+       mPhotographer.takePicture(this, getApplicationContext());
 
     }
 
     @Override
-    public void pickImage() {
+    public void pickPhoto() {
 
-        mImageHandler.pickImage(this);
+        mPhotographer.pickImage(this);
     }
 
     @Override
-    public void beginCrop(Uri source) {
+    public void cropPhoto(Uri source) {
 
-        mImageHandler.beginCrop(source, this);
+        mPhotographer.beginCrop(source, this);
+    }
+
+    @Override
+    public void uploadPhoto() {
+
+        mProgressDialog = ProgressDialog.show(CreateStoryActivity.this, "Espere un momento",
+                "Subiendo foto...");
+
+        Context context = getApplicationContext();
+
+        try {
+
+            saveStory();
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                    mPhotographer.mSourceImage);
+            String encodedImage = mPhotographer.encodeImage(bitmap);
+            String fileName = mPhotographer.getImageName(context);
+            ImageUploadResponse response = new ImageUploadResponse(mStory, mProgressDialog, context);
+
+            Dog dog = Dog.getDogs(Tag.DOG_OWNED).get(0);
+            int dogId = 1;
+
+            if (dog != null) {
+
+                dogId = dog.mDogId;
+            }
+
+            Request request = RequestManager.postImage(fileName, encodedImage, dogId, context,
+                    response, response);
+
+            VolleyManager.getInstance(context).addToRequestQueue(request, TAG);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            Do.showLongToast("No se pudo enviar la foto", context);
+        }
+
+    }
+
+    @Override
+    public void succeedUpload() {
+
+    }
+
+    @Override
+    public void failedUpload() {
+
     }
 
     @Override
@@ -267,7 +324,7 @@ public class CreateStoryActivity extends ActionBarActivity implements ImageHandl
         String date = Do.today();
         String time = Do.now();
         String body = mBodyEditText.getText().toString();
-        String image = mImageHandler.getStringUri();
+        String image = mPhotographer.getStringUri();
 
         Story story = new Story(storyId, title, userId, ownerName, date, time, body, image);
         mStory = Story.createOrUpdate(story);

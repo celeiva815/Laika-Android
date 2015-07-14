@@ -18,7 +18,7 @@
             android:id="@+id/picture_adopt_dog_screen_slide_imageview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:adjustViewBounds="false"
             android:cropToPadding="false"
             android:baselineAlignBottom="false" />
 

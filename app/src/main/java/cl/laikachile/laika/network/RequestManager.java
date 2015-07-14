@@ -14,12 +14,15 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.requests.LaikaRequest;
 import cl.laikachile.laika.responses.ImageResponse;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -57,6 +60,7 @@ public class RequestManager {
     public static final String ADDRESS_SYNC = "sync/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
+    public static final String ADDRESS_UPLOAD_DOG_PHOTOS = "upload_dog_photos/";
     public static final String ADDRESS_USER = "user/";
     public static final String ADDRESS_USER_DOG_PHOTOS = "user_dog_photos/";
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
@@ -76,6 +80,12 @@ public class RequestManager {
     public static final String FULL_NAME = "full_name";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String EMAIL = "email";
+
+    public static final String API_PHOTO = "photo";
+    public static final String API_CONTENT = "content";
+    public static final String API_FILE_NAME = "file_name";
+
+
 
     public static String apiRelativeUrl;
 
@@ -154,28 +164,32 @@ public class RequestManager {
     /**
      * This method is unique for this project, it should be standarized for new applications
      *
-     * @param params
-     * @param address
-     * @param imageParam
-     * @param listener
-     * @param errorListener
      * @return
      */
-    public static Request postImage(List<String> params, String address, final byte[] imageParam,
-                                    Response.Listener<String> listener,
+    public static Request postImage(String name, String encodedImage, int dogId, Context context,
+                                    Response.Listener<JSONObject> listener,
                                     Response.ErrorListener errorListener) {
 
-        String url = getURL(address);
-        Log.d(RequestManager.TAG, url);
+        String address = ADDRESS_USER_DOG_PHOTOS;
+        String token = PrefsManager.getUserToken(context);
 
-        StringRequest request = new StringRequest(METHOD_POST, url, listener, errorListener) {
+        Map<String,String> params = new HashMap<>();
+        params.put(API_CONTENT, encodedImage);
+        params.put(API_FILE_NAME, name);
 
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return imageParam;
-            }
+        JSONObject jsonPicture = getJsonParams(params);
+        JSONObject jsonParams = new JSONObject();
 
-        };
+        try {
+
+            jsonParams.put(Dog.COLUMN_DOG_ID, dogId);
+            jsonParams.put(API_PHOTO, jsonPicture);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Request request = postRequest(jsonParams, address, listener, errorListener, token);
 
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,

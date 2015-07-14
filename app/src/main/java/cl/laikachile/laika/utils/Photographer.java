@@ -1,4 +1,4 @@
-package cl.laikachile.laika.listeners;
+package cl.laikachile.laika.utils;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -25,7 +25,7 @@ import cl.laikachile.laika.utils.camera.CameraActivity;
 /**
  * Created by Tito_Leiva on 01-07-15.
  */
-public class ImageHandler {
+public class Photographer {
 
     public static final int SQUARE_CAMERA_REQUEST_CODE = 0;
     public static final int TAKE_PICTURE_REQUEST_CODE = 1;
@@ -34,7 +34,7 @@ public class ImageHandler {
     public Uri mSourceImage;
     public String mCurrentPhotoPath;
 
-    public ImageHandler(ImageView mStoryImageView) {
+    public Photographer(ImageView mStoryImageView) {
 
         this.mStoryImageView = mStoryImageView;
     }
@@ -90,7 +90,7 @@ public class ImageHandler {
 
     public void takePicture(Activity activity, Context context) {
 
-        String fileName = getImageName(PrefsManager.getUserId(context)) + ".jpg";
+        String fileName = getImageName(context) + ".jpg";
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, fileName);
         mSourceImage = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
@@ -131,7 +131,7 @@ public class ImageHandler {
         // Create an image file name
         mCurrentPhotoPath = "";
 
-        String imageFileName = getImageName(PrefsManager.getUserId(context)) + ".jpg";
+        String imageFileName = getImageName(context) + ".jpg";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = new File(storageDir, imageFileName);
@@ -151,7 +151,7 @@ public class ImageHandler {
         activity.sendBroadcast(mediaScanIntent);
     }
 
-    public String getImageName(int userId) {
+    public String getImageName(Context context) {
 
         int[] dateArray = Do.nowDateInArray();
         int[] timeArray = Do.timeInArray();
@@ -168,7 +168,7 @@ public class ImageHandler {
             date += Integer.toString(i);
         }
 
-        date += "user" + Integer.toString(userId);
+        date += "user" + Integer.toString(PrefsManager.getUserId(context)) + ".jpg";
 
         return date;
 

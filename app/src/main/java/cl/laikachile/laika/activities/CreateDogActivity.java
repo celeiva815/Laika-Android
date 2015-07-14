@@ -50,8 +50,7 @@ import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.CreateDogResponse;
-import cl.laikachile.laika.responses.ImageResponse;
-import cl.laikachile.laika.responses.PostImageResponse;
+import cl.laikachile.laika.responses.ImageUploadResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -447,8 +446,8 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             e.printStackTrace();
         }
 
-        PostImageResponse response = new PostImageResponse(mDog, context,
-                mPictureImageView, mImageProgressBar, PostImageResponse.TYPE_PROFILE);
+        ImageUploadResponse response = new ImageUploadResponse(mDog, context,
+                mPictureImageView, mImageProgressBar, ImageUploadResponse.TYPE_PROFILE);
 
         Request imageRequest = RequestManager.postRequest(jsonObject,
                 RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);

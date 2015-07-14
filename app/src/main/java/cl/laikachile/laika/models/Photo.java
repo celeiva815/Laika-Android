@@ -29,11 +29,11 @@ public class Photo extends Model {
 
     public final static String TABLE_PHOTO = "photos";
     public final static String COLUMN_PHOTO_ID = "photo_id";
-    public final static String COLUMN_OWNER_ID = "user_id";
+    public final static String COLUMN_USER_ID = "user_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_DOG_ID = "dog_id";
     public final static String COLUMN_URL_THUMBNAIL = "url_thumbnail";
-    public final static String COLUMN_URL_IMAGE = "url";
+    public final static String COLUMN_URL = "url";
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_DETAIL = "detail";
@@ -41,11 +41,12 @@ public class Photo extends Model {
     public static final String API_PHOTO = "photo";
     public static final String API_CONTENT = "content";
     public static final String API_FILE_NAME = "file_name";
+    public static final String API_USER = "user";
 
     @Column(name = COLUMN_PHOTO_ID)
     public int mPhotoId;
 
-    @Column(name = COLUMN_OWNER_ID)
+    @Column(name = COLUMN_USER_ID)
     public int mOwnerId;
 
     @Column(name = COLUMN_OWNER_NAME)
@@ -57,7 +58,7 @@ public class Photo extends Model {
     @Column(name = COLUMN_URL_THUMBNAIL)
     public String mUrlThumbnail;
 
-    @Column(name = COLUMN_URL_IMAGE)
+    @Column(name = COLUMN_URL)
     public String mUrlImage;
 
     @Column(name = COLUMN_TIME)
@@ -120,10 +121,10 @@ public class Photo extends Model {
     public Photo(JSONObject jsonObject, Context context, Dog dog) {
 
         this.mPhotoId = jsonObject.optInt(COLUMN_PHOTO_ID);
-        this.mOwnerId = jsonObject.optInt(COLUMN_OWNER_ID, PrefsManager.getUserId(context));
-        this.mOwnerName = jsonObject.optString(COLUMN_OWNER_NAME, PrefsManager.getUserName(context));
+        this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
+        this.mOwnerName = jsonObject.optString(API_USER, PrefsManager.getUserName(context));
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID, dog.mDogId);
-        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mUrlImage = jsonObject.optString(COLUMN_URL);
         this.mDate = jsonObject.optString(COLUMN_DATE);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
