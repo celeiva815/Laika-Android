@@ -25,7 +25,7 @@ public class SearchDogsToAdoptOnClickListener implements OnClickListener {
     public void onClick(View v) {
 
         int ownerId = PrefsManager.getUserId(v.getContext());
-        int locationId = mActivity.mLocation.mLocationId;
+        int locationId = mActivity.mCity.mCityId;
         int homeType = (int) mActivity.mHomeSpinner.getSelectedItemId();
         int familyCount = 0; //FIXME
         boolean hasPet = mActivity.mPets;

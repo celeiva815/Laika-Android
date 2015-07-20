@@ -14,9 +14,8 @@ import cl.laikachile.laika.activities.MainActivity;
 import cl.laikachile.laika.models.Breed;
 import cl.laikachile.laika.models.Country;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Region;
-import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
@@ -37,22 +36,14 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     @Override
     public void onResponse(JSONObject response) {
 
-        if (response.has(Dog.TABLE_DOG) && response.has(Breed.TABLE_BREED)) {
+        Dog.saveDogs(response, Tag.DOG_OWNED);
+        Breed.saveBreeds(response);
+        Country.saveCountries(response);
+        Region.saveRegions(response);
+        City.saveCities(response);
 
-            Dog.saveDogs(response, Tag.DOG_OWNED);
-            Breed.saveBreeds(response);
+        Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            ResponseHandler.requestLocations(mContext, mActivity);
-
-        } else {
-
-            Country.saveCountries(response);
-            Region.saveRegions(response);
-            Location.saveCities(response);
-            Location.setLocations(response);
-
-            Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
     }
 
     @Override

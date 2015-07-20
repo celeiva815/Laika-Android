@@ -25,8 +25,6 @@ public class Country extends Model {
     public final static String COLUMN_COUNTRY_ID = "country_id";
     public final static String COLUMN_NAME = "name";
 
-    public final static String API_ID = "id";
-
     @Column(name = COLUMN_COUNTRY_ID)
     public int mCountryId;
 
@@ -43,7 +41,7 @@ public class Country extends Model {
 
     public Country(JSONObject jsonObject) {
 
-        this.mCountryId = jsonObject.optInt(API_ID); //FIXME
+        this.mCountryId = jsonObject.optInt(COLUMN_COUNTRY_ID); //FIXME
         this.mName = jsonObject.optString(COLUMN_NAME);
 
     }

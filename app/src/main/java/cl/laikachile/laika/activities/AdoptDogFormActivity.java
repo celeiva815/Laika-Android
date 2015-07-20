@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -35,9 +34,10 @@ import cl.laikachile.laika.adapters.SpaceAdapter;
 import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
 import cl.laikachile.laika.models.AdoptDogForm;
+import cl.laikachile.laika.models.Country;
 import cl.laikachile.laika.models.Region;
 import cl.laikachile.laika.models.indexes.FreeTime;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Personality;
 import cl.laikachile.laika.models.Size;
 import cl.laikachile.laika.models.indexes.Space;
@@ -65,7 +65,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public RadioGroup mElderlyRadioGroup;
     public RadioGroup mPetsRadioGroup;
     public Button mSearchButton;
-    public Location mLocation;
+    public City mCity;
     public int mGender;
     public boolean mKids;
     public boolean mElderly;
@@ -166,7 +166,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mLocation = (Location) parent.getItemAtPosition(position);
+                mCity = (City) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -318,9 +318,11 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public List<Region> getRegions(Context context) {
 
         //TODO agregar el filtro por location del usuario
-        int locationId = 1;
-        Location location = Location.getSingleLocation(locationId);
-        return Region.getRegions(location.mCountryId);
+        int cityId = 1;
+        City city = City.getSingleLocation(cityId);
+
+        Country country = Country.getCountries().get(0);
+        return Region.getRegions(country.mCountryId);
     }
 
     public void showDialog(String title, String message) {

@@ -38,7 +38,7 @@ public class AdoptDogForm extends Model {
     public int mOwnerId;
 
     @Column(name = COLUMN_LOCATION_ID)
-    public int mLocationId;
+    public int mCityId;
 
     @Column(name = COLUMN_HOME_TYPE)
     public int mHomeType;
@@ -69,11 +69,11 @@ public class AdoptDogForm extends Model {
 
     public AdoptDogForm() { }
 
-    public AdoptDogForm(int mOwnerId, int mLocationId, int mHomeType,
+    public AdoptDogForm(int mOwnerId, int mCityId, int mHomeType,
                         int mFamilyCount, boolean mHasPet, boolean mHasElderly, boolean mHasKids,
                         int mDogGender, int mDogSize, int mDogPersonality, int mFreeTime) {
         this.mOwnerId = mOwnerId;
-        this.mLocationId = mLocationId;
+        this.mCityId = mCityId;
         this.mHomeType = mHomeType;
         this.mFamilyCount = mFamilyCount;
         this.mHasPet = mHasPet;
@@ -89,7 +89,7 @@ public class AdoptDogForm extends Model {
 
         this.mAdoptDogFormId = jsonObject.optInt(API_ID);
         this.mOwnerId = jsonObject.optInt(API_USER_ID);
-        this.mLocationId = jsonObject.optInt(COLUMN_LOCATION_ID);
+        this.mCityId = jsonObject.optInt(COLUMN_LOCATION_ID);
         this.mHomeType = jsonObject.optInt(COLUMN_HOME_TYPE);
         this.mFamilyCount = jsonObject.optInt(COLUMN_FAMILY_COUNT);
         this.mHasPet = jsonObject.optBoolean(COLUMN_HAS_PET);
@@ -111,7 +111,7 @@ public class AdoptDogForm extends Model {
     public void update(AdoptDogForm dogForm) {
 
         this.mOwnerId = dogForm.mOwnerId;
-        this.mLocationId = dogForm.mLocationId;
+        this.mCityId = dogForm.mCityId;
         this.mHomeType = dogForm.mHomeType;
         this.mFamilyCount = dogForm.mFamilyCount;
         this.mHasPet = dogForm.mHasPet;
@@ -169,7 +169,7 @@ public class AdoptDogForm extends Model {
 
         try {
 
-            jsonObject.put(COLUMN_LOCATION_ID, mLocationId);
+            jsonObject.put(COLUMN_LOCATION_ID, mCityId);
             jsonObject.put(COLUMN_HOME_TYPE, mHomeType);
             jsonObject.put(COLUMN_FAMILY_COUNT, mFamilyCount);
             jsonObject.put(COLUMN_HAS_PET, mHasPet);

@@ -25,8 +25,6 @@ public class Region extends Model {
     public final static String COLUMN_REGION_ID = "region_id";
     public final static String COLUMN_NAME = "name";
 
-    public final static String API_ID = "id";
-
     @Column(name = COLUMN_COUNTRY_ID)
     public int mCountryId;
 
@@ -48,7 +46,7 @@ public class Region extends Model {
     public Region(JSONObject jsonObject) {
 
         this.mCountryId =jsonObject.optInt(COLUMN_COUNTRY_ID);
-        this.mRegionId = jsonObject.optInt(API_ID); //FIXME
+        this.mRegionId = jsonObject.optInt(COLUMN_REGION_ID);
         this.mName = jsonObject.optString(COLUMN_NAME);
 
     }
@@ -60,6 +58,11 @@ public class Region extends Model {
         this.mName = region.mName;
 
         this.save();
+    }
+
+    public Country getCountry() {
+
+        return Country.getSingleCountry(mCountryId);
     }
 
     //DATABASE

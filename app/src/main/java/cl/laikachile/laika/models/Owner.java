@@ -73,7 +73,7 @@ public class Owner extends Model {
     public String mPhone;
 
     @Column(name = COLUMN_LOCATION_ID)
-    public int mLocationId;
+    public int mCityId;
 
 
     //Not in the database
@@ -84,7 +84,7 @@ public class Owner extends Model {
 
     public Owner(int mOwnerId, String mOwnerName, String mFirstName, String mLastName,
                  String mSecondLastName, String mRut, String mBirthDate, int mGender, String mEmail,
-                 String mPhone, int mLocationId) {
+                 String mPhone, int mCityId) {
 
         this.mOwnerId = mOwnerId;
         this.mOwnerName = mOwnerName;
@@ -96,7 +96,7 @@ public class Owner extends Model {
         this.mGender = mGender;
         this.mEmail = mEmail;
         this.mPhone = mPhone;
-        this.mLocationId = mLocationId;
+        this.mCityId = mCityId;
     }
 
     public Owner(JSONObject jsonObject) {
@@ -116,7 +116,7 @@ public class Owner extends Model {
         this.mGender = jsonObject.optInt(COLUMN_GENDER);
         this.mEmail = jsonObject.optString(COLUMN_EMAIL);
         this.mPhone = jsonObject.optString(COLUMN_PHONE);
-        this.mLocationId = jsonObject.optInt(COLUMN_LOCATION_ID);
+        this.mCityId = jsonObject.optInt(COLUMN_LOCATION_ID);
 
     }
 
@@ -158,7 +158,7 @@ public class Owner extends Model {
         this.mGender = owner.mGender;
         this.mEmail = owner.mEmail;
         this.mPhone = owner.mPhone;
-        this.mLocationId = owner.mLocationId;
+        this.mCityId = owner.mCityId;
 
         this.save();
 
@@ -175,7 +175,7 @@ public class Owner extends Model {
             jsonObject.put(COLUMN_BIRTH_DATE, mBirthDate);
             jsonObject.put(COLUMN_GENDER, mGender);
             jsonObject.put(COLUMN_PHONE,mPhone);
-            jsonObject.put(COLUMN_LOCATION_ID, mLocationId);
+            jsonObject.put(COLUMN_LOCATION_ID, mCityId);
 
         } catch (JSONException e) {
             e.printStackTrace();

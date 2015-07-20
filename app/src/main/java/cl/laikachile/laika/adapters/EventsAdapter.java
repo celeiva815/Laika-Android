@@ -67,7 +67,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         mNameTextView.setSelected(true);
         mSponsorTextView.setText(event.mSponsorName);
         mSponsorTextView.setSelected(true);
-        mLocationTextView.setText(Integer.toString(event.mLocationId));
+        mLocationTextView.setText(Integer.toString(event.mCityId));
         mDateTextView.setText(event.getDate());
         mDateTextView.setSelected(true);
         mTimeTextView.setText(event.getTime());

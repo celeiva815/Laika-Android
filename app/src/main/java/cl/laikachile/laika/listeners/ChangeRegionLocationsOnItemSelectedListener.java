@@ -6,18 +6,18 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.adapters.LocationsAdapter;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.adapters.CitiesAdapter;
+import cl.laikachile.laika.models.City;
 
 public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelectedListener{
 
-	Location mLocation;
+	City mCity;
 	Spinner mCitySpinner;
 
-	public ChangeRegionLocationsOnItemSelectedListener(Spinner citySpinner, Location location) {
+	public ChangeRegionLocationsOnItemSelectedListener(Spinner citySpinner, City city) {
 
 		this.mCitySpinner = citySpinner;
-		this.mLocation = location;
+		this.mCity = city;
 	}
 
 	public ChangeRegionLocationsOnItemSelectedListener(Spinner mCitySpinner) {
@@ -29,15 +29,15 @@ public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelect
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 
-		LocationsAdapter locationAdapter = new LocationsAdapter(view.getContext(),
+		CitiesAdapter locationAdapter = new CitiesAdapter(view.getContext(),
 				R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-				Location.getLocationsByRegions((int) id));
+				City.getCitiesByRegion((int) id));
 
 		mCitySpinner.setAdapter(locationAdapter);
 
-		if (mLocation != null) {
+		if (mCity != null) {
 
-			int locationPosition = locationAdapter.getPosition(mLocation);
+			int locationPosition = locationAdapter.getPosition(mCity);
 			mCitySpinner.setSelection(locationPosition);
 
 		}

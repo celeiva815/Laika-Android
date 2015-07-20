@@ -23,15 +23,13 @@ import com.fourmob.datetimepicker.date.DatePickerDialog;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.adapters.LocationsAdapter;
+import cl.laikachile.laika.adapters.CitiesAdapter;
 import cl.laikachile.laika.adapters.RegionAdapter;
 import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.Region;
 import cl.laikachile.laika.network.RequestManager;
@@ -61,7 +59,7 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
     public Button mUpdateButton;
     public String mDate;
     public String mPhoneCountry;
-    public Location mLocation;
+    public City mCity;
     public ProgressDialog mProgressDialog;
     public Owner mOwner;
     public int mGender;
@@ -73,7 +71,7 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
         setContentView(mIdLayout);
         mPhoneCountry = Do.getPhoneCountry(getApplicationContext());
         mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
-        mLocation = Location.getSingleLocation(mOwner.mLocationId);
+        mCity = City.getSingleLocation(mOwner.mCityId);
         setActivityView();
         setValues();
 
@@ -110,12 +108,12 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
                 getRegions(getApplicationContext()));
 
         mRegionSpinner.setAdapter(regionAdapter);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mLocation));
+        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
         mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mLocation = (Location) parent.getItemAtPosition(position);
+                mCity = (City) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -170,13 +168,13 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
 
         }
 
-        if (mLocation != null && mLocation.mLocationId > 1) {
+        if (mCity != null && mCity.mCityId > 1) {
 
             int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
-                    getPosition(mLocation.getRegion());
-            LocationsAdapter locationAdapter = new LocationsAdapter(getApplicationContext(),
+                    getPosition(mCity.getRegion());
+            CitiesAdapter locationAdapter = new CitiesAdapter(getApplicationContext(),
                     R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                    Location.getLocationsByRegions(mLocation.mRegionId));
+                    City.getCitiesByRegion(mCity.mRegionId));
 
             mCitySpinner.setAdapter(locationAdapter);
             mRegionSpinner.setSelection(regionPosition);
@@ -247,7 +245,7 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
         String birthDate = mBirthDateButton.getText().toString();
         int gender = mGender;
         String phone = mPhoneEditText.getText().toString();
-        int locationId = mLocation.mLocationId;
+        int locationId = mCity.mCityId;
 
         Owner owner = new Owner(ownerId, ownerName, firstName, lastName, secondLastName, rut, birthDate,
                 gender, mOwner.mEmail, phone, locationId);
@@ -343,8 +341,8 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
 
         //TODO agregar el filtro por location del usuario
         int locationId = 1;
-        Location location = Location.getSingleLocation(locationId);
-        return Region.getRegions(location.mCountryId);
+        City city = City.getSingleLocation(locationId);
+        return Region.getRegions(city.getCountry().mCountryId);
     }
 
     @Override

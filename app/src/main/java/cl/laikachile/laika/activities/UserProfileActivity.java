@@ -9,21 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.fourmob.datetimepicker.date.DatePickerDialog;
 
 import java.util.List;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.DogsAdapter;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Location;
+import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.utils.Do;
@@ -47,7 +43,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public TextView mLocationTextView;
     public ListView mDogsListView;
     public DogsAdapter mDogsAdapter;
-    public Location mLocation;
+    public City mCity;
     public int mOwnerId;
     public Owner mOwner;
     public List<Dog> mDogs;
@@ -119,9 +115,9 @@ public class UserProfileActivity extends ActionBarActivity {
         mEmailTextView.setText(mOwner.mEmail);
         mPhoneTextView.setText(mOwner.mPhone);
         mBirthDateTextView.setText(mOwner.mBirthDate);
-        mCountryTextView.setText(mLocation.getCountry().mName);
-        mRegionTextView.setText(mLocation.getRegion().mName);
-        mLocationTextView.setText(mLocation.mCityName);
+        mCountryTextView.setText(mCity.getCountry().mName);
+        mRegionTextView.setText(mCity.getRegion().mName);
+        mLocationTextView.setText(mCity.mCityName);
 
         mDogsAdapter = new DogsAdapter(context, R.layout.lk_dog_user_profile_row, mDogs);
         mDogsListView.setAdapter(mDogsAdapter);
@@ -194,7 +190,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public void setOwnerInformation() {
 
         mOwner = Owner.getSingleOwner(mOwnerId);
-        mLocation = Location.getSingleLocation(mOwner.mLocationId);
+        mCity = City.getSingleLocation(mOwner.mCityId);
     }
 
     public void setDogs() {

@@ -4,57 +4,55 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.models.Location;
-import cl.laikachile.laika.models.Region;
+import cl.laikachile.laika.models.City;
 
-public class LocationsAdapter extends BaseAdapter {
+public class CitiesAdapter extends BaseAdapter {
 
-	public List<Location> mLocations;
+	public List<City> mCities;
 	public Context mContext;
 	public int mIdLayout;
 	public int mIdTextview;
 
-	public LocationsAdapter(Context context, int resource, int textViewResourceId, List objects) {
+	public CitiesAdapter(Context context, int resource, int textViewResourceId, List objects) {
 
 		mContext = context;
 		mIdLayout = resource;
 		mIdTextview = textViewResourceId;
-		mLocations = objects;
+		mCities = objects;
 
 	}
 
-	public int getPosition(Location location) {
+	public int getPosition(City city) {
 
-		return mLocations.indexOf(location);
+		return mCities.indexOf(city);
 	}
 
 	@Override
 	public int getCount() {
-		return mLocations.size();
+		return mCities.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return mLocations.get(position);
+		return mCities.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return mLocations.get(position).mLocationId;
+		return mCities.get(position).mCityId;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
-		textView.setText(mLocations.get(position).mCityName);
+		textView.setText(mCities.get(position).mCityName);
 		textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
 		textView.setBackground(mContext.getResources().getDrawable(R.drawable.laikatheme_textfield_default_holo_light));
 		return textView;
@@ -69,7 +67,7 @@ public class LocationsAdapter extends BaseAdapter {
 			convertView = inflater.inflate(mIdLayout, null);
 		}
 
-		((TextView) convertView).setText(mLocations.get(position).mCityName);
+		((TextView) convertView).setText(mCities.get(position).mCityName);
 		return convertView;
 
 

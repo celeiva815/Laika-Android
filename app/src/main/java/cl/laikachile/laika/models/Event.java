@@ -55,7 +55,7 @@ public class Event extends Model {
     public String mUrlEvent;
 
     @Column(name = COLUMN_LOCATION_ID)
-    public int mLocationId;
+    public int mCityId;
 
     @Column(name = COLUMN_START_DATE)
     public String mStartDate;
@@ -76,7 +76,7 @@ public class Event extends Model {
     }
 
     public Event(int mEventId, String mName, int mSponsorId, String mSponsorName,
-                 String mUrlImage, String mUrlEvent, int mLocationId, String mStartDate,
+                 String mUrlImage, String mUrlEvent, int mCityId, String mStartDate,
                  String mFinishDate, String mStartTime, String mFinishTime, boolean mIsPaid) {
 
         this.mEventId = mEventId;
@@ -85,7 +85,7 @@ public class Event extends Model {
         this.mSponsorName = mSponsorName;
         this.mUrlImage = mUrlImage;
         this.mUrlEvent = mUrlEvent;
-        this.mLocationId = mLocationId;
+        this.mCityId = mCityId;
         this.mStartDate = mStartDate;
         this.mFinishDate = mFinishDate;
         this.mStartTime = mStartTime;
@@ -103,7 +103,7 @@ public class Event extends Model {
             this.mSponsorName = jsonObject.getString(COLUMN_SPONSOR_NAME);
             this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
             this.mUrlEvent = jsonObject.getString(COLUMN_URL_EVENT);
-            this.mLocationId = jsonObject.getInt(COLUMN_LOCATION_ID);
+            this.mCityId = jsonObject.getInt(COLUMN_LOCATION_ID);
             this.mStartDate = jsonObject.getString(COLUMN_START_DATE);
             this.mFinishDate = jsonObject.getString(COLUMN_FINISH_DATE);
             this.mStartTime = jsonObject.getString(COLUMN_START_TIME);
@@ -140,7 +140,7 @@ public class Event extends Model {
         this.mSponsorName = event.mSponsorName;
         this.mUrlImage = event.mUrlImage;
         this.mUrlEvent = event.mUrlEvent;
-        this.mLocationId = event.mLocationId;
+        this.mCityId = event.mCityId;
         this.mStartDate = event.mStartDate;
         this.mFinishDate = event.mFinishDate;
         this.mStartTime = event.mStartTime;
