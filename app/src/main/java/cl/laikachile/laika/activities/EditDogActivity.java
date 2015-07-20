@@ -28,7 +28,7 @@ public class EditDogActivity extends CreateDogActivity {
 
     public void completeDogForm() {
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Do.hideKeyboard(this);
         setDog();
 
         mNameEditText.setText(mDog.mName);

@@ -27,7 +27,8 @@ public class CreateStoryOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        mActivity.uploadPhoto();
+        Do.hideKeyboard(mActivity);
+        mActivity.sendStory();
 
 
 

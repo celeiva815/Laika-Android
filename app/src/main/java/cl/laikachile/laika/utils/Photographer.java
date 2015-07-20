@@ -86,7 +86,9 @@ public class Photographer {
         }
     }
 
-    public void takePicture(Activity activity, Context context) {
+    public void takePicture(Activity activity) {
+
+        Context context = activity.getApplicationContext();
 
         String fileName = getImageName(context) + ".jpg";
         ContentValues values = new ContentValues();
@@ -100,6 +102,7 @@ public class Photographer {
 
     }
 
+    /*
     public void takePicture(Activity activity) {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -123,7 +126,7 @@ public class Photographer {
             }
         }
 
-    }
+    } */
 
     public File createImageFile(Context context) throws IOException {
         // Create an image file name

@@ -45,6 +45,7 @@ import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.AdoptDogFormResponse;
 import cl.laikachile.laika.responses.DogForAdoptionResponse;
+import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -112,7 +113,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Do.hideKeyboard(this);
     }
 
     public void setActivityView() {

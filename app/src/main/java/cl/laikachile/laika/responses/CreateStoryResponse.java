@@ -26,8 +26,8 @@ public class CreateStoryResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Context context = mActivity.getApplicationContext();
-        Do.showShortToast("¡Gracias por compartir tu historia! Pronto estará disponible en nuestra " +
-                "aplicación ", context);
+        Do.showLongToast("¡Gracias por compartir tu historia! Pronto estará disponible en Laika",
+                context);
 
         mActivity.onBackPressed();
     }

@@ -19,10 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.toolbox.Volley;
 import com.soundcloud.android.crop.Crop;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -30,8 +31,7 @@ import java.io.IOException;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.listeners.CreateStoryOnClickListener;
-import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.responses.ImageUploadResponse;
+import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.network.RequestManager;
@@ -39,7 +39,6 @@ import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.CreateStoryResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
-import cl.laikachile.laika.utils.Tag;
 
 public class CreateStoryActivity extends ActionBarActivity implements Photographable {
 
@@ -63,6 +62,13 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Do.hideKeyboard(this);
     }
 
     public void setActivityView() {
@@ -178,7 +184,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
     @Override
     public void takePhoto() {
 
-       mPhotographer.takePicture(this, getApplicationContext());
+       mPhotographer.takePicture(this);
 
     }
 
@@ -197,38 +203,6 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
     @Override
     public void uploadPhoto() {
 
-        mProgressDialog = ProgressDialog.show(CreateStoryActivity.this, "Espere un momento",
-                "Subiendo foto...");
-
-        Context context = getApplicationContext();
-
-        try {
-
-            saveStory();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
-                    mPhotographer.mSourceImage);
-            String encodedImage = mPhotographer.encodeImage(bitmap);
-            String fileName = mPhotographer.getImageName(context);
-            ImageUploadResponse response = new ImageUploadResponse(mStory, mProgressDialog, context);
-
-            Dog dog = Dog.getDogs(Tag.DOG_OWNED).get(0);
-            int dogId = 1;
-
-            if (dog != null) {
-
-                dogId = dog.mDogId;
-            }
-
-            Request request = RequestManager.postImage(fileName, encodedImage, dogId, context,
-                    response, response);
-
-            VolleyManager.getInstance(context).addToRequestQueue(request, TAG);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            Do.showLongToast("No se pudo enviar la foto", context);
-        }
 
     }
 
@@ -276,7 +250,10 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendStory(String imageUrl) {
+    public void sendStory() {
+
+        mProgressDialog = ProgressDialog.show(CreateStoryActivity.this, "Espere un momento",
+                "Subiendo la historia...");
 
         String title = mTitleEditText.getText().toString();
         String body = mBodyEditText.getText().toString();
@@ -295,23 +272,48 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
         String date = Do.today();
         String time = Do.now();
 
-        Story story = new Story(title, date, time, body, imageUrl);
-        requestStory(story, getApplicationContext());
+        Story story = new Story(title, date, time, body, null);
+        postStory(story, getApplicationContext());
 
     }
 
 
-    public void requestStory(Story story, Context context) {
+    public void postStory(Story story, Context context) {
 
-        JSONObject params = story.getJsonObject();
+        try {
 
-        CreateStoryResponse response = new CreateStoryResponse(this);
+            saveStory();
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                    mPhotographer.mSourceImage);
+            String encodedImage = mPhotographer.encodeImage(bitmap);
+            String fileName = mPhotographer.getImageName(context);
 
-        Request storyRequest = RequestManager.postRequest(params, RequestManager.ADDRESS_STORIES,
-                response, response, PrefsManager.getUserToken(context));
+            JSONObject jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
+            JSONObject params = story.getJsonObject();
+            params.put(Photo.API_PHOTO, jsonPhoto);
 
-        VolleyManager.getInstance(context)
-                .addToRequestQueue(storyRequest, TAG);
+            CreateStoryResponse response = new CreateStoryResponse(this);
+
+            Request storyRequest = RequestManager.postRequest(params, RequestManager.ADDRESS_STORIES,
+                    response, response, PrefsManager.getUserToken(context));
+
+            storyRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    50000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            VolleyManager.getInstance(context)
+                    .addToRequestQueue(storyRequest, TAG);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            Do.showLongToast("No se pudo enviar la foto", context);
+        } catch (JSONException e) {
+
+            Do.showLongToast("La foto no pudo ser adjuntada", context);
+            e.printStackTrace();
+        }
 
     }
 

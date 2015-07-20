@@ -168,11 +168,8 @@ public class RequestManager {
         String address = ADDRESS_USER_DOG_PHOTOS;
         String token = PrefsManager.getUserToken(context);
 
-        Map<String,String> params = new HashMap<>();
-        params.put(API_CONTENT, encodedImage);
-        params.put(API_FILE_NAME, name);
 
-        JSONObject jsonPicture = getJsonParams(params);
+        JSONObject jsonPicture = getJsonPhoto(encodedImage, name);
         JSONObject jsonParams = new JSONObject();
 
         try {
@@ -196,7 +193,16 @@ public class RequestManager {
 
     // ############## Utils ################ //
 
-    public static String buildImageUrl(String relativeUrl) {
+    public static JSONObject getJsonPhoto(String encodedImage, String name) {
+
+        Map<String,String> params = new HashMap<>();
+        params.put(API_CONTENT, encodedImage);
+        params.put(API_FILE_NAME, name);
+
+        return getJsonParams(params);
+    }
+
+    public static String buildImag(String relativeUrl) {
 
         String url = BASE_URL + ADDRESS_USER_DOG_PHOTOS + relativeUrl;
         Log.d(TAG, url);

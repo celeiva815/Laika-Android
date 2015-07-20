@@ -101,7 +101,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     protected void onStart() {
         super.onStart();
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Do.hideKeyboard(this);
     }
 
     @Override
