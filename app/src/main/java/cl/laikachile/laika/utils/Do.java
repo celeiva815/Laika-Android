@@ -290,7 +290,7 @@ public class Do {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static String getPhoneCountry(Context context) {
+    public static String getCountryIso(Context context) {
 
         try {
             final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

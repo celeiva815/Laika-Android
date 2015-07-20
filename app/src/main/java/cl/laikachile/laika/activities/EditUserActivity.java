@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +68,7 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
-        mPhoneCountry = Do.getPhoneCountry(getApplicationContext());
+        mPhoneCountry = Do.getCountryIso(getApplicationContext());
         mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
         mCity = City.getSingleLocation(mOwner.mCityId);
         setActivityView();

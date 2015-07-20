@@ -24,6 +24,7 @@ public class Country extends Model {
     public final static String TABLE_COUNTRIES = "countries";
     public final static String COLUMN_COUNTRY_ID = "country_id";
     public final static String COLUMN_NAME = "name";
+    public final static String COLUMN_ISO = "iso";
 
     @Column(name = COLUMN_COUNTRY_ID)
     public int mCountryId;
@@ -31,18 +32,23 @@ public class Country extends Model {
     @Column(name = COLUMN_NAME)
     public String mName;
 
+    @Column(name = COLUMN_ISO)
+    public String mIso;
+
     public Country() {
     }
 
-    public Country(int mCountryId, String mName) {
+    public Country(int mCountryId, String mName, String mIso) {
         this.mCountryId = mCountryId;
         this.mName = mName;
+        this.mIso = mIso;
     }
 
     public Country(JSONObject jsonObject) {
 
-        this.mCountryId = jsonObject.optInt(COLUMN_COUNTRY_ID); //FIXME
+        this.mCountryId = jsonObject.optInt(COLUMN_COUNTRY_ID);
         this.mName = jsonObject.optString(COLUMN_NAME);
+        this.mIso = jsonObject.optString(COLUMN_ISO);
 
     }
 
@@ -51,6 +57,7 @@ public class Country extends Model {
 
         this.mCountryId = country.mCountryId;
         this.mName = country.mName;
+        this.mIso = country.mIso;
 
         this.save();
     }
@@ -106,6 +113,13 @@ public class Country extends Model {
 
     }
 
+    public static Country getSingleCountry(String iso) {
+
+        String condition = COLUMN_ISO + DB.EQUALS + iso;
+        return new Select().from(Country.class).where(condition).executeSingle();
+
+    }
+
     public static List<Country> getCountries() {
 
         return new Select().from(Country.class).execute();
@@ -122,6 +136,12 @@ public class Country extends Model {
 
         String condition = COLUMN_COUNTRY_ID + DB.EQUALS + country.mCountryId;
         new Delete().from(Country.class).where(condition).execute();
+
+    }
+
+    public static boolean existIso(String iso) {
+
+        return new Select().from(Country.class).where(COLUMN_ISO + DB._EQUALS_QUESTION, iso).exists();
 
     }
 }
