@@ -51,7 +51,7 @@ public class City extends Model {
     public City(JSONObject jsonObject) {
 
         this.mRegionId = jsonObject.optInt(COLUMN_REGION_ID);
-        this.mCityId = jsonObject.optInt(COLUMN_CITY_NAME);
+        this.mCityId = jsonObject.optInt(COLUMN_CITY_ID);
         this.mCityName = jsonObject.optString(COLUMN_CITY_NAME);
 
     }
@@ -168,6 +168,9 @@ public class City extends Model {
 
     }
 
+    public static List<City> getAll() {
 
+        return new Select().from(City.class).execute();
+    }
 }
 
