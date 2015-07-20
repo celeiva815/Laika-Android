@@ -16,7 +16,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -30,7 +29,6 @@ import cl.laikachile.laika.fragments.RemindersMyDogFragment;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
-import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.views.CustomPagerSlidingTabStrip;
@@ -288,7 +286,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
     public String getImageName(int dogId) {
 
-        int[] dateArray = Do.nowDateInArray();
+        int[] dateArray = Do.dateInArray();
         int[] timeArray = Do.timeInArray();
 
         String date = "";

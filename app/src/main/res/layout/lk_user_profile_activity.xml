@@ -156,12 +156,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chile"
+                    android:text="No has especificado tu país"
                     android:id="@+id/country_user_profile_textview"
                     android:textColor="@color/light_black_font"
                     android:layout_toRightOf="@+id/textView37"
                     android:layout_toEndOf="@+id/textView37"
-                    android:layout_alignBaseline="@+id/textView37" />
+                    android:layout_alignBaseline="@+id/textView37"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,22 +188,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Región Metropolitana"
+                    android:text="No has especificado tu región"
                     android:id="@+id/region_user_profile_textview"
                     android:textColor="@color/light_black_font"
                     android:layout_toRightOf="@+id/textView40"
                     android:layout_toEndOf="@+id/textView40"
-                    android:layout_alignBaseline="@+id/textView40" />
+                    android:layout_alignBaseline="@+id/textView40"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Las Condes"
+                    android:text="No has especificado tu comuna"
                     android:id="@+id/location_user_profile_textview"
                     android:textColor="@color/light_black_font"
                     android:layout_toRightOf="@+id/textView41"
                     android:layout_toEndOf="@+id/textView41"
-                    android:layout_alignBaseline="@+id/textView41" />
+                    android:layout_alignBaseline="@+id/textView41"
+                    android:layout_marginRight="5dp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -268,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+56912345678"
+                    android:text="No has especificado tu teléfono"
                     android:id="@+id/phone_user_profile_textview"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/textView43"

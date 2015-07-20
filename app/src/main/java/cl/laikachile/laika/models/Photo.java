@@ -21,13 +21,13 @@ import cl.laikachile.laika.utils.Tag;
 /**
  * Created by Tito_Leiva on 13-03-15.
  */
-@Table(name = Photo.TABLE_PHOTO)
+@Table(name = Photo.TABLE_PHOTOS)
 public class Photo extends Model {
 
 
     public static int ID = 0;
 
-    public final static String TABLE_PHOTO = "photos";
+    public final static String TABLE_PHOTOS = "photos";
     public final static String COLUMN_PHOTO_ID = "photo_id";
     public final static String COLUMN_USER_ID = "user_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
@@ -131,10 +131,44 @@ public class Photo extends Model {
         this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
     }
 
-    public static Photo savePhoto(JSONObject jsonObject, Context context, Dog dog) {
+    public Photo(JSONObject jsonObject, Context context) {
 
-        Photo photo = new Photo(jsonObject, context, dog);
-        return createOrUpdate(photo);
+        this.mPhotoId = jsonObject.optInt(COLUMN_PHOTO_ID);
+        this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
+        this.mOwnerName = jsonObject.optString(API_USER, PrefsManager.getUserName(context));
+        this.mUrlImage = jsonObject.optString(COLUMN_URL);
+        this.mDate = jsonObject.optString(COLUMN_DATE);
+        this.mTime = jsonObject.optString(COLUMN_TIME);
+        this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
+        this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
+    }
+
+    public static Photo saveDogPhoto(JSONObject jsonObject, Context context, Dog dog) {
+
+        JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
+
+        if (jsonPhoto != null) {
+
+            Photo photo = new Photo(jsonPhoto, context, dog);
+            return createOrUpdate(photo);
+        }
+
+        return null;
+
+    }
+
+    public static Photo getPhoto(JSONObject jsonObject, Context context) {
+
+        JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
+
+        if (jsonPhoto != null) {
+
+            Photo photo = new Photo(jsonPhoto, context);
+            return photo;
+
+        }
+
+        return null;
 
     }
 

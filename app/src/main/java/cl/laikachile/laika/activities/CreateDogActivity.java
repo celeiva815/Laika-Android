@@ -388,7 +388,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     public String getImageName(int userId) {
 
-        int[] dateArray = Do.nowDateInArray();
+        int[] dateArray = Do.dateInArray();
         int[] timeArray = Do.timeInArray();
 
         String date = "";

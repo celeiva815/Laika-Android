@@ -18,8 +18,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-import cl.laikachile.laika.utils.Do;
-import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.camera.CameraActivity;
 
 /**
@@ -153,12 +151,12 @@ public class Photographer {
 
     public String getImageName(Context context) {
 
-        int[] dateArray = Do.nowDateInArray();
+        int[] dateArray = Do.dateInArray();
         int[] timeArray = Do.timeInArray();
 
         String date = "";
 
-        for (int i : dateArray) {
+        for (int i = dateArray.length - 1; i >= 0; i--) {
 
             date += Integer.toString(i);
         }
@@ -168,7 +166,7 @@ public class Photographer {
             date += Integer.toString(i);
         }
 
-        date += "user" + Integer.toString(PrefsManager.getUserId(context)) + ".jpg";
+        date += "user" + Integer.toString(PrefsManager.getUserId(context));
 
         return date;
 

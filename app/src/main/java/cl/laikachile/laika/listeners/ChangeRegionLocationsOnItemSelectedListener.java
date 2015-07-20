@@ -51,7 +51,4 @@ public class ChangeRegionLocationsOnItemSelectedListener implements OnItemSelect
 	public void onNothingSelected(AdapterView<?> parent) {
 
 	}
-
-
-	
 }

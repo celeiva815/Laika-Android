@@ -40,7 +40,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public TextView mBirthDateTextView;
     public TextView mCountryTextView;
     public TextView mRegionTextView;
-    public TextView mLocationTextView;
+    public TextView mCityTextView;
     public ListView mDogsListView;
     public DogsAdapter mDogsAdapter;
     public City mCity;
@@ -84,7 +84,7 @@ public class UserProfileActivity extends ActionBarActivity {
         mBirthDateTextView = (TextView) findViewById(R.id.birth_date_user_profile_textview);
         mCountryTextView = (TextView) findViewById(R.id.country_user_profile_textview);
         mRegionTextView = (TextView) findViewById(R.id.region_user_profile_textview);
-        mLocationTextView = (TextView) findViewById(R.id.location_user_profile_textview);
+        mCityTextView = (TextView) findViewById(R.id.location_user_profile_textview);
         mDogsListView = (ListView) findViewById(R.id.dogs_user_profile_listview);
 
         mDogsListView.setOnTouchListener(new View.OnTouchListener() {
@@ -115,9 +115,14 @@ public class UserProfileActivity extends ActionBarActivity {
         mEmailTextView.setText(mOwner.mEmail);
         mPhoneTextView.setText(mOwner.mPhone);
         mBirthDateTextView.setText(mOwner.mBirthDate);
-        mCountryTextView.setText(mCity.getCountry().mName);
-        mRegionTextView.setText(mCity.getRegion().mName);
-        mLocationTextView.setText(mCity.mCityName);
+
+        if (mCity != null) {
+
+            mCountryTextView.setText(mCity.getCountry().mName);
+            mRegionTextView.setText(mCity.getRegion().mName);
+            mCityTextView.setText(mCity.mCityName);
+
+        }
 
         mDogsAdapter = new DogsAdapter(context, R.layout.lk_dog_user_profile_row, mDogs);
         mDogsListView.setAdapter(mDogsAdapter);

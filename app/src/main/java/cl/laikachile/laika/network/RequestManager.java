@@ -161,11 +161,6 @@ public class RequestManager {
 
     }
 
-    /**
-     * This method is unique for this project, it should be standarized for new applications
-     *
-     * @return
-     */
     public static Request postImage(String name, String encodedImage, int dogId, Context context,
                                     Response.Listener<JSONObject> listener,
                                     Response.ErrorListener errorListener) {
@@ -192,7 +187,7 @@ public class RequestManager {
         Request request = postRequest(jsonParams, address, listener, errorListener, token);
 
         request.setRetryPolicy(new DefaultRetryPolicy(
-                30000,
+                50000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 

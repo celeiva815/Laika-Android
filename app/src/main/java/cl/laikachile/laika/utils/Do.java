@@ -172,7 +172,7 @@ public class Do {
 
         return true; //FIXME isLoggedIn
     }
-    public static int[] nowDateInArray() {
+    public static int[] dateInArray() {
 
         Calendar cal = Calendar.getInstance();
 

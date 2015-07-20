@@ -1,9 +1,7 @@
 package cl.laikachile.laika.responses;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,8 +12,6 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import cl.laikachile.laika.R;
-import cl.laikachile.laika.activities.CreateStoryActivity;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.models.Story;
@@ -106,7 +102,7 @@ public class ImageUploadResponse implements Response.ErrorListener,
 
     public void albumPhoto(JSONObject response) {
 
-        Photo photo = Photo.savePhoto(response, mContext, mDog);
+        Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
 
 
     }
@@ -117,10 +113,10 @@ public class ImageUploadResponse implements Response.ErrorListener,
 
     public void storyPhoto(JSONObject response) {
 
-        String url = response.optString(API_URL);
+        Photo photo = Photo.getPhoto(response, mContext);
+        String url = photo.mUrlImage;
 
         if (!Do.isNullOrEmpty(url)) {
-
             mStory.mUrlImage = url;
 
         }

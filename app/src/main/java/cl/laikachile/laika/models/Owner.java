@@ -256,10 +256,10 @@ public class Owner extends Model {
         switch (mGender) {
 
             case Tag.GENDER_MALE:
-                return Do.getRString(context, R.string.gender_male);
+                return Do.getRString(context, R.string.gender_human_male);
 
             case Tag.GENDER_FEMALE:
-                return Do.getRString(context, R.string.gender_female);
+                return Do.getRString(context, R.string.gender_human_female);
         }
 
         return "";
