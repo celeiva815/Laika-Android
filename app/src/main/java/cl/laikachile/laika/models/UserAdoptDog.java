@@ -162,7 +162,8 @@ public class UserAdoptDog extends Model {
 
     public static List<UserAdoptDog> getUserAdoptDogs() {
 
-        return new Select().from(UserAdoptDog.class).execute();
+        String order = COLUMN_STATUS + DB.ASC;
+        return new Select().from(UserAdoptDog.class).orderBy(order).execute();
 
     }
 

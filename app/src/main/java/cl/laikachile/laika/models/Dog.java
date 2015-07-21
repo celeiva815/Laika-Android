@@ -440,6 +440,7 @@ public class Dog extends Model {
     public static List<Dog> getDogs(int process) {
 
         String condition = COLUMN_STATUS + DB.EQUALS + process;
+
         return new Select().from(Dog.class).where(condition).execute();
 
     }
