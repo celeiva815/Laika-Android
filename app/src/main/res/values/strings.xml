@@ -72,7 +72,7 @@
     <string name="gender_human_question">¿Cuál es tu género?</string>
     <string name="gender_human_male">Masculino</string>
     <string name="gender_human_female">Femenino</string>
-    <string name="phone_question">¿Cuál es tu número de teléfono móvil?</string>
+    <string name="phone_question">¿Cuál es tu número de teléfono móvil? (opcional)</string>
     <string name="phone_example">Ejemplo: +56912345678</string>
     <string name="add_a_password_question">Agrega una contraseña</string>
     <string name="repeat_password_question">Repite tu contraseña</string>
@@ -99,6 +99,7 @@
     <string name="favourites_left_menu">Favoritos</string>
 
     <!-- AdoptDogActivity -->
+    <string name="adopt_user_activity_name">Formulario de Adopción</string>
     <string name="adopt_activity_name">Adopción</string>
     <string name="years_adopt_dog">Tres Años</string>
     <string name="sterilized_adopt_dog">Esterilizado</string>

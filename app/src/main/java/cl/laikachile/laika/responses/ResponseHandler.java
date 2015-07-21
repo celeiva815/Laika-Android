@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.models.AdoptDogForm;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.Breed;
 import cl.laikachile.laika.models.Personality;
@@ -60,16 +61,26 @@ public class ResponseHandler {
 
             try {
 
-                Owner owner = new Owner(response);
+                JSONObject jsonUser = response.getJSONObject(Owner.API_USER);
+                Owner owner = new Owner(jsonUser);
                 Owner.createOrUpdate(owner);
 
-                token = response.getString(RequestManager.ACCESS_TOKEN);
+                if (response.has(AdoptDogForm.TABLE_ADOPT_DOG_FORM)) {
+
+                    JSONObject jsonForm = response.optJSONObject(AdoptDogForm.TABLE_ADOPT_DOG_FORM);
+                    AdoptDogForm.saveAdoptForm(jsonForm);
+                }
+
+                token = jsonUser.getString(RequestManager.ACCESS_TOKEN);
                 PrefsManager.saveUser(context, token, owner);
 
                 refreshDataBase(context, activity);
 
             } catch (JSONException e) {
                 e.printStackTrace();
+
+                Do.showLongToast("Hubo un problema con su inicio de sesión. Inténtelo nuevamente.",
+                        context);
             }
 
         } else {

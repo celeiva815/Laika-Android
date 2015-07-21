@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cl.laikachile.laika.utils.DB;
@@ -115,8 +114,7 @@ public class Country extends Model {
 
     public static Country getSingleCountry(String iso) {
 
-        String condition = COLUMN_ISO + DB.EQUALS + iso;
-        return new Select().from(Country.class).where(condition).executeSingle();
+        return new Select().from(Country.class).where(COLUMN_ISO + DB._QUESTION, iso).executeSingle();
 
     }
 
@@ -141,7 +139,7 @@ public class Country extends Model {
 
     public static boolean existIso(String iso) {
 
-        return new Select().from(Country.class).where(COLUMN_ISO + DB._EQUALS_QUESTION, iso).exists();
+        return new Select().from(Country.class).where(COLUMN_ISO + DB._QUESTION, iso).exists();
 
     }
 }

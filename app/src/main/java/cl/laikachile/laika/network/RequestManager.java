@@ -38,7 +38,7 @@ public class RequestManager {
 
     public static final String TAG = RequestManager.class.getSimpleName();
 
-    public static final String BASE_URL = "http://laika-test.herokuapp.com/";
+    public static final String BASE_URL = "http://10.201.71.183/";//"http://fundaciones.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 

@@ -40,6 +40,7 @@ public class Owner extends Model {
     public final static String API_OWNERS = "owners";
     public final static String API_ID = "id";
     public final static String API_USER_ID = "user_id";
+    public final static String API_USER = "user";
     public final static String API_LAST_NAME = "last_name";
 
     @Column(name = COLUMN_OWNER_ID)

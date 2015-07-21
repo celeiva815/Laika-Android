@@ -2,48 +2,30 @@ package cl.laikachile.laika.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cl.laikachile.laika.R;
-import cl.laikachile.laika.adapters.FreeTimeAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
-import cl.laikachile.laika.adapters.RegionAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
-import cl.laikachile.laika.adapters.SpaceAdapter;
-import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
-import cl.laikachile.laika.listeners.SearchDogsToAdoptOnClickListener;
-import cl.laikachile.laika.models.AdoptDogForm;
-import cl.laikachile.laika.models.Country;
-import cl.laikachile.laika.models.Region;
-import cl.laikachile.laika.models.indexes.FreeTime;
-import cl.laikachile.laika.models.City;
+import cl.laikachile.laika.listeners.SubmitUserAdoptionFormOnClickListener;
 import cl.laikachile.laika.models.Personality;
 import cl.laikachile.laika.models.Size;
-import cl.laikachile.laika.models.indexes.Space;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
-import cl.laikachile.laika.responses.AdoptDogFormResponse;
 import cl.laikachile.laika.responses.DogForAdoptionResponse;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -53,24 +35,16 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
     public static final String TAG = AdoptDogFormActivity.class.getSimpleName();
     public static final String API_LIMIT = "limit";
+    public static final String API_DOG_SIZE = "dog_size";
+    public static final String API_DOG_GENDER = "dog_gender";
+    public static final String API_DOG_PERSONALITY = "dog_personality";
+
 
     private int mIdLayout = R.layout.lk_adopt_dog_form_activity;
     public Spinner mSizeSpinner;
     public Spinner mPersonalitySpinner;
-    public Spinner mRegionSpinner;
-    public Spinner mCitySpinner;
-    public Spinner mHomeSpinner;
-    public EditText mPartnersEditText;
-    public Spinner mFreeTimeSpinner;
-    public RadioGroup mKidsRadioGroup;
-    public RadioGroup mElderlyRadioGroup;
-    public RadioGroup mPetsRadioGroup;
     public Button mSearchButton;
-    public City mCity;
     public int mGender;
-    public boolean mKids;
-    public boolean mElderly;
-    public boolean mPets;
     public ProgressDialog mProgressDialog;
 
     @Override
@@ -121,13 +95,6 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         //View creation
         mSizeSpinner = (Spinner) findViewById(R.id.size_dog_form_spinner);
         mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
-        mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
-        mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
-        mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
-        mFreeTimeSpinner = (Spinner) findViewById(R.id.free_time_dog_form_spinner);
-        mKidsRadioGroup = (RadioGroup) findViewById(R.id.kids_dog_form_radiogroup);
-        mElderlyRadioGroup = (RadioGroup) findViewById(R.id.elderly_dog_form_radiogroup);
-        mPetsRadioGroup = (RadioGroup) findViewById(R.id.pets_dog_form_radiogroup);
         mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
 
         //Adapters creation
@@ -139,66 +106,35 @@ public class AdoptDogFormActivity extends ActionBarActivity {
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
                 getPersonalities());
 
-        SpaceAdapter spaceAdapter = new SpaceAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                getSpaces(getApplicationContext()));
-
-        FreeTimeAdapter freeTimeAdapter = new FreeTimeAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                getFreeTimes(getApplicationContext()));
-
-        RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                getRegions(getApplicationContext()));
-
-        SearchDogsToAdoptOnClickListener listener = new SearchDogsToAdoptOnClickListener(this);
-
         //Setting the adapters
         mSizeSpinner.setAdapter(sizeAdapter);
         mPersonalitySpinner.setAdapter(personalityAdapter);
-        mRegionSpinner.setAdapter(regionAdapter);
-        mFreeTimeSpinner.setAdapter(freeTimeAdapter);
-        mHomeSpinner.setAdapter(spaceAdapter);
 
         //Setting the listeners
-        mSearchButton.setOnClickListener(listener);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner));
-        mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCity = (City) parent.getItemAtPosition(position);
-            }
+            public void onClick(View v) {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                requestDogsForAdoption();
 
             }
         });
     }
 
-    public void requestAdoptionDogForm(AdoptDogForm adoptDogForm) {
-
-        mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this,
-                "Esperanos un momento", "Estamos buscando perritos...");
-
-        JSONObject jsonParams = adoptDogForm.getJsonObject();
-        AdoptDogFormResponse response = new AdoptDogFormResponse(this);
-
-        Request adoptDogRequest = RequestManager.postRequest(jsonParams,
-                RequestManager.ADDRESS_UPLOAD_ADOPTION_FORM, response, response,
-                PrefsManager.getUserToken(getApplicationContext()));
-
-        VolleyManager.getInstance(getApplicationContext())
-                .addToRequestQueue(adoptDogRequest, TAG);
-
-    }
-
     public void requestDogsForAdoption() {
+
+        mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this, "Espere un momento...",
+                "Estamos buscando perritos para ti");
 
         Map<String,String> params = new HashMap<>();
         DogForAdoptionResponse response = new DogForAdoptionResponse(this);
+        int dogSize = (int) mSizeSpinner.getSelectedItemId();
+        int dogPersonality = (int) mPersonalitySpinner.getSelectedItemId();
 
+        params.put(API_DOG_GENDER, Integer.toString(mGender));
+        params.put(API_DOG_SIZE, Integer.toString(dogSize));
+        params.put(API_DOG_PERSONALITY, Integer.toString(dogPersonality));
         params.put(API_LIMIT, Integer.toString(10));
 
         Request adoptDogRequest = RequestManager.getRequest(params,
@@ -237,93 +173,12 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         }
     }
 
-    public void setKidsRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        this.mKids = false;
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.yes_kid_dog_form_radiobutton:
-                if (checked) {
-                    mKids = true;
-                }
-                break;
-
-            case R.id.no_kid_dog_form_radiobutton:
-                if (checked) {
-                    mKids = false;
-                }
-
-                break;
-        }
-    }
-
-    public void setElderlyRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        this.mElderly = false;
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.yes_elderly_dog_form_radiobutton:
-                if (checked) {
-                    mElderly = true;
-                }
-                break;
-
-            case R.id.no_elderly_dog_form_radiobutton:
-                if (checked) {
-                    mElderly = false;
-                }
-                break;
-        }
-    }
-
-    public void setPetsRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        this.mPets = false;
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.yes_pet_dog_form_radiobutton:
-                if (checked) {
-                    mPets = true;
-
-                }
-                break;
-
-            case R.id.no_pet_dog_form_radiobutton:
-                if (checked) {
-                    mPets = false;
-                }
-                break;
-        }
-    }
-
     public List<Size> getSizes() {
         return Size.getSizes();
     }
 
     public List<Personality> getPersonalities() {
         return Personality.getPersonalities();
-    }
-
-    public List<Space> getSpaces(Context context) {
-        return Space.getSpaces(context);
-    }
-
-    public List<FreeTime> getFreeTimes(Context context) { return FreeTime.getFreeTimes(context);  }
-
-    public List<Region> getRegions(Context context) {
-
-        //TODO agregar el filtro por location del usuario
-        int cityId = 1;
-        City city = City.getSingleLocation(cityId);
-
-        Country country = Country.getCountries().get(0);
-        return Region.getRegions(country.mCountryId);
     }
 
     public void showDialog(String title, String message) {

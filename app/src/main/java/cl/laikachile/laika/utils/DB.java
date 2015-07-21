@@ -10,7 +10,7 @@ public class DB {
     public final static String OR = " OR ";
     public final static String EQUALS = " = ";
     public final static String NOT_EQUALS = " != ";
-    public final static String _EQUALS_QUESTION = " = ?";
+    public final static String _QUESTION = " = ?";
     public final static String ORDER_BY = "ORDER BY";
     public final static String TRUE = "1";
     public final static String FALSE = "0";

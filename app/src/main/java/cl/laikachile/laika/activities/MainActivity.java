@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
         ImageView storiesImageView = (ImageView) view.findViewById(R.id.stories_main_imageview);
 
         myDogImageView.setOnClickListener(new ToMyDogOnCLickListener());
-        adoptImageView.setOnClickListener(new ToAdoptActivityOnClickListener(AdoptDogFormActivity.class));
+        adoptImageView.setOnClickListener(new ToAdoptActivityOnClickListener());
         newsImageView.setOnClickListener(new ToActivityOnCLickListener(PublicationsActivity.class));
         tipsImageView.setOnClickListener(new ToActivityOnCLickListener(TipsActivity.class));
         eventsImageView.setOnClickListener(new ToActivityOnCLickListener(EventsActivity.class));

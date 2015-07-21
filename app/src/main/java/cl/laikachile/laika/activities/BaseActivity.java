@@ -16,11 +16,16 @@ import com.android.volley.Request;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.NavigationDrawerFragment;
 import cl.laikachile.laika.fragments.PlaceHolderFragment;
+import cl.laikachile.laika.models.AdoptDogForm;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.models.Event;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.OwnerDog;
+import cl.laikachile.laika.models.Publication;
+import cl.laikachile.laika.models.Story;
+import cl.laikachile.laika.models.Tip;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.PostulatedDogsResponse;
@@ -148,8 +153,13 @@ public class BaseActivity extends ActionBarActivity
         Dog.deleteAll();
         Owner.deleteAll();
         OwnerDog.deleteAll();
+        AdoptDogForm.deleteAll();
         CalendarReminder.deleteAll();
         AlarmReminder.deleteAll();
+        Event.deleteAll();
+        Publication.deleteAll();
+        Tip.deleteAll();
+        Story.deleteAll();
 
     }
 
