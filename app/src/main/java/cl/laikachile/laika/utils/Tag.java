@@ -11,6 +11,7 @@ public class Tag {
     public static final int DOG_LOST = 3;
     public static final int DOG_DEAD = 4;
     public static final int DOG_POSTULATED = 5;
+    public static final int DOG_DELETED = 6;
 
     //Owners
     public static final int GENDER_MALE = 1;

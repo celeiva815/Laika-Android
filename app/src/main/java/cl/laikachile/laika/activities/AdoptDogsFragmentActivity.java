@@ -1,7 +1,7 @@
 package cl.laikachile.laika.activities;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AdoptDogScreenSlideFragment;
@@ -107,8 +109,9 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
      * sequence.
      */
     protected class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    	
+
     	Activity activity;
+
         public ScreenSlidePagerAdapter(FragmentManager fm, Activity activity) {
         	
         	super(fm);
@@ -123,13 +126,19 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
 
         @Override
         public int getCount() {
+
             return mDogs.size();
         }
 
         @Override
         public int getItemPosition(Object object){
+
             return PagerAdapter.POSITION_NONE;
         }
+
+
     }
+
+
 
 }

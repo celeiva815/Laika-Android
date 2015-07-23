@@ -2,9 +2,11 @@ package cl.laikachile.laika.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.MyDogsActivity;
 import cl.laikachile.laika.listeners.RevokeAdoptionDialogOnClickListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.UserAdoptDog;
@@ -35,11 +37,37 @@ public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragmen
         mFoundationTextView.setText(mUserAdoptDog.mFoundationName);
         mStatusTextView.setText(getStatus(mUserAdoptDog.mStatus, mActivity.getApplicationContext()));
 
-        mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
-                R.string.revoke_postulated_status));
-
         mPostulateButton.setOnClickListener(new RevokeAdoptionDialogOnClickListener(mDog, mActivity,
                 mProgressDialog, mUserAdoptDog));
+
+        switch(mUserAdoptDog.mStatus) {
+
+            case Tag.POSTULATION_WAITING:
+            case Tag.POSTULATION_ACCEPTED:
+
+                mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
+                        R.string.revoke_postulated_status));
+
+                break;
+
+            case Tag.POSTULATION_DISABLED:
+            case Tag.POSTULATION_REVOKED:
+            case Tag.POSTULATION_REFUSED:
+
+                mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
+                        R.string.delete_owner));
+
+                break;
+
+            case Tag.POSTULATION_ADOPTED:
+
+                mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
+                        R.string.view_dog_profile));
+
+                break;
+
+        }
+
 
     }
 

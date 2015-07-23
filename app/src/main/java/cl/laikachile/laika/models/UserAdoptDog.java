@@ -78,7 +78,10 @@ public class UserAdoptDog extends Model {
         this.mStatus = jsonObject.optInt(COLUMN_STATUS);
 
         if (jsonObject.has(API_DOG)) {
-            Dog dog = Dog.saveDog(jsonObject.optJSONObject(API_DOG), Tag.DOG_POSTULATED);
+
+            int status = mStatus == Tag.POSTULATION_ADOPTED? Tag.DOG_OWNED : Tag.DOG_POSTULATED;
+
+            Dog dog = Dog.saveDog(jsonObject.optJSONObject(API_DOG), status);
             this.mDogId = dog.mDogId;
 
         }

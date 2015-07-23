@@ -148,6 +148,7 @@
     <string name="refused_postulated_status">Rechazada</string>
     <string name="revoked_postulated_status">Revocada</string>
     <string name="revoke_postulated_status">Revocar</string>
+    <string name="delete_postulation">Eliminar postulación</string>
 
     <!-- NewDogRegisterActivity -->
     <string name="new_dog_register_activity_name">Registro de Mascotas</string>
@@ -335,6 +336,7 @@
     <!-- OwnerOptions -->
     <string name="choose_an_option">Elije una opción...</string>
     <string name="view_profile">Ver perfil</string>
+    <string name="view_dog_profile">Ir a tu perrito</string>
     <string name="edit_my_profile">Editar mi perfil</string>
     <string name="view_my_profile">Ver mi perfil</string>
     <string name="delete_owner">Eliminar responsable</string>
