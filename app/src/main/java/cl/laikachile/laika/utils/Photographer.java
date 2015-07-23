@@ -14,10 +14,13 @@ import android.widget.ImageView;
 
 import com.soundcloud.android.crop.Crop;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.utils.camera.CameraActivity;
 
 /**
@@ -173,6 +176,26 @@ public class Photographer {
 
         return date;
 
+    }
+
+    public JSONObject getJsonPhoto(Context context) {
+
+        JSONObject jsonPhoto = new JSONObject();
+        Bitmap bitmap;
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),
+                    mSourceImage);
+
+        String encodedImage = encodeImage(bitmap);
+        String fileName = getImageName(context);
+        jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return jsonPhoto;
     }
 
     public Bitmap setPicture() {

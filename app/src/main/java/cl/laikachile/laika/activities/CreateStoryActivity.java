@@ -1,9 +1,7 @@
 package cl.laikachile.laika.activities;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -31,6 +29,7 @@ import java.io.IOException;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.listeners.CreateStoryOnClickListener;
+import cl.laikachile.laika.listeners.PhotographerListener;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.models.Story;
@@ -89,63 +88,10 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
             mBodyEditText.setText(mStory.mBody);
         }
 
-        mStoryImageView.setOnClickListener(new View.OnClickListener() {
+        PhotographerListener listener = new PhotographerListener(mPhotographer, this);
 
-            @Override
-            public void onClick(View v) {
-
-                final Context context = v.getContext();
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-
-                dialog.setTitle(R.string.choose_an_option);
-                dialog.setItems(mPhotographer.getOptions(),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                switch (which) {
-
-                                    case 0:
-
-                                        takePhoto();
-
-                                        break;
-
-                                    case 1:
-
-                                        pickPhoto();
-
-                                        break;
-
-                                    case 2:
-
-                                        cropPhoto(mPhotographer.mSourceImage);
-
-                                        break;
-                                }
-                            }
-                        });
-
-                dialog.show();
-
-            }
-        });
-
-        mStoryImageView.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                if (mPhotographer.mSourceImage != null) {
-
-                    cropPhoto(mPhotographer.mSourceImage);
-                    return true;
-
-                } else {
-
-                    return false;
-                }
-            }
-        });
+        mStoryImageView.setOnClickListener(listener);
+        mStoryImageView.setOnLongClickListener(listener);
     }
 
     @Override
@@ -283,13 +229,9 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
         try {
 
             saveStory();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
-                    mPhotographer.mSourceImage);
-            String encodedImage = mPhotographer.encodeImage(bitmap);
-            String fileName = mPhotographer.getImageName(context);
 
-            JSONObject jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
             JSONObject params = story.getJsonObject();
+            JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
             params.put(Photo.API_PHOTO, jsonPhoto);
 
             CreateStoryResponse response = new CreateStoryResponse(this);
@@ -305,13 +247,13 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
             VolleyManager.getInstance(context)
                     .addToRequestQueue(storyRequest, TAG);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            Do.showLongToast("No se pudo enviar la foto", context);
         } catch (JSONException e) {
 
             Do.showLongToast("La foto no pudo ser adjuntada", context);
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+
+            Do.showLongToast("Debes adjuntar una foto antes de enviar la historia", context);
             e.printStackTrace();
         }
 

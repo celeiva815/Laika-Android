@@ -2,6 +2,8 @@ package cl.laikachile.laika.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,13 +14,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.soundcloud.android.crop.Crop;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -27,18 +32,23 @@ import java.util.List;
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.CitiesAdapter;
 import cl.laikachile.laika.adapters.RegionAdapter;
+import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.listeners.ChangeRegionLocationsOnItemSelectedListener;
+import cl.laikachile.laika.listeners.PhotographerListener;
 import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Owner;
+import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.models.Region;
 import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.responses.EditUserResponse;
 import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
-public class EditUserActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+public class EditUserActivity extends ActionBarActivity
+        implements DatePickerDialog.OnDateSetListener, Photographable {
 
     public int mIdLayout = R.layout.lk_edit_owner_activity;
 
@@ -62,6 +72,8 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
     public ProgressDialog mProgressDialog;
     public Owner mOwner;
     public int mGender;
+    public ImageView mProfileImageView;
+    public Photographer mPhotographer;
 
 
     @Override
@@ -101,6 +113,14 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
         mRegionSpinner = (Spinner) findViewById(R.id.region_edit_user_spinner);
         mCitySpinner = (Spinner) findViewById(R.id.location_edit_user_spinner);
         mUpdateButton = (Button) findViewById(R.id.update_edit_user_button);
+        mProfileImageView = (ImageView) findViewById(R.id.profile_edit_user_imageview);
+        mPhotographer = new Photographer(mProfileImageView);
+
+
+        PhotographerListener listener = new PhotographerListener(mPhotographer, this);
+
+        mProfileImageView.setOnClickListener(listener);
+        mProfileImageView.setOnLongClickListener(listener);
 
         RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
@@ -212,6 +232,74 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+
+        if (requestCode == Photographer.SQUARE_CAMERA_REQUEST_CODE &&
+                resultCode == RESULT_OK) {
+
+            if (result != null) {
+
+                cropPhoto(result.getData());
+
+            } else if (mPhotographer.mSourceImage != null) {
+
+                cropPhoto(mPhotographer.mSourceImage);
+
+            } else {
+                Do.showLongToast(R.string.generic_networking_error, getApplicationContext());
+            }
+
+            super.onActivityResult(requestCode, resultCode, result);
+
+        }
+
+        if (requestCode == Crop.REQUEST_PICK
+                && resultCode == RESULT_OK) {
+
+            cropPhoto(result.getData());
+
+        }  else if (requestCode == Crop.REQUEST_CROP) {
+            mPhotographer.handleCrop(resultCode, result, this);
+
+        }
+    }
+
+    @Override
+    public void takePhoto() {
+
+        mPhotographer.takePicture(this);
+
+    }
+
+    @Override
+    public void pickPhoto() {
+
+        mPhotographer.pickImage(this);
+    }
+
+    @Override
+    public void cropPhoto(Uri source) {
+
+        mPhotographer.beginCrop(source, this);
+    }
+
+    @Override
+    public void uploadPhoto() {
+
+
+    }
+
+    @Override
+    public void succeedUpload() {
+
+    }
+
+    @Override
+    public void failedUpload() {
+
+    }
+
 
     public void enableViews(boolean enable) {
 
@@ -250,6 +338,13 @@ public class EditUserActivity extends ActionBarActivity implements DatePickerDia
                 gender, mOwner.mEmail, phone, locationId);
 
         JSONObject jsonParams = owner.getJsonObject();
+        JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
+        try {
+            jsonParams.put(Photo.API_PHOTO, jsonPhoto);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         EditUserResponse response = new EditUserResponse(this);
         String token = PrefsManager.getUserToken(getApplicationContext());
 
