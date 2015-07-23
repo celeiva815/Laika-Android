@@ -266,7 +266,7 @@
             android:layout_height="wrap_content"
             android:text="@string/view_more_story_adopt_dog"
             android:id="@+id/textView23"
-            android:textColor="@color/dark_white_font"
+            android:textColor="@color/laika_dark_white"
             android:gravity="center"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"

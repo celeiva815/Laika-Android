@@ -96,6 +96,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         mSizeSpinner = (Spinner) findViewById(R.id.size_dog_form_spinner);
         mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
         mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
+        mGender = Tag.GENDER_BOTH;
 
         //Adapters creation
         SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
@@ -120,6 +121,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
             }
         });
+
     }
 
     public void requestDogsForAdoption() {

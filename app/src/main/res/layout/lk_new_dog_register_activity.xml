@@ -298,7 +298,7 @@
                 android:background="@drawable/laika_button"
                 android:text="@string/add_new_dog_register"
                 android:textSize="@dimen/laika_big_text"
-                android:textColor="@color/dark_white_font" />
+                android:textColor="@color/laika_dark_white" />
 
             <ProgressBar
                 android:id="@+id/new_dog_progressbar"

@@ -176,7 +176,7 @@
                 android:background="@drawable/laika_button"
                 android:onClick="register"
                 android:text="@string/update_user"
-                android:textColor="@color/dark_white_font"
+                android:textColor="@color/laika_dark_white"
                 android:textSize="@dimen/laika_big_text" />
 
 

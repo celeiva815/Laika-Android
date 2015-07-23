@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.activities.AdoptDogsFragmentActivity;
 import cl.laikachile.laika.listeners.ConfirmAdoptionDialogOnClickListener;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.network.RequestManager;
@@ -94,7 +95,41 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mPostulateButton.setOnClickListener(listener);
 
         setUserAdoptDog();
-        
+
+        mSlidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+
+            @Override
+            public void onPanelSlide(View view, float v) {
+
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(false);
+            }
+
+            @Override
+            public void onPanelCollapsed(View view) {
+
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(true);
+            }
+
+            @Override
+            public void onPanelExpanded(View view) {
+
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(false);
+
+            }
+
+            @Override
+            public void onPanelAnchored(View view) {
+
+            }
+
+            @Override
+            public void onPanelHidden(View view) {
+
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(true);
+
+            }
+        });
+
         return view;
     }
 
@@ -116,6 +151,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         super.onResume();
 
         mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
     }
 
     public void requestDogImage(ImageView imageView) {

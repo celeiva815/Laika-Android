@@ -44,7 +44,7 @@
             android:paddingBottom="5dp"
             android:textSize="@dimen/laika_medium_text"
             android:background="@color/darker_trans_black_background"
-            android:textColor="@color/dark_white_font" />
+            android:textColor="@color/laika_dark_white" />
     </RelativeLayout>
 
     <ListView

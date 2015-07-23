@@ -241,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/laika_button"
                 android:text="@string/accept_dialog"
-                android:textColor="@color/dark_white_font" />
+                android:textColor="@color/laika_dark_white" />
 
         </LinearLayout>
     </LinearLayout>

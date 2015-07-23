@@ -342,7 +342,7 @@
                 android:layout_gravity="bottom"
                 android:background="@drawable/laika_button"
                 android:text="@string/postulate_adopt_dog"
-                android:textColor="@color/dark_white_font" />
+                android:textColor="@color/laika_dark_white" />
 
         </RelativeLayout>
 

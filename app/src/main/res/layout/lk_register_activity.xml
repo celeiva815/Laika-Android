@@ -221,7 +221,7 @@
                 android:background="@drawable/laika_button"
                 android:onClick="register"
                 android:text="@string/register_user"
-                android:textColor="@color/dark_white_font"
+                android:textColor="@color/laika_dark_white"
                 android:textSize="@dimen/laika_big_text" />
 
             <ProgressBar
@@ -246,7 +246,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/sign_up_with_social_networks"
-                    android:textColor="@color/dark_white_font"
+                    android:textColor="@color/laika_dark_white"
                     android:textSize="@dimen/laika_min_text" />
 
                 <LinearLayout

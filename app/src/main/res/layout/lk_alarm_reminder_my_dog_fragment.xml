@@ -213,6 +213,6 @@
         android:textSize="@dimen/save_alarm_reminder_my_dog"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/dark_white_font" />
+        android:textColor="@color/laika_dark_white" />
 
 </LinearLayout>

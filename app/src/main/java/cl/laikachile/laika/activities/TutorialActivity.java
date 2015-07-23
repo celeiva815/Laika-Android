@@ -47,14 +47,14 @@ public class TutorialActivity extends ActionBarActivity {
 
 
         getSupportActionBar().hide(); // hide the actionbar
-        setContentView(R.layout.lk_tutorial_activity);
+        setContentView(R.layout.lk_indicator_view_pager_activity);
 
         // Instantiate a ViewPager and a PagerAdapter
-        mPager = (ViewPager) findViewById(R.id.tutorial_pager);
+        mPager = (ViewPager) findViewById(R.id.view_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        mIndicator = (CirclePageIndicator) findViewById(R.id.tutorial_indicator);
+        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
         mIndicator.setViewPager(mPager);
     }
 

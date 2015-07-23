@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/alarm_title_stop_alarm_textview"
-                android:textColor="@color/dark_white_font"
+                android:textColor="@color/laika_dark_white"
                 android:textSize="25sp"
                 android:text="17:30 - Almuerzo"
                 android:paddingBottom="5dp"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/detail_history_my_dog"
                 android:id="@+id/alarm_detail_stop_alarm_textview"
-                android:textColor="@color/dark_white_font"
+                android:textColor="@color/laika_dark_white"
                 android:textSize="@dimen/laika_small_text"
                 android:paddingBottom="3dp" />
 
@@ -126,7 +126,7 @@
             android:paddingLeft="30dp"
             android:drawablePadding="-15dp"
             android:textSize="@dimen/laika_biggest_text"
-            android:textColor="@color/dark_white_font"/>
+            android:textColor="@color/laika_dark_white"/>
 
         <Button
             android:layout_width="0dp"
@@ -136,7 +136,7 @@
             android:layout_weight="1.5"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/laika_biggest_text"
-            android:textColor="@color/dark_white_font"
+            android:textColor="@color/laika_dark_white"
             android:background="@drawable/laika_button"
             android:drawableLeft="@drawable/laika_cancel_white"
             android:paddingLeft="30dp"

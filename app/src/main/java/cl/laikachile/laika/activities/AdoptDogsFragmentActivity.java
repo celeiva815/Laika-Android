@@ -1,6 +1,5 @@
 package cl.laikachile.laika.activities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,7 +14,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.viewpagerindicator.CirclePageIndicator;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AdoptDogScreenSlideFragment;
@@ -24,7 +24,7 @@ import cl.laikachile.laika.utils.Tag;
 
 public class AdoptDogsFragmentActivity extends ActionBarActivity{
 	
-	protected int mIdLayout = R.layout.ai_screen_slide_activity;
+	protected int mIdLayout = R.layout.lk_adopt_indicator_view_pager_activity;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -35,6 +35,7 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
      * The pager adapter, which provides the pages to the view pager widget.
      */
     protected PagerAdapter mPagerAdapter;
+    protected CirclePageIndicator mIndicator;
     protected List<Dog> mDogs;
 
     @Override
@@ -87,6 +88,20 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
          }*/ 
     }
+
+    public void setIndicatorVisibiility(boolean isVisible) {
+
+        if (isVisible) {
+
+            mIndicator.setVisibility(View.VISIBLE);
+
+        } else {
+
+            mIndicator.setVisibility(View.INVISIBLE);
+        }
+
+
+    }
     
     protected void setDogList() {
     	
@@ -97,9 +112,12 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
     protected void setViewPager() {
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.view_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
         mPager.setAdapter(mPagerAdapter);
+
+        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
+        mIndicator.setViewPager(mPager);
 
     }
 

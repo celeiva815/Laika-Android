@@ -3,6 +3,8 @@ package cl.laikachile.laika.activities;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
     @Override
     protected void setViewPager() {
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.view_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this) {
 
             @Override
@@ -41,6 +43,9 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
         };
 
         mPager.setAdapter(mPagerAdapter);
+
+        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
+        mIndicator.setViewPager(mPager);
     }
 
     public void updateDogs() {
