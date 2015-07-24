@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="cl.laikachile.laika.activities.MyDogsActivity">
+    tools:context="social.laika.app.activities.MyDogsActivity">
 
     <!-- activity_screen_slide.xml -->
-    <cl.laikachile.laika.utils.views.CustomPagerSlidingTabStrip
+    <social.laika.app.utils.views.CustomPagerSlidingTabStrip
         android:id="@+id/my_dog_indicator"
         android:layout_width="fill_parent"
         android:layout_height="48dp"

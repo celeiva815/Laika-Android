@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cl.laikachile.laika" >
+    package="social.laika.app" >
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,12 +26,12 @@
         android:icon="@drawable/laika_logo"
         android:theme="@style/LaikaTheme" >
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name="social.laika.app.activities.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name="social.laika.app.activities.MainActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="social.laika.app.activities.LoginActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name="social.laika.app.activities.RegisterActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -55,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GPlusSignInActivity"
+            android:name="social.laika.app.activities.GPlusSignInActivity"
             android:exported="false"
             android:label="@string/log_in_activity_name" >
             <intent-filter>
@@ -63,18 +63,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MapActivity"
+            android:name="social.laika.app.activities.MapActivity"
             android:label="Veterinarias" >
         </activity>
         <activity
-            android:name=".activities.MapHairActivity"
+            android:name="social.laika.app.activities.MapHairActivity"
             android:label="Peliquerías" >
         </activity>
 
         <!-- Activities de Laika -->
 
         <activity
-            android:name=".activities.AdoptDogFormActivity"
+            android:name="social.laika.app.activities.AdoptDogFormActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >
@@ -83,7 +83,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AdoptDogUserFormActivity"
+            android:name="social.laika.app.activities.AdoptDogUserFormActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >
@@ -92,7 +92,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AdoptDogsFragmentActivity"
+            android:name="social.laika.app.activities.AdoptDogsFragmentActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >
@@ -101,7 +101,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PostulatedDogsFragmentActivity"
+            android:name="social.laika.app.activities.PostulatedDogsFragmentActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >
@@ -110,7 +110,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AdoptDogSuccessActivity"
+            android:name="social.laika.app.activities.AdoptDogSuccessActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
             android:screenOrientation="portrait" >
@@ -119,7 +119,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateDogActivity"
+            android:name="social.laika.app.activities.CreateDogActivity"
             android:exported="false"
             android:label="@string/new_dog_register_activity_name"
             android:screenOrientation="portrait" >
@@ -128,7 +128,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.EditDogActivity"
+            android:name="social.laika.app.activities.EditDogActivity"
             android:exported="false"
             android:label="@string/edit_dog_register_activity_name"
             android:screenOrientation="portrait" >
@@ -137,7 +137,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.EditUserActivity"
+            android:name="social.laika.app.activities.EditUserActivity"
             android:exported="false"
             android:label="@string/edit_user_activity_name"
             android:screenOrientation="portrait" >
@@ -146,7 +146,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.UserProfileActivity"
+            android:name="social.laika.app.activities.UserProfileActivity"
             android:exported="false"
             android:label="@string/edit_user_activity_name"
             android:screenOrientation="portrait" >
@@ -155,7 +155,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MyDogsActivity"
+            android:name="social.laika.app.activities.MyDogsActivity"
             android:exported="false"
             android:label="@string/my_dog_activity_name"
             android:screenOrientation="portrait" >
@@ -164,7 +164,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HealthDogActivity"
+            android:name="social.laika.app.activities.HealthDogActivity"
             android:exported="false"
             android:label="@string/my_dog_health_activity_name"
             android:screenOrientation="portrait" >
@@ -173,7 +173,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PublicationsActivity"
+            android:name="social.laika.app.activities.PublicationsActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
             android:screenOrientation="portrait" >
@@ -182,7 +182,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PublicationsFragmentActivity"
+            android:name="social.laika.app.activities.PublicationsFragmentActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
             android:screenOrientation="portrait" >
@@ -191,7 +191,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PhotosFragmentActivity"
+            android:name="social.laika.app.activities.PhotosFragmentActivity"
             android:exported="false"
             android:label="@string/photos_activity_name">
             <intent-filter>
@@ -199,7 +199,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WebActivity"
+            android:name="social.laika.app.activities.WebActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
             android:screenOrientation="portrait" >
@@ -208,7 +208,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TipsActivity"
+            android:name="social.laika.app.activities.TipsActivity"
             android:exported="false"
             android:label="@string/tips_activity_name"
             android:screenOrientation="portrait" >
@@ -217,7 +217,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TutorialActivity"
+            android:name="social.laika.app.activities.TutorialActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -227,7 +227,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.EventsActivity"
+            android:name="social.laika.app.activities.EventsActivity"
             android:exported="false"
             android:label="@string/events_activity_name"
             android:screenOrientation="portrait" >
@@ -236,7 +236,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.StoriesActivity"
+            android:name="social.laika.app.activities.StoriesActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
             android:screenOrientation="portrait" >
@@ -245,7 +245,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateStoryActivity"
+            android:name="social.laika.app.activities.CreateStoryActivity"
             android:exported="false"
             android:label="@string/create_story_activity_name"
             android:screenOrientation="portrait" >
@@ -254,7 +254,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.StoriesFragmentActivity"
+            android:name="social.laika.app.activities.StoriesFragmentActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
             android:screenOrientation="portrait" >
@@ -263,7 +263,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.StopAlarmActivity"
+            android:name="social.laika.app.activities.StopAlarmActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
             android:screenOrientation="portrait" >
@@ -272,7 +272,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".utils.camera.CameraActivity"
+            android:name="social.laika.app.utils.camera.CameraActivity"
             android:exported="false"
             android:label="@string/camera"
             android:screenOrientation="portrait" >
@@ -284,11 +284,11 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <service
-            android:name=".network.RemindersService"
+            android:name="social.laika.app.network.RemindersService"
             android:exported="false" >
         </service>
 
-        <receiver android:name="cl.laikachile.laika.utils.AlarmReceiver">
+        <receiver android:name="social.laika.app.utils.AlarmReceiver">
         </receiver>
 
         <!-- [AI] agregar la metadata de la base de datos -->

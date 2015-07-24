@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    tools:context="cl.laikachile.laika.activities.ShowImageActivity"
+    tools:context="social.laika.app.activities.ShowImageActivity"
     android:id="@+id/fullscreen_photo_screen_slider_relativelayout">
 
     <!-- The primary full-screen view. This can be replaced with whatever view

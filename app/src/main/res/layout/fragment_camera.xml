@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cl.laikachile.laika.utils.camera.CameraFragment">
+    tools:context="social.laika.app.utils.camera.CameraFragment">
 
-    <cl.laikachile.laika.utils.camera.SquareCameraPreview
+    <social.laika.app.utils.camera.SquareCameraPreview
         android:id="@+id/camera_preview_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

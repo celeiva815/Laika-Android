@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="cl.laikachile.laika.ActivityMain" >
+    tools:context="social.laika.app.ActivityMain" >
 
     <item
         android:id="@+id/send_message_teacher_main_button"
