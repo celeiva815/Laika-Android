@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import cl.laikachile.laika.adapters.DogsAdapter;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.City;
 import cl.laikachile.laika.models.Owner;
+import cl.laikachile.laika.network.RequestManager;
 import cl.laikachile.laika.network.VolleyManager;
 import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
@@ -43,6 +45,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public TextView mCityTextView;
     public ListView mDogsListView;
     public DogsAdapter mDogsAdapter;
+    public ProgressBar mProgressBar;
     public City mCity;
     public int mOwnerId;
     public Owner mOwner;
@@ -86,6 +89,7 @@ public class UserProfileActivity extends ActionBarActivity {
         mRegionTextView = (TextView) findViewById(R.id.region_user_profile_textview);
         mCityTextView = (TextView) findViewById(R.id.location_user_profile_textview);
         mDogsListView = (ListView) findViewById(R.id.dogs_user_profile_listview);
+        mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
 
         mDogsListView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
@@ -145,6 +149,9 @@ public class UserProfileActivity extends ActionBarActivity {
         }
 
         setTitle("Perfil de " + mOwner.mFirstName);
+
+        RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+                getApplicationContext());
     }
 
     @Override

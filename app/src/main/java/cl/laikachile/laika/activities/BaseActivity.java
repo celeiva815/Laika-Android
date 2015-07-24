@@ -23,6 +23,7 @@ import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Event;
 import cl.laikachile.laika.models.Owner;
 import cl.laikachile.laika.models.OwnerDog;
+import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.models.Publication;
 import cl.laikachile.laika.models.Story;
 import cl.laikachile.laika.models.Tip;

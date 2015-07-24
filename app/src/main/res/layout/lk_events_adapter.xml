@@ -16,7 +16,7 @@
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:background="@color/picture_background">
+        android:background="@color/laika_picture_background">
 
         <ImageView
             android:id="@+id/photo_events_imageview"

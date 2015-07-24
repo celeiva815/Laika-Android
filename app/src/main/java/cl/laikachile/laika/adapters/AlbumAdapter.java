@@ -1,25 +1,30 @@
 package cl.laikachile.laika.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+
 import java.util.List;
 
+import cl.laikachile.laika.R;
 import cl.laikachile.laika.models.Photo;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.ImageResponse;
 import cl.laikachile.laika.utils.Do;
 
 public class AlbumAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Photo> mPhotos;
+    public SquareImageView mImageView;
 
     public AlbumAdapter(Context context, List<Photo> photos) {
 
@@ -49,30 +54,38 @@ public class AlbumAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        SquareImageView imageView;
         Photo photo = mPhotos.get(position);
 
         if (view == null) {
             // if it's not recycled, initialize some attributes
-            imageView = new SquareImageView(mContext);
-            imageView.setAdjustViewBounds(false);
-            imageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT ));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(0, 0, 0, 0);
-        } else {
-            imageView = (SquareImageView) view;
-        }
-
-        if (!Do.isNullOrEmpty(photo.mUrlImage)) {
-
-            imageView.setImageBitmap(photo.getPicture(200));
+            mImageView = new SquareImageView(mContext);
+            mImageView.setAdjustViewBounds(false);
+            mImageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            mImageView.setPadding(0, 0, 0, 0);
+            mImageView.setBackgroundColor(Do.getColor(mContext, R.color.laika_picture_background));
 
         } else {
-            //imageView.setImageResource(photo.mResource);
+
+            mImageView = (SquareImageView) view;
         }
 
-        return imageView;
+        if (!Do.isNullOrEmpty(photo.mUrlThumbnail) && mImageView.getDrawable() == null &&
+                Do.isNullOrEmpty(photo.mUriLocal)) {
+
+            ImageResponse response = new ImageResponse(mImageView, photo, mContext);
+            Request request = RequestManager.imageRequest(photo.mUrlThumbnail, mImageView, response,
+                    response);
+
+            VolleyManager.getInstance(mContext).addToRequestQueue(request);
+
+        } else {
+
+            mImageView.setImageURI(Uri.parse(photo.mUriLocal));
+        }
+
+        return mImageView;
     }
 
     private class SquareImageView extends ImageView {

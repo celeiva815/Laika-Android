@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="main_background">#eee</color>
-    <color name="picture_background">#ccc</color>
+    <color name="laika_picture_background">#ccc</color>
     <color name="light_red_background">#F49292</color>
     <color name="semi_trans_background">#77FFFFFF</color>
     <color name="semi_trans_black_background">#33000000</color>

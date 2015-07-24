@@ -76,7 +76,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
         mBodyEditText = (EditText) findViewById(R.id.body_create_story_edittext);
         mCreateButton = (Button) findViewById(R.id.create_story_button);
         mStoryImageView = (ImageView) findViewById(R.id.adoption_story_imageview);
-        mPhotographer = new Photographer(mStoryImageView);
+        mPhotographer = new Photographer();
 
         mCreateButton.setOnClickListener(new CreateStoryOnClickListener(this));
 
@@ -122,7 +122,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
             cropPhoto(result.getData());
 
         }  else if (requestCode == Crop.REQUEST_CROP) {
-            mPhotographer.handleCrop(resultCode, result, this);
+            mPhotographer.handleCrop(resultCode, result, this, mStoryImageView);
 
         }
     }

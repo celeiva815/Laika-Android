@@ -36,6 +36,7 @@ public class Owner extends Model {
     public final static String COLUMN_PHONE = "phone";
     public final static String COLUMN_EMAIL = "email";
     public final static String COLUMN_LOCATION_ID = "location_id";
+    public final static String COLUMN_URL_IMAGE = "url_image";
 
     public final static String API_OWNERS = "owners";
     public final static String API_ID = "id";
@@ -76,6 +77,8 @@ public class Owner extends Model {
     @Column(name = COLUMN_LOCATION_ID)
     public int mCityId;
 
+    @Column(name = COLUMN_URL_IMAGE)
+    public String mUrlImage;
 
     //Not in the database
     public int mRole;
@@ -118,6 +121,7 @@ public class Owner extends Model {
         this.mEmail = jsonObject.optString(COLUMN_EMAIL);
         this.mPhone = jsonObject.optString(COLUMN_PHONE);
         this.mCityId = jsonObject.optInt(COLUMN_LOCATION_ID);
+        this.mUrlImage= jsonObject.optString(COLUMN_URL_IMAGE);
 
     }
 
@@ -160,6 +164,7 @@ public class Owner extends Model {
         this.mEmail = owner.mEmail;
         this.mPhone = owner.mPhone;
         this.mCityId = owner.mCityId;
+        this.mUrlImage = owner.mUrlImage;
 
         this.save();
 

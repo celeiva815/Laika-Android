@@ -31,13 +31,13 @@ public class Photographer {
     public static final int SQUARE_CAMERA_REQUEST_CODE = 0;
     public static final int TAKE_PICTURE_REQUEST_CODE = 1;
 
-    private ImageView mStoryImageView;
     public Uri mSourceImage;
     public String mCurrentPhotoPath;
+    public boolean mImageChange;
 
-    public Photographer(ImageView mStoryImageView) {
+    public Photographer() {
 
-        this.mStoryImageView = mStoryImageView;
+        this.mImageChange = false;
     }
 
     public CharSequence[] getOptions() {
@@ -78,11 +78,13 @@ public class Photographer {
         Crop.of(mSourceImage, destination).asSquare().start(activity);
     }
 
-    public void handleCrop(int resultCode, Intent result, Activity activity) {
+    public void handleCrop(int resultCode, Intent result, Activity activity, ImageView imageView) {
+
         if (resultCode == activity.RESULT_OK) {
 
-            mStoryImageView.setImageDrawable(null);
-            mStoryImageView.setImageURI(Crop.getOutput(result));
+            imageView.setImageDrawable(null);
+            imageView.setImageURI(Crop.getOutput(result));
+            mImageChange = true;
 
         } else if (resultCode == Crop.RESULT_ERROR) {
             Do.showShortToast(Crop.getError(result).getMessage(), activity.getApplicationContext());
@@ -162,15 +164,8 @@ public class Photographer {
 
         String date = "";
 
-        for (int i = dateArray.length - 1; i >= 0; i--) {
-
-            date += Integer.toString(i);
-        }
-
-        for (int i : timeArray) {
-
-            date += Integer.toString(i);
-        }
+        date += dateArray[2] + dateArray[1] + dateArray[0];
+        date += timeArray[0] + timeArray[1];
 
         date += "user" + Integer.toString(PrefsManager.getUserId(context));
 
@@ -187,9 +182,9 @@ public class Photographer {
             bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),
                     mSourceImage);
 
-        String encodedImage = encodeImage(bitmap);
-        String fileName = getImageName(context);
-        jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
+            String encodedImage = encodeImage(bitmap);
+            String fileName = getImageName(context);
+            jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -240,6 +235,11 @@ public class Photographer {
 
             return "";
         }
+    }
+
+    public boolean hasPhotoChanged() {
+
+        return mSourceImage != null && mImageChange;
     }
 
     public Uri parseUri(String uriString) {

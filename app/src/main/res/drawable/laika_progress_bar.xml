@@ -17,11 +17,11 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/picture_background" />
+                <solid android:color="@color/laika_picture_background" />
             </shape>
         </clip>
 
-        <color android:color="@color/picture_background" />
+        <color android:color="@color/laika_picture_background" />
     </item>
 
 </layer-list>

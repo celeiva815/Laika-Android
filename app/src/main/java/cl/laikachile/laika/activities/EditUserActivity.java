@@ -15,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.soundcloud.android.crop.Crop;
@@ -70,6 +72,7 @@ public class EditUserActivity extends ActionBarActivity
     public String mPhoneCountry;
     public City mCity;
     public ProgressDialog mProgressDialog;
+    public ProgressBar mProgressBar;
     public Owner mOwner;
     public int mGender;
     public ImageView mProfileImageView;
@@ -114,8 +117,8 @@ public class EditUserActivity extends ActionBarActivity
         mCitySpinner = (Spinner) findViewById(R.id.location_edit_user_spinner);
         mUpdateButton = (Button) findViewById(R.id.update_edit_user_button);
         mProfileImageView = (ImageView) findViewById(R.id.profile_edit_user_imageview);
-        mPhotographer = new Photographer(mProfileImageView);
-
+        mPhotographer = new Photographer();
+        mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
 
         PhotographerListener listener = new PhotographerListener(mPhotographer, this);
 
@@ -199,6 +202,9 @@ public class EditUserActivity extends ActionBarActivity
             mRegionSpinner.setSelection(regionPosition);
 
         }
+
+        RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+                getApplicationContext());
     }
 
     @Override
@@ -260,7 +266,7 @@ public class EditUserActivity extends ActionBarActivity
             cropPhoto(result.getData());
 
         }  else if (requestCode == Crop.REQUEST_CROP) {
-            mPhotographer.handleCrop(resultCode, result, this);
+            mPhotographer.handleCrop(resultCode, result, this, mProfileImageView);
 
         }
     }
@@ -338,11 +344,16 @@ public class EditUserActivity extends ActionBarActivity
                 gender, mOwner.mEmail, phone, locationId);
 
         JSONObject jsonParams = owner.getJsonObject();
-        JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
-        try {
-            jsonParams.put(Photo.API_PHOTO, jsonPhoto);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        if (mPhotographer.hasPhotoChanged()) {
+
+            JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
+
+            try {
+                jsonParams.put(Photo.API_PHOTO, jsonPhoto);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         EditUserResponse response = new EditUserResponse(this);
@@ -350,6 +361,11 @@ public class EditUserActivity extends ActionBarActivity
 
         Request registerRequest = RequestManager.patchRequest(jsonParams,
                 RequestManager.ADDRESS_USER, response, response, token);
+
+        registerRequest.setRetryPolicy(new DefaultRetryPolicy(
+                50000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(registerRequest, TAG);

@@ -19,7 +19,7 @@
         app:radius="7dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="90dp"
         app:fillColor="@color/laika_red"
         app:pageColor="@color/laika_dark_white"
         app:strokeColor="@color/laika_red"/>

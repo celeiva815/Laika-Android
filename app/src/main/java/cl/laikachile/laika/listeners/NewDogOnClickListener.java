@@ -35,7 +35,7 @@ public class NewDogOnClickListener implements OnClickListener {
 		Dog newDog = new Dog(name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
-		mActivity.requestNewOrEditDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ",
+		mActivity.requestCreateOrUpdateDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ",
 				RequestManager.METHOD_POST);
 
 	}

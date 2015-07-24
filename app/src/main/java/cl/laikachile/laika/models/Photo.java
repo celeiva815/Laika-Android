@@ -3,18 +3,27 @@ package cl.laikachile.laika.models;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import cl.laikachile.laika.utils.DB;
+import cl.laikachile.laika.utils.Do;
+import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
@@ -31,9 +40,14 @@ public class Photo extends Model {
     public final static String COLUMN_PHOTO_ID = "photo_id";
     public final static String COLUMN_USER_ID = "user_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
+    public static final String COLUMN_FILE_NAME = "file_name";
     public final static String COLUMN_DOG_ID = "dog_id";
-    public final static String COLUMN_URL_THUMBNAIL = "url_thumbnail";
-    public final static String COLUMN_URL = "url";
+    public final static String COLUMN_URL_THUMB = "thumb_url";
+    public final static String COLUMN_URL_SMALL = "small_url";
+    public final static String COLUMN_URL_MEDIUM = "medium_url";
+    public final static String COLUMN_URL_LARGE = "large_url";
+    public final static String COLUMN_URL_ORIGINAL = "original_url";
+    public final static String COLUMN_URI_LOCAL = "local_urli";
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_DETAIL = "detail";
@@ -55,11 +69,26 @@ public class Photo extends Model {
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
 
-    @Column(name = COLUMN_URL_THUMBNAIL)
+    @Column(name = COLUMN_URL_ORIGINAL)
+    public String mUrlOriginal;
+
+    @Column(name = COLUMN_URL_LARGE)
+    public String mUrlLarge;
+
+    @Column(name = COLUMN_URL_MEDIUM)
+    public String mUrlMedium;
+
+    @Column(name = COLUMN_URL_SMALL)
+    public String mUrlSmall;
+
+    @Column(name = COLUMN_URL_THUMB)
     public String mUrlThumbnail;
 
-    @Column(name = COLUMN_URL)
-    public String mUrlImage;
+    @Column(name = COLUMN_URI_LOCAL)
+    public String mUriLocal;
+
+    @Column(name = COLUMN_FILE_NAME)
+    public String mFileName;
 
     @Column(name = COLUMN_TIME)
     public String mTime;
@@ -77,7 +106,7 @@ public class Photo extends Model {
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mUrlImage, bmOptions);
+        BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
@@ -87,19 +116,19 @@ public class Photo extends Model {
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions = new BitmapFactory.Options();
         bmOptions.inSampleSize = scale;
-        Bitmap bitmap = BitmapFactory.decodeFile(mUrlImage, bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
 
         return bitmap;
     }
 
-    public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlImage, String mDate,
+    public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlOriginal, String mDate,
                  String mDetail) {
 
         this.mPhotoId = mPhotoId;
         this.mOwnerId = mOwnerId;
         this.mOwnerName = mOwnerName;
         this.mDogId = mDogId;
-        this.mUrlImage = mUrlImage;
+        this.mUrlOriginal = mUrlOriginal;
         this.mDate = mDate;
         this.mDetail = mDetail;
     }
@@ -110,7 +139,7 @@ public class Photo extends Model {
         this.mOwnerId = photo.mOwnerId;
         this.mOwnerName = photo.mOwnerName;
         this.mDogId = photo.mDogId;
-        this.mUrlImage = photo.mUrlImage;
+        this.mUrlOriginal = photo.mUrlOriginal;
         this.mDate = photo.mDate;
         this.mDetail = photo.mDetail;
 
@@ -124,7 +153,12 @@ public class Photo extends Model {
         this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
         this.mOwnerName = jsonObject.optString(API_USER, PrefsManager.getUserName(context));
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID, dog.mDogId);
-        this.mUrlImage = jsonObject.optString(COLUMN_URL);
+        this.mUrlOriginal = jsonObject.optString(COLUMN_URL_ORIGINAL);
+        this.mUrlLarge = jsonObject.optString(COLUMN_URL_LARGE);
+        this.mUrlMedium = jsonObject.optString(COLUMN_URL_MEDIUM);
+        this.mUrlSmall = jsonObject.optString(COLUMN_URL_SMALL);
+        this.mUrlThumbnail = jsonObject.optString(COLUMN_URL_THUMB);
+        this.mFileName = jsonObject.optString(COLUMN_FILE_NAME);
         this.mDate = jsonObject.optString(COLUMN_DATE);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
@@ -136,24 +170,47 @@ public class Photo extends Model {
         this.mPhotoId = jsonObject.optInt(COLUMN_PHOTO_ID);
         this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
         this.mOwnerName = jsonObject.optString(API_USER, PrefsManager.getUserName(context));
-        this.mUrlImage = jsonObject.optString(COLUMN_URL);
+        this.mUrlOriginal = jsonObject.optString(COLUMN_URL_ORIGINAL);
+        this.mUrlLarge = jsonObject.optString(COLUMN_URL_LARGE);
+        this.mUrlMedium = jsonObject.optString(COLUMN_URL_MEDIUM);
+        this.mUrlSmall = jsonObject.optString(COLUMN_URL_SMALL);
+        this.mUrlThumbnail = jsonObject.optString(COLUMN_URL_THUMB);
+        this.mFileName = jsonObject.optString(COLUMN_FILE_NAME);
         this.mDate = jsonObject.optString(COLUMN_DATE);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
         this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
     }
 
-    public static Photo saveDogPhoto(JSONObject jsonObject, Context context, Dog dog) {
+    public static void saveDogPhotos(JSONObject jsonObject, Context context, Dog dog) {
 
-        JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
+        try {
+            JSONArray jsonPhotos = jsonObject.getJSONArray(TABLE_PHOTOS);
 
-        if (jsonPhoto != null) {
+            for (int i = 0; i < jsonPhotos.length(); i++) {
+                saveDogPhoto(jsonPhotos.getJSONObject(i), context, dog);
 
-            Photo photo = new Photo(jsonPhoto, context, dog);
-            return createOrUpdate(photo);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        return null;
+    }
+
+    public static Photo saveDogPhoto(JSONObject jsonObject, Context context, Dog dog) {
+
+        if (jsonObject.has(API_PHOTO)) {
+
+            JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
+            Photo photo = new Photo(jsonPhoto, context, dog);
+            return createOrUpdate(photo);
+
+        } else {
+
+            Photo photo = new Photo(jsonObject, context, dog);
+            return createOrUpdate(photo);
+
+        }
 
     }
 
@@ -204,7 +261,7 @@ public class Photo extends Model {
 
     public String getImage(String size) {
 
-        String url = mUrlImage.replaceAll("original", size);
+        String url = mUrlOriginal.replaceAll("original", size);
         return url;
 
     }
@@ -222,6 +279,46 @@ public class Photo extends Model {
         }
 
         return jsonObject;
+    }
+
+    public void setUri(Bitmap bitmap, Context context) {
+
+        OutputStream fOut = null;
+        Uri outputFileUri;
+
+        try {
+            File root = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + "thumbs" + File.separator);
+            root.mkdirs();
+
+            String filename = new Photographer().getImageName(context);
+
+            if (!Do.isNullOrEmpty(mFileName)) {
+
+                filename = mFileName;
+            }
+
+            File sdImageMainDirectory = new File(root, filename);
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+            fOut = new FileOutputStream(sdImageMainDirectory);
+            mUriLocal = outputFileUri.toString();
+
+            this.save();
+
+        } catch (Exception e) {
+
+            Do.showShortToast("No se pudo guardar la foto", context);
+        }
+
+        try {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+
+        } catch (Exception e) {
+        }
+
+
     }
 }
 

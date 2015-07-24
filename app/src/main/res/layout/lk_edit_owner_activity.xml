@@ -179,8 +179,18 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:adjustViewBounds="false"
-                android:cropToPadding="false"
-                android:background="@drawable/laika_ic_action_camera" />
+                android:cropToPadding="false" />
+
+            <ProgressBar
+                android:id="@+id/download_image_progressbar"
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:focusableInTouchMode="false"
+                android:visibility="gone" />
+
         </RelativeLayout>
 
     </LinearLayout>

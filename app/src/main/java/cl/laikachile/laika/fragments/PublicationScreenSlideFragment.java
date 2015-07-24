@@ -39,7 +39,7 @@ public class PublicationScreenSlideFragment extends Fragment {
         sponsorTextView.setText(publication.getSponsor());
         dateTextView.setText(publication.mDate);
         bodyTextView.setText(publication.mBody);
-        //mainImageView.setImageResource(publication.mUrlImage);
+        //mainImageView.setImageResource(publication.mUrlOriginal);
         mainImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

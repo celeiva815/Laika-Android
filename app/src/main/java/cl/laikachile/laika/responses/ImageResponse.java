@@ -1,6 +1,7 @@
 package cl.laikachile.laika.responses;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import cl.laikachile.laika.R;
+import cl.laikachile.laika.models.Photo;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -17,9 +19,11 @@ import cl.laikachile.laika.R;
 public class ImageResponse implements Response.ErrorListener,
         Response.Listener<Bitmap>  {
 
+    public Context mContext;
     public Activity mActivity;
     public ImageView mImageView;
     public ProgressBar mProgressBar;
+    public Photo mPhoto;
 
     public ImageResponse(Activity mActivity, ImageView mImageView) {
         this.mActivity = mActivity;
@@ -37,6 +41,12 @@ public class ImageResponse implements Response.ErrorListener,
         this.mProgressBar = mProgressBar;
     }
 
+    public ImageResponse(ImageView mImageView, Photo mPhoto, Context mContext) {
+        this.mImageView = mImageView;
+        this.mPhoto = mPhoto;
+        this.mContext = mContext;
+    }
+
     @Override
     public void onResponse(Bitmap response) {
 
@@ -45,6 +55,10 @@ public class ImageResponse implements Response.ErrorListener,
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);
 
+        }
+
+        if (mPhoto != null) {
+            mPhoto.setUri(response, mContext);
         }
     }
 

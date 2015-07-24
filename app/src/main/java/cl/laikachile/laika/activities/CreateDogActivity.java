@@ -40,6 +40,7 @@ import cl.laikachile.laika.R;
 import cl.laikachile.laika.adapters.BreedAdapter;
 import cl.laikachile.laika.adapters.PersonalityAdapter;
 import cl.laikachile.laika.adapters.SizeAdapter;
+import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.listeners.NewDogOnClickListener;
 import cl.laikachile.laika.listeners.ChangeDogBreedsOnItemSelectedListener;
 import cl.laikachile.laika.models.Dog;
@@ -55,7 +56,8 @@ import cl.laikachile.laika.utils.Do;
 import cl.laikachile.laika.utils.PrefsManager;
 import cl.laikachile.laika.utils.Tag;
 
-public class CreateDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+public class CreateDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener,
+                                                                    Photographable{
 
     public static final String TAG = CreateDogActivity.class.getSimpleName();
     public static final String KEY_DOG_ID = "dog_id";
@@ -187,7 +189,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             @Override
             public void onClick(View v) {
 
-                takePicture();
+                takePhoto();
             }
         });
 
@@ -195,7 +197,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     }
 
-    public void requestNewOrEditDog(Dog dog, String message, int method) {
+    public void requestCreateOrUpdateDog(Dog dog, String message, int method) {
 
         enableViews(false);
         JSONObject jsonObject = dog.getJsonObject();
@@ -325,112 +327,6 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-
-            Bitmap imageBitmap = setPicture();
-            String imageName = getImageName(PrefsManager.getUserId(getApplicationContext()));
-            String encodedImage = encodeImage(imageBitmap);
-
-            postPicture(imageName, encodedImage);
-
-        } else if (resultCode == RESULT_CANCELED) {
-
-            Toast.makeText(this, "La fotografía fue cancelada", Toast.LENGTH_SHORT).show();
-        } else {
-
-            Toast.makeText(this, "No se pudo tomar la fotografía", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void takePicture() {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the mPhoto should go
-            File photoFile = null;
-            try {
-
-                photoFile = createImageFile();
-
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Do.showShortToast("Problem creating the picture", getApplicationContext());
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            }
-        }
-
-    }
-
-    public File createImageFile() throws IOException {
-        // Create an image file name
-
-        Context context = getApplicationContext();
-
-        mCurrentPhotoPath = "";
-
-        String imageFileName = getImageName(PrefsManager.getUserId(context)) + ".jpg";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = new File(storageDir, imageFileName);
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-
-        return image;
-    }
-
-    public String getImageName(int userId) {
-
-        int[] dateArray = Do.dateInArray();
-        int[] timeArray = Do.timeInArray();
-
-        String date = "";
-
-        for (int i : dateArray) {
-
-            date += Integer.toString(i);
-        }
-
-        for (int i : timeArray) {
-
-            date += Integer.toString(i);
-        }
-
-        date += "user" + Integer.toString(userId);
-
-        return date;
-
-    }
-
-    private Bitmap setPicture() {
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / 640, photoH / 480);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-        bmOptions.inSampleSize = scaleFactor;
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-        return bitmap;
-    }
-
     public void postPicture(String name, String image) {
 
         Context context = getApplicationContext();
@@ -446,8 +342,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             e.printStackTrace();
         }
 
-        ImageUploadResponse response = new ImageUploadResponse(mDog, context,
-                mPictureImageView, mImageProgressBar, ImageUploadResponse.TYPE_PROFILE);
+        ImageUploadResponse response = new ImageUploadResponse(mDog, this, context);
 
         Request imageRequest = RequestManager.postRequest(jsonObject,
                 RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);
@@ -456,14 +351,34 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     }
 
-    public String encodeImage(Bitmap bitmap) {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+    @Override
+    public void takePhoto() {
 
-        return encoded;
     }
 
+    @Override
+    public void pickPhoto() {
+
+    }
+
+    @Override
+    public void cropPhoto(Uri source) {
+
+    }
+
+    @Override
+    public void uploadPhoto() {
+
+    }
+
+    @Override
+    public void succeedUpload() {
+
+    }
+
+    @Override
+    public void failedUpload() {
+
+    }
 }

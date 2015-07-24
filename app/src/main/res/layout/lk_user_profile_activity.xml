@@ -35,6 +35,17 @@
                 android:textSize="@dimen/laika_medium_text"
                 android:background="@color/darker_trans_black_background"
                 android:textColor="@color/laika_dark_white" />
+
+            <ProgressBar
+                android:id="@+id/download_image_progressbar"
+                style="?android:attr/progressBarStyleSmallInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:focusableInTouchMode="false"
+                android:visibility="gone" />
+
         </RelativeLayout>
 
         <LinearLayout

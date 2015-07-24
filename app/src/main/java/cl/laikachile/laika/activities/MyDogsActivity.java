@@ -1,10 +1,8 @@
 package cl.laikachile.laika.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,24 +14,29 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
+import com.android.volley.Request;
+import com.soundcloud.android.crop.Crop;
+
+import org.json.JSONObject;
 
 import cl.laikachile.laika.R;
 import cl.laikachile.laika.fragments.AlbumMyDogFragment;
 import cl.laikachile.laika.fragments.HistoryMyDogFragment;
 import cl.laikachile.laika.fragments.OwnersFragment;
 import cl.laikachile.laika.fragments.RemindersMyDogFragment;
+import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.models.AlarmReminder;
 import cl.laikachile.laika.models.CalendarReminder;
 import cl.laikachile.laika.models.Dog;
+import cl.laikachile.laika.network.RequestManager;
+import cl.laikachile.laika.network.VolleyManager;
+import cl.laikachile.laika.responses.ImageUploadResponse;
 import cl.laikachile.laika.utils.Do;
-import cl.laikachile.laika.utils.PrefsManager;
+import cl.laikachile.laika.utils.Photographer;
 import cl.laikachile.laika.utils.views.CustomPagerSlidingTabStrip;
 
-public class MyDogsActivity extends ActionBarActivity {
+public class MyDogsActivity extends ActionBarActivity implements Photographable {
 
     public static final String DOG_ID = "dog_id";
     public static final String HISTORY = "Historial";
@@ -41,7 +44,7 @@ public class MyDogsActivity extends ActionBarActivity {
     public static final String OWNERS = "Dueños";
     public static final String ALBUM = "Album";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    public static final String[] CONTENT = new String[] {HISTORY, REMINDERS, OWNERS, ALBUM};
+    public static final String[] CONTENT = new String[]{HISTORY, REMINDERS, OWNERS, ALBUM};
     public static final int[] ICONS = new int[]{
             R.drawable.laika_history_selector,
             R.drawable.laika_reminder_selector,
@@ -58,8 +61,8 @@ public class MyDogsActivity extends ActionBarActivity {
     public String mCurrentPhotoPath;
     public ViewPager mPager;
     public PagerAdapter mPagerAdapter;
-
     public CustomPagerSlidingTabStrip mIndicator;
+    public Photographer mPhotographer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
         int dogId = getIntent().getIntExtra(DOG_ID, 0);
         mDog = Dog.getSingleDog(dogId);
+        mPhotographer = new Photographer();
 
         // Instantiate a ViewPager and a PagerAdapter
         mPager = (ViewPager) findViewById(R.id.my_dog_pager);
@@ -81,6 +85,8 @@ public class MyDogsActivity extends ActionBarActivity {
 
         mIndicator = (CustomPagerSlidingTabStrip) findViewById(R.id.my_dog_indicator);
         mIndicator.setViewPager(mPager);
+
+
     }
 
     @Override
@@ -114,27 +120,8 @@ public class MyDogsActivity extends ActionBarActivity {
                 return true;
 
             case R.id.camera_menu_button:
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // Ensure that there's a camera activity to handle the intent
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the mPhoto should go
-                    File photoFile = null;
-                    try {
 
-                        photoFile = createImageFile();
-
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
-                        Do.showShortToast("Problem creating the picture", getApplicationContext());
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(photoFile));
-                        startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-                    }
-                }
-
+                takePhoto();
                 return true;
 
             case R.id.dog_settings:
@@ -148,33 +135,6 @@ public class MyDogsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-
-            if (resultCode == RESULT_OK) {
-
-                //Bitmap imageBitmap = setPicture();
-                //String imageName = getImageName(mDog.mDogId);
-                //FIXME agregar el nombre correcto del usuario
-                String ownerName = PrefsManager.getUserName(getApplicationContext());
-                int ownerId = PrefsManager.getUserId(getApplicationContext());
-
-
-                mPagerAdapter.notifyDataSetChanged();
-
-
-            } else if (resultCode == RESULT_CANCELED) {
-
-                Toast.makeText(this, "La fotografía fue cancelada", Toast.LENGTH_SHORT).show();
-            } else {
-
-                Toast.makeText(this, "No se pudo tomar la fotografía", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public void setHistoryFragment(Dog mDog) {
@@ -221,95 +181,9 @@ public class MyDogsActivity extends ActionBarActivity {
 
     }
 
-
-    public File createImageFile() throws IOException {
-        // Create an image file name
-
-        mCurrentPhotoPath = "";
-
-        String imageFileName = getImageName(mDog.mDogId) + ".jpg";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = new File(storageDir, imageFileName);
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-
-        return image;
-    }
-
-    private Bitmap setPicture() {
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / 640, photoH / 480);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-        bmOptions.inSampleSize = scaleFactor;
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-
-        return bitmap;
-    }
-
-    public void takePicture() {
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the mPhoto should go
-            File photoFile = null;
-            try {
-
-                photoFile = createImageFile();
-
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Do.showShortToast("Problem creating the picture", getApplicationContext());
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            }
-        }
-
-    }
-
-    public String getImageName(int dogId) {
-
-        int[] dateArray = Do.dateInArray();
-        int[] timeArray = Do.timeInArray();
-
-        String date = "";
-
-        for (int i : dateArray) {
-
-            date += Integer.toString(i);
-        }
-
-        for (int i : timeArray) {
-
-            date += Integer.toString(i);
-        }
-
-        date += Integer.toString(dogId);
-
-        return date;
-
-    }
-
     public int getPagerPosition(String tab) {
 
-        for (int i = 0 ; i < CONTENT.length ; i++) {
+        for (int i = 0; i < CONTENT.length; i++) {
 
             if (CONTENT[i].equals(tab)) {
                 return i;
@@ -317,6 +191,99 @@ public class MyDogsActivity extends ActionBarActivity {
         }
 
         return 0;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+
+        if (requestCode == Photographer.SQUARE_CAMERA_REQUEST_CODE &&
+                resultCode == RESULT_OK) {
+
+            if (result != null) {
+
+                cropPhoto(result.getData());
+
+            } else if (mPhotographer.mSourceImage != null) {
+
+                cropPhoto(mPhotographer.mSourceImage);
+
+            } else {
+                Do.showLongToast(R.string.generic_networking_error, getApplicationContext());
+            }
+
+            super.onActivityResult(requestCode, resultCode, result);
+
+        }
+
+        if (requestCode == Crop.REQUEST_PICK
+                && resultCode == RESULT_OK) {
+
+            cropPhoto(result.getData());
+
+        } else if (requestCode == Crop.REQUEST_CROP) {
+
+            uploadPhoto();
+
+        }
+    }
+
+    @Override
+    public void takePhoto() {
+
+        mPhotographer.takePicture(this);
+
+    }
+
+    @Override
+    public void pickPhoto() {
+
+        mPhotographer.pickImage(this);
+    }
+
+    @Override
+    public void cropPhoto(Uri source) {
+
+        mPhotographer.beginCrop(source, this);
+    }
+
+    @Override
+    public void uploadPhoto() {
+
+        if (Do.isNetworkAvailable(getApplicationContext())) {
+
+            Context context = getApplicationContext();
+
+            JSONObject jsonPhoto = mPhotographer.getJsonPhoto(context);
+            ImageUploadResponse response = new ImageUploadResponse(mDog, this, context);
+            response.mProgressDialog = ProgressDialog.show(MyDogsActivity.this, "Espera un momento",
+                    "Estamos subiendo la foto");
+
+            Request request = RequestManager.postImage(mDog.mDogId, jsonPhoto, context,
+                    response, response);
+
+            VolleyManager.getInstance(context).addToRequestQueue(request);
+
+        } else {
+
+            Do.showLongToast("Debes estar conectado para subir fotos", getApplicationContext());
+        }
+
+    }
+
+    @Override
+    public void succeedUpload() {
+
+        Do.showShortToast("la foto ha sido subida correctamente", getApplicationContext());
+        mAlbumFragment.refreshPhotos();
+
+    }
+
+    @Override
+    public void failedUpload() {
+
+        Do.showShortToast("La foto no se subió, pero quedó guardada en tu dispositivo.",
+                getApplicationContext());
+
     }
 
     private class ScreenSlidePagerAdapter extends FragmentPagerAdapter implements CustomPagerSlidingTabStrip.IconTabProvider {
@@ -362,6 +329,7 @@ public class MyDogsActivity extends ActionBarActivity {
 
                     if (mAlbumFragment == null) {
                         mAlbumFragment = AlbumMyDogFragment.newInstance(dogId);
+                        mAlbumFragment.setPhotographer(mPhotographer);
 
                     }
 

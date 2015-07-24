@@ -386,6 +386,20 @@ public class Dog extends Model {
 
     }
 
+    public List<String> getThumbsPhotos() {
+
+        List<String> thumbs = new ArrayList<>();
+        List<Photo> photos = Photo.getPhotos(mDogId);
+
+        for (Photo photo : photos) {
+
+            thumbs.add(photo.mUrlThumbnail);
+        }
+
+        return thumbs;
+
+    }
+
     //DataBase
 
     public static void saveDogs(JSONObject jsonObject, int status) {

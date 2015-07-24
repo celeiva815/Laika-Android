@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import cl.laikachile.laika.interfaces.Photographable;
 import cl.laikachile.laika.models.Dog;
 import cl.laikachile.laika.models.Photo;
 import cl.laikachile.laika.models.Story;
@@ -25,9 +26,6 @@ import cl.laikachile.laika.utils.Do;
 public class ImageUploadResponse implements Response.ErrorListener,
         Response.Listener<JSONObject> {
 
-    public static final int TYPE_ALBUM = 1;
-    public static final int TYPE_PROFILE = 2;
-    public static final int TYPE_STORY = 3;
     public static final String API_URL = "url";
     public static final String API_TIME = "time";
     public static final String API_DATE = "date";
@@ -38,46 +36,21 @@ public class ImageUploadResponse implements Response.ErrorListener,
     public ImageView mImageView;
     public ProgressBar mProgressBar;
     public ProgressDialog mProgressDialog;
-    public int mType;
+    public Photographable mActivity;
 
-    public ImageUploadResponse(Dog dog, Context mContext, ImageView mImageView,
-                               ProgressBar mProgressBar, int mType) {
+    public ImageUploadResponse(Dog dog, Photographable mActivity, Context mContext) {
 
         this.mDog = dog;
         this.mContext = mContext;
-        this.mImageView = mImageView;
-        this.mProgressBar = mProgressBar;
-        this.mType = mType;
-    }
-
-    public ImageUploadResponse(Story story, ProgressDialog mProgressDialog, Context context) {
-
-        this.mContext = context;
-        this.mStory = story;
-        this.mProgressDialog = mProgressDialog;
-        this.mType = TYPE_STORY;
-
+        this.mActivity = mActivity;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        switch (mType) {
-
-            case TYPE_ALBUM:
-
-                break;
-
-            case TYPE_PROFILE:
-
-                break;
-
-            case TYPE_STORY:
-
-                storyPhoto(response);
-
-                break;
-        }
+        Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
+        mActivity.succeedUpload();
+        cancelProgress();
 
     }
 
@@ -86,7 +59,6 @@ public class ImageUploadResponse implements Response.ErrorListener,
 
         ResponseHandler.error(error, mContext);
         cancelProgress();
-
 
     }
 
@@ -100,30 +72,6 @@ public class ImageUploadResponse implements Response.ErrorListener,
 
     }
 
-    public void albumPhoto(JSONObject response) {
-
-        Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
-
-
-    }
-
-    public void profilePhoto(JSONObject response) {
-
-    }
-
-    public void storyPhoto(JSONObject response) {
-
-        Photo photo = Photo.getPhoto(response, mContext);
-        String url = photo.mUrlImage;
-
-        if (!Do.isNullOrEmpty(url)) {
-            mStory.mUrlImage = url;
-
-        }
-
-        cancelProgress();
-
-    }
 
     public void cancelProgress() {
 
