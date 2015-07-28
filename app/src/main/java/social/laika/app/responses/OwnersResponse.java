@@ -8,6 +8,8 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.fragments.OwnersFragment;
+import social.laika.app.interfaces.Refreshable;
+import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 
 /**
@@ -15,18 +17,20 @@ import social.laika.app.models.Owner;
  */
 public class OwnersResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    public OwnersFragment mFragment;
+    public Refreshable mFragment;
+    public Dog mDog;
     public Context mContext;
 
-    public OwnersResponse(OwnersFragment mFragment) {
+    public OwnersResponse(Refreshable mFragment, Dog mDog, Context mContext) {
         this.mFragment = mFragment;
-        this.mContext = mFragment.getActivity().getApplicationContext();
+        this.mDog = mDog;
+        this.mContext = mContext;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        Owner.saveOwners(response, mContext, mFragment.mDog);
+        Owner.saveOwners(response, mContext, mDog);
         mFragment.refreshList();
 
     }
@@ -34,7 +38,7 @@ public class OwnersResponse implements Response.Listener<JSONObject>, Response.E
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mFragment.getActivity());
+        ResponseHandler.error(error, mContext);
 
     }
 }

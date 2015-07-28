@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import social.laika.app.R;
 import social.laika.app.fragments.AlbumMyDogFragment;
+import social.laika.app.fragments.DogProfileFragment;
 import social.laika.app.fragments.HistoryMyDogFragment;
 import social.laika.app.fragments.OwnersFragment;
 import social.laika.app.fragments.RemindersMyDogFragment;
@@ -30,7 +31,6 @@ import social.laika.app.interfaces.Photographable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageUploadResponse;
@@ -56,6 +56,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public int mIdLayout = R.layout.activity_my_dog;
     public Dog mDog;
+    public DogProfileFragment mDogProfileFragment;
     public HistoryMyDogFragment mHistoryFragment;
     public VetVisitsFragment mVetVisitsFragment;
     public RemindersMyDogFragment mRemindersFragment;
@@ -142,11 +143,11 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public void setHistoryFragment(Dog mDog) {
 
-        if (mHistoryFragment != null) {
-            mHistoryFragment.refreshHistories();
+        if (mDogProfileFragment != null) {
+            mDogProfileFragment.refreshList();
 
         } else {
-            mHistoryFragment = HistoryMyDogFragment.newInstance(mDog.mDogId);
+            mDogProfileFragment = DogProfileFragment.newInstance(mDog.mDogId);
         }
 
         mPager.setCurrentItem(getPagerPosition(HISTORY), true);
@@ -304,13 +305,22 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 case 0:
 
+                    if (mDogProfileFragment == null) {
+                        mDogProfileFragment = DogProfileFragment.newInstance(dogId);
+                    }
+
+                    return mDogProfileFragment;
+
+                case 1:
+
                     if (mHistoryFragment == null) {
-                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
+                        mHistoryFragment = mHistoryFragment.newInstance(dogId);
+
                     }
 
                     return mHistoryFragment;
 
-                case 1:
+                case 2:
 
                     if (mVetVisitsFragment == null) {
                         mVetVisitsFragment = VetVisitsFragment.newInstance(dogId);
@@ -319,14 +329,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                     return mVetVisitsFragment;
 
-                case 2:
-
-                    if (mOwnerFragment == null) {
-                        mOwnerFragment = OwnersFragment.newInstance(dogId);
-
-                    }
-
-                    return mOwnerFragment;
 
                 case 3:
 
@@ -339,11 +341,11 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                     return mAlbumFragment;
 
                 default:
-                    if (mHistoryFragment == null) {
-                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
+                    if (mDogProfileFragment == null) {
+                        mDogProfileFragment = DogProfileFragment.newInstance(dogId);
                     }
 
-                    return mHistoryFragment;
+                    return mDogProfileFragment;
 
             }
         }

@@ -22,6 +22,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.adapters.HistoryMyDogAdapter;
+import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
@@ -35,21 +36,17 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class HistoryMyDogFragment extends Fragment {
+public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     public static final String KEY_DOG = "dog";
     public static final String TAG = HistoryMyDogFragment.class.getSimpleName();
 
     public String mTag;
-    private int mIdLayout = R.layout.lk_history_my_dog_fragment;
+    private int mIdLayout = R.layout.simple_listview;
     public Dog mDog;
-    public ImageView mDogImageView;
-    public TextView mNameTextView;
-    public ProgressBar mProgressBar;
     public ListView mHistoryListView;
     public List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
-    public Dialog mDialog;
 
 
     public HistoryMyDogFragment(Dog mDog) {
@@ -86,25 +83,11 @@ public class HistoryMyDogFragment extends Fragment {
 
         View view = inflater.inflate(mIdLayout, container, false);
 
-        mDogImageView = (ImageView) view.findViewById(R.id.dog_history_imageview);
-        mNameTextView = (TextView) view.findViewById(R.id.dog_name_history_textview);
-        mHistoryListView = (ListView) view.findViewById(R.id.history_my_dog_listview);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
+        mHistoryListView = (ListView) view.findViewById(R.id.simple_listview);
         mHistoryAdapter = new HistoryMyDogAdapter(view.getContext(), R.layout.lk_history_my_dog_row,
                 getHistories(view.getContext()));
 
         mHistoryListView.setAdapter(mHistoryAdapter);
-        Do.setListViewHeightBasedOnChildren(mHistoryListView);
-
-        mHistoryListView.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
 
         mHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -117,8 +100,6 @@ public class HistoryMyDogFragment extends Fragment {
             }
         });
 
-        mNameTextView.setText(mDog.mName);
-
         return view;
     }
 
@@ -126,14 +107,13 @@ public class HistoryMyDogFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        requestDogImage();
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshHistories();
+        refreshList();
 
     }
 
@@ -186,7 +166,8 @@ public class HistoryMyDogFragment extends Fragment {
         }
     }
 
-    public void refreshHistories() {
+    @Override
+    public void refreshList() {
 
         if (!mHistories.isEmpty()) {
             mHistories.clear();
@@ -195,18 +176,6 @@ public class HistoryMyDogFragment extends Fragment {
 
         mHistories.addAll(getHistories(getActivity().getApplicationContext()));
         mHistoryAdapter.notifyDataSetChanged();
-    }
-
-    public void requestDogImage() {
-
-        mProgressBar.setVisibility(View.VISIBLE);
-        ImageResponse response = new ImageResponse(mDogImageView, mProgressBar);
-        Request request = RequestManager.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM_S),
-                mDogImageView, response, response);
-
-        VolleyManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);
-
-
     }
 
 }

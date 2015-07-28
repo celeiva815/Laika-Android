@@ -18,6 +18,7 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.OwnerMyDogAdapter;
+import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
@@ -29,7 +30,7 @@ import social.laika.app.utils.PrefsManager;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class OwnersFragment extends Fragment {
+public class OwnersFragment extends Fragment implements Refreshable {
 
     public static final String TAG = OwnersFragment.class.getSimpleName();
     public static final String KEY_DOG = "dog";
@@ -116,7 +117,7 @@ public class OwnersFragment extends Fragment {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
-        OwnersResponse response = new OwnersResponse(this);
+        OwnersResponse response = new OwnersResponse(this, mDog, context);
         Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_OWNER_DOGS,
                 response, response, PrefsManager.getUserToken(context));
 
@@ -124,6 +125,7 @@ public class OwnersFragment extends Fragment {
 
     }
 
+    @Override
     public void refreshList() {
 
         mEmptyLinearLayout.setVisibility(View.GONE);
