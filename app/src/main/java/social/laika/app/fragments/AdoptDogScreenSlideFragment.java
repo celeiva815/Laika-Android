@@ -101,19 +101,19 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             @Override
             public void onPanelSlide(View view, float v) {
 
-                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(false);
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(false);
             }
 
             @Override
             public void onPanelCollapsed(View view) {
 
-                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(true);
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(true);
             }
 
             @Override
             public void onPanelExpanded(View view) {
 
-                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(false);
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(false);
 
             }
 
@@ -125,7 +125,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             @Override
             public void onPanelHidden(View view) {
 
-                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibiility(true);
+                ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(true);
 
             }
         });

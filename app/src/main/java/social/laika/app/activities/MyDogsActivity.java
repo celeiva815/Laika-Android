@@ -25,10 +25,12 @@ import social.laika.app.fragments.AlbumMyDogFragment;
 import social.laika.app.fragments.HistoryMyDogFragment;
 import social.laika.app.fragments.OwnersFragment;
 import social.laika.app.fragments.RemindersMyDogFragment;
+import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageUploadResponse;
@@ -55,6 +57,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public int mIdLayout = R.layout.activity_my_dog;
     public Dog mDog;
     public HistoryMyDogFragment mHistoryFragment;
+    public VetVisitsFragment mVetVisitsFragment;
     public RemindersMyDogFragment mRemindersFragment;
     public OwnersFragment mOwnerFragment;
     public AlbumMyDogFragment mAlbumFragment;
@@ -309,12 +312,12 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 case 1:
 
-                    if (mRemindersFragment == null) {
-                        mRemindersFragment = RemindersMyDogFragment.newInstance(dogId);
+                    if (mVetVisitsFragment == null) {
+                        mVetVisitsFragment = VetVisitsFragment.newInstance(dogId);
 
                     }
 
-                    return mRemindersFragment;
+                    return mVetVisitsFragment;
 
                 case 2:
 

@@ -38,7 +38,8 @@ public class RequestManager {
 
     public static final String TAG = RequestManager.class.getSimpleName();
 
-    public static final String BASE_URL = "http://10.20.160.182/";//"http://fundaciones.laika.social/";
+    //public static final String BASE_URL = "http://fundaciones.laika.social/";
+    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
@@ -64,6 +65,7 @@ public class RequestManager {
     public static final String ADDRESS_USER = "user/";
     public static final String ADDRESS_USER_DOG_PHOTOS = "user_dog_photos/";
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
+    public static final String ADDRESS_VET_VISITS = "vet_visits";
 
     //Request Methods
     public static final int METHOD_DELETE = Request.Method.DELETE;

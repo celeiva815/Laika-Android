@@ -89,26 +89,6 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
          }*/ 
     }
 
-    public void setIndicatorVisibiility(boolean isVisible) {
-
-        if (isVisible) {
-
-            mIndicator.setVisibility(View.VISIBLE);
-
-        } else {
-
-            mIndicator.setVisibility(View.INVISIBLE);
-        }
-
-
-    }
-    
-    protected void setDogList() {
-    	
-    	mDogs = Dog.getDogs(Tag.DOG_FOUNDATION);
-
-    }
-
     protected void setViewPager() {
 
         // Instantiate a ViewPager and a PagerAdapter.
@@ -118,6 +98,28 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
 
         mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
         mIndicator.setViewPager(mPager);
+
+        mIndicator.setVisibility(View.GONE);
+
+    }
+
+    public void setIndicatorVisibility(boolean isVisible) {
+
+        if (isVisible) {
+
+            mIndicator.setVisibility(View.GONE);
+
+        } else {
+
+            mIndicator.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    protected void setDogList() {
+
+        mDogs = Dog.getDogs(Tag.DOG_FOUNDATION);
 
     }
 

@@ -26,6 +26,7 @@ import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Publication;
 import social.laika.app.models.Story;
 import social.laika.app.models.Tip;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.PostulatedDogsResponse;
@@ -153,6 +154,7 @@ public class BaseActivity extends ActionBarActivity
         Dog.deleteAll();
         Owner.deleteAll();
         OwnerDog.deleteAll();
+        VetVisit.deleteAll();
         AdoptDogForm.deleteAll();
         CalendarReminder.deleteAll();
         AlarmReminder.deleteAll();

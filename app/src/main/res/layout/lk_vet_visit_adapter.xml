@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:background="#fff"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="13">
+
+    <RelativeLayout
+        android:id="@+id/photo_vet_visits_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@color/laika_picture_background">
+
+        <ImageView
+            android:id="@+id/photo_vet_visits_imageview"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_weight="4"
+            android:adjustViewBounds="false"
+            android:minWidth="50sp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/event_1" />
+
+        <ProgressBar
+            android:id="@+id/download_image_progressbar"
+            style="?android:attr/progressBarStyleSmallInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:focusableInTouchMode="false"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/date_vet_visits_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photo_vet_visits_layout"
+        android:layout_toEndOf="@+id/photo_vet_visits_layout"
+        android:layout_toRightOf="@+id/photo_vet_visits_layout"
+        android:text="27/06/2015"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_small_text" />
+
+    <TextView
+        android:id="@+id/vet_name_vet_visits_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/date_vet_visits_textview"
+        android:layout_below="@+id/date_vet_visits_textview"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Veterinaria Las Condes Mi perro super saud"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_small_text"
+        android:layout_toLeftOf="@+id/imageView14"
+        android:layout_toStartOf="@+id/imageView14" />
+
+    <TextView
+        android:id="@+id/reason_vet_visits_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/photo_vet_visits_layout"
+        android:layout_alignLeft="@+id/vet_name_vet_visits_textview"
+        android:layout_alignStart="@+id/vet_name_vet_visits_textview"
+        android:layout_below="@+id/vet_name_vet_visits_textview"
+        android:layout_toLeftOf="@+id/imageView14"
+        android:layout_toStartOf="@+id/imageView14"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:maxLines="100"
+        android:scrollHorizontally="false"
+        android:text="El perrito tenia una cosa en su patita que no lo dejaba caminar absolutamente nada. Era una lata andar con el perro por ahi. Perro culiao no se quedaba quieto en ningun momento"
+        android:textColor="@color/light_black_font"
+        android:textSize="@dimen/laika_min_text" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/arrow_right"
+        android:layout_marginLeft="5dp" />
+
+</RelativeLayout>
