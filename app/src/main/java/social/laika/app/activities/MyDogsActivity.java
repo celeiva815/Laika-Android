@@ -73,6 +73,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public PagerAdapter mPagerAdapter;
     public CustomPagerSlidingTabStrip mIndicator;
     public Photographer mPhotographer;
+    public int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
         setContentView(mIdLayout);
         setTitle(TITLES[0]);
+        mPosition = 0;
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -108,13 +110,48 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class)) {
-            getMenuInflater().inflate(R.menu.dog_profile_menu, menu);
+
+            getMenuInflater().inflate(R.menu.my_dog_menu, menu);
 
             this.mMenu = menu;
         }
 
-
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.edit_profile_option).setVisible(false);
+        menu.findItem(R.id.add_reminder_option).setVisible(false);
+        menu.findItem(R.id.add_vet_visit_option).setVisible(false);
+        menu.findItem(R.id.take_picture_option).setVisible(false);
+
+        switch (mPosition) {
+
+            case 0:
+
+                menu.findItem(R.id.edit_profile_option).setVisible(true);
+                return true;
+
+            case 1:
+
+                menu.findItem(R.id.add_reminder_option).setVisible(true);
+                return true;
+
+            case 2:
+
+                menu.findItem(R.id.add_vet_visit_option).setVisible(true);
+                return true;
+
+            case 3:
+
+                menu.findItem(R.id.take_picture_option).setVisible(true);
+                return true;
+        }
+
+        return false;
+
     }
 
     @Override
@@ -127,44 +164,11 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         switch (id) {
 
             case android.R.id.home:
+
                 super.onBackPressed();
                 return true;
 
-            case R.id.dog_fragment_option:
-
-                switch (mPager.getCurrentItem()) {
-
-                    case 0:
-
-                        Do.showShortToast(OPTIONS[0], getApplicationContext());
-                        break;
-
-                    case 1:
-
-                        Do.showShortToast(OPTIONS[1], getApplicationContext());
-                        break;
-
-                    case 2:
-
-                        Do.showShortToast(OPTIONS[2], getApplicationContext());
-                        break;
-
-                    case 3:
-
-                        Do.showShortToast(OPTIONS[3], getApplicationContext());
-                        break;
-
-                }
-
-
-                return true;
-
-
-            case R.id.camera_menu_button:
-
-                takePhoto();
-                return true;
-
+            case R.id.edit_profile_option:
             case R.id.edit_dog_profile_settings:
 
                 Intent intent = new Intent(getApplicationContext(), EditDogActivity.class);
@@ -173,6 +177,32 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                 startActivity(intent);
 
                 return true;
+
+            case R.id.add_reminder_option:
+
+
+                return true;
+
+            case R.id.add_vet_visit_option:
+
+
+                return true;
+
+            case R.id.take_picture_settings:
+            case R.id.take_picture_option:
+
+                takePhoto();
+
+                return true;
+
+            case R.id.add_owner_settings:
+
+                return true;
+
+            case R.id.delete_settings:
+
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -402,11 +432,8 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     private void updateMenuTitles(int position) {
 
-        if (mMenu != null) {
-            MenuItem bedMenuItem = mMenu.findItem(R.id.dog_fragment_option);
-            bedMenuItem.setTitle(OPTIONS[position]);
-            setTitle(TITLES[position]);
-        }
+        setTitle(TITLES[position]);
+
     }
 
     private class MyDogPageListener implements ViewPager.OnPageChangeListener {
@@ -419,7 +446,9 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         @Override
         public void onPageSelected(int position) {
 
-            updateMenuTitles(position);
+            mPosition = position;
+            updateMenuTitles(mPosition);
+            invalidateOptionsMenu();
 
         }
 

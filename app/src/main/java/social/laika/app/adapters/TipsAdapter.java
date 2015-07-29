@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import social.laika.app.R;
+import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Tip;
 import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
@@ -45,9 +46,10 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mBodyTextView = (TextView) view.findViewById(R.id.body_tip_textview);
         mMainImageView = (ImageView) view.findViewById(R.id.main_tip_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrlTip));
 
         mSponsorTextView.setText(tip.mSponsorName);
-        mTitleTextView.setText(tip.mTipId + " - " + tip.mTitle); //FIXME
+        mTitleTextView.setText(tip.mTitle);
         mBodyTextView.setText(tip.mBody);
 
         if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {

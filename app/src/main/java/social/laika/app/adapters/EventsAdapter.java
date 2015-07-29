@@ -14,6 +14,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.activities.WebActivity;
+import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Event;
 import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
@@ -58,7 +59,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         mAnnounceTextView = (TextView) view.findViewById(R.id.announce_events_textview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
 
-        mNameTextView.setText(Integer.toString(event.mEventId) + " - " + event.mName); //FIXME
+        mNameTextView.setText(event.mName);
         mNameTextView.setSelected(true);
         mSponsorTextView.setText(event.mSponsorName);
         mSponsorTextView.setSelected(true);
@@ -87,18 +88,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         final int pos = position;
         view.setClickable(true);
         view.setFocusable(true);
-        view.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Context context = v.getContext();
-                Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra(WebActivity.URL, mEvents.get(pos).mUrlEvent);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
+        view.setOnClickListener(new WebLinkOnClickListener(event.mUrlEvent));
 
         return view;
 

@@ -14,6 +14,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.activities.WebActivity;
+import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Publication;
 import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
@@ -62,23 +63,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mSponsorTextView.setText(publication.getSponsor());
         mDateTextView.setText(publication.mDate);
         mBodyTextView.setText(publication.mBody);
-        mMainImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!Do.isNullOrEmpty(publication.mUrlPublication)) {
-
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, WebActivity.class);
-                    intent.putExtra(WebActivity.URL, publication.mUrlPublication);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-
-                } else {
-
-                }
-            }
-        });
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication.mUrlPublication));
 
         if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
