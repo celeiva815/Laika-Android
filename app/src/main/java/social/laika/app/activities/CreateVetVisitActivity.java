@@ -1,7 +1,6 @@
 package social.laika.app.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,14 +10,10 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -29,20 +24,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.adapters.CitiesAdapter;
-import social.laika.app.adapters.RegionAdapter;
 import social.laika.app.interfaces.Photographable;
-import social.laika.app.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import social.laika.app.listeners.PhotographerListener;
-import social.laika.app.models.City;
-import social.laika.app.models.Owner;
+import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
-import social.laika.app.models.Region;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.CreateVetVisitResponse;
 import social.laika.app.responses.EditUserResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
@@ -52,30 +43,28 @@ import social.laika.app.utils.Tag;
 public class CreateVetVisitActivity extends ActionBarActivity
         implements DatePickerDialog.OnDateSetListener, Photographable {
 
-    public int mIdLayout = R.layout.lk_edit_owner_activity;
+    public int mIdLayout = R.layout.lk_create_vet_visit_activity;
 
     private static final String TAG = CreateVetVisitActivity.class.getSimpleName();
+    public static final String KEY_DOG = "dog_id";
     public static final String API_EMAIL = "email";
     public static final String API_PASSWORD = "password";
     public static final String API_PASSWORD_CONFIRMATION = "password_confirmation";
     public static final String API_FULL_NAME = "full_name";
     public static final String API_BIRTHDATE = "birth_date";
 
-    public EditText mFullNameEditText;
-    public RadioGroup mGenderRadioGroup;
-    public EditText mPhoneEditText;
-    public Button mBirthDateButton;
-    public Spinner mRegionSpinner;
-    public Spinner mCitySpinner;
-    public Button mUpdateButton;
+    public EditText mNameEditText;
+    public EditText mDoctorEditText;
+    public EditText mReasonEditText;
+    public EditText mDetailEditText;
+    public EditText mTreatmentEditText;
+    public Button mDateButton;
+    public Button mCreateButton;
     public String mDate;
-    public String mPhoneCountry;
-    public City mCity;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
-    public Owner mOwner;
-    public int mGender;
-    public ImageView mProfileImageView;
+    public Dog mDog;
+    public ImageView mVetImageView;
     public Photographer mPhotographer;
 
 
@@ -83,11 +72,9 @@ public class CreateVetVisitActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
-        mPhoneCountry = Do.getCountryIso(getApplicationContext());
-        mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
-        mCity = City.getSingleLocation(mOwner.mCityId);
+        int dogInt = getIntent().getExtras().getInt(KEY_DOG);
+        mDog = Dog.getSingleDog(dogInt);
         setActivityView();
-        setValues();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -109,45 +96,26 @@ public class CreateVetVisitActivity extends ActionBarActivity
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), false);
 
-        mFullNameEditText = (EditText) findViewById(R.id.name_edit_user_edittext);
-        mGenderRadioGroup = (RadioGroup) findViewById(R.id.gender_edit_user_radiogroup);
-        mPhoneEditText = (EditText) findViewById(R.id.phone_edit_user_edittext);
-        mBirthDateButton = (Button) findViewById(R.id.birthdate_edit_user_button);
-        mRegionSpinner = (Spinner) findViewById(R.id.region_edit_user_spinner);
-        mCitySpinner = (Spinner) findViewById(R.id.location_edit_user_spinner);
-        mUpdateButton = (Button) findViewById(R.id.update_edit_user_button);
-        mProfileImageView = (ImageView) findViewById(R.id.profile_edit_user_imageview);
+        mNameEditText = (EditText) findViewById(R.id.name_vet_visit_edittext);
+        mDoctorEditText = (EditText) findViewById(R.id.doctor_vet_visit_edittext);
+        mReasonEditText = (EditText) findViewById(R.id.reason_vet_visit_edittext);
+        mDetailEditText = (EditText) findViewById(R.id.detail_vet_visit_edittext);
+        mTreatmentEditText = (EditText) findViewById(R.id.treatment_vet_visit_edittext);
+        mDateButton = (Button) findViewById(R.id.birthdate_vet_visit_button);
+        mCreateButton = (Button) findViewById(R.id.update_vet_visit_button);
+        mVetImageView = (ImageView) findViewById(R.id.profile_vet_visit_imageview);
         mPhotographer = new Photographer();
         mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
 
         PhotographerListener listener = new PhotographerListener(mPhotographer, this);
 
-        mProfileImageView.setOnClickListener(listener);
-        mProfileImageView.setOnLongClickListener(listener);
-
-        RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                getRegions(getApplicationContext()));
-
-        mRegionSpinner.setAdapter(regionAdapter);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
-        mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCity = (City) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        mVetImageView.setOnClickListener(listener);
+        mVetImageView.setOnLongClickListener(listener);
 
         mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH),
                 calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
-        mBirthDateButton.setText(mDate);
-        mBirthDateButton.setOnClickListener(new View.OnClickListener() {
+        mDateButton.setText(mDate);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -160,51 +128,16 @@ public class CreateVetVisitActivity extends ActionBarActivity
             }
         });
 
-        mUpdateButton.setOnClickListener(new View.OnClickListener() {
+        mCreateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                requestUpdateUser();
+                requestCreateVetVisit();
 
             }
         });
 
-    }
-
-    private void setValues() {
-
-        mFullNameEditText.setText(mOwner.getFullName());
-
-        if (!Do.isNullOrEmpty(mOwner.mBirthDate)) {
-            mBirthDateButton.setText(mOwner.mBirthDate);
-        }
-
-        mPhoneEditText.setText(mOwner.mPhone);
-
-        if (mOwner.mGender == Tag.GENDER_MALE) {
-            mGenderRadioGroup.check(R.id.human_male_edit_user_radiobutton);
-
-        } else {
-            mGenderRadioGroup.check(R.id.human_female_edit_user_radiobutton);
-
-        }
-
-        if (mCity != null && mCity.mCityId > 1) {
-
-            int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
-                    getPosition(mCity.getRegion());
-            CitiesAdapter locationAdapter = new CitiesAdapter(getApplicationContext(),
-                    R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                    City.getCitiesByRegion(mCity.mRegionId));
-
-            mCitySpinner.setAdapter(locationAdapter);
-            mRegionSpinner.setSelection(regionPosition);
-
-        }
-
-        RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
-                getApplicationContext());
     }
 
     @Override
@@ -266,7 +199,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
             cropPhoto(result.getData());
 
         }  else if (requestCode == Crop.REQUEST_CROP) {
-            mPhotographer.handleCrop(resultCode, result, this, mProfileImageView);
+            mPhotographer.handleCrop(resultCode, result, this, mVetImageView);
 
         }
     }
@@ -309,41 +242,40 @@ public class CreateVetVisitActivity extends ActionBarActivity
 
     public void enableViews(boolean enable) {
 
-        mFullNameEditText.setEnabled(enable);
-        mBirthDateButton.setEnabled(enable);
-        mUpdateButton.setEnabled(enable);
-
+        mNameEditText.setEnabled(enable);
+        mDoctorEditText.setEnabled(enable);
+        mReasonEditText.setEnabled(enable);
+        mDetailEditText.setEnabled(enable);
+        mTreatmentEditText.setEnabled(enable);
+        mDateButton.setEnabled(enable);
+        mCreateButton.setEnabled(enable);
 
     }
 
-    public void requestUpdateUser() {
+    public void requestCreateVetVisit() {
 
-        final String name = mFullNameEditText.getText().toString();
+        final String name = mNameEditText.getText().toString();
 
         if (TextUtils.isEmpty(name)) {
-            mFullNameEditText.setError(getString(R.string.field_not_empty_error));
+            mNameEditText.setError(getString(R.string.field_not_empty_error));
             return;
         }
 
         enableViews(false);
         mProgressDialog = ProgressDialog.show(CreateVetVisitActivity.this, "Espere un momento",
-                "Estamos actualizando su perfil...");
+                "Creando la ficha médica...");
 
         int ownerId = PrefsManager.getUserId(getApplicationContext());
-        String ownerName = mFullNameEditText.getText().toString();
-        String firstName = getFirstName(ownerName);
-        String lastName = getLastName(ownerName);
-        String secondLastName = getSecondLastName(ownerName);
-        String rut = "";
-        String birthDate = mBirthDateButton.getText().toString();
-        int gender = mGender;
-        String phone = mPhoneEditText.getText().toString();
-        int locationId = mCity.mCityId;
+        String doctor = mDoctorEditText.getText().toString();
+        String reason = mReasonEditText.getText().toString();
+        String detail = mDetailEditText.getText().toString();
+        String treatment = mTreatmentEditText.getText().toString();
+        String date = mDateButton.getText().toString();
 
-        Owner owner = new Owner(ownerId, ownerName, firstName, lastName, secondLastName, rut, birthDate,
-                gender, mOwner.mEmail, phone, locationId);
+        VetVisit vetVisit = new VetVisit(ownerId, mDog.mDogId, date, detail, "", "", reason,
+                treatment, doctor, name);
 
-        JSONObject jsonParams = owner.getJsonObject();
+        JSONObject jsonParams = vetVisit.getJsonObject();
 
         if (mPhotographer.hasPhotoChanged()) {
 
@@ -356,11 +288,11 @@ public class CreateVetVisitActivity extends ActionBarActivity
             }
         }
 
-        EditUserResponse response = new EditUserResponse(this);
+        CreateVetVisitResponse response = new CreateVetVisitResponse(this);
         String token = PrefsManager.getUserToken(getApplicationContext());
 
-        Request registerRequest = RequestManager.patchRequest(jsonParams,
-                RequestManager.ADDRESS_USER, response, response, token);
+        Request registerRequest = RequestManager.postRequest(jsonParams,
+                RequestManager.ADDRESS_VET_VISITS, response, response, token);
 
         registerRequest.setRetryPolicy(new DefaultRetryPolicy(
                 50000,
@@ -371,95 +303,11 @@ public class CreateVetVisitActivity extends ActionBarActivity
                 .addToRequestQueue(registerRequest, TAG);
     }
 
-    private String getFirstName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length == 4) {
-
-            return names[0] + names[1];
-
-        } else if (names.length > 1) {
-
-            return names[0];
-
-        } else {
-
-            String firstName = mFullNameEditText.getText().toString();
-
-            if (fullName.contains(" ")) {
-                firstName = fullName.substring(0, fullName.indexOf(" "));
-            }
-
-            return firstName;
-        }
-    }
-
-    private String getLastName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length == 4) {
-
-            return names[2];
-
-        } else if (names.length > 1) {
-
-            return names[1];
-
-        } else {
-
-            return "";
-        }
-    }
-
-    private String getSecondLastName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length >= 3) {
-
-            return names[names.length - 1];
-
-        } else {
-
-            return "";
-        }
-    }
-
-    public void setHumanGenderRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        this.mGender = mOwner.mGender;
-
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.human_male_edit_user_radiobutton:
-                if (checked)
-                    mGender = Tag.GENDER_MALE;
-
-                break;
-            case R.id.human_female_edit_user_radiobutton:
-                if (checked)
-                    mGender = Tag.GENDER_FEMALE;
-
-                break;
-        }
-    }
-
-    public List<Region> getRegions(Context context) {
-
-        //TODO agregar el filtro por location del usuario
-        int locationId = 1;
-        City city = City.getSingleLocation(locationId);
-        return Region.getRegions(city.getCountry().mCountryId);
-    }
-
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
 
         mDate = Do.getToStringDate(day, month, year);
-        mBirthDateButton.setText(mDate);
+        mDateButton.setText(mDate);
 
     }
 }

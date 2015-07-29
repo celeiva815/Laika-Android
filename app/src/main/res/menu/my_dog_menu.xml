@@ -10,13 +10,13 @@
         android:title="Editar Perfil" />
 
     <item
-        android:id="@+id/add_reminder_option"
+        android:id="@+id/create_reminder_option"
         android:orderInCategory="90"
         app:showAsAction="always"
         android:title="Agregar" />
 
     <item
-        android:id="@+id/add_vet_visit_option"
+        android:id="@+id/create_vet_visit_option"
         android:orderInCategory="90"
         app:showAsAction="always"
         android:title="Crear Ficha" />

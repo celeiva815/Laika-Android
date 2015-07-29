@@ -123,8 +123,8 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         menu.findItem(R.id.edit_profile_option).setVisible(false);
-        menu.findItem(R.id.add_reminder_option).setVisible(false);
-        menu.findItem(R.id.add_vet_visit_option).setVisible(false);
+        menu.findItem(R.id.create_reminder_option).setVisible(false);
+        menu.findItem(R.id.create_vet_visit_option).setVisible(false);
         menu.findItem(R.id.take_picture_option).setVisible(false);
 
         switch (mPosition) {
@@ -136,12 +136,12 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
             case 1:
 
-                menu.findItem(R.id.add_reminder_option).setVisible(true);
+                menu.findItem(R.id.create_reminder_option).setVisible(true);
                 return true;
 
             case 2:
 
-                menu.findItem(R.id.add_vet_visit_option).setVisible(true);
+                menu.findItem(R.id.create_vet_visit_option).setVisible(true);
                 return true;
 
             case 3:
@@ -171,20 +171,19 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
             case R.id.edit_profile_option:
             case R.id.edit_dog_profile_settings:
 
-                Intent intent = new Intent(getApplicationContext(), EditDogActivity.class);
-                intent.putExtra(EditDogActivity.KEY_DOG_ID, mDog.mDogId);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                changeActivity(EditDogActivity.class);
 
                 return true;
 
-            case R.id.add_reminder_option:
+            case R.id.create_reminder_option:
 
+                changeActivity(CreateReminderActivity.class);
 
                 return true;
 
-            case R.id.add_vet_visit_option:
+            case R.id.create_vet_visit_option:
 
+                changeActivity(CreateVetVisitActivity.class);
 
                 return true;
 
@@ -456,6 +455,15 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         public void onPageScrollStateChanged(int state) {
 
         }
+    }
+
+    public void changeActivity(Class activityClass) {
+
+        Intent intent = new Intent(getApplicationContext(), activityClass);
+        intent.putExtra(DOG_ID, mDog.mDogId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
 }

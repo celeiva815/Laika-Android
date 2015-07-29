@@ -8,8 +8,11 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import social.laika.app.activities.CreateVetVisitActivity;
 import social.laika.app.activities.EditUserActivity;
+import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
+import social.laika.app.models.VetVisit;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
@@ -19,14 +22,14 @@ import social.laika.app.utils.PrefsManager;
 public class CreateVetVisitResponse implements Response.ErrorListener,
         Response.Listener<JSONObject>  {
 
-    public EditUserActivity mActivity;
-    public Owner mOwner;
+    public CreateVetVisitActivity mActivity;
+    public Dog mDog;
     public ProgressDialog mProgressDialog;
 
-    public CreateVetVisitResponse(EditUserActivity mActivity) {
+    public CreateVetVisitResponse(CreateVetVisitActivity mActivity) {
 
         this.mActivity = mActivity;
-        this.mOwner = mActivity.mOwner;
+        this.mDog = mActivity.mDog;
         this.mProgressDialog = mActivity.mProgressDialog;
     }
 
@@ -34,12 +37,11 @@ public class CreateVetVisitResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Context context = mActivity.getApplicationContext();
-        Owner owner = new Owner(response);
+        VetVisit.saveVetVisit(response);
+        mActivity.onBackPressed();
 
-        mOwner.update(owner);
-        PrefsManager.editUser(context, mOwner);
         mProgressDialog.dismiss();
-        Do.showLongToast("Su perfil ha sido actualizado", context);
+        Do.showLongToast("La visita médica ha sido creada", context);
     }
 
     @Override
