@@ -213,4 +213,5 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
     }
 
+
 }

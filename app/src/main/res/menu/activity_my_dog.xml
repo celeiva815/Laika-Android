@@ -10,7 +10,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/dog_settings"
+        android:id="@+id/edit_dog_profile_settings"
         android:orderInCategory="100"
         android:title="Editar Perro"
         app:showAsAction="never" />

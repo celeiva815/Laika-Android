@@ -47,6 +47,10 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public static final String ALBUM = "Album";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     public static final String[] CONTENT = new String[]{HISTORY, REMINDERS, OWNERS, ALBUM};
+    public static final String[] OPTIONS = new String []{ "Editar", "Agregar",
+            "Crear Ficha", "Tomar Foto" };
+    public static final String[] TITLES = new String []{ "Perfil", "Recordatorios",
+            "Ficha Médica", "Álbum" };
     public static final int[] ICONS = new int[]{
             R.drawable.laika_history_selector,
             R.drawable.laika_reminder_selector,
@@ -54,7 +58,9 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
             R.drawable.laika_album_selector
     };
 
+
     public int mIdLayout = R.layout.activity_my_dog;
+    public Menu mMenu;
     public Dog mDog;
     public DogProfileFragment mDogProfileFragment;
     public HistoryMyDogFragment mHistoryFragment;
@@ -73,6 +79,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         super.onCreate(savedInstanceState);
 
         setContentView(mIdLayout);
+        setTitle(TITLES[0]);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -85,10 +92,13 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         // Instantiate a ViewPager and a PagerAdapter
         mPager = (ViewPager) findViewById(R.id.my_dog_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-
+        MyDogPageListener pagerListener = new MyDogPageListener();
         mIndicator = (CustomPagerSlidingTabStrip) findViewById(R.id.my_dog_indicator);
+
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setOnPageChangeListener(pagerListener);
         mIndicator.setViewPager(mPager);
+        mIndicator.setOnPageChangeListener(pagerListener);
 
 
     }
@@ -97,17 +107,14 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.activity_my_dog, menu);
+        if (!this.getClass().equals(MainActivity.class)) {
+            getMenuInflater().inflate(R.menu.dog_profile_menu, menu);
+
+            this.mMenu = menu;
+        }
+
 
         return true;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
     }
 
     @Override
@@ -123,12 +130,42 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                 super.onBackPressed();
                 return true;
 
+            case R.id.dog_fragment_option:
+
+                switch (mPager.getCurrentItem()) {
+
+                    case 0:
+
+                        Do.showShortToast(OPTIONS[0], getApplicationContext());
+                        break;
+
+                    case 1:
+
+                        Do.showShortToast(OPTIONS[1], getApplicationContext());
+                        break;
+
+                    case 2:
+
+                        Do.showShortToast(OPTIONS[2], getApplicationContext());
+                        break;
+
+                    case 3:
+
+                        Do.showShortToast(OPTIONS[3], getApplicationContext());
+                        break;
+
+                }
+
+
+                return true;
+
+
             case R.id.camera_menu_button:
 
                 takePhoto();
                 return true;
 
-            case R.id.dog_settings:
+            case R.id.edit_dog_profile_settings:
 
                 Intent intent = new Intent(getApplicationContext(), EditDogActivity.class);
                 intent.putExtra(EditDogActivity.KEY_DOG_ID, mDog.mDogId);
@@ -318,6 +355,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                     }
 
+
                     return mHistoryFragment;
 
                 case 2:
@@ -326,6 +364,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                         mVetVisitsFragment = VetVisitsFragment.newInstance(dogId);
 
                     }
+
 
                     return mVetVisitsFragment;
 
@@ -358,6 +397,35 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         @Override
         public int getPageIconResId(int position) {
             return ICONS[position];
+        }
+    }
+
+    private void updateMenuTitles(int position) {
+
+        if (mMenu != null) {
+            MenuItem bedMenuItem = mMenu.findItem(R.id.dog_fragment_option);
+            bedMenuItem.setTitle(OPTIONS[position]);
+            setTitle(TITLES[position]);
+        }
+    }
+
+    private class MyDogPageListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+            updateMenuTitles(position);
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 
