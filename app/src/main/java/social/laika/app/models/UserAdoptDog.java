@@ -189,5 +189,10 @@ public class UserAdoptDog extends Model {
 
     }
 
+    public static void deleteAll() {
+
+        new Delete().from(UserAdoptDog.class).execute();
+    }
+
 }
 

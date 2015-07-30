@@ -184,7 +184,11 @@ public class Dog extends Model {
         this.mIsSterilized = dog.mIsSterilized;
         this.mIsTrained = dog.mIsTrained;
         this.mChipCode = dog.mChipCode;
-        this.mOwnerId = dog.mOwnerId;
+        this.mUrlImage = dog.mUrlImage;
+        this.mDetail = dog.mDetail;
+        this.mCompatibility = dog.mCompatibility;
+        this.mFoundationId = dog.mFoundationId;
+        this.mFoundationName = dog.mFoundationName;
 
         if (!(mStatus == Tag.DOG_OWNED && dog.mStatus == Tag.DOG_POSTULATED)) {
             this.mStatus = dog.mStatus;

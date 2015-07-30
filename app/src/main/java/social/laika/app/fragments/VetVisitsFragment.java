@@ -20,6 +20,7 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.VetVisitAdapter;
+import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
@@ -30,7 +31,7 @@ import social.laika.app.utils.PrefsManager;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class VetVisitsFragment extends Fragment {
+public class VetVisitsFragment extends Fragment implements Refreshable {
 
     public static final String KEY_DOG = "dog";
     public static final String TAG = VetVisitsFragment.class.getSimpleName();
@@ -107,7 +108,8 @@ public class VetVisitsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshVetVisits();
+
+        refreshList();
 
     }
 
@@ -117,7 +119,8 @@ public class VetVisitsFragment extends Fragment {
 
     }
 
-    public void refreshVetVisits() {
+    @Override
+    public void refreshList() {
 
         if (!mVetVisitAdapter.isEmpty()) {
             mVetVisitAdapter.clear();
@@ -134,7 +137,7 @@ public class VetVisitsFragment extends Fragment {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
-        VetVisitsResponse response = new VetVisitsResponse(this);
+        VetVisitsResponse response = new VetVisitsResponse(this, context);
         Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_VET_VISITS,
                 response, response, PrefsManager.getUserToken(context));
 

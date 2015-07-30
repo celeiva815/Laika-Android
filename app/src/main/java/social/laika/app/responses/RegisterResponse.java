@@ -1,6 +1,7 @@
 package social.laika.app.responses;
 
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,23 +17,25 @@ public class RegisterResponse implements Response.ErrorListener,
         Response.Listener<JSONObject>  {
 
     public RegisterActivity mActivity;
+    public ProgressBar mProgressBar;
 
     public RegisterResponse(RegisterActivity mActivity) {
+
         this.mActivity = mActivity;
+        this.mProgressBar = mActivity.mRegisterProgressBar;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        mActivity.mRegisterProgressBar.setVisibility(View.GONE);
-        ResponseHandler.successLogin(mActivity, response);
+        ResponseHandler.successLogin(mActivity, response, mProgressBar);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mActivity);
-        mActivity.mRegisterProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
         mActivity.enableViews(true);
     }
 

@@ -7,29 +7,31 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.OwnersFragment;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Refreshable;
-import social.laika.app.models.Owner;
+import social.laika.app.models.AlarmReminder;
+import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
  */
-public class VetVisitsResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class RemindersResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     public Refreshable mFragment;
+    public Dog mDog;
     public Context mContext;
 
-    public VetVisitsResponse(Refreshable mFragment, Context context) {
+    public RemindersResponse(Refreshable mFragment, Dog mDog, Context mContext) {
         this.mFragment = mFragment;
-        this.mContext = context;
+        this.mDog = mDog;
+        this.mContext = mContext;
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
-        VetVisit.saveVetVisits(response);
+        AlarmReminder.saveReminders(response, mDog.mDogId, mContext);
         mFragment.refreshList();
 
     }

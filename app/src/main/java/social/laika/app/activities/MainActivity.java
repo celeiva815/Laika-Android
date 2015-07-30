@@ -16,13 +16,6 @@ public class MainActivity extends BaseActivity {
 
     private int mIdLayout = R.layout.lk_main_activity;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Do.showLongToast("Bienvenido " + PrefsManager.getUserName(this.getApplicationContext()) +
-                ", ¿Cómo están tus perritos?", this.getApplicationContext());
-    }
 
     @Override
     public void onStart() {

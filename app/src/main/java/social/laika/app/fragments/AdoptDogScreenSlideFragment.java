@@ -35,7 +35,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
     public SlidingUpPanelLayout mSlidingUpPanelLayout;
-    public TextView mMatchTextView;
+    public TextView mCompatibilityTextView;
     public TextView mNameTextView;
     public TextView mGenderTextView;
     public TextView mSterilizedTextView;
@@ -63,7 +63,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mSlidingUpPanelLayout  = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
-        mMatchTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
+        mCompatibilityTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
         mNameTextView = (TextView) view.findViewById(R.id.name_adopt_dog_screen_slide_textview);
         mGenderTextView = (TextView) view.findViewById(R.id.gender_adopt_dog_screen_slide_textview);
         mSterilizedTextView = (TextView) view.findViewById(R.id.sterilized_adopt_dog_screen_slide_textview);
@@ -84,7 +84,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mSterilizedTextView.setText(mDog.getSterilized(view.getContext()));
         mChipTextView.setText(mDog.getChip(view.getContext()));
         mTrainedTextView.setText(mDog.getTrained(view.getContext()));
-        mMatchTextView.setText(mDog.mCompatibility + "%");
+        mCompatibilityTextView.setText(mDog.mCompatibility + "%");
         mFoundationTextView.setText(mDog.mFoundationName);
 
         if (!Do.isNullOrEmpty(mDog.mDetail))

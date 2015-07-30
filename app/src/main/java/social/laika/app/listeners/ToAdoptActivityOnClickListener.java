@@ -31,7 +31,6 @@ public class ToAdoptActivityOnClickListener implements View.OnClickListener {
 
         if (Country.existIso(iso)) {
 
-            Do.showLongToast("¡Eureka! Puedes adoptar perritos en tu país", context);
             Intent intent;
 
             if (!AdoptDogForm.hasDogForm()) {
@@ -48,7 +47,8 @@ public class ToAdoptActivityOnClickListener implements View.OnClickListener {
 
         } else {
 
-            Do.showLongToast("¡Lo sentimos! No puedes adoptar perritos en tu país", context);
+            Do.showLongToast("¡Lo sentimos! Por ahora no puedes adoptar perritos en tu país",
+                    context);
         }
 
 

@@ -2,6 +2,7 @@ package social.laika.app.activities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -44,6 +45,7 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
 
         mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
         mIndicator.setViewPager(mPager);
+        mIndicator.setVisibility(View.GONE);
     }
 
     public void updateDogs() {

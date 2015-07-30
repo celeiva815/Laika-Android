@@ -3,6 +3,8 @@ package social.laika.app.responses;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,10 +29,13 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
 
     public Activity mActivity;
     public Context mContext;
+    public ProgressBar mProgressBar;
 
-    public FirstInformationResponse(Activity mActivity) {
+    public FirstInformationResponse(Activity mActivity, ProgressBar progressBar) {
+
         this.mActivity = mActivity;
         this.mContext = mActivity.getApplicationContext();
+        this.mProgressBar = progressBar;
     }
 
     @Override
@@ -42,7 +47,14 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         Region.saveRegions(response);
         City.saveCities(response);
 
+        if (mProgressBar != null) {
+
+            mProgressBar.setVisibility(View.GONE);
+        }
+
         Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
+        Do.showLongToast("Bienvenido " + PrefsManager.getUserName(mContext) +
+                ", ¿Cómo están tus perritos?", mContext);
 
     }
 
@@ -51,6 +63,11 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
 
         ResponseHandler.error(error, mContext);
         //Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (mProgressBar != null) {
+
+            mProgressBar.setVisibility(View.GONE);
+        }
 
         if (mActivity instanceof LoginActivity) {
             ((LoginActivity) mActivity).enableViews(true);

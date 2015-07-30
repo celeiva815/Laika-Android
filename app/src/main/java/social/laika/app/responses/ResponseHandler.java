@@ -2,6 +2,7 @@ package social.laika.app.responses;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,7 +50,7 @@ public class ResponseHandler {
         }
     }
 
-    public static void successLogin(Activity activity, JSONObject response) {
+    public static void successLogin(Activity activity, JSONObject response, ProgressBar progressBar) {
 
         Context context = activity.getApplicationContext();
 
@@ -72,7 +73,7 @@ public class ResponseHandler {
                 token = jsonUser.getString(RequestManager.ACCESS_TOKEN);
                 PrefsManager.saveUser(context, token, owner);
 
-                refreshDataBase(context, activity);
+                refreshDataBase(context, activity, progressBar);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -89,10 +90,10 @@ public class ResponseHandler {
         }
     }
 
-    public static void requestFirstInformation(Context context, Activity activity) {
+    public static void requestFirstInformation(Context context, Activity activity, ProgressBar progressBar) {
 
         String token = PrefsManager.getUserToken(context);
-        FirstInformationResponse response = new FirstInformationResponse(activity);
+        FirstInformationResponse response = new FirstInformationResponse(activity, progressBar);
 
         Request firstRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_SYNC,
                 response, response, token);
@@ -101,24 +102,13 @@ public class ResponseHandler {
 
     }
 
-    public static void requestLocations(Context context, Activity activity) {
 
-        String token = PrefsManager.getUserToken(context);
-        FirstInformationResponse response = new FirstInformationResponse(activity);
-
-        Request locationsRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_LOCATIONS,
-                response, response, token);
-
-        VolleyManager.getInstance(context).addToRequestQueue(locationsRequest, TAG);
-
-    }
-
-    public static void refreshDataBase(Context context, Activity activity) {
+    public static void refreshDataBase(Context context, Activity activity, ProgressBar progressBar) {
 
         Size.setSizes(context);
         Personality.setPersonalities(context);
 
-        requestFirstInformation(context, activity);
+        requestFirstInformation(context, activity, progressBar);
 
     }
 }

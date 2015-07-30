@@ -148,7 +148,7 @@ public class UserProfileActivity extends ActionBarActivity {
             });
         }
 
-        setTitle("Perfil de " + mOwner.mFirstName);
+        setTitle("Mi Perfil");
 
         RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
                 getApplicationContext());

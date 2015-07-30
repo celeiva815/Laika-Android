@@ -133,6 +133,7 @@ public class AlarmReminder extends Model {
 
     public AlarmReminder(JSONObject jsonObject, int mDogId, Context context) {
 
+        this.mAlarmReminderId = jsonObject.optInt(COLUMN_ALARM_REMINDER_ID);
         this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
         this.mCategory = jsonObject.optInt(COLUMN_CATEGORY, Tag.CATEGORY_FOOD);
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
@@ -549,6 +550,41 @@ public class AlarmReminder extends Model {
         }
     }
 
+    public void cancelAlarm(Context context) {
+
+        int[] time = DateFormatter.parseTimeFromString(mTime);
+        int hour = time[0];
+        int minutes = time[1];
+
+        if (mHasMonday) {
+            cancelAlarm(context, Calendar.MONDAY, hour, minutes);
+        }
+
+        if (mHasTuesday) {
+            cancelAlarm(context, Calendar.TUESDAY, hour, minutes);
+        }
+
+        if (mHasWednesday) {
+            cancelAlarm(context, Calendar.WEDNESDAY, hour, minutes);
+        }
+
+        if (mHasThursday) {
+            cancelAlarm(context, Calendar.THURSDAY, hour, minutes);
+        }
+
+        if (mHasFriday) {
+            cancelAlarm(context, Calendar.FRIDAY, hour, minutes);
+        }
+
+        if (mHasSaturday) {
+            cancelAlarm(context, Calendar.SATURDAY, hour, minutes);
+        }
+
+        if (mHasSunday) {
+            cancelAlarm(context, Calendar.SUNDAY, hour, minutes);
+        }
+    }
+
     public void setAlarm(Context context, int i) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
@@ -651,21 +687,24 @@ public class AlarmReminder extends Model {
     public static AlarmReminder saveReminder(JSONObject jsonReminder, int dogId, Context context) {
 
         AlarmReminder reminder = new AlarmReminder(jsonReminder, dogId, context);
-        createOrUpdate(reminder);
+        createOrUpdate(reminder, context);
 
         return reminder;
 
     }
 
-    public static void createOrUpdate(AlarmReminder reminder) {
+    public static void createOrUpdate(AlarmReminder reminder, Context context) {
 
         if (!AlarmReminder.isSaved(reminder)) {
             reminder.save();
+            reminder.setAlarm(context);
 
         } else {
             AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
-            oldReminder.update(reminder);
+            oldReminder.cancelAlarm(context);
 
+            oldReminder.update(reminder);
+            oldReminder.setAlarm(context);
         }
     }
 

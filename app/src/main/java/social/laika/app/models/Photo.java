@@ -9,6 +9,7 @@ import android.os.Environment;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -317,7 +318,11 @@ public class Photo extends Model {
         } catch (Exception e) {
         }
 
+    }
 
+    public static void deleteAll() {
+
+        new Delete().from(UserAdoptDog.class).execute();
     }
 }
 

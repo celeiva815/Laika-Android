@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.activities.MyDogsActivity;
@@ -30,7 +32,10 @@ import social.laika.app.models.History;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
+import social.laika.app.responses.RemindersResponse;
+import social.laika.app.responses.VetVisitsResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 /**
@@ -107,6 +112,11 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if (mHistoryListView.getCount() == 0) {
+
+            requestReminders();
+
+        }
 
     }
 
@@ -164,6 +174,20 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
                 break;
 
         }
+    }
+
+    public void requestReminders() {
+
+        Context context = getActivity().getApplicationContext();
+        Map<String, String> params = new HashMap<>();
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+
+        RemindersResponse response = new RemindersResponse(this, mDog, context);
+        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_ALERT_REMINDERS,
+                response, response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);
+
     }
 
     @Override

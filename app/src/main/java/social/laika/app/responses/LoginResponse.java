@@ -36,9 +36,8 @@ public class LoginResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
-        mLoginProgressBar.setVisibility(View.GONE);
-        ResponseHandler.successLogin(mActivity, response);
-        enableViews();
+        ResponseHandler.successLogin(mActivity, response, mLoginProgressBar);
+
     }
 
     @Override

@@ -38,13 +38,14 @@ public class CreateAlarmReminderResponse implements Response.Listener<JSONObject
     @Override
     public void onResponse(JSONObject response) {
 
-        AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
+        AlarmReminder alarmReminder = AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
+        alarmReminder.setAlarm(mContext);
 
         if (mFragment != null) {
 
             String message = Do.getRString(mContext, R.string.new_reminder_added);
             Do.showLongToast(message, mContext);
-            ((MyDogsActivity) mFragment.getActivity()).setHistoryFragment(mDog);
+            mFragment.getActivity().onBackPressed();
         }
     }
 

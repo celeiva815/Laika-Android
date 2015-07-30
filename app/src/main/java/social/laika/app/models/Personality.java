@@ -5,6 +5,7 @@ import android.content.Context;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -42,7 +43,6 @@ public class Personality extends Model {
 
             String[] names = context.getResources().getStringArray(R.array.personality_adopt);
 
-            Personality other = new Personality(Tag.PERSONALITY_OTHER, names[Tag.PERSONALITY_OTHER]);
             Personality shy = new Personality(Tag.PERSONALITY_SHY, names[Tag.PERSONALITY_SHY]);
             Personality player = new Personality(Tag.PERSONALITY_PLAYER, names[Tag.PERSONALITY_PLAYER]);
             Personality social = new Personality(Tag.PERSONALITY_SOCIAL, names[Tag.PERSONALITY_SOCIAL]);
@@ -52,7 +52,6 @@ public class Personality extends Model {
             player.save();
             social.save();
             keeper.save();
-            other.save();
         }
     }
 
@@ -65,5 +64,10 @@ public class Personality extends Model {
 
         String condition = COLUMN_PERSONALITY_ID + DB.EQUALS + personalityId;
         return new Select().from(Personality.class).where(condition).executeSingle();
+    }
+
+    public static void deleteAll() {
+
+        new Delete().from(Personality.class).execute();
     }
 }

@@ -23,9 +23,12 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.Event;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
+import social.laika.app.models.Personality;
 import social.laika.app.models.Publication;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Story;
 import social.laika.app.models.Tip;
+import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
@@ -154,6 +157,8 @@ public class BaseActivity extends ActionBarActivity
         Dog.deleteAll();
         Owner.deleteAll();
         OwnerDog.deleteAll();
+        UserAdoptDog.deleteAll();
+        Photo.deleteAll();
         VetVisit.deleteAll();
         AdoptDogForm.deleteAll();
         CalendarReminder.deleteAll();
@@ -162,6 +167,7 @@ public class BaseActivity extends ActionBarActivity
         Publication.deleteAll();
         Tip.deleteAll();
         Story.deleteAll();
+        Personality.deleteAll();
 
     }
 

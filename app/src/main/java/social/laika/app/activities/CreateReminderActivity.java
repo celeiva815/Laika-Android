@@ -47,7 +47,7 @@ import social.laika.app.utils.Tag;
 public class CreateReminderActivity extends ActionBarActivity{
 
     public static final String TAG = CreateReminderActivity.class.getSimpleName();
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "dog_id";
     public static final String KEY_ALARM = "alarm";
     public static final String KEY_CALENDAR = "calendar";
 

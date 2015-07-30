@@ -74,6 +74,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public CustomPagerSlidingTabStrip mIndicator;
     public Photographer mPhotographer;
     public int mPosition;
+    public boolean mChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         setContentView(mIdLayout);
         setTitle(TITLES[0]);
         mPosition = 0;
+        mChanged = false;
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -103,6 +105,15 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         mIndicator.setOnPageChangeListener(pagerListener);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        refreshFragments();
+
+        mChanged = false;
     }
 
     @Override
@@ -160,6 +171,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        mChanged = true;
 
         switch (id) {
 
@@ -464,6 +476,23 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+    }
+
+    public void refreshFragments() {
+
+        if (mChanged) {
+
+            switch (mPosition) {
+
+                case 1:
+
+                    mHistoryFragment.refreshList();
+
+                    break;
+
+            }
+
+        }
     }
 
 }
