@@ -222,7 +222,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public void setHistoryFragment(Dog mDog) {
 
         if (mDogProfileFragment != null) {
-            mDogProfileFragment.refreshList();
+            mDogProfileFragment.refresh();
 
         } else {
             mDogProfileFragment = DogProfileFragment.newInstance(mDog.mDogId);
@@ -486,7 +486,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 case 1:
 
-                    mHistoryFragment.refreshList();
+                    mHistoryFragment.refresh();
 
                     break;
 

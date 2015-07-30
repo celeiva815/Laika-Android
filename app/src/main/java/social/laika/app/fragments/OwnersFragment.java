@@ -126,7 +126,7 @@ public class OwnersFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public void refreshList() {
+    public void refresh() {
 
         mEmptyLinearLayout.setVisibility(View.GONE);
 

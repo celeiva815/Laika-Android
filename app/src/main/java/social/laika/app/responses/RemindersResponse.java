@@ -7,11 +7,9 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.models.VetVisit;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -32,7 +30,7 @@ public class RemindersResponse implements Response.Listener<JSONObject>, Respons
     public void onResponse(JSONObject response) {
 
         AlarmReminder.saveReminders(response, mDog.mDogId, mContext);
-        mFragment.refreshList();
+        mFragment.refresh();
 
     }
 

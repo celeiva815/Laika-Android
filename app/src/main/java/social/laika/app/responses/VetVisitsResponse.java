@@ -7,10 +7,7 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.OwnersFragment;
-import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Refreshable;
-import social.laika.app.models.Owner;
 import social.laika.app.models.VetVisit;
 
 /**
@@ -30,7 +27,7 @@ public class VetVisitsResponse implements Response.Listener<JSONObject>, Respons
     public void onResponse(JSONObject response) {
 
         VetVisit.saveVetVisits(response);
-        mFragment.refreshList();
+        mFragment.refresh();
 
     }
 

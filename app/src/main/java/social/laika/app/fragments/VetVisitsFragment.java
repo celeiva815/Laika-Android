@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -109,7 +107,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
     public void onResume() {
         super.onResume();
 
-        refreshList();
+        refresh();
 
     }
 
@@ -120,7 +118,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public void refreshList() {
+    public void refresh() {
 
         if (!mVetVisitAdapter.isEmpty()) {
             mVetVisitAdapter.clear();

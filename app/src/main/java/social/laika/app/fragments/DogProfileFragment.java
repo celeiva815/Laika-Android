@@ -201,7 +201,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public void refreshList() {
+    public void refresh() {
 
         if (!mOwnersAdapter.isEmpty()) {
             mOwnersAdapter.clear();

@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -14,6 +13,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
+import social.laika.app.network.sync.SyncService;
 
 /**
  * Created by Tito_Leiva on 30-07-15.
@@ -21,6 +21,7 @@ import social.laika.app.activities.MainActivity;
 public class LaikaGcmListenerService extends GcmListenerService {
 
     public static final String TAG = LaikaGcmListenerService.class.getSimpleName();
+
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
@@ -30,9 +31,8 @@ public class LaikaGcmListenerService extends GcmListenerService {
         Log.d(TAG, "Message: " + message);
 
         sendNotification(message);
+        SyncService.triggerRefresh(data);
     }
-
-
 
     private void sendNotification(String message) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -40,13 +40,12 @@ public class LaikaGcmListenerService extends GcmListenerService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.camera_icon_camera)
                 .setContentTitle("GCM Message")
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
+                .setSound(getWofUri())
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -54,5 +53,12 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+    private Uri getWofUri() {
+
+        return Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ladrido);
+
+    }
+
 
 }

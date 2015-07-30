@@ -5,5 +5,5 @@ package social.laika.app.interfaces;
  */
 public interface Refreshable {
 
-    void refreshList();
+    void refresh();
 }

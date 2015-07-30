@@ -1,18 +1,13 @@
 package social.laika.app.fragments;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -31,10 +26,7 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.History;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.ImageResponse;
 import social.laika.app.responses.RemindersResponse;
-import social.laika.app.responses.VetVisitsResponse;
-import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -123,7 +115,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     @Override
     public void onResume() {
         super.onResume();
-        refreshList();
+        refresh();
 
     }
 
@@ -191,7 +183,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public void refreshList() {
+    public void refresh() {
 
         if (!mHistories.isEmpty()) {
             mHistories.clear();

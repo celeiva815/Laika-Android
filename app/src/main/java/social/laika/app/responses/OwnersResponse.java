@@ -7,7 +7,6 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.OwnersFragment;
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
@@ -31,7 +30,7 @@ public class OwnersResponse implements Response.Listener<JSONObject>, Response.E
     public void onResponse(JSONObject response) {
 
         Owner.saveOwners(response, mContext, mDog);
-        mFragment.refreshList();
+        mFragment.refresh();
 
     }
 
