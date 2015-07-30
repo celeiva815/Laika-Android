@@ -28,6 +28,9 @@ public class PrefsManager {
     // Default value for String preferences
     public static final String DEFAULT_STRING = "";
 
+    public static final String GCM_SENT_TOKEN_TO_SERVER = "setSentTokenToServer";
+    public static final String GCM_REGISTRATION_COMPLETE = "registrationComplete";
+
     private PrefsManager() {
 
     }
@@ -132,6 +135,24 @@ public class PrefsManager {
         long lastSyncMillis = getPrefs(context).getLong(PREF_LAST_SYNC, 0);
         return lastSyncMillis > 0 ? new Date(lastSyncMillis) : null;
     }
+
+
+    // ################ GCM ###############
+
+    public static void setSentTokenToServer(Context context, boolean isSent) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putBoolean(GCM_SENT_TOKEN_TO_SERVER, isSent);
+        editor.apply();
+    }
+
+    public static boolean getSentTokenToServer(Context context) {
+
+        SharedPreferences prefs = getPrefs(context);
+        return prefs.getBoolean(GCM_SENT_TOKEN_TO_SERVER, false);
+    }
+
+    // #####################################
+
 
     /**
      * Saves the session cookie serialized in json string format in shared preferences

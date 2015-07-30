@@ -50,4 +50,5 @@ public class MainActivity extends BaseActivity {
         storiesImageView.setOnClickListener(new ToActivityOnCLickListener(StoriesActivity.class));
 
     }
+
 }

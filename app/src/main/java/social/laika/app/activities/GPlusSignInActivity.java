@@ -27,7 +27,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.People.LoadPeopleResult;
 import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.google.android.gms.plus.model.people.Person;
 
 import android.content.Intent;
@@ -50,7 +49,7 @@ import social.laika.app.R;
 
 public class GPlusSignInActivity extends BaseActivity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
-        OnAccessRevokedListener, ResultCallback<LoadPeopleResult> {
+        ResultCallback<LoadPeopleResult> {
 
 	 	private static final int RC_SIGN_IN = 0;
 	    // Logcat tag
@@ -174,7 +173,7 @@ public class GPlusSignInActivity extends BaseActivity implements OnClickListener
 	        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 	        
 	        Plus.PeopleApi.loadVisible(mGoogleApiClient, null).setResultCallback(this);
-	 
+
 	        // Get user's information
 	        getProfileInformation();
 	 
@@ -343,12 +342,7 @@ public class GPlusSignInActivity extends BaseActivity implements OnClickListener
 	        }
 	    }
 
-		@Override
-		public void onAccessRevoked(ConnectionResult arg0) {
 
-			
-		}	
-		
 		private void buildConnection(){
 			
 		       mGoogleApiClient = new GoogleApiClient.Builder(this)

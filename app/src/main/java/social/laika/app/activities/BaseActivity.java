@@ -1,17 +1,23 @@
 package social.laika.app.activities;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Request;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import social.laika.app.R;
 import social.laika.app.fragments.NavigationDrawerFragment;
@@ -32,6 +38,7 @@ import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.network.gcm.LaikaRegistrationIntentService;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
@@ -43,7 +50,9 @@ public class BaseActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    protected BroadcastReceiver mRegistrationBroadcastReceiver;
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle;
     protected PlaceHolderFragment mFragment;
@@ -56,7 +65,6 @@ public class BaseActivity extends ActionBarActivity
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
 
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -64,6 +72,8 @@ public class BaseActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
+
+        registerGCM();
 
     }
 
@@ -85,6 +95,19 @@ public class BaseActivity extends ActionBarActivity
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(PrefsManager.GCM_REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
 
@@ -198,5 +221,42 @@ public class BaseActivity extends ActionBarActivity
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(adoptDogRequest, TAG);
 
+    }
+
+    protected void registerGCM() {
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                boolean sentToken = PrefsManager.getSentTokenToServer(getApplicationContext());
+
+            }
+        };
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, LaikaRegistrationIntentService.class);
+            startService(intent);
+        }
+
+
+    }
+
+    protected boolean checkPlayServices() {
+
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }
