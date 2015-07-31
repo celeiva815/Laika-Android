@@ -61,9 +61,6 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         Log.i(TAG, "Beginning network synchronization");
 
-        PostulationRequest postulationRequest = new PostulationRequest(this.getContext());
-        postulationRequest.request();
-
 
         Log.i(TAG, "Network synchronization complete");
     }

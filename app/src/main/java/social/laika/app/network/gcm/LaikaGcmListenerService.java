@@ -13,6 +13,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
+import social.laika.app.network.requests.PostulationRequest;
 import social.laika.app.network.sync.SyncUtils;
 
 /**
@@ -21,35 +22,41 @@ import social.laika.app.network.sync.SyncUtils;
 public class LaikaGcmListenerService extends GcmListenerService {
 
     public static final String TAG = LaikaGcmListenerService.class.getSimpleName();
+    public static final int POSTULATED_DOGS = 100;
 
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
         String message = data.getString("title");
+        int code = Integer.parseInt(data.getString("code"));
+
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
-        sendNotification(message);
-        SyncUtils.triggerRefresh(data);
+        synchronize(code, message);
     }
 
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public static void sendNotification(String message, Class activityClass, Bundle data,
+                                        Context context) {
+
+        Intent intent = new Intent(context, activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" +
+                R.raw.ladrido_simple);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.camera_icon_camera)
                 .setContentTitle("GCM Message")
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(getWofUri())
+                .setSound(soundUri)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
@@ -57,6 +64,21 @@ public class LaikaGcmListenerService extends GcmListenerService {
     private Uri getWofUri() {
 
         return Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ladrido);
+
+    }
+
+    public void synchronize(int code, String message) {
+
+        switch (code) {
+
+            case POSTULATED_DOGS:
+
+                PostulationRequest request = new PostulationRequest(this, message);
+                request.request();
+
+                break;
+
+        }
 
     }
 

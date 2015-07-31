@@ -64,7 +64,6 @@ public class BaseActivity extends ActionBarActivity
     protected PlaceHolderFragment mFragment;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,6 @@ public class BaseActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
 
         registerGCM();
-        SyncUtils.CreateSyncAccount(getApplicationContext());
 
     }
 

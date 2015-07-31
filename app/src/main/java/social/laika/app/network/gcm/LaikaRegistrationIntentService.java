@@ -12,6 +12,7 @@ import com.google.android.gms.iid.InstanceID;
 import java.io.IOException;
 
 import social.laika.app.R;
+import social.laika.app.network.requests.TokenRequest;
 import social.laika.app.utils.PrefsManager;
 
 /**
@@ -68,7 +69,11 @@ public class LaikaRegistrationIntentService extends IntentService {
     }
 
     private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+
+        TokenRequest tokenRequest = new TokenRequest(token, this);
+
+        tokenRequest.request();
+
     }
 
     private void subscribeTopics(String token) throws IOException {
