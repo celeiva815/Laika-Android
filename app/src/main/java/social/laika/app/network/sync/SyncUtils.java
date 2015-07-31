@@ -16,7 +16,7 @@ import social.laika.app.utils.PrefsManager;
  */
 public class SyncUtils {
 
-    private static final long SYNC_FREQUENCY = 30;  // 1 day (in seconds)
+    private static final long SYNC_FREQUENCY = 60 * 60 * 12;  // 1 day (in seconds)
     private static final String CONTENT_AUTHORITY = SyncService.CONTENT_AUTHORITY;
 
     // Value below must match the account type specified in res/xml/syncadapter.xml

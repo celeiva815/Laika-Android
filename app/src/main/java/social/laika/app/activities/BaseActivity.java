@@ -81,6 +81,7 @@ public class BaseActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
 
         registerGCM();
+        SyncUtils.CreateSyncAccount(getApplicationContext());
 
     }
 
