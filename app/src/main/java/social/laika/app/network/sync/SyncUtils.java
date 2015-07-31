@@ -37,6 +37,7 @@ public class SyncUtils {
         Account account = AccountService.GetAccount(ACCOUNT_TYPE);
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+
         if (accountManager.addAccountExplicitly(account, null, null)) {
             // Inform the system that this account supports sync
             ContentResolver.setIsSyncable(account, CONTENT_AUTHORITY, 1);
