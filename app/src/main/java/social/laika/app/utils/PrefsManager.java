@@ -25,6 +25,7 @@ public class PrefsManager {
     private static final String PREF_IS_SYNCING_STATUS = "is_syncing_status";
     private static final String PREF_LAST_SYNC = "last_sync";
     private static final String PREF_FIRST_BOOT = "firstboot";
+    private static final String PREF_SETUP_COMPLETE = "setup_complete";
     // Default value for String preferences
     public static final String DEFAULT_STRING = "";
 
@@ -152,6 +153,22 @@ public class PrefsManager {
     }
 
     // #####################################
+    // #####################################
+
+
+    // ############ Sync ##############
+
+    public static void setSyncSetupComplete(Context context, boolean isComplete) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putBoolean(PREF_SETUP_COMPLETE, isComplete);
+        editor.apply();
+    }
+
+    public static boolean getSyncSetupComplete(Context context) {
+
+        SharedPreferences prefs = getPrefs(context);
+        return prefs.getBoolean(PREF_SETUP_COMPLETE, false);
+    }
 
 
     /**

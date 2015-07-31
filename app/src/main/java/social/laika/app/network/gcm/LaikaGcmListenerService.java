@@ -13,7 +13,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
-import social.laika.app.network.sync.SyncService;
+import social.laika.app.network.sync.SyncUtils;
 
 /**
  * Created by Tito_Leiva on 30-07-15.
@@ -31,7 +31,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         Log.d(TAG, "Message: " + message);
 
         sendNotification(message);
-        SyncService.triggerRefresh(data);
+        SyncUtils.triggerRefresh(data);
     }
 
     private void sendNotification(String message) {

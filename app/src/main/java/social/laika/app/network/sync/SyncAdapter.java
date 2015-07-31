@@ -4,17 +4,14 @@ import android.accounts.Account;
 import android.annotation.TargetApi;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import social.laika.app.network.requests.PostulationRequest;
 
 /**
  * Define a sync adapter for the app.
@@ -64,6 +61,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         Log.i(TAG, "Beginning network synchronization");
 
+        PostulationRequest postulationRequest = new PostulationRequest(this.getContext());
+        postulationRequest.request();
 
 
         Log.i(TAG, "Network synchronization complete");

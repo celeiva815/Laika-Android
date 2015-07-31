@@ -15,7 +15,7 @@ import android.util.Log;
  * Created by Tito_Leiva on 30-07-15.
  */
 public class AccountService extends Service {
-    private static final String TAG = AccountService.class.getSimpleName();
+    private static final String TAG = "AccountService";
     public static final String ACCOUNT_NAME = "Account";
     private Authenticator mAuthenticator;
 

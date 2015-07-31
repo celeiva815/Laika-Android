@@ -65,15 +65,4 @@ public class SyncService extends Service {
         return sSyncAdapter.getSyncAdapterBinder();
     }
 
-    public static void triggerRefresh(Bundle data) {
-
-        // Disable sync backoff and ignore sync preferences. In other words...perform sync NOW!
-        data.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        data.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-
-        ContentResolver.requestSync(
-                AccountService.GetAccount(ACCOUNT_TYPE), // Sync account
-                CONTENT_AUTHORITY,                       // Content authority
-                data);                                   // Extras
-    }
 }

@@ -1,10 +1,13 @@
 package social.laika.app.activities;
 
+import android.accounts.Account;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -39,6 +42,9 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
+import social.laika.app.network.sync.AccountService;
+import social.laika.app.network.sync.SyncService;
+import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
@@ -57,6 +63,8 @@ public class BaseActivity extends ActionBarActivity
     protected CharSequence mTitle;
     protected PlaceHolderFragment mFragment;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +82,7 @@ public class BaseActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
 
         registerGCM();
+        SyncUtils.CreateSyncAccount(getApplicationContext());
 
     }
 
@@ -102,6 +111,7 @@ public class BaseActivity extends ActionBarActivity
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(PrefsManager.GCM_REGISTRATION_COMPLETE));
+
     }
 
     @Override
@@ -126,7 +136,8 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 1: // Mis postulaciones
-                openPostulatedDogs();
+                Do.changeActivity(context, PostulatedDogsFragmentActivity.class,
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 break;
 
@@ -259,4 +270,5 @@ public class BaseActivity extends ActionBarActivity
         }
         return true;
     }
+
 }
