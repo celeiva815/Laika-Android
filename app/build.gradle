@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'newrelic'
 
 android {
     compileSdkVersion 21
@@ -39,5 +40,5 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
-
+    compile 'com.newrelic.agent.android:android-agent:5.+'
 }
