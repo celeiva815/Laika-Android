@@ -79,17 +79,18 @@ public class City extends Model {
 
     public static void saveCities(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonCities = jsonObject.getJSONArray(TABLE_CITIES);
+        if (jsonObject.has(TABLE_CITIES)) {
+            try {
+                JSONArray jsonCities = jsonObject.getJSONArray(TABLE_CITIES);
 
-            for (int i = 0; i < jsonCities.length(); i++) {
-                saveCity(jsonCities.getJSONObject(i));
+                for (int i = 0; i < jsonCities.length(); i++) {
+                    saveCity(jsonCities.getJSONObject(i));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     public static City saveCity(JSONObject jsonObject) {

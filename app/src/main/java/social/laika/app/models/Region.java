@@ -69,17 +69,18 @@ public class Region extends Model {
 
     public static void saveRegions(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonRegions = jsonObject.getJSONArray(TABLE_REGIONS);
+        if (jsonObject.has(TABLE_REGIONS)) {
+            try {
+                JSONArray jsonRegions = jsonObject.getJSONArray(TABLE_REGIONS);
 
-            for (int i = 0; i < jsonRegions.length(); i++) {
-                saveRegion(jsonRegions.getJSONObject(i));
+                for (int i = 0; i < jsonRegions.length(); i++) {
+                    saveRegion(jsonRegions.getJSONObject(i));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     public static Region saveRegion(JSONObject jsonObject) {

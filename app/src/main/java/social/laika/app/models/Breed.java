@@ -80,15 +80,18 @@ public class Breed extends Model {
 
     public static void saveBreeds(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonBreeds = jsonObject.getJSONArray(TABLE_BREED);
+        if (jsonObject.has(TABLE_BREED)) {
 
-            for (int i = 0; i < jsonBreeds.length(); i++) {
-                saveBreed(jsonBreeds.getJSONObject(i));
+            try {
+                JSONArray jsonBreeds = jsonObject.getJSONArray(TABLE_BREED);
 
+                for (int i = 0; i < jsonBreeds.length(); i++) {
+                    saveBreed(jsonBreeds.getJSONObject(i));
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
     }

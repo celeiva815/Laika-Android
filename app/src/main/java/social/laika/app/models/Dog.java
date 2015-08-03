@@ -408,15 +408,17 @@ public class Dog extends Model {
 
     public static void saveDogs(JSONObject jsonObject, int status) {
 
-        try {
-            JSONArray jsonDogs = jsonObject.getJSONArray(TABLE_DOG);
+        if (jsonObject.has(TABLE_DOG)) {
+            try {
+                JSONArray jsonDogs = jsonObject.getJSONArray(TABLE_DOG);
 
-            for (int i = 0; i < jsonDogs.length(); i++) {
-                saveDog(jsonDogs.getJSONObject(i), status);
+                for (int i = 0; i < jsonDogs.length(); i++) {
+                    saveDog(jsonDogs.getJSONObject(i), status);
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
     }

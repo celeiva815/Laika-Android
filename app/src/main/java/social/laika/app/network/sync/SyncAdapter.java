@@ -2,6 +2,7 @@ package social.laika.app.network.sync;
 
 import android.accounts.Account;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.Context;
@@ -9,9 +10,17 @@ import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 
+import com.android.volley.Request;
+
+import social.laika.app.network.RequestManager;
+import social.laika.app.network.VolleyManager;
 import social.laika.app.network.requests.PostulationRequest;
+import social.laika.app.responses.FirstInformationResponse;
+import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 
 /**
  * Define a sync adapter for the app.
@@ -59,12 +68,29 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
 
+        Context context = this.getContext();
         Log.i(TAG, "Beginning network synchronization");
+
+        String lastSync = Do.dateToString(PrefsManager.getLastSync(context), Do.DAY_FIRST);
+
+        if (!Do.isNullOrEmpty(lastSync)) {
+
+
+
+        }
+
 
 
         Log.i(TAG, "Network synchronization complete");
     }
 
+
+    public void syncEverything(Context context) {
+
+
+
+
+    }
 
 
 }

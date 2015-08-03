@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.activities.MainActivity;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.Breed;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
@@ -30,12 +31,17 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     public Activity mActivity;
     public Context mContext;
     public ProgressBar mProgressBar;
+    public Requestable mRequestable;
 
     public FirstInformationResponse(Activity mActivity, ProgressBar progressBar) {
 
         this.mActivity = mActivity;
         this.mContext = mActivity.getApplicationContext();
         this.mProgressBar = progressBar;
+    }
+
+    public FirstInformationResponse(Requestable mRequestable) {
+        this.mRequestable = mRequestable;
     }
 
     @Override
@@ -46,6 +52,13 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         Country.saveCountries(response);
         Region.saveRegions(response);
         City.saveCities(response);
+
+
+        if (mRequestable != null) { //FIXME
+
+            mRequestable.onSuccess();
+            return;
+        }
 
         if (mProgressBar != null) {
 

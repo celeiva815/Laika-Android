@@ -65,17 +65,18 @@ public class Country extends Model {
 
     public static void saveCountries(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonCountries = jsonObject.getJSONArray(TABLE_COUNTRIES);
+        if (jsonObject.has(TABLE_COUNTRIES)) {
+            try {
+                JSONArray jsonCountries = jsonObject.getJSONArray(TABLE_COUNTRIES);
 
-            for (int i = 0; i < jsonCountries.length(); i++) {
-                saveCountry(jsonCountries.getJSONObject(i));
+                for (int i = 0; i < jsonCountries.length(); i++) {
+                    saveCountry(jsonCountries.getJSONObject(i));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     public static Country saveCountry(JSONObject jsonObject) {
