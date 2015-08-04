@@ -29,6 +29,7 @@ import social.laika.app.R;
 import social.laika.app.fragments.AlarmReminderMyDogFragment;
 import social.laika.app.fragments.CalendarReminderMyDogFragment;
 import social.laika.app.interfaces.Photographable;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.listeners.CreateStoryOnClickListener;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.AlarmReminder;
@@ -44,7 +45,7 @@ import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
-public class CreateReminderActivity extends ActionBarActivity{
+public class CreateReminderActivity extends ActionBarActivity implements Requestable {
 
     public static final String TAG = CreateReminderActivity.class.getSimpleName();
     public static final String KEY_DOG = "dog_id";
@@ -327,5 +328,20 @@ public class CreateReminderActivity extends ActionBarActivity{
 
         Do.hideView(mAlarmLayout);
         openCalendarReminder(calendarReminder);
+    }
+
+    @Override
+    public void request() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
     }
 }
