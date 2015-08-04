@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -585,7 +586,38 @@ public class AlarmReminder extends Model {
         }
     }
 
-    public void setAlarm(Context context, int i) {
+    public void checkAlarm(Context context) {
+
+        if (mHasMonday) {
+            checkAlarmUp(context, Calendar.MONDAY);
+        }
+
+        if (mHasTuesday) {
+            checkAlarmUp(context, Calendar.TUESDAY);
+        }
+
+        if (mHasWednesday) {
+            checkAlarmUp(context, Calendar.WEDNESDAY);
+        }
+
+        if (mHasThursday) {
+            checkAlarmUp(context, Calendar.THURSDAY);
+        }
+
+        if (mHasFriday) {
+            checkAlarmUp(context, Calendar.FRIDAY);
+        }
+
+        if (mHasSaturday) {
+            checkAlarmUp(context, Calendar.SATURDAY);
+        }
+
+        if (mHasSunday) {
+            checkAlarmUp(context, Calendar.SUNDAY);
+        }
+    }
+
+    private void setAlarm(Context context, int i) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.ONE_TIME, Boolean.FALSE);
@@ -595,11 +627,11 @@ public class AlarmReminder extends Model {
     }
 
 
-    public void setAlarm(Context context, int weekday, int hour, int minutes) {
+    private void setAlarm(Context context, int weekday, int hour, int minutes) {
 
         Intent intent = getAlarmIntent(context, weekday);
         int requestCode = getAlarmRequestCode(weekday);
-        Calendar calendar = getAlarmCalendar(weekday,hour,minutes);
+        Calendar calendar = getAlarmCalendar(weekday, hour, minutes);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, requestCode, intent, 0);
@@ -613,7 +645,7 @@ public class AlarmReminder extends Model {
 
     }
 
-    public void cancelAlarm(Context context, int weekday, int hour, int minutes) {
+    private void cancelAlarm(Context context, int weekday, int hour, int minutes) {
 
         Intent intent = getAlarmIntent(context, weekday);
         int requestCode = getAlarmRequestCode(weekday);
@@ -628,12 +660,31 @@ public class AlarmReminder extends Model {
         mAlarmManager.cancel(pendingIntent);
     }
 
-    public void updateAlarm(Context context, int oldWeekday, int oldHour, int oldMinutes,
+    private void updateAlarm(Context context, int oldWeekday, int oldHour, int oldMinutes,
                             int newWeekday, int newHour, int newMinutes) {
 
         cancelAlarm(context, oldWeekday, oldHour, oldMinutes);
         setAlarm(context, newWeekday, newHour, newMinutes);
 
+    }
+
+    public boolean checkAlarmUp(Context context, int weekday) {
+
+        Intent intent = getAlarmIntent(context, weekday);
+
+        boolean alarmUp = (PendingIntent.getBroadcast(context, getAlarmRequestCode(weekday),
+                intent, PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUp)
+        {
+            Log.i("ID:"+ mAlarmReminderId +" Weekday:" + weekday, "Cool!! Alarm is already active");
+
+        } else {
+
+            Log.wtf("ID:" + mAlarmReminderId + " Weekday:" + weekday, "WTF!! Alarm is not active");
+        }
+
+        return alarmUp;
     }
 
     public Intent getAlarmIntent(Context context, int weekday) {

@@ -3,6 +3,7 @@ package social.laika.app.fragments;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +71,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         int dogId = getArguments().getInt(KEY_DOG);
         mDog = Dog.getSingleDog(dogId);
+        checkAlarmsUp(getActivity().getApplicationContext(), Calendar.TUESDAY);
 
         super.onCreate(savedInstanceState);
 
@@ -191,6 +194,20 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         mHistories.addAll(getHistories(getActivity().getApplicationContext()));
         mHistoryAdapter.notifyDataSetChanged();
+    }
+
+    public void checkAlarmsUp(Context context) {
+
+        List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
+
+        for (AlarmReminder alarm : alarms) {
+
+            Log.i(alarm.mTitle, "CHECKING EVERY WEEKDAY");
+
+            alarm.checkAlarm(context);
+
+
+        }
     }
 
 }
