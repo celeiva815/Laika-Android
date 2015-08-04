@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 import social.laika.app.R;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
@@ -30,7 +31,8 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDialog.OnTimeSetListener{
+public class AlarmReminderMyDogFragment extends Fragment implements
+        TimePickerDialog.OnTimeSetListener, Requestable{
 
     public static final String TAG = AlarmReminderMyDogFragment.class.getSimpleName();
     public static final String TIMEPICKER_TAG = "timepicker";
@@ -59,19 +61,24 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
     public boolean mFriday = false;
     public boolean mSaturday = false;
     public boolean mSunday = false;
+    public int mRequestMethod;
 
     public String mTime;
 
+    //TODO cambiarlo a la forma comun de instanciar fragments
     public AlarmReminderMyDogFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
+        this.mRequestMethod = RequestManager.METHOD_POST;
     }
 
     public AlarmReminderMyDogFragment(Dog mDog, AlarmReminder alarmReminder) {
 
         this.mDog = mDog;
         this.mAlarmReminder = alarmReminder;
+        this.mRequestMethod = RequestManager.METHOD_PATCH;
+
     }
 
     @Override
@@ -112,6 +119,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             @Override
             public void onClick(View v) {
 
+                Context context = v.getContext();
+
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
@@ -131,31 +140,30 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
                     mAlarmReminder.mHasSaturday = mSaturday;
                     mAlarmReminder.mHasSunday = mSunday;
                     mAlarmReminder.mTime = mTime;
-                    mAlarmReminder.mOwnerId = PrefsManager.getUserId(v.getContext());
+                    mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
 
                     mAlarmReminder.save();
 
-                    String message = Do.getRString(v.getContext(), R.string.edit_reminder_added);
-                    Do.showLongToast(message, v.getContext());
+                    String message = Do.getRString(context, R.string.edit_reminder_added);
+                    Do.showLongToast(message, context);
 
                 } else {
 
-                    AlarmReminder reminder = new AlarmReminder(Tag.TYPE_ALARM,
+                    mAlarmReminder = new AlarmReminder(Tag.TYPE_ALARM,
                             mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday,
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
-                            PrefsManager.getUserId(v.getContext()), mDog.mDogId);
+                            PrefsManager.getUserId(context), mDog.mDogId);
 
-                    //FIXME ver el caso en que hay internet y cuando no
-                    if (Do.isNetworkAvailable(view.getContext())) {
-                        createAlarmReminders(reminder, RequestManager.METHOD_POST);
+                    if (Do.isNetworkAvailable(context)) {
+                        request();
 
                     }  else {
 
-                        reminder.save();
-                        reminder.setAlarm(view.getContext());
+                        //TODO cachar bien como hacer el sync de las alarms no subidas
+                        mAlarmReminder.save();
+                        mAlarmReminder.setAlarm(context);
 
-                        String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                        Do.showLongToast(message, v.getContext());
+                        onSuccess();
 
                     }
 
@@ -168,6 +176,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             public void onClick(View v) {
 
                 setMonday(!mMonday);
+
             }
         });
 
@@ -237,20 +246,6 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
         }
 
         return view;
-    }
-
-    public void createAlarmReminders(AlarmReminder alarmReminder, int method) {
-
-        Context context = getActivity().getApplicationContext();
-        JSONObject jsonParams = alarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(this);
-
-        Request createRequest = RequestManager.defaultRequest(method, jsonParams,
-                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
-                PrefsManager.getUserToken(context));
-
-        VolleyManager.getInstance(context).addToRequestQueue(createRequest, TAG);
-
     }
 
     @Override
@@ -373,6 +368,39 @@ public class AlarmReminderMyDogFragment extends Fragment implements TimePickerDi
             mSunday = false;
             mSundayButton.setBackgroundColor(getSemiTransparentColor());
         }
+    }
+
+    @Override
+    public void request() {
+
+        Context context = getActivity().getApplicationContext();
+        JSONObject jsonParams = mAlarmReminder.getJsonObject();
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, mDog,this);
+
+        Request createRequest = RequestManager.defaultRequest(mRequestMethod, jsonParams,
+                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context).addToRequestQueue(createRequest, TAG);
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+        Context context = getActivity().getApplicationContext();
+        String message = Do.getRString(context, R.string.new_reminder_added);
+
+        Do.showLongToast(message, context);
+        getActivity().onBackPressed();
+
+    }
+
+    @Override
+    public void onFailure() {
+
+
+
     }
 
     //Data Base

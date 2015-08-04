@@ -45,7 +45,7 @@ import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
-public class CreateReminderActivity extends ActionBarActivity implements Requestable {
+public class CreateReminderActivity extends ActionBarActivity {
 
     public static final String TAG = CreateReminderActivity.class.getSimpleName();
     public static final String KEY_DOG = "dog_id";
@@ -193,6 +193,10 @@ public class CreateReminderActivity extends ActionBarActivity implements Request
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -328,20 +332,5 @@ public class CreateReminderActivity extends ActionBarActivity implements Request
 
         Do.hideView(mAlarmLayout);
         openCalendarReminder(calendarReminder);
-    }
-
-    @Override
-    public void request() {
-
-    }
-
-    @Override
-    public void onSuccess() {
-
-    }
-
-    @Override
-    public void onFailure() {
-
     }
 }

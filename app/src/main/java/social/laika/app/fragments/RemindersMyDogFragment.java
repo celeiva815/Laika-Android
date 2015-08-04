@@ -45,23 +45,6 @@ public class RemindersMyDogFragment extends Fragment {
     public RemindersMyDogFragment() {
     }
 
-    public RemindersMyDogFragment(Dog mDog) {
-        this.mDog = mDog;
-    }
-
-    public RemindersMyDogFragment(Dog mDog, AlarmReminder alarmReminder) {
-
-        this.mDog = mDog;
-        this.mAlarmReminder = alarmReminder;
-
-    }
-
-    public RemindersMyDogFragment(Dog mDog, CalendarReminder calendarReminder) {
-
-        this.mDog = mDog;
-        this.mCalendarReminder = calendarReminder;
-    }
-
     public static final RemindersMyDogFragment newInstance(int dogId)
     {
         RemindersMyDogFragment f = new RemindersMyDogFragment();

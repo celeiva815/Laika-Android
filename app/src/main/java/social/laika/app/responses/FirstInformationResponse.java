@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.interfaces.Requestable;
@@ -53,7 +55,6 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         Region.saveRegions(response);
         City.saveCities(response);
 
-
         if (mRequestable != null) { //FIXME
 
             mRequestable.onSuccess();
@@ -65,6 +66,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
             mProgressBar.setVisibility(View.GONE);
         }
 
+        PrefsManager.saveLastSync(mContext, new Date());
         Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
         Do.showLongToast("Bienvenido " + PrefsManager.getUserName(mContext) +
                 ", ¿Cómo están tus perritos?", mContext);

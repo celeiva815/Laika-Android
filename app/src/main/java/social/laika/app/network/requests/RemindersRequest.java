@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import social.laika.app.fragments.AlarmReminderMyDogFragment;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
@@ -22,7 +23,7 @@ import social.laika.app.utils.PrefsManager;
 /**
  * Created by Tito_Leiva on 12-06-15.
  */
-public class RemindersRequest {
+public class RemindersRequest implements Requestable {
 
     private static final String TAG = RemindersRequest.class.getSimpleName();
 
@@ -30,7 +31,7 @@ public class RemindersRequest {
                                      Context context) {
 
         JSONObject jsonParams = alarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, dog);
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, dog, this);
 
         Request createRequest = RequestManager.defaultRequest(method, jsonParams,
                 RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
@@ -45,7 +46,7 @@ public class RemindersRequest {
 
         Context context = fragment.getActivity().getApplicationContext();
         JSONObject jsonParams = alarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(fragment);
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, this);
 
         Request createRequest = RequestManager.defaultRequest(method, jsonParams,
                 RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
@@ -91,5 +92,18 @@ public class RemindersRequest {
     }
 
 
+    @Override
+    public void request() {
 
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
 }

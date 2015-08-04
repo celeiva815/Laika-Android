@@ -91,7 +91,6 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //FIXME solo para editar el recordatorio, falta eliminarlo
                 editReminder(mHistories.get(position));
 
             }

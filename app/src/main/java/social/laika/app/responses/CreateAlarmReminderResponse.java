@@ -1,6 +1,7 @@
 package social.laika.app.responses;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import social.laika.app.R;
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.fragments.AlarmReminderMyDogFragment;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.utils.Do;
@@ -19,20 +21,22 @@ import social.laika.app.utils.Do;
  */
 public class CreateAlarmReminderResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    public AlarmReminderMyDogFragment mFragment;
+    public static final String TAG = CreateAlarmReminderResponse.class.getSimpleName();
+
     public Context mContext;
     public Dog mDog;
+    public Requestable mRequestable;
 
-    public CreateAlarmReminderResponse(AlarmReminderMyDogFragment mFragment) {
-        this.mFragment = mFragment;
-        this.mContext = mFragment.getActivity().getApplicationContext();
-        this.mDog = mFragment.mDog;
+    public CreateAlarmReminderResponse(Context mContext, Requestable mRequestable) {
+        this.mContext = mContext;
+        this.mRequestable = mRequestable;
     }
 
-    public CreateAlarmReminderResponse(Context context, Dog dog) {
+    public CreateAlarmReminderResponse(Context context, Dog dog, Requestable mRequestable ) {
 
         this.mContext = context;
         this.mDog = dog;
+        this.mRequestable = mRequestable;
     }
 
     @Override
@@ -41,18 +45,15 @@ public class CreateAlarmReminderResponse implements Response.Listener<JSONObject
         AlarmReminder alarmReminder = AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
         alarmReminder.setAlarm(mContext);
 
-        if (mFragment != null) {
-
-            String message = Do.getRString(mContext, R.string.new_reminder_added);
-            Do.showLongToast(message, mContext);
-            mFragment.getActivity().onBackPressed();
-        }
+        mRequestable.onSuccess();
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
+        Log.e(TAG, "Can't create the alarm");
         ResponseHandler.error(error, mContext);
+        mRequestable.onFailure();
 
     }
 }
