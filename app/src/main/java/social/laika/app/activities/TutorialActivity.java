@@ -1,6 +1,9 @@
 package social.laika.app.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -8,6 +11,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -17,10 +22,15 @@ import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
+import com.facebook.Profile;
+import com.newrelic.agent.android.NewRelic;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import java.security.MessageDigest;
 
 
 public class TutorialActivity extends ActionBarActivity {
+    private static final String TAG = TutorialActivity.class.getSimpleName();
 
     // the number of pages of tutorial to be shown
     public static final int NUM_PAGES = 5;
@@ -38,6 +48,11 @@ public class TutorialActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "New Relic Initialized");
+        NewRelic.withApplicationToken(
+                "AA602cfb22c1752b158a0b1d7465547e124ea262e4"
+        ).start(this.getApplication());
+
 
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
 
@@ -56,6 +71,25 @@ public class TutorialActivity extends ActionBarActivity {
 
         mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
         mIndicator.setViewPager(mPager);
+
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "social.laika.app",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d(TAG, Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                Profile profile = Profile.getCurrentProfile();
+                String first_name = profile.getFirstName();
+                String last_name = profile.getLastName();
+                Log.i(TAG, first_name);
+                Log.i(TAG, last_name);
+            }
+        } catch (Exception e) {
+            Log.i(TAG, e.toString());
+        }
     }
 
 

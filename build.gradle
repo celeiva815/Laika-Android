@@ -28,4 +28,5 @@ allprojects {
             url "https://mint.splunk.com/gradle/"
         }
     }
+
 }

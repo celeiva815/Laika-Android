@@ -1,7 +1,6 @@
 package social.laika.app.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,10 +8,7 @@ import social.laika.app.R;
 import social.laika.app.listeners.ToActivityOnCLickListener;
 import social.laika.app.listeners.ToAdoptActivityOnClickListener;
 import social.laika.app.listeners.ToMyDogOnCLickListener;
-import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
-import com.newrelic.agent.android.NewRelic;
-
 
 public class MainActivity extends BaseActivity {
 
@@ -56,9 +52,5 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("new_relic", "TOKEN");
-        NewRelic.withApplicationToken(
-                "AA602cfb22c1752b158a0b1d7465547e124ea262e4"
-        ).start(this.getApplication());
     }
 }

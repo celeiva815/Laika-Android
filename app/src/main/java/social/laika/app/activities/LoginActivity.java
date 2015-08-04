@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,10 +13,18 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import social.laika.app.R;
@@ -39,13 +48,20 @@ public class LoginActivity extends ActionBarActivity {
     public Button mRegisterButton;
     public ProgressBar mLoginProgressBar;
 
+    // Facebook
+    private LoginButton mFacebookLoginButton;
+    private CallbackManager mCallbackManager = CallbackManager.Factory.create();
+    private FacebookCallback<LoginResult> mFacebookLoginResult = new LaikaFBCallback();
+    public static final List<String> FACEBOOK_PERMISSIONS =  Arrays.asList("public_profile", "email", "user_friends");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "OnCreate()::LoginActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_login_activity);
         getSupportActionBar().hide();
 
-        if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
+        if (true || PrefsManager.isUserLoggedIn(getApplicationContext())) {
 
             //FIXME ver qué información sincronizar al comienzo
             Do.changeActivity(this, MainActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -59,6 +75,14 @@ public class LoginActivity extends ActionBarActivity {
         mLoginProgressBar = (ProgressBar) findViewById(R.id.login_progressbar);
 
         mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
+
+        /* Facebook Login */
+//        mFacebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+//        Log.d(TAG, FACEBOOK_PERMISSIONS.toString());
+//        mFacebookLoginButton.setReadPermissions(FACEBOOK_PERMISSIONS);
+//        mFacebookLoginButton.registerCallback(mCallbackManager, mFacebookLoginResult);
+//        Log.d(TAG, "Facebook Login onCreate()");
+
     }
 
     @Override
@@ -129,5 +153,27 @@ public class LoginActivity extends ActionBarActivity {
 
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(loginRequest, TAG);
+    }
+
+    private class LaikaFBCallback implements FacebookCallback<LoginResult> {
+
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Log.i(TAG, loginResult.getAccessToken().getToken());
+            com.facebook.Profile profile = Profile.getCurrentProfile();
+            String first_name = profile.getFirstName();
+            String last_name = profile.getLastName();
+            Log.i(TAG, first_name);
+            Log.i(TAG, last_name);
+
+        }
+
+        @Override
+        public void onCancel() { Log.i("FacebookToken", "Cancelled"); }
+
+        @Override
+        public void onError(FacebookException e) {
+            Log.i("FacebookToken",e.getMessage());
+        }
     }
 }

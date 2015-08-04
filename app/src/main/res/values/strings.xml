@@ -5,6 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Facebook -->
+    <string name="facebook_app_id">1472555673060744</string>
+
     <!-- Network -->
     <string name="http_client_null_exception_message">Client must not be null.</string>
 

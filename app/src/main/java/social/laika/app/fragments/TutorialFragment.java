@@ -1,9 +1,11 @@
 package social.laika.app.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
@@ -21,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import social.laika.app.R;
+import social.laika.app.activities.LoginActivity;
 import social.laika.app.activities.RegisterActivity;
 import social.laika.app.activities.TutorialActivity;
 import social.laika.app.listeners.ToActivityOnCLickListener;
@@ -59,6 +68,10 @@ public class TutorialFragment extends Fragment {
 
     // The fragment number
     private int mPageNumb;
+
+    // Facebook
+    private LoginButton mFacebookLoginButton;
+    private static CallbackManager mCallbackManager;
 
     /**
      * Use this factory method to create a new instance of
@@ -125,13 +138,15 @@ public class TutorialFragment extends Fragment {
                 break;
 
             case TUTORIAL_LOG_IN:
+                com.facebook.FacebookSdk.sdkInitialize(getActivity().getApplicationContext()); // FIXME Facebook
                 layoutId = R.layout.lk_login_activity;
                 view = inflater.inflate(layoutId, container, false);
-
-                return setLoginLayout(view);
+                break;
         }
-
-        return setTutorialLayout(view, title, detail, backgroundId);
+        if(backgroundId != 0)
+            return setTutorialLayout(view, title, detail, backgroundId);
+        else
+            return setLoginLayout(view);
     }
 
     public View setTutorialLayout(View view, String title, String detail, int backgroundId) {
@@ -177,6 +192,41 @@ public class TutorialFragment extends Fragment {
         });
 
         mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
+
+        /* [Start] Facebook Login */
+        Log.d(TAG, getActivity().getClass().getName());
+        if (mCallbackManager == null) {
+            mCallbackManager = CallbackManager.Factory.create();
+        }
+        mFacebookLoginButton = (LoginButton) view.findViewById(R.id.facebook_login_button);// Facebook
+
+        Log.d(TAG, LoginActivity.FACEBOOK_PERMISSIONS.toString());
+        mFacebookLoginButton.setReadPermissions(LoginActivity.FACEBOOK_PERMISSIONS);
+        mFacebookLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult> () {
+            @Override
+            public void onSuccess (LoginResult loginResult){
+                Log.i(TAG, "Login Successfull");
+                Log.i(TAG, loginResult.getAccessToken().getToken());
+                com.facebook.Profile profile = Profile.getCurrentProfile();
+                String first_name = profile.getFirstName();
+                String last_name = profile.getLastName();
+                Log.i(TAG, first_name);
+                Log.i(TAG, last_name);
+
+            }
+
+            @Override
+            public void onCancel () {
+                Log.i("FacebookToken", "Cancelled");
+            }
+
+            @Override
+            public void onError (FacebookException e) {
+                Log.i("FacebookToken", e.getMessage());
+            }
+        });
+        Log.d(TAG, "Facebook Login onCreate()");
+
 
         return view;
     }
@@ -226,4 +276,9 @@ public class TutorialFragment extends Fragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "activity Result");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
