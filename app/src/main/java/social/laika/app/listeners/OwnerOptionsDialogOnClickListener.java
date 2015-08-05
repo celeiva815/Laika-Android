@@ -34,7 +34,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
 
         final Context context = v.getContext();
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         dialog.setTitle(R.string.choose_an_option);
         dialog.setItems(getOptions(context),

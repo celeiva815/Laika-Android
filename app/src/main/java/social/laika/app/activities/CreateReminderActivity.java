@@ -49,8 +49,8 @@ public class CreateReminderActivity extends ActionBarActivity {
 
     public static final String TAG = CreateReminderActivity.class.getSimpleName();
     public static final String KEY_DOG = "dog_id";
-    public static final String KEY_ALARM = "alarm";
-    public static final String KEY_CALENDAR = "calendar";
+    public static final String KEY_ALARM_ID = "alarm_id";
+    public static final String KEY_CALENDAR_ID = "calendar_id";
 
     private int mIdLayout = R.layout.lk_reminders_my_dog_fragment;
     public Dog mDog;
@@ -79,8 +79,8 @@ public class CreateReminderActivity extends ActionBarActivity {
         int dogId = getIntent().getExtras().getInt(KEY_DOG);
         mDog = Dog.getSingleDog(dogId);
 
-        int alarmReminderId = getIntent().getExtras().getInt(KEY_ALARM, 0);
-        int calendarReminderId = getIntent().getExtras().getInt(KEY_CALENDAR, 0);
+        int alarmReminderId = getIntent().getExtras().getInt(KEY_ALARM_ID, 0);
+        int calendarReminderId = getIntent().getExtras().getInt(KEY_CALENDAR_ID, 0);
 
         if (alarmReminderId > 0) {
 

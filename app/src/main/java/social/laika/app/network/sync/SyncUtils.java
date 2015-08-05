@@ -19,6 +19,39 @@ public class SyncUtils {
     private static final long SYNC_FREQUENCY = 60 * 60 * 12;  // 1 day (in seconds)
     private static final String CONTENT_AUTHORITY = SyncService.CONTENT_AUTHORITY;
 
+    public static final String CODE = "code";
+    public static final int CODE_GENERAL= 100;
+    public static final int CODE_LOCATIONS= 110;
+    public static final int CODE_BREEDS= 120;
+    public static final int CODE_POSTULATIONS= 200;
+    public static final int CODE_MY_DOG= 300;
+    public static final int CODE_ALARM= 310;
+    public static final int CODE_ALARM_CREATE = 311;
+    public static final int CODE_ALARM_READ = 312;
+    public static final int CODE_ALARM_UPDATE = 313;
+    public static final int CODE_ALARM_DELETE = 314;
+    public static final int CODE_CALENDAR = 320;
+    public static final int CODE_CALENDAR_CREATE = 321;
+    public static final int CODE_CALENDAR_READ = 322;
+    public static final int CODE_CALENDAR_UPDATE = 323;
+    public static final int CODE_CALENDAR_DELETE = 324;
+    public static final int CODE_VET_VISIT = 330;
+    public static final int CODE_VET_VISIT_CREATE = 331;
+    public static final int CODE_VET_VISIT_READ = 332;
+    public static final int CODE_VET_VISIT_UPDATE = 333;
+    public static final int CODE_VET_VISIT_DELETE = 334;
+    public static final int CODE_OWNER = 340;
+    public static final int CODE_OWNER_CREATE = 341;
+    public static final int CODE_OWNER_READ = 342;
+    public static final int CODE_OWNER_UPDATE = 343;
+    public static final int CODE_OWNER_DELETE = 344;
+    public static final int CODE_PHOTO = 350;
+    public static final int CODE_PHOTO_CREATE = 351;
+    public static final int CODE_PHOTO_READ = 352;
+    public static final int CODE_PHOTO_UPDATE = 353;
+    public static final int CODE_PHOTO_DELETE = 354;
+
+
     // Value below must match the account type specified in res/xml/syncadapter.xml
     public static final String ACCOUNT_TYPE = SyncService.ACCOUNT_TYPE;
 

@@ -61,9 +61,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements
     public boolean mFriday = false;
     public boolean mSaturday = false;
     public boolean mSunday = false;
-    public int mRequestMethod;
-
     public String mTime;
+    public int mRequestMethod;
+    public String mMessage = "";
 
     //TODO cambiarlo a la forma comun de instanciar fragments
     public AlarmReminderMyDogFragment(Dog mDog, int mReminderCategory) {
@@ -128,8 +128,6 @@ public class AlarmReminderMyDogFragment extends Fragment implements
 
                 if (mAlarmReminder != null) {
 
-                    //FIXME este es el método para actualizar en la API
-
                     mAlarmReminder.mTitle = title;
                     mAlarmReminder.mDetail = detail;
                     mAlarmReminder.mHasMonday = mMonday;
@@ -142,10 +140,21 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                     mAlarmReminder.mTime = mTime;
                     mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
 
-                    mAlarmReminder.save();
+                    mMessage = Do.getRString(context, R.string.edit_reminder_added);
 
-                    String message = Do.getRString(context, R.string.edit_reminder_added);
-                    Do.showLongToast(message, context);
+                    if (Do.isNetworkAvailable(context)) {
+
+                        request();
+
+                    }  else {
+
+                        //TODO cachar bien como hacer el sync de las alarms no subidas
+                        mAlarmReminder.save();
+                        mAlarmReminder.setAlarm(context);
+
+                        onSuccess();
+
+                    }
 
                 } else {
 
@@ -153,6 +162,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                             mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday,
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
                             PrefsManager.getUserId(context), mDog.mDogId);
+
+                    mMessage = Do.getRString(context, R.string.new_reminder_added);
 
                     if (Do.isNetworkAvailable(context)) {
                         request();
@@ -389,9 +400,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
     public void onSuccess() {
 
         Context context = getActivity().getApplicationContext();
-        String message = Do.getRString(context, R.string.new_reminder_added);
-
-        Do.showLongToast(message, context);
+        Do.showLongToast(mMessage, context);
         getActivity().onBackPressed();
 
     }

@@ -1,6 +1,9 @@
 package social.laika.app.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.activeandroid.Model;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import social.laika.app.R;
+import social.laika.app.activities.CreateReminderActivity;
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.adapters.HistoryMyDogAdapter;
 import social.laika.app.interfaces.Refreshable;
@@ -28,7 +33,9 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.History;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.RemindersResponse;
+import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -57,8 +64,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     }
 
-    public static final HistoryMyDogFragment newInstance(int dogId)
-    {
+    public static final HistoryMyDogFragment newInstance(int dogId) {
         HistoryMyDogFragment f = new HistoryMyDogFragment();
         Bundle bdl = new Bundle(1);
         bdl.putInt(KEY_DOG, dogId);
@@ -71,7 +77,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         int dogId = getArguments().getInt(KEY_DOG);
         mDog = Dog.getSingleDog(dogId);
-        checkAlarmsUp(getActivity().getApplicationContext(), Calendar.TUESDAY);
+        checkAlarmsUp(getActivity().getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
@@ -94,13 +100,40 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                editReminder(mHistories.get(position));
+                final Context context = view.getContext();
+                final int pos = position;
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
+                dialog.setTitle(R.string.choose_an_option);
+                dialog.setItems(new CharSequence[]{"Editar", "Eliminar"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                switch (which) {
+
+                                    case 0: // editar alarma
+
+                                        editReminder(mHistories.get(pos));
+                                        break;
+
+                                    case 1: // eliminar alarma
+
+                                        deleteReminder(mHistories.get(pos));
+
+                                        break;
+
+                                }
+
+                            }
+                        });
+
+                dialog.show();
             }
         });
 
         return view;
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -149,25 +182,63 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     public void editReminder(History history) {
 
-        MyDogsActivity activity = (MyDogsActivity) getActivity();
+        Context context = getActivity().getApplicationContext();
+        Intent intent = new Intent(context, CreateReminderActivity.class);
 
         switch (history.mType) {
 
             case Tag.TYPE_ALARM:
 
-                AlarmReminder alarmReminder = AlarmReminder.getSingleReminder(history.mReminderId);
-                activity.setReminderFragment(alarmReminder);
+                intent.putExtra(CreateReminderActivity.KEY_ALARM_ID, history.mReminderId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
 
                 break;
 
             case Tag.TYPE_CALENDAR:
 
-                CalendarReminder calendarReminder = CalendarReminder.getSingleReminder(history.mReminderId);
-                activity.setReminderFragment(calendarReminder);
+                intent.putExtra(CreateReminderActivity.KEY_CALENDAR_ID, history.mReminderId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
                 break;
 
         }
+    }
+
+    public void deleteReminder(History history) {
+
+        Context context = getActivity().getApplicationContext();
+
+        switch (history.mType) {
+
+            case Tag.TYPE_ALARM:
+
+                AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
+                reminder.cancelAlarm(context);
+
+                if (reminder.mAlarmReminderId > 0) {
+                    Bundle data = new Bundle();
+
+                    data.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_DELETE);
+                    data.putInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID, reminder.mAlarmReminderId);
+
+                    SyncUtils.triggerRefresh(data);
+                }
+
+                Model.delete(AlarmReminder.class, reminder.getId());
+
+                break;
+
+            case Tag.TYPE_CALENDAR:
+
+
+                break;
+
+        }
+
+        refresh();
     }
 
     public void requestReminders() {
@@ -205,6 +276,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             Log.i(alarm.mTitle, "CHECKING EVERY WEEKDAY");
 
             alarm.checkAlarm(context);
+            alarm.delete();
 
 
         }

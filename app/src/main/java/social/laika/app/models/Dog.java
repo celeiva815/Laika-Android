@@ -1,5 +1,6 @@
 package social.laika.app.models;
 
+import android.content.ContentProvider;
 import android.content.Context;
 import android.graphics.Bitmap;
 
@@ -505,4 +506,5 @@ public class Dog extends Model {
         new Delete().from(Dog.class).where(condition).execute();
 
     }
+
 }

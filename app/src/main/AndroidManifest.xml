@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name='android.permission.WAKE_LOCK'/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -363,7 +364,7 @@
         </service>
 
         <provider
-            android:name=".network.sync.SyncProvider"
+            android:name="com.activeandroid.content.ContentProvider"
             android:authorities="social.laika.app"
             android:syncable="true"
             android:label="Mis Perros" />

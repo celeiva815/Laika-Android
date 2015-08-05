@@ -132,7 +132,7 @@ public class RequestManager {
                                        Response.Listener<JSONObject> listener,
                                        Response.ErrorListener errorListener, final String token) {
 
-        return defaultRequest(METHOD_PATCH, jsonParams, address, listener, errorListener, token);
+        return defaultRequest(METHOD_DELETE, jsonParams, address, listener, errorListener, token);
     }
 
     public static Request defaultRequest(int method, JSONObject jsonParams, String address,

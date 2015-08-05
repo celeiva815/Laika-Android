@@ -13,6 +13,7 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.Calendar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +50,7 @@ public class AlarmReminder extends Model {
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
+    public final static String COLUMN_NEEDS_SYNC = "need_sync";
 
     public final static String LOCAL_ID = "local_id";
     public final static String WEEKDAY = "weekday";
@@ -106,7 +108,10 @@ public class AlarmReminder extends Model {
 
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
-    
+
+    @Column(name = COLUMN_NEEDS_SYNC)
+    public boolean mNeedsSync;
+
     public static AlarmManager mAlarmManager;
 
     public AlarmReminder(int mType, int mCategory, String mTitle,
@@ -130,6 +135,7 @@ public class AlarmReminder extends Model {
         this.mTime = mTime;
         this.mOwnerId = mOwnerId;
         this.mDogId = mDogId;
+        this.mNeedsSync = true; //Es local y se tiene que subir
     }
 
     public AlarmReminder(JSONObject jsonObject, int mDogId, Context context) {
@@ -150,6 +156,7 @@ public class AlarmReminder extends Model {
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mOwnerId = jsonObject.optInt(API_USER_ID, PrefsManager.getUserId(context));
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID, mDogId);
+        this.mNeedsSync = false; //Es del servidor y está actulizandose local
     }
 
     public AlarmReminder() {
@@ -622,7 +629,7 @@ public class AlarmReminder extends Model {
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.ONE_TIME, Boolean.FALSE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        //After after 5 seconds
+        //After after 10 seconds
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60, pi);
     }
 
@@ -632,10 +639,9 @@ public class AlarmReminder extends Model {
         Intent intent = getAlarmIntent(context, weekday);
         int requestCode = getAlarmRequestCode(weekday);
         Calendar calendar = getAlarmCalendar(weekday, hour, minutes);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, requestCode, intent, 0);
-        
+
         if (mAlarmManager == null) {
             mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
@@ -649,7 +655,6 @@ public class AlarmReminder extends Model {
 
         Intent intent = getAlarmIntent(context, weekday);
         int requestCode = getAlarmRequestCode(weekday);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -661,7 +666,7 @@ public class AlarmReminder extends Model {
     }
 
     private void updateAlarm(Context context, int oldWeekday, int oldHour, int oldMinutes,
-                            int newWeekday, int newHour, int newMinutes) {
+                             int newWeekday, int newHour, int newMinutes) {
 
         cancelAlarm(context, oldWeekday, oldHour, oldMinutes);
         setAlarm(context, newWeekday, newHour, newMinutes);
@@ -671,13 +676,11 @@ public class AlarmReminder extends Model {
     public boolean checkAlarmUp(Context context, int weekday) {
 
         Intent intent = getAlarmIntent(context, weekday);
-
         boolean alarmUp = (PendingIntent.getBroadcast(context, getAlarmRequestCode(weekday),
                 intent, PendingIntent.FLAG_NO_CREATE) != null);
 
-        if (alarmUp)
-        {
-            Log.i("ID:"+ mAlarmReminderId +" Weekday:" + weekday, "Cool!! Alarm is already active");
+        if (alarmUp) {
+            Log.i("ID:" + mAlarmReminderId + " Weekday:" + weekday, "Cool!! Alarm is already active");
 
         } else {
 
@@ -744,11 +747,20 @@ public class AlarmReminder extends Model {
 
     }
 
+    /**
+     * Crea o actualiza un alarma que fue creada en el servidor.
+     * @param reminder
+     * @param context
+     */
     public static void createOrUpdate(AlarmReminder reminder, Context context) {
 
+        reminder.mNeedsSync = false;
+
         if (!AlarmReminder.isSaved(reminder)) {
+
             reminder.save();
             reminder.setAlarm(context);
+
 
         } else {
             AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
