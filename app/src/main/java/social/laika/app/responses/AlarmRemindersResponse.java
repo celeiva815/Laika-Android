@@ -26,7 +26,7 @@ public class AlarmRemindersResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onResponse(JSONObject response) {
 
-        AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
+        AlarmReminder.saveReminder(response, mContext);
 
     }
 

@@ -7,8 +7,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
+import social.laika.app.network.account.AccountService;
 import social.laika.app.utils.PrefsManager;
 
 /**
@@ -25,10 +25,10 @@ public class SyncUtils {
     public static final int CODE_BREEDS= 120;
     public static final int CODE_POSTULATIONS= 200;
     public static final int CODE_MY_DOG= 300;
-    public static final int CODE_ALARM= 310;
+    public static final int CODE_ALARM_REFRESH = 310;
     public static final int CODE_ALARM_CREATE = 311;
     public static final int CODE_ALARM_READ = 312;
-    public static final int CODE_ALARM_UPDATE = 313;
+    public static final int CODE_ALARM_SYNC = 313;
     public static final int CODE_ALARM_DELETE = 314;
     public static final int CODE_CALENDAR = 320;
     public static final int CODE_CALENDAR_CREATE = 321;

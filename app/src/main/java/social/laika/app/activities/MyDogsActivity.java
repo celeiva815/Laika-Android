@@ -39,12 +39,11 @@ import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.network.sync.AccountService;
-import social.laika.app.network.sync.SyncService;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
+import social.laika.app.utils.Tag;
 import social.laika.app.utils.views.CustomPagerSlidingTabStrip;
 
 public class MyDogsActivity extends ActionBarActivity implements Photographable {
@@ -524,48 +523,26 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
             @Override
             public void onChange(boolean selfChange, Uri changeUri) {
 
-                AlarmReminder alarmReminder = null;
                 Bundle settingsBundle = new Bundle();
+                AlarmReminder alarmReminder;
 
-                if (changeUri != null) {
+                try {
 
-                    Log.i("URI", changeUri.toString());
+                    alarmReminder = Model.load(AlarmReminder.class,
+                            Long.parseLong(changeUri.getLastPathSegment()));
 
-                    try {
+                    if (alarmReminder != null && alarmReminder.mNeedsSync > Tag.FLAG_READED) {
 
-                        alarmReminder = Model.load(AlarmReminder.class,
-                                Long.parseLong(changeUri.getLastPathSegment()));
-
-                    } catch (NumberFormatException e) {
-                        Log.i("URI", "Deleting alarmReminder");
-                        return;
-                    }
-
-                    if (alarmReminder != null && alarmReminder.mNeedsSync) {
-
-                        int serverId = alarmReminder.mAlarmReminderId;
-                        settingsBundle.putLong(ID, alarmReminder.getId());
-
-                        if (serverId > AlarmReminder.ID_NOT_SET) {
-
-                            settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_UPDATE);
-                            settingsBundle.putInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID, serverId);
-                            Log.i("URI", "Updating alarmReminder " + serverId);
-
-                        } else {
-
-                            settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_CREATE);
-                            Log.i("URI", "Creating a new alarmReminder " + serverId);
-                        }
-
+                        settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_SYNC);
                         SyncUtils.requestSync(settingsBundle);
+                        mHistoryFragment.refresh();
                     }
 
-                } else {
-
-                    Log.i("URI", "URI is null");
-
+                } catch (NumberFormatException e) {
+                    Log.i("URI", "AlarmReminder deleted");
+                    return;
                 }
+
             }
         };
         mResolver.registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),

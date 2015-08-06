@@ -158,6 +158,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         mHistories = new ArrayList<>();
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
+        Object something = AlarmReminder.getAllReminders();
 
         if (calendars.size() > 0) {
 
@@ -265,18 +266,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             case Tag.TYPE_ALARM:
 
                 AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
-                reminder.cancelAlarm(context);
-
-                if (reminder.mAlarmReminderId > 0) {
-                    Bundle data = new Bundle();
-
-                    data.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_DELETE);
-                    data.putInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID, reminder.mAlarmReminderId);
-
-                    SyncUtils.triggerRefresh(data);
-                }
-
-                Model.delete(AlarmReminder.class, reminder.getId());
+                reminder.remove(context);
 
                 break;
 

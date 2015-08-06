@@ -42,7 +42,7 @@ public class CreateAlarmReminderResponse implements Response.Listener<JSONObject
     @Override
     public void onResponse(JSONObject response) {
 
-        AlarmReminder.saveReminder(response, mDog.mDogId, mContext);
+        AlarmReminder.saveReminder(response, mContext);
         mRequestable.onSuccess();
     }
 

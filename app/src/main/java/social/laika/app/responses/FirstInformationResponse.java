@@ -16,6 +16,7 @@ import java.util.Date;
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.interfaces.Requestable;
+import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Breed;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
@@ -54,6 +55,16 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         Country.saveCountries(response);
         Region.saveRegions(response);
         City.saveCities(response);
+        AlarmReminder.saveReminders(response, mContext);
+        /* TODO el super request
+            Login
+            Alarms
+            Calendars
+            Photos
+            VetVisits
+            Postulations
+
+         */
 
         if (mRequestable != null) { //FIXME
 

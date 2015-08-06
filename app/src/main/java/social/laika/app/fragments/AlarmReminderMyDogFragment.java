@@ -32,7 +32,7 @@ import social.laika.app.utils.Tag;
  * Created by Tito_Leiva on 09-03-15.
  */
 public class AlarmReminderMyDogFragment extends Fragment implements
-        TimePickerDialog.OnTimeSetListener, Requestable{
+        TimePickerDialog.OnTimeSetListener, Requestable {
 
     public static final String TAG = AlarmReminderMyDogFragment.class.getSimpleName();
     public static final String TIMEPICKER_TAG = "timepicker";
@@ -101,9 +101,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements
         mSaveButton = (Button) view.findViewById(R.id.save_alarm_remind_my_dog_button);
 
         final Calendar calendar = Calendar.getInstance();
-        final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY) ,calendar.get(Calendar.MINUTE), false, false);
+        final TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, false);
 
-        mTime = getTime(calendar.get(Calendar.HOUR_OF_DAY) ,calendar.get(Calendar.MINUTE));
+        mTime = getTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
         mTimeButton.setText(mTime);
 
         mTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +116,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
         });
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
@@ -125,6 +126,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                 String detail = mDetailEditText.getText().toString();
 
                 if (mAlarmReminder != null) {
+
+                    mAlarmReminder.cancelAlarm(context);
 
                     mAlarmReminder.mTitle = title;
                     mAlarmReminder.mDetail = detail;
@@ -137,22 +140,10 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                     mAlarmReminder.mHasSunday = mSunday;
                     mAlarmReminder.mTime = mTime;
                     mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
-                    mAlarmReminder.mNeedsSync = true;
+
+                    mAlarmReminder.update(context);
 
                     mMessage = Do.getRString(context, R.string.edit_reminder_added);
-
-//                    if (Do.isNetworkAvailable(context)) {
-//
-//                        request();
-//
-//                    }  else {
-
-                        mAlarmReminder.save();
-                        mAlarmReminder.setAlarm(context);
-
-                        onSuccess();
-
-//                    }
 
                 } else {
 
@@ -161,22 +152,12 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
                             PrefsManager.getUserId(context), mDog.mDogId);
 
+                    mAlarmReminder.create(context);
                     mMessage = Do.getRString(context, R.string.new_reminder_added);
 
-//                    if (Do.isNetworkAvailable(context)) {
-//                        request();
-//
-//                    }  else {
-
-                        //TODO cachar bien como hacer el sync de las alarms no subidas
-                        mAlarmReminder.save();
-                        mAlarmReminder.setAlarm(context);
-
-                        onSuccess();
-
-//                    }
-
                 }
+
+                onSuccess();
             }
         });
 
@@ -319,6 +300,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
             mTuesdayButton.setBackgroundColor(getSemiTransparentColor());
         }
     }
+
     public void setWednesday(boolean day) {
 
         if (day) {
@@ -343,6 +325,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
         }
 
     }
+
     public void setFriday(boolean day) {
 
         if (day) {
@@ -355,6 +338,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
         }
 
     }
+
     public void setSaturday(boolean day) {
 
         if (day) {
@@ -367,6 +351,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
         }
 
     }
+
     public void setSunday(boolean day) {
 
         if (day) {
@@ -384,7 +369,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
 
         Context context = getActivity().getApplicationContext();
         JSONObject jsonParams = mAlarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, mDog,this);
+        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, mDog, this);
 
         Request createRequest = RequestManager.defaultRequest(mRequestMethod, jsonParams,
                 RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
@@ -407,11 +392,9 @@ public class AlarmReminderMyDogFragment extends Fragment implements
     public void onFailure() {
 
 
-
     }
 
     //Data Base
-
 
 
 }

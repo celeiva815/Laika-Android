@@ -110,7 +110,7 @@ public class AlarmReminder extends Model {
     public int mDogId;
 
     @Column(name = COLUMN_NEEDS_SYNC)
-    public boolean mNeedsSync;
+    public int mNeedsSync;
 
     public static AlarmManager mAlarmManager;
 
@@ -135,10 +135,9 @@ public class AlarmReminder extends Model {
         this.mTime = mTime;
         this.mOwnerId = mOwnerId;
         this.mDogId = mDogId;
-        this.mNeedsSync = true; //Es local y se tiene que subir
     }
 
-    public AlarmReminder(JSONObject jsonObject, int mDogId, Context context) {
+    public AlarmReminder(JSONObject jsonObject, Context context) {
 
         this.mAlarmReminderId = jsonObject.optInt(COLUMN_ALARM_REMINDER_ID);
         this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
@@ -155,8 +154,8 @@ public class AlarmReminder extends Model {
         this.mHasSunday = jsonObject.optBoolean(COLUMN_HAS_SUNDAY);
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mOwnerId = jsonObject.optInt(API_USER_ID, PrefsManager.getUserId(context));
-        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID, mDogId);
-        this.mNeedsSync = false; //Es del servidor y está actulizandose local
+        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
+        this.mNeedsSync = Tag.FLAG_READED;
     }
 
     public AlarmReminder() {
@@ -210,7 +209,31 @@ public class AlarmReminder extends Model {
 
     }
 
-    public void update(AlarmReminder alarmReminder) {
+    public void create(Context context) {
+
+        this.mNeedsSync = Tag.FLAG_CREATED;
+        this.save();
+        setAlarm(context);
+
+    }
+
+    public void update(Context context) {
+
+        if (this.mNeedsSync == Tag.FLAG_READED) {
+            this.mNeedsSync = Tag.FLAG_UPDATED;
+        }
+        this.save();
+        setAlarm(context);
+    }
+
+    public void remove(Context context) {
+
+        this.mNeedsSync = Tag.FLAG_DELETED;
+        this.save();
+        this.cancelAlarm(context);
+    }
+
+    private void update(AlarmReminder alarmReminder) {
 
         this.mType = alarmReminder.mType;
         this.mCategory = alarmReminder.mCategory;
@@ -704,7 +727,7 @@ public class AlarmReminder extends Model {
 
     public int getAlarmRequestCode(int weekday) {
 
-        return (int) (getId() * 10 + weekday);
+        return (int) ((getId() * 100) + (Tag.TYPE_ALARM * 10) + weekday);
 
     }
 
@@ -723,24 +746,26 @@ public class AlarmReminder extends Model {
 
     // DATABASE METHODS
 
-    public static void saveReminders(JSONObject jsonObject, int dogId, Context context) {
+    public static void saveReminders(JSONObject jsonObject, Context context) {
 
-        try {
-            JSONArray jsonReminders = jsonObject.getJSONArray(API_ALERT_REMINDERS);
+        if (jsonObject.has(API_ALERT_REMINDERS)) {
 
-            for (int i = 0; i < jsonReminders.length(); i++) {
-                saveReminder(jsonReminders.getJSONObject(i), dogId, context);
+            try {
+                JSONArray jsonReminders = jsonObject.getJSONArray(API_ALERT_REMINDERS);
 
+                for (int i = 0; i < jsonReminders.length(); i++) {
+                    saveReminder(jsonReminders.getJSONObject(i), context);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
-    public static AlarmReminder saveReminder(JSONObject jsonReminder, int dogId, Context context) {
+    public static AlarmReminder saveReminder(JSONObject jsonReminder, Context context) {
 
-        AlarmReminder reminder = new AlarmReminder(jsonReminder, dogId, context);
+        AlarmReminder reminder = new AlarmReminder(jsonReminder, context);
         createOrUpdate(reminder, context);
 
         return reminder;
@@ -754,7 +779,7 @@ public class AlarmReminder extends Model {
      */
     public static void createOrUpdate(AlarmReminder reminder, Context context) {
 
-        reminder.mNeedsSync = false;
+        reminder.mNeedsSync = Tag.FLAG_READED;
 
         if (!AlarmReminder.isSaved(reminder)) {
 

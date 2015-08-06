@@ -2,61 +2,40 @@ package social.laika.app.network.requests;
 
 import android.content.Context;
 
-import com.android.volley.Request;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import social.laika.app.interfaces.Requestable;
-import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.FirstInformationResponse;
-import social.laika.app.utils.Do;
-import social.laika.app.utils.PrefsManager;
 
 /**
  * Created by Tito_Leiva on 31-07-15.
  */
-public class SyncRequest extends BaseRequest {
-
-    public static final String TAG = SyncRequest.class.getSimpleName();
-    public static final String LAST_SYNC = "last_sync";
+public abstract class SyncRequest {
 
     public Context mContext;
-    public String mLastSync = "";
 
     public SyncRequest(Context mContext) {
-        super(mContext);
+        this.mContext = mContext;
     }
 
-    public SyncRequest(Context mContext, Context mContext1, String mLastSync) {
-        super(mContext);
-        mContext = mContext1;
-        this.mLastSync = mLastSync;
-    }
+    public abstract void sync() throws JSONException, InterruptedException, ExecutionException,
+            TimeoutException;
 
-    @Override
-    public void request() {
+    public abstract JSONObject refresh() throws JSONException, InterruptedException, ExecutionException,
+            TimeoutException;
 
-        Map<String,String> params = new HashMap<>();
-        params.put(LAST_SYNC, mLastSync);
+    protected abstract JSONObject create() throws JSONException, InterruptedException, ExecutionException,
+            TimeoutException;
 
-        String token = PrefsManager.getUserToken(mContext);
-        FirstInformationResponse response = new FirstInformationResponse(this);
+    protected abstract JSONObject update() throws JSONException, InterruptedException, ExecutionException,
+            TimeoutException;
 
-        Request firstRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_SYNC,
-                response, response, token);
+    protected abstract JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
+            TimeoutException;
 
-        VolleyManager.getInstance(mContext).addToRequestQueue(firstRequest, TAG);
-    }
 
-    @Override
-    public void onSuccess() {
 
-    }
-
-    @Override
-    public void onFailure() {
-
-    }
 }

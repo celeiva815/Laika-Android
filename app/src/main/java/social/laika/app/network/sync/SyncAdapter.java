@@ -1,9 +1,6 @@
 package social.laika.app.network.sync;
 
 import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.annotation.TargetApi;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
@@ -14,31 +11,19 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
-import com.activeandroid.query.Select;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
-import social.laika.app.network.RequestManager;
+import social.laika.app.models.Dog;
 import social.laika.app.network.requests.AlarmRemindersRequest;
-import social.laika.app.responses.SimpleResponse;
-import social.laika.app.utils.Do;
-import social.laika.app.utils.PrefsManager;
+import social.laika.app.network.requests.SyncRequest;
 
 /**
  * Define a sync adapter for the app.
@@ -52,18 +37,17 @@ import social.laika.app.utils.PrefsManager;
 class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static final String TAG = "SyncAdapter";
 
+    private static final String DATA = "data";
     private static final String CODE = SyncUtils.CODE;
     private static final String ID = MyDogsActivity.ID;
+    private static final String DOG_ID = Dog.COLUMN_DOG_ID;
     private static final int CODE_GENERAL = SyncUtils.CODE_GENERAL;
     private static final int CODE_LOCATIONS = SyncUtils.CODE_LOCATIONS;
     private static final int CODE_BREEDS = SyncUtils.CODE_BREEDS;
     private static final int CODE_POSTULATIONS = SyncUtils.CODE_POSTULATIONS;
     private static final int CODE_MY_DOG = SyncUtils.CODE_MY_DOG;
-    private static final int CODE_ALARM = SyncUtils.CODE_ALARM;
-    private static final int CODE_ALARM_CREATE = SyncUtils.CODE_ALARM_CREATE;
-    private static final int CODE_ALARM_READ = SyncUtils.CODE_ALARM_READ;
-    private static final int CODE_ALARM_UPDATE = SyncUtils.CODE_ALARM_UPDATE;
-    private static final int CODE_ALARM_DELETE = SyncUtils.CODE_ALARM_DELETE;
+    private static final int CODE_ALARM_REFRESH = SyncUtils.CODE_ALARM_REFRESH;
+    private static final int CODE_ALARM_SYNC = SyncUtils.CODE_ALARM_SYNC;
     private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR;
     private static final int CODE_CALENDAR_CREATE = SyncUtils.CODE_CALENDAR_CREATE;
     private static final int CODE_CALENDAR_READ = SyncUtils.CODE_CALENDAR_READ;
@@ -103,7 +87,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     /**
      * Called by the Android system in response to a request to run the sync adapter. The work
-     * required to read data from the network, parse it, and store it in the content provider is
+     * required to refresh data from the network, parse it, and store it in the content provider is
      * done here. Extending AbstractThreadedSyncAdapter ensures that all methods within SyncAdapter
      * run on a background thread. For this reason, blocking I/O and other long-running tasks can be
      * run <em>in situ</em>, and you don't have to set up a separate thread for them.
@@ -120,14 +104,28 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
 
-        Context context = this.getContext();
-        int code = extras.getInt(CODE);
-
-        Log.i(TAG, "Beginning network synchronization | code:" + code);
-
         try {
-            sync(context, code, extras);
 
+            Context context = this.getContext();
+            int code = 0;
+
+            if (extras.containsKey(CODE)) {
+
+                code = extras.getInt(CODE);
+
+            } else if (extras.containsKey(DATA)){
+
+                JSONObject jsonObject = new JSONObject(extras.getString(DATA));
+                code = jsonObject.getInt(CODE);
+                int dogId = jsonObject.optInt(DOG_ID);
+
+                extras.putInt(CODE, code);
+                extras.putInt(DOG_ID, dogId);
+
+            }
+
+            Log.i(TAG, "Beginning network synchronization | code:" + code);
+            sync(context, code, extras);
 
         } catch (InterruptedException e) {
             Log.e(TAG, "Retrieve cards api call interrupted.");
@@ -166,6 +164,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void sync(Context context, int code, Bundle extras) throws InterruptedException,
             ExecutionException, TimeoutException, JSONException {
 
+        SyncRequest request;
+
         switch (code) {
 
             case CODE_GENERAL:
@@ -183,45 +183,23 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             case CODE_MY_DOG:
 
                 break;
-            case CODE_ALARM:
+            case CODE_ALARM_REFRESH:
 
-
-
-                break;
-            case CODE_ALARM_CREATE:
-
-                break;
-            case CODE_ALARM_READ:
+                int dogId = extras.getInt(DOG_ID);
+                request = new AlarmRemindersRequest(context, dogId);
+                JSONObject jsonObject = request.refresh();
+                AlarmReminder.saveReminders(jsonObject, context);
 
                 break;
-            case CODE_ALARM_UPDATE:
 
-                long alarmId = extras.getLong(ID);
-                AlarmReminder alarmReminder = Model.load(AlarmReminder.class, alarmId);
+            case CODE_ALARM_SYNC:
 
-                if (alarmReminder.mNeedsSync) {
-
-                    AlarmRemindersRequest request = new AlarmRemindersRequest(context);
-                    request.updateAlarmReminders(context, alarmReminder.mAlarmReminderId);
-
-                    ActiveAndroid.beginTransaction();
-                    try {
-
-                        alarmReminder.mNeedsSync = false;
-                        alarmReminder.save();
-
-                        ActiveAndroid.setTransactionSuccessful();
-                    } finally {
-                        ActiveAndroid.endTransaction();
-                    }
+                for (AlarmReminder alarmReminder : AlarmReminder.getAllReminders()) {
+                    request = new AlarmRemindersRequest(context, alarmReminder);
+                    request.sync();
                 }
-
                 break;
-            case CODE_ALARM_DELETE:
 
-
-
-                break;
             case CODE_CALENDAR:
 
                 break;
@@ -285,7 +263,6 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         }
 
-
     }
 
 
@@ -299,8 +276,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     }
 
-
-    public void syncVetVisits(Context context) {
+    public void syncPostulation(Context context) {
 
 
     }

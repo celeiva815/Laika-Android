@@ -32,6 +32,8 @@ public class SimpleResponse implements Response.ErrorListener,
 
     public Requestable mRequest;
 
+    public SimpleResponse(){  }
+
     public SimpleResponse(Requestable mRequest) {
         this.mRequest = mRequest;
     }
@@ -39,6 +41,7 @@ public class SimpleResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
+        if (mRequest != null)
         mRequest.onSuccess();
 
     }
@@ -46,7 +49,8 @@ public class SimpleResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        mRequest.onFailure();
+        if (mRequest != null)
+            mRequest.onFailure();
 
     }
 }

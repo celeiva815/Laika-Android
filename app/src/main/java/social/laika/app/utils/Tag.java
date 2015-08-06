@@ -5,6 +5,12 @@ package social.laika.app.utils;
  */
 public class Tag {
 
+    //Model
+    public final static int FLAG_READED = 0;
+    public final static int FLAG_CREATED = 1;
+    public final static int FLAG_UPDATED = 2;
+    public final static int FLAG_DELETED = 3;
+
     //Dog
     public static final int DOG_FOUNDATION = 1;
     public static final int DOG_OWNED = 2;

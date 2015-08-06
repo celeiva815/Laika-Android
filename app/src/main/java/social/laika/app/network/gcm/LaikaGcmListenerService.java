@@ -29,12 +29,11 @@ public class LaikaGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
 
         String message = data.getString("title");
-        int code = Integer.parseInt(data.getString("code"));
 
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
-        synchronize(code, message);
+        synchronize(data);
     }
 
     public static void sendNotification(String message, Class activityClass, Bundle data,
@@ -67,18 +66,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
     }
 
-    public void synchronize(int code, String message) {
+    public void synchronize(Bundle data) {
 
-        switch (code) {
-
-            case POSTULATED_DOGS:
-
-                PostulationRequest request = new PostulationRequest(this, message);
-                request.request();
-
-                break;
-
-        }
+        SyncUtils.triggerRefresh(data);
 
     }
 
