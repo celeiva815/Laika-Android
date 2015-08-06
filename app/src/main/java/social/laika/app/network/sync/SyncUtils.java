@@ -61,7 +61,7 @@ public class SyncUtils {
      * @param context Context
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static void CreateSyncAccount(Context context) {
+    public static Account createSyncAccount(Context context) {
 
         boolean newAccount = false;
         boolean setupComplete = PrefsManager.getSyncSetupComplete(context);
@@ -90,6 +90,8 @@ public class SyncUtils {
             triggerRefresh(getFrequentData());
             PrefsManager.setSyncSetupComplete(context, true);
         }
+
+        return account;
     }
 
     /**
@@ -108,6 +110,16 @@ public class SyncUtils {
         // Disable sync backoff and ignore sync preferences. In other words...perform sync NOW!
         data.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         data.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+        Account account = AccountService.GetAccount(ACCOUNT_TYPE);
+
+        ContentResolver.requestSync(
+                account,                                // Sync account
+                CONTENT_AUTHORITY,                       // Content authority
+                data);                                   // Extras
+    }
+
+    public static void requestSync(Bundle data) {
 
         Account account = AccountService.GetAccount(ACCOUNT_TYPE);
 

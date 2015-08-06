@@ -1,13 +1,10 @@
 package social.laika.app.activities;
 
-import android.accounts.Account;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -42,8 +39,6 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
-import social.laika.app.network.sync.AccountService;
-import social.laika.app.network.sync.SyncService;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
@@ -81,7 +76,7 @@ public class BaseActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
 
         registerGCM();
-        SyncUtils.CreateSyncAccount(getApplicationContext());
+        SyncUtils.createSyncAccount(getApplicationContext());
 
     }
 

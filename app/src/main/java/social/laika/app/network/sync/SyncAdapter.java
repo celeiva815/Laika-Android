@@ -15,6 +15,7 @@ import android.util.Log;
 
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.requests.AlarmRemindersRequest;
@@ -51,6 +53,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static final String TAG = "SyncAdapter";
 
     private static final String CODE = SyncUtils.CODE;
+    private static final String ID = MyDogsActivity.ID;
     private static final int CODE_GENERAL = SyncUtils.CODE_GENERAL;
     private static final int CODE_LOCATIONS = SyncUtils.CODE_LOCATIONS;
     private static final int CODE_BREEDS = SyncUtils.CODE_BREEDS;
@@ -119,54 +122,42 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         Context context = this.getContext();
         int code = extras.getInt(CODE);
+
         Log.i(TAG, "Beginning network synchronization | code:" + code);
 
         try {
-                sync(context, code, extras);
+            sync(context, code, extras);
 
-            List<AlarmReminder> alarmReminders = AlarmReminder.getAllReminders();
 
-            ActiveAndroid.beginTransaction();
-            try {
-                for (AlarmReminder alarmReminder : alarmReminders) {
-                    alarmReminder.mNeedsSync = false;
-                    alarmReminder.save();
-                }
-                ActiveAndroid.setTransactionSuccessful();
-            } finally {
-                ActiveAndroid.endTransaction();
-            }
-
-        } catch (OperationCanceledException e) {
-            Log.e(TAG, "The operation was canceled.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.e(TAG, "Problem with the IO");
-            e.printStackTrace();
-        } catch (AuthenticatorException e) {
-            Log.e(TAG, "Retrieve cards api call interrupted.");
-            e.printStackTrace();
         } catch (InterruptedException e) {
             Log.e(TAG, "Retrieve cards api call interrupted.");
+            syncResult.stats.numIoExceptions++;
             e.printStackTrace();
         } catch (ExecutionException e) {
             Log.e(TAG, "Retrieve cards api call failed.");
+            syncResult.stats.numIoExceptions++;
             e.printStackTrace();
         } catch (TimeoutException e) {
             Log.e(TAG, "Retrieve cards api call timed out.");
+            syncResult.stats.numIoExceptions++;
             e.printStackTrace();
         } catch (JSONException e) {
             Log.e(TAG, "Bad JSON request");
+            syncResult.stats.numIoExceptions++;
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            syncResult.stats.numIoExceptions++;
+            Log.e(TAG, "FUUUUUUUCK! I missed something");
             e.printStackTrace();
         }
 
 
-        String lastSync = Do.dateToString(PrefsManager.getLastSync(context), Do.DAY_FIRST);
-
-        if (!Do.isNullOrEmpty(lastSync)) {
-
-
-        }
+//        String lastSync = Do.dateToString(PrefsManager.getLastSync(context), Do.DAY_FIRST);
+//
+//        if (!Do.isNullOrEmpty(lastSync)) {
+//
+//
+//        }
 
 
         Log.i(TAG, "Network synchronization complete");
@@ -194,6 +185,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 break;
             case CODE_ALARM:
 
+
+
                 break;
             case CODE_ALARM_CREATE:
 
@@ -203,11 +196,30 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 break;
             case CODE_ALARM_UPDATE:
 
+                long alarmId = extras.getLong(ID);
+                AlarmReminder alarmReminder = Model.load(AlarmReminder.class, alarmId);
+
+                if (alarmReminder.mNeedsSync) {
+
+                    AlarmRemindersRequest request = new AlarmRemindersRequest(context);
+                    request.updateAlarmReminders(context, alarmReminder.mAlarmReminderId);
+
+                    ActiveAndroid.beginTransaction();
+                    try {
+
+                        alarmReminder.mNeedsSync = false;
+                        alarmReminder.save();
+
+                        ActiveAndroid.setTransactionSuccessful();
+                    } finally {
+                        ActiveAndroid.endTransaction();
+                    }
+                }
+
                 break;
             case CODE_ALARM_DELETE:
 
-                AlarmRemindersRequest request = new AlarmRemindersRequest(context);
-                request.deleteAlertReminder(context, extras);
+
 
                 break;
             case CODE_CALENDAR:

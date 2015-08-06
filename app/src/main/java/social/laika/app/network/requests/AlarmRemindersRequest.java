@@ -89,26 +89,30 @@ public class AlarmRemindersRequest extends BaseRequest {
 
     }
 
-    public void updateAlarmReminders(AlarmReminder alarmReminder, int method,
-                                     AlarmReminderMyDogFragment fragment) {
+    public JSONObject updateAlarmReminders(Context context, int reminderId) throws JSONException,
+            InterruptedException, ExecutionException, TimeoutException {
 
-        Context context = fragment.getActivity().getApplicationContext();
-        JSONObject jsonParams = alarmReminder.getJsonObject();
-        CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, this);
+        JSONObject jsonObject = new JSONObject();
 
-        Request createRequest = RequestManager.defaultRequest(method, jsonParams,
-                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
-                PrefsManager.getUserToken(context));
+        jsonObject.put(AlarmReminder.COLUMN_ALARM_REMINDER_ID, reminderId);
 
-        VolleyManager.getInstance(context)
-                .addToRequestQueue(createRequest, TAG);
+        String address = RequestManager.ADDRESS_ALERT_REMINDERS;
+        String token = PrefsManager.getUserToken(context);
+
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+        SimpleResponse errorListener = new SimpleResponse(this);
+        Request request = RequestManager.patchRequest(jsonObject, address, future, errorListener, token);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+
+        return future.get(5, TimeUnit.SECONDS);
 
     }
 
-    public JSONObject deleteAlertReminder(Context context, Bundle data) throws JSONException,
+    public JSONObject deleteAlertReminder(Context context, int reminderId) throws JSONException,
             InterruptedException, ExecutionException, TimeoutException {
 
-        int reminderId = data.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put(AlarmReminder.COLUMN_ALARM_REMINDER_ID, reminderId);
@@ -123,7 +127,7 @@ public class AlarmRemindersRequest extends BaseRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
 
-        return future.get(30, TimeUnit.SECONDS);
+        return future.get(5, TimeUnit.SECONDS);
 
     }
 

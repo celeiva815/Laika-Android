@@ -1,9 +1,15 @@
 package social.laika.app.fragments;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +23,12 @@ import com.activeandroid.Model;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.activities.CreateReminderActivity;
-import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.adapters.HistoryMyDogAdapter;
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.AlarmReminder;
@@ -33,9 +37,9 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.History;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.network.sync.SyncService;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.RemindersResponse;
-import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -54,11 +58,6 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     public List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
 
-
-    public HistoryMyDogFragment(Dog mDog) {
-        this.mDog = mDog;
-        this.mTag = Long.toString(mDog.getId());
-    }
 
     public HistoryMyDogFragment() {
 
@@ -158,6 +157,56 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         mHistories = new ArrayList<>();
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
+        List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
+
+        if (calendars.size() > 0) {
+
+            for (CalendarReminder c : calendars) {
+
+                mHistories.add(c.toHistory(context));
+            }
+        }
+
+        if (alarms.size() > 0) {
+
+            for (AlarmReminder a : alarms) {
+
+                mHistories.add(a.toHistory(context));
+            }
+        }
+
+        return mHistories;
+
+    }
+
+    private List<History> getAlarmHistories(Context context, List<AlarmReminder> alarms) {
+
+        mHistories = new ArrayList<>();
+        List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
+
+        if (calendars.size() > 0) {
+
+            for (CalendarReminder c : calendars) {
+
+                mHistories.add(c.toHistory(context));
+            }
+        }
+
+        if (alarms.size() > 0) {
+
+            for (AlarmReminder a : alarms) {
+
+                mHistories.add(a.toHistory(context));
+            }
+        }
+
+        return mHistories;
+
+    }
+
+    private List<History> getCalendarHistories(Context context, List<CalendarReminder> calendars) {
+
+        mHistories = new ArrayList<>();
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
 
         if (calendars.size() > 0) {
@@ -281,5 +330,16 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         }
     }
+
+    public Uri createUri() {
+
+        StringBuilder uri = new StringBuilder();
+        uri.append("content://");
+        uri.append(getActivity().getPackageName());
+        uri.append("/");
+        return Uri.parse(uri.toString());
+    }
+
+
 
 }

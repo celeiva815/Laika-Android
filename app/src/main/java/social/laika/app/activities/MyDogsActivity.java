@@ -1,8 +1,11 @@
 package social.laika.app.activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +15,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.activeandroid.Model;
+import com.activeandroid.content.ContentProvider;
 import com.android.volley.Request;
 import com.soundcloud.android.crop.Crop;
 
@@ -33,6 +39,9 @@ import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.network.sync.AccountService;
+import social.laika.app.network.sync.SyncService;
+import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
@@ -40,6 +49,7 @@ import social.laika.app.utils.views.CustomPagerSlidingTabStrip;
 
 public class MyDogsActivity extends ActionBarActivity implements Photographable {
 
+    public static final String ID = "id";
     public static final String DOG_ID = "dog_id";
     public static final String HISTORY = "Historial";
     public static final String REMINDERS = "Recordatorios";
@@ -47,10 +57,10 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public static final String ALBUM = "Album";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     public static final String[] CONTENT = new String[]{HISTORY, REMINDERS, OWNERS, ALBUM};
-    public static final String[] OPTIONS = new String []{ "Editar", "Agregar",
-            "Crear Ficha", "Tomar Foto" };
-    public static final String[] TITLES = new String []{ "Perfil", "Recordatorios",
-            "Ficha Médica", "Álbum" };
+    public static final String[] OPTIONS = new String[]{"Editar", "Agregar",
+            "Crear Ficha", "Tomar Foto"};
+    public static final String[] TITLES = new String[]{"Perfil", "Recordatorios",
+            "Ficha Médica", "Álbum"};
     public static final int[] ICONS = new int[]{
             R.drawable.laika_history_selector,
             R.drawable.laika_reminder_selector,
@@ -75,6 +85,12 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public Photographer mPhotographer;
     public int mPosition;
     public boolean mChanged;
+
+    ContentResolver mResolver;
+    ContentObserver mAlarmObserver;
+    ContentObserver mVetVisitObserver;
+    ContentObserver mCalendarObserver;
+    ContentObserver mPhotoObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +120,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         mIndicator.setViewPager(mPager);
         mIndicator.setOnPageChangeListener(pagerListener);
 
+        registerContentObserver();
 
     }
 
@@ -495,4 +512,64 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         }
     }
 
+    public void registerContentObserver() {
+
+        mResolver = getContentResolver();
+        mAlarmObserver = new ContentObserver(new Handler(getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange) {
+                onChange(selfChange, null);
+            }
+
+            @Override
+            public void onChange(boolean selfChange, Uri changeUri) {
+
+                AlarmReminder alarmReminder = null;
+                Bundle settingsBundle = new Bundle();
+
+                if (changeUri != null) {
+
+                    Log.i("URI", changeUri.toString());
+
+                    try {
+
+                        alarmReminder = Model.load(AlarmReminder.class,
+                                Long.parseLong(changeUri.getLastPathSegment()));
+
+                    } catch (NumberFormatException e) {
+                        Log.i("URI", "Deleting alarmReminder");
+                        return;
+                    }
+
+                    if (alarmReminder != null && alarmReminder.mNeedsSync) {
+
+                        int serverId = alarmReminder.mAlarmReminderId;
+                        settingsBundle.putLong(ID, alarmReminder.getId());
+
+                        if (serverId > AlarmReminder.ID_NOT_SET) {
+
+                            settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_UPDATE);
+                            settingsBundle.putInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID, serverId);
+                            Log.i("URI", "Updating alarmReminder " + serverId);
+
+                        } else {
+
+                            settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_CREATE);
+                            Log.i("URI", "Creating a new alarmReminder " + serverId);
+                        }
+
+                        SyncUtils.requestSync(settingsBundle);
+                    }
+
+                } else {
+
+                    Log.i("URI", "URI is null");
+
+                }
+            }
+        };
+        mResolver.registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
+                true, mAlarmObserver);
+
+    }
 }

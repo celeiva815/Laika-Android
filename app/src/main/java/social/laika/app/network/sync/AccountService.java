@@ -29,7 +29,7 @@ public class AccountService extends Service {
      *
      * @param accountType AccountType defined in the configuration XML file for
      *                    android.accounts.AccountAuthenticator (e.g. res/xml/syncadapter.xml).
-     * @return Handle to application's account (not guaranteed to resolve unless CreateSyncAccount()
+     * @return Handle to application's account (not guaranteed to resolve unless createSyncAccount()
      *         has been called)
      */
     public static Account GetAccount(String accountType) {

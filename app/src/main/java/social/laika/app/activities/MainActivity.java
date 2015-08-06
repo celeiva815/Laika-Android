@@ -1,6 +1,12 @@
 package social.laika.app.activities;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +15,7 @@ import social.laika.app.R;
 import social.laika.app.listeners.ToActivityOnCLickListener;
 import social.laika.app.listeners.ToAdoptActivityOnClickListener;
 import social.laika.app.listeners.ToMyDogOnCLickListener;
+import social.laika.app.network.sync.SyncService;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import com.newrelic.agent.android.NewRelic;
@@ -17,7 +24,6 @@ import com.newrelic.agent.android.NewRelic;
 public class MainActivity extends BaseActivity {
 
     private int mIdLayout = R.layout.lk_main_activity;
-
 
     @Override
     public void onStart() {
@@ -60,5 +66,7 @@ public class MainActivity extends BaseActivity {
         NewRelic.withApplicationToken(
                 "AA602cfb22c1752b158a0b1d7465547e124ea262e4"
         ).start(this.getApplication());
+
+
     }
 }

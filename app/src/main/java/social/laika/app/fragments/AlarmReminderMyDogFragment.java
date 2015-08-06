@@ -124,8 +124,6 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
-                //TODO agregar el owner otras variables y verificar que no sean nullOrEmpty.
-
                 if (mAlarmReminder != null) {
 
                     mAlarmReminder.mTitle = title;
@@ -139,22 +137,22 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                     mAlarmReminder.mHasSunday = mSunday;
                     mAlarmReminder.mTime = mTime;
                     mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
+                    mAlarmReminder.mNeedsSync = true;
 
                     mMessage = Do.getRString(context, R.string.edit_reminder_added);
 
-                    if (Do.isNetworkAvailable(context)) {
+//                    if (Do.isNetworkAvailable(context)) {
+//
+//                        request();
+//
+//                    }  else {
 
-                        request();
-
-                    }  else {
-
-                        //TODO cachar bien como hacer el sync de las alarms no subidas
                         mAlarmReminder.save();
                         mAlarmReminder.setAlarm(context);
 
                         onSuccess();
 
-                    }
+//                    }
 
                 } else {
 
@@ -165,10 +163,10 @@ public class AlarmReminderMyDogFragment extends Fragment implements
 
                     mMessage = Do.getRString(context, R.string.new_reminder_added);
 
-                    if (Do.isNetworkAvailable(context)) {
-                        request();
-
-                    }  else {
+//                    if (Do.isNetworkAvailable(context)) {
+//                        request();
+//
+//                    }  else {
 
                         //TODO cachar bien como hacer el sync de las alarms no subidas
                         mAlarmReminder.save();
@@ -176,7 +174,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
 
                         onSuccess();
 
-                    }
+//                    }
 
                 }
             }
