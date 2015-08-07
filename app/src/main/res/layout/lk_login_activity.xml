@@ -26,14 +26,21 @@
         android:weightSum="2">
 
         <Button
-        android:id="@+id/google_login_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+            android:id="@+id/google_login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/common_signin_btn_text_focus_dark"
-        android:text="@string/g_plus_log_in"
-        android:textSize="12sp"
+            android:text="@string/g_plus_log_in"
+            android:textSize="12sp"
             android:textColor="@color/laika_dark_white"
             android:layout_weight="1" />
+        <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp" />
 
     </LinearLayout>
 

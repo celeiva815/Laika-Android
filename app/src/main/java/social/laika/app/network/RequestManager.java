@@ -55,6 +55,7 @@ public class RequestManager {
     public static final String ADDRESS_GET_MATCHING_DOGS = "get_matching_dogs/";
     public static final String ADDRESS_LOCATIONS = "locations/";
     public static final String ADDRESS_LOGIN = "log_in/";
+    public static final String ADDRESS_FB_LOGIN = "auth/facebook/log_in";
     public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
     public static final String ADDRESS_PUBLICATIONS = "publications/";
     public static final String ADDRESS_REGISTER = "sign_up/";

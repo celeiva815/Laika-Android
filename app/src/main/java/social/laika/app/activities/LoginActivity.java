@@ -1,9 +1,12 @@
 package social.laika.app.activities;
 
+import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,10 +15,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import social.laika.app.R;
@@ -39,6 +45,12 @@ public class LoginActivity extends ActionBarActivity {
     public Button mRegisterButton;
     public ProgressBar mLoginProgressBar;
 
+    /* Facebook Login */
+    private LoginButton mFacebookLoginButton;
+//    private LaikaFBCallback mFacebookCallback;
+    public static final List<String> FACEBOOK_PERMISSIONS =  Arrays.asList("public_profile", "email", "user_friends");
+    /* Facebook Login */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +71,21 @@ public class LoginActivity extends ActionBarActivity {
         mLoginProgressBar = (ProgressBar) findViewById(R.id.login_progressbar);
 
         mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
+
+        mFacebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);// Facebook
+
+        /* Setting Permissions */
+        mFacebookLoginButton.setReadPermissions(FACEBOOK_PERMISSIONS);
+
+//        /* Setting the CallbackManager */
+//        CallbackManager callbackManager = ((TutorialActivity) getActivity()).getCallbackManager();
+//        if (mFacebookCallback == null) {
+//            mFacebookCallback = new LaikaFBCallback(view.getContext(), this);
+//        }
+//
+//        mFacebookLoginButton.registerCallback(callbackManager, mFacebookCallback);
+        Log.d(TAG, "Facebook login configuration completed");
+        /* [Finish] Finished Facebook Login configuration */
     }
 
     @Override

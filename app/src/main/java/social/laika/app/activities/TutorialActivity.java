@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -8,19 +9,43 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import social.laika.app.R;
 import social.laika.app.fragments.TutorialFragment;
+import social.laika.app.network.RequestManager;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.FacebookLoginResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
+import com.android.volley.Request;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.newrelic.agent.android.NewRelic;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class TutorialActivity extends ActionBarActivity {
+
+    private static final String TAG = TutorialActivity.class.getSimpleName();
 
     // the number of pages of tutorial to be shown
     public static final int NUM_PAGES = 5;
@@ -35,9 +60,15 @@ public class TutorialActivity extends ActionBarActivity {
 
     private Button mQuitBtn;
 
+    /* Facebook Login */
+    private CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* Initialize the defaults */
+        initializer();
 
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
 
@@ -88,6 +119,47 @@ public class TutorialActivity extends ActionBarActivity {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
+    }
+
+    /**
+     * Facebook CallbackManager Single Instance ?
+     * @return CallbackManager
+     */
+    public CallbackManager getCallbackManager() {
+        if(mCallbackManager == null)
+            mCallbackManager = CallbackManager.Factory.create();
+        return mCallbackManager;
+    }
+
+    /**
+     * Calling the CallbackManager :D
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "On Activity Result");
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initializer() {
+        NewRelic.withApplicationToken(
+                "AA602cfb22c1752b158a0b1d7465547e124ea262e4"
+        ).start(this.getApplication());
+        Log.d(TAG, "Started New Relic");
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        Log.d(TAG, "Started Facebook Service");
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this)
+//                .addApi(Plus.API)
+//                .addScope(Plus.SCOPE_PLUS_LOGIN)
+//                .addScope(Plus.SCOPE_PLUS_PROFILE)//Scopes.PLUS_ME)
+//                .build();
+//        Log.d(TAG, "Started Google Service");
+
     }
 
     /**
