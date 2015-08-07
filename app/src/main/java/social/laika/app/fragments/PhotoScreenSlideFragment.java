@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import social.laika.app.R;
 import social.laika.app.activities.PhotosFragmentActivity;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 
 public class PhotoScreenSlideFragment extends Fragment {
 	
 	private int mIdLayout = R.layout.photo_screen_slider_fragment;
-	public DogPhoto mPhoto;
+	public Photo mPhoto;
 	public PhotosFragmentActivity mActivity;
     public boolean mIsFullScreen;
 
@@ -28,7 +28,7 @@ public class PhotoScreenSlideFragment extends Fragment {
     public TextView mDateTextView;
     public ImageView mMainImageView;
 
-	public PhotoScreenSlideFragment(DogPhoto mPhoto, PhotosFragmentActivity mActivity) {
+	public PhotoScreenSlideFragment(Photo mPhoto, PhotosFragmentActivity mActivity) {
 
         this.mActivity = mActivity;
 		this.mPhoto = mPhoto;

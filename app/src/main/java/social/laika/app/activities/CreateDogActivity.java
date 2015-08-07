@@ -35,7 +35,7 @@ import social.laika.app.listeners.ChangeDogBreedsOnItemSelectedListener;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Breed;
 import social.laika.app.models.Personality;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Size;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
@@ -325,7 +325,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(Dog.COLUMN_DOG_ID, mDog.mDogId);
-            jsonObject.put(DogPhoto.API_PHOTO, DogPhoto.getJsonPhoto(name, image));
+            jsonObject.put(Photo.API_PHOTO, Photo.getJsonPhoto(name, image));
 
         } catch (JSONException e) {
             e.printStackTrace();

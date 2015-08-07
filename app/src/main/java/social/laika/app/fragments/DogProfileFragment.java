@@ -70,8 +70,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
     }
 
-    public static final DogProfileFragment newInstance(int dogId)
-    {
+    public static final DogProfileFragment newInstance(int dogId) {
         DogProfileFragment f = new DogProfileFragment();
         Bundle bdl = new Bundle(1);
         bdl.putInt(KEY_DOG, dogId);
@@ -98,11 +97,16 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mDogImageView = (ImageView) view.findViewById(R.id.dog_history_imageview);
         mNameTextView = (TextView) view.findViewById(R.id.name_dog_profile_textview);
         mBirthDateTextView = (TextView) view.findViewById(R.id.birth_date_dog_profile_textview);
-        mSizeTextView = (TextView) view.findViewById(R.id.size_dog_profile_textview);;
-        mBreedTextView = (TextView) view.findViewById(R.id.breed_dog_profile_textview);;
-        mPersonalityTextView = (TextView) view.findViewById(R.id.personality_dog_profile_textview);;
-        mSterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dog_profile_textview);;
-        mChipTextView = (TextView) view.findViewById(R.id.chip_dog_profile_textview);;
+        mSizeTextView = (TextView) view.findViewById(R.id.size_dog_profile_textview);
+        ;
+        mBreedTextView = (TextView) view.findViewById(R.id.breed_dog_profile_textview);
+        ;
+        mPersonalityTextView = (TextView) view.findViewById(R.id.personality_dog_profile_textview);
+        ;
+        mSterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dog_profile_textview);
+        ;
+        mChipTextView = (TextView) view.findViewById(R.id.chip_dog_profile_textview);
+        ;
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mOwnersListView = (ListView) view.findViewById(R.id.owners_dog_profile_listview);
         mOwnersAdapter = new OwnerMyDogAdapter(view.getContext(), R.layout.lk_owner_my_dog_row,
@@ -114,9 +118,9 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mBreedTextView.setText(mDog.getBreed().mName);
         mPersonalityTextView.setText(mDog.getPersonality().mName);
         mSterilizedTextView.setText(Do.getRString(view.getContext(),
-                mDog.mIsSterilized? R.string.is_sterilized : R.string.is_not_sterilized));
+                mDog.mIsSterilized ? R.string.is_sterilized : R.string.is_not_sterilized));
 
-        if (!Do.isNullOrEmpty(mDog.mChipCode))  {
+        if (!Do.isNullOrEmpty(mDog.mChipCode)) {
             mChipTextView.setText("Chip:" + mDog.mChipCode);
 
         } else {
@@ -134,8 +138,8 @@ public class DogProfileFragment extends Fragment implements Refreshable {
             }
         });
 
-        Do.setListViewHeightBasedOnChildren(mOwnersListView);
         mOwnersListView.setAdapter(mOwnersAdapter);
+        Do.setListViewHeightBasedOnChildren(mOwnersListView);
 
 
         return view;
@@ -144,11 +148,6 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     @Override
     public void onStart() {
 
-        if (mOwnersListView.getCount() == 0) {
-
-            requestOwners();
-
-        }
         super.onStart();
 
     }
@@ -164,6 +163,8 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     @Override
     public void onResume() {
         super.onResume();
+
+        refresh();
 
     }
 
@@ -204,8 +205,8 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     public void refresh() {
 
         if (!mOwnersAdapter.isEmpty()) {
-            mOwnersAdapter.clear();
 
+            mOwnersAdapter.clear();
         }
 
         mOwnersAdapter.addAll(getOwners());

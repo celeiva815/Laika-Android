@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import social.laika.app.fragments.AlbumMyDogFragment;
 import social.laika.app.models.Dog;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 
 /**
  * Created by Tito_Leiva on 24-07-15.
@@ -33,7 +33,7 @@ public class DogPhotosResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
-        DogPhoto.saveDogPhotos(response, mContext, mDog);
+        Photo.saveDogPhotos(response, mContext, mDog);
         mFragment.onResume();
 
     }

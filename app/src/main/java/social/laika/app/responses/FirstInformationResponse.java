@@ -21,7 +21,8 @@ import social.laika.app.models.Breed;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.City;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
+import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
@@ -53,25 +54,21 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     @Override
     public void onResponse(JSONObject response) {
 
-        Dog.saveDogs(response, Tag.DOG_OWNED);
+        //sync general
         Breed.saveBreeds(response);
         Country.saveCountries(response);
         Region.saveRegions(response);
         City.saveCities(response);
+
+        //sync mis perros
+        Dog.saveDogs(response, Tag.DOG_OWNED);
         AlarmReminder.saveReminders(response, mContext);
         VetVisit.saveVetVisits(response);
-        DogPhoto.saveDogPhotos(response, mContext);
+        Photo.saveDogPhotos(response, mContext);
+        OwnerDog.saveOwnerDogs(response, mContext);
+
+        //sync postulaciones
         UserAdoptDog.saveUserAdoptDogs(response);
-
-        /* TODO el super request
-            Login
-            Alarms
-            Calendars
-            Photos
-            VetVisits
-            Postulations
-
-         */
 
         if (mRequestable != null) { //FIXME
 
