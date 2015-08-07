@@ -1,6 +1,5 @@
 package social.laika.app.models;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.graphics.Bitmap;
 
@@ -394,9 +393,9 @@ public class Dog extends Model {
     public List<String> getThumbsPhotos() {
 
         List<String> thumbs = new ArrayList<>();
-        List<Photo> photos = Photo.getPhotos(mDogId);
+        List<DogPhoto> photos = DogPhoto.getPhotos(mDogId);
 
-        for (Photo photo : photos) {
+        for (DogPhoto photo : photos) {
 
             thumbs.add(photo.mUrlThumbnail);
         }

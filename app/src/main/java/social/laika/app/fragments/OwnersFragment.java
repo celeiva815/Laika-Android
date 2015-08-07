@@ -33,7 +33,7 @@ import social.laika.app.utils.PrefsManager;
 public class OwnersFragment extends Fragment implements Refreshable {
 
     public static final String TAG = OwnersFragment.class.getSimpleName();
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
 
     public int mIdLayout = R.layout.lk_owner_my_dog_fragment;
     public Dog mDog;

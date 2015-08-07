@@ -31,7 +31,7 @@ import social.laika.app.utils.PrefsManager;
  */
 public class VetVisitsFragment extends Fragment implements Refreshable {
 
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
     public static final String TAG = VetVisitsFragment.class.getSimpleName();
 
     public String mTag;
@@ -98,7 +98,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
 
         if (mVetVisitListView.getCount() == 0) {
 
-            requestVetVisits();
+           // requestVetVisits();
 
         }
     }

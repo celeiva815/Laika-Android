@@ -1,48 +1,23 @@
 package social.laika.app.activities;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.soundcloud.android.crop.Crop;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import social.laika.app.R;
 import social.laika.app.fragments.AlarmReminderMyDogFragment;
 import social.laika.app.fragments.CalendarReminderMyDogFragment;
-import social.laika.app.interfaces.Photographable;
-import social.laika.app.interfaces.Requestable;
-import social.laika.app.listeners.CreateStoryOnClickListener;
-import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Photo;
-import social.laika.app.models.Story;
-import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.CreateStoryResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
-import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 public class CreateReminderActivity extends ActionBarActivity {

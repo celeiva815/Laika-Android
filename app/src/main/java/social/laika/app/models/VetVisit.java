@@ -146,17 +146,18 @@ public class VetVisit extends Model {
 
     public static void saveVetVisits(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonVetVisits = jsonObject.getJSONArray(TABLE_VET_VISITS);
+        if (jsonObject.has(TABLE_VET_VISITS)) {
+            try {
+                JSONArray jsonVetVisits = jsonObject.getJSONArray(TABLE_VET_VISITS);
 
-            for (int i = 0; i < jsonVetVisits.length(); i++) {
-                saveVetVisit(jsonVetVisits.getJSONObject(i));
+                for (int i = 0; i < jsonVetVisits.length(); i++) {
+                    saveVetVisit(jsonVetVisits.getJSONObject(i));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     public static VetVisit saveVetVisit(JSONObject jsonVetVisit) {

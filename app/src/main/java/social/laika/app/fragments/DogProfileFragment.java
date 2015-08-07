@@ -39,7 +39,7 @@ import social.laika.app.utils.Tag;
  */
 public class DogProfileFragment extends Fragment implements Refreshable {
 
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
     public static final String TAG = DogProfileFragment.class.getSimpleName();
 
     public String mTag;

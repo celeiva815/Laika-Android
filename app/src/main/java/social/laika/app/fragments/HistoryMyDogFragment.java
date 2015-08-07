@@ -48,7 +48,7 @@ import social.laika.app.utils.Tag;
  */
 public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
     public static final String TAG = HistoryMyDogFragment.class.getSimpleName();
 
     public String mTag;
@@ -313,10 +313,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         for (AlarmReminder alarm : alarms) {
 
             Log.i(alarm.mTitle, "CHECKING EVERY WEEKDAY");
-
             alarm.checkAlarm(context);
-            alarm.delete();
-
 
         }
     }

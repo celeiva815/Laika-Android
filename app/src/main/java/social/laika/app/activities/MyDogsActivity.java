@@ -34,6 +34,7 @@ import social.laika.app.fragments.OwnersFragment;
 import social.laika.app.fragments.RemindersMyDogFragment;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Photographable;
+import social.laika.app.listeners.AddOwnerDogOnClickListener;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
@@ -224,6 +225,8 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
             case R.id.add_owner_settings:
 
+                addOwner();
+
                 return true;
 
             case R.id.delete_settings:
@@ -233,6 +236,13 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addOwner() {
+
+        AddOwnerDogOnClickListener ownerManager = new AddOwnerDogOnClickListener(mDog);
+        ownerManager.addOwner(getApplicationContext());
+
     }
 
     public void setHistoryFragment(Dog mDog) {

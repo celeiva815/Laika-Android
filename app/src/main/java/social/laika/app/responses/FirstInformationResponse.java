@@ -21,7 +21,10 @@ import social.laika.app.models.Breed;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.City;
+import social.laika.app.models.DogPhoto;
 import social.laika.app.models.Region;
+import social.laika.app.models.UserAdoptDog;
+import social.laika.app.models.VetVisit;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -56,6 +59,10 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         Region.saveRegions(response);
         City.saveCities(response);
         AlarmReminder.saveReminders(response, mContext);
+        VetVisit.saveVetVisits(response);
+        DogPhoto.saveDogPhotos(response, mContext);
+        UserAdoptDog.saveUserAdoptDogs(response);
+
         /* TODO el super request
             Login
             Alarms
@@ -99,6 +106,8 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
             ((LoginActivity) mActivity).enableViews(true);
             PrefsManager.clearPrefs(mContext);
         }
+
+        mRequestable.onFailure();
 
     }
 }

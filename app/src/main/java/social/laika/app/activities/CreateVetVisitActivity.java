@@ -29,12 +29,11 @@ import social.laika.app.R;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Photo;
+import social.laika.app.models.DogPhoto;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateVetVisitResponse;
-import social.laika.app.responses.EditUserResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
@@ -282,7 +281,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
             JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
 
             try {
-                jsonParams.put(Photo.API_PHOTO, jsonPhoto);
+                jsonParams.put(DogPhoto.API_PHOTO, jsonPhoto);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

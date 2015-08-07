@@ -33,7 +33,7 @@ public class UserAdoptDog extends Model {
     public final static String COLUMN_DOG_ID = "dog_id";
 
     public final static String API_POSTULATIONS = "postulations";
-    public final static String API_DOG = "dog";
+    public final static String API_DOG = "mDog";
 
     @Column(name = COLUMN_USER_ADOPT_DOG_ID)
     public int mUserAdoptDogId;
@@ -106,17 +106,19 @@ public class UserAdoptDog extends Model {
 
     //DATA BASE
 
-    public static void saveUserAdoptDogs(JSONObject jsonObject){
+    public static void saveUserAdoptDogs(JSONObject jsonObject) {
 
-        try {
-            JSONArray jsonDogs = jsonObject.getJSONArray(API_POSTULATIONS);
+        if (jsonObject.has(API_POSTULATIONS)) {
+            try {
+                JSONArray jsonDogs = jsonObject.getJSONArray(API_POSTULATIONS);
 
-            for (int i = 0; i < jsonDogs.length(); i++) {
-                saveUserAdoptDog(jsonDogs.getJSONObject(i));
+                for (int i = 0; i < jsonDogs.length(); i++) {
+                    saveUserAdoptDog(jsonDogs.getJSONObject(i));
 
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

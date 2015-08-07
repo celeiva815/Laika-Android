@@ -20,7 +20,7 @@ import social.laika.app.R;
 import social.laika.app.activities.PhotosFragmentActivity;
 import social.laika.app.adapters.AlbumAdapter;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Photo;
+import social.laika.app.models.DogPhoto;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.DogPhotosResponse;
@@ -32,11 +32,11 @@ import social.laika.app.utils.PrefsManager;
  */
 public class AlbumMyDogFragment extends Fragment {
 
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
 
     private int mIdLayout = R.layout.lk_album_my_dog_fragment;
     public Dog mDog;
-    public List<Photo> mPhotos;
+    public List<DogPhoto> mPhotos;
     public GridView mGridView;
     public AlbumAdapter mAlbumAdapter;
     private Photographer mPhotographer;
@@ -54,7 +54,7 @@ public class AlbumMyDogFragment extends Fragment {
 
         if (mAlbumAdapter.getCount() == 0) {
 
-            requestPhotos();
+            //requestPhotos();
 
         }
         super.onStart();
@@ -120,9 +120,9 @@ public class AlbumMyDogFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    private List<Photo> getPhotos() {
+    private List<DogPhoto> getPhotos() {
 
-        return Photo.getPhotos(mDog.mDogId);
+        return DogPhoto.getPhotos(mDog.mDogId);
     }
 
     public void setPhotographer(Photographer photographer) {

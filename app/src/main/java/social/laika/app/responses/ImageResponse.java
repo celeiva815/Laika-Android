@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import social.laika.app.models.Photo;
+import social.laika.app.models.DogPhoto;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -22,7 +22,7 @@ public class ImageResponse implements Response.ErrorListener,
     public Activity mActivity;
     public ImageView mImageView;
     public ProgressBar mProgressBar;
-    public Photo mPhoto;
+    public DogPhoto mPhoto;
 
     public ImageResponse(Activity mActivity, ImageView mImageView) {
         this.mActivity = mActivity;
@@ -40,7 +40,7 @@ public class ImageResponse implements Response.ErrorListener,
         this.mProgressBar = mProgressBar;
     }
 
-    public ImageResponse(ImageView mImageView, Photo mPhoto, Context mContext) {
+    public ImageResponse(ImageView mImageView, DogPhoto mPhoto, Context mContext) {
         this.mImageView = mImageView;
         this.mPhoto = mPhoto;
         this.mContext = mContext;

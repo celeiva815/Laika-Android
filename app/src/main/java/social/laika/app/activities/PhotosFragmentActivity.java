@@ -12,7 +12,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.fragments.PhotoScreenSlideFragment;
-import social.laika.app.models.Photo;
+import social.laika.app.models.DogPhoto;
 
 public class PhotosFragmentActivity extends FragmentActivity{
 
@@ -25,7 +25,7 @@ public class PhotosFragmentActivity extends FragmentActivity{
      */
     public ViewPager mPager;
     private int mDogId;
-    public List<Photo> mPhotos;
+    public List<DogPhoto> mPhotos;
     public boolean mIsFullScreen;
 
     /**
@@ -66,7 +66,7 @@ public class PhotosFragmentActivity extends FragmentActivity{
 
     private void setPhotoList() {
 
-        mPhotos = Photo.getPhotos(mDogId);
+        mPhotos = DogPhoto.getPhotos(mDogId);
 	}
     
 	@Override

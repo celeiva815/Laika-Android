@@ -39,14 +39,15 @@ public class RequestManager {
     public static final String TAG = RequestManager.class.getSimpleName();
 
     //public static final String BASE_URL = "http://fundaciones.laika.social/";
-    public static final String BASE_URL = "http://develop.laika.social/";
+    public static final String BASE_URL = "http://192.168.0.9/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
     //API Address
     public static final String ADDRESS_ALERT_REMINDERS = "alert_reminders/";
+    public static final String ADDRESS_ADD_DOG_OWNER = "add_dog_owner/";
     public static final String ADDRESS_CALENDAR_REMINDERS = "calendar_reminders/";
-    public static final String ADDRESS_DOG = "dog/";
+    public static final String ADDRESS_DOG = "mDog/";
     public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_CANCEL_POSTULATION = "cancel_postulation/";
     public static final String ADDRESS_CONFIRM_POSTULATION = "confirm_postulation/";

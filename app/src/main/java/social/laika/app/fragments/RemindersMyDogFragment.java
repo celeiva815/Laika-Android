@@ -22,7 +22,7 @@ import social.laika.app.utils.Tag;
  */
 public class RemindersMyDogFragment extends Fragment {
 
-    public static final String KEY_DOG = "dog";
+    public static final String KEY_DOG = "mDog";
     public static final String KEY_ALARM = "alarm";
     public static final String KEY_CALENDAR = "calendar";
 

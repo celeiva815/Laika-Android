@@ -30,8 +30,8 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 13-03-15.
  */
-@Table(name = Photo.TABLE_PHOTOS)
-public class Photo extends Model {
+@Table(name = DogPhoto.TABLE_PHOTOS)
+public class DogPhoto extends Model {
 
 
     public static int ID = 0;
@@ -99,7 +99,7 @@ public class Photo extends Model {
     @Column(name = COLUMN_DETAIL)
     public String mDetail;
 
-    public Photo() { }
+    public DogPhoto() { }
 
 
     public Bitmap getPicture(int imageMaxSize) {
@@ -121,8 +121,8 @@ public class Photo extends Model {
         return bitmap;
     }
 
-    public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlOriginal, String mDate,
-                 String mDetail) {
+    public DogPhoto(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlOriginal, String mDate,
+                    String mDetail) {
 
         this.mPhotoId = mPhotoId;
         this.mOwnerId = mOwnerId;
@@ -133,7 +133,7 @@ public class Photo extends Model {
         this.mDetail = mDetail;
     }
 
-    public void update(Photo photo) {
+    public void update(DogPhoto photo) {
 
         this.mPhotoId = photo.mPhotoId;
         this.mOwnerId = photo.mOwnerId;
@@ -147,7 +147,7 @@ public class Photo extends Model {
 
     }
 
-    public Photo(JSONObject jsonObject, Context context, Dog dog) {
+    public DogPhoto(JSONObject jsonObject, Context context, Dog dog) {
 
         this.mPhotoId = jsonObject.optInt(COLUMN_PHOTO_ID);
         this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
@@ -165,10 +165,11 @@ public class Photo extends Model {
         this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
     }
 
-    public Photo(JSONObject jsonObject, Context context) {
+    public DogPhoto(JSONObject jsonObject, Context context) {
 
         this.mPhotoId = jsonObject.optInt(COLUMN_PHOTO_ID);
         this.mOwnerId = jsonObject.optInt(COLUMN_USER_ID, PrefsManager.getUserId(context));
+        this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
         this.mOwnerName = jsonObject.optString(API_USER, PrefsManager.getUserName(context));
         this.mUrlOriginal = jsonObject.optString(COLUMN_URL_ORIGINAL);
         this.mUrlLarge = jsonObject.optString(COLUMN_URL_LARGE);
@@ -197,30 +198,64 @@ public class Photo extends Model {
 
     }
 
-    public static Photo saveDogPhoto(JSONObject jsonObject, Context context, Dog dog) {
+    public static DogPhoto saveDogPhoto(JSONObject jsonObject, Context context, Dog dog) {
 
         if (jsonObject.has(API_PHOTO)) {
 
             JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
-            Photo photo = new Photo(jsonPhoto, context, dog);
+            DogPhoto photo = new DogPhoto(jsonPhoto, context, dog);
             return createOrUpdate(photo);
 
         } else {
 
-            Photo photo = new Photo(jsonObject, context, dog);
+            DogPhoto photo = new DogPhoto(jsonObject, context, dog);
             return createOrUpdate(photo);
 
         }
 
     }
 
-    public static Photo getPhoto(JSONObject jsonObject, Context context) {
+    public static void saveDogPhotos(JSONObject jsonObject, Context context) {
+
+        if (jsonObject.has(TABLE_PHOTOS)) {
+            try {
+                JSONArray jsonPhotos = jsonObject.getJSONArray(TABLE_PHOTOS);
+
+                for (int i = 0; i < jsonPhotos.length(); i++) {
+                    saveDogPhoto(jsonPhotos.getJSONObject(i), context);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static DogPhoto saveDogPhoto(JSONObject jsonObject, Context context) {
+
+        if (jsonObject.has(API_PHOTO)) {
+
+            JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
+            DogPhoto photo = new DogPhoto(jsonPhoto, context);
+            return createOrUpdate(photo);
+
+        } else {
+
+            DogPhoto photo = new DogPhoto(jsonObject, context);
+            return createOrUpdate(photo);
+
+        }
+
+    }
+
+    public static DogPhoto getPhoto(JSONObject jsonObject, Context context) {
 
         JSONObject jsonPhoto = jsonObject.optJSONObject(API_PHOTO);
 
         if (jsonPhoto != null) {
 
-            Photo photo = new Photo(jsonPhoto, context);
+            DogPhoto photo = new DogPhoto(jsonPhoto, context);
             return photo;
 
         }
@@ -229,7 +264,7 @@ public class Photo extends Model {
 
     }
 
-    public static Photo createOrUpdate(Photo photo) {
+    public static DogPhoto createOrUpdate(DogPhoto photo) {
 
         if (!isSaved(photo.mPhotoId)) {
             photo.save();
@@ -241,21 +276,21 @@ public class Photo extends Model {
     public static boolean isSaved(int photoId) {
 
         String condition = COLUMN_PHOTO_ID + DB.EQUALS + photoId;
-        return new Select().from(Photo.class).where(condition).exists();
+        return new Select().from(DogPhoto.class).where(condition).exists();
 
     }
 
-    public static Photo getPhoto(int photoId) {
+    public static DogPhoto getPhoto(int photoId) {
 
         String condition = COLUMN_PHOTO_ID + DB.EQUALS + photoId;
-        return new Select().from(Photo.class).where(condition).executeSingle();
+        return new Select().from(DogPhoto.class).where(condition).executeSingle();
 
     }
 
-    public static List<Photo> getPhotos(int dogId) {
+    public static List<DogPhoto> getPhotos(int dogId) {
 
         String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
-        return new Select().from(Photo.class).where(condition).execute();
+        return new Select().from(DogPhoto.class).where(condition).execute();
 
     }
 
