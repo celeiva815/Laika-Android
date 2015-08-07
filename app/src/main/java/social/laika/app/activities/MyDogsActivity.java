@@ -241,11 +241,11 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     private void addOwner() {
 
         AddOwnerDogOnClickListener ownerManager = new AddOwnerDogOnClickListener(mDog);
-        ownerManager.addOwner(MyDogsActivity.this);
+        ownerManager.addOwner(MyDogsActivity.this, mDogProfileFragment);
 
     }
 
-    public void setHistoryFragment(Dog mDog) {
+    public void setDogProfileFragment(Dog mDog) {
 
         if (mDogProfileFragment != null) {
             mDogProfileFragment.refresh();

@@ -14,6 +14,7 @@ import social.laika.app.utils.PrefsManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,7 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
     private EditText emailEditText;
     private Context mContext;
     private String mEmail;
+    private Fragment mFragment;
 
     public AddOwnerDogOnClickListener(Dog mDog) {
 
@@ -56,6 +58,13 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
         emailEditText = (EditText) view.findViewById(R.id.email_add_owners_my_dog_editext);
 
         return view;
+
+    }
+
+    public void addOwner(final Context context, Fragment mFragment) {
+
+        this.mFragment = mFragment;
+        addOwner(context);
 
     }
 
@@ -118,6 +127,11 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
 
     @Override
     public void onSuccess() {
+
+        if (mFragment != null) {
+
+            mFragment.onResume();
+        }
 
 
     }

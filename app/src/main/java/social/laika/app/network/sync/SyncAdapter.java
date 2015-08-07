@@ -16,6 +16,7 @@ import com.activeandroid.Model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -194,7 +195,9 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
             case CODE_ALARM_SYNC:
 
-                for (AlarmReminder alarmReminder : AlarmReminder.getAllReminders()) {
+                List<AlarmReminder> alarmReminders = AlarmReminder.getAllReminders();
+
+                for (AlarmReminder alarmReminder : alarmReminders) {
                     request = new AlarmRemindersRequest(context, alarmReminder);
                     request.sync();
                 }

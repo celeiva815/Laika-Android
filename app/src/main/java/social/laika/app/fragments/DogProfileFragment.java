@@ -98,15 +98,10 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mNameTextView = (TextView) view.findViewById(R.id.name_dog_profile_textview);
         mBirthDateTextView = (TextView) view.findViewById(R.id.birth_date_dog_profile_textview);
         mSizeTextView = (TextView) view.findViewById(R.id.size_dog_profile_textview);
-        ;
         mBreedTextView = (TextView) view.findViewById(R.id.breed_dog_profile_textview);
-        ;
         mPersonalityTextView = (TextView) view.findViewById(R.id.personality_dog_profile_textview);
-        ;
         mSterilizedTextView = (TextView) view.findViewById(R.id.sterilized_dog_profile_textview);
-        ;
         mChipTextView = (TextView) view.findViewById(R.id.chip_dog_profile_textview);
-        ;
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mOwnersListView = (ListView) view.findViewById(R.id.owners_dog_profile_listview);
         mOwnersAdapter = new OwnerMyDogAdapter(view.getContext(), R.layout.lk_owner_my_dog_row,
