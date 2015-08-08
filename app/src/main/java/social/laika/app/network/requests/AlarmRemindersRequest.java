@@ -111,7 +111,7 @@ public class AlarmRemindersRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(10, TimeUnit.SECONDS);
+        return future.get(20, TimeUnit.SECONDS);
 
     }
 

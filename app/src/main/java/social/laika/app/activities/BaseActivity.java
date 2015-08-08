@@ -2,10 +2,14 @@ package social.laika.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.activeandroid.Model;
+import com.activeandroid.content.ContentProvider;
 import com.android.volley.Request;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -31,7 +37,7 @@ import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Publication;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Story;
 import social.laika.app.models.Tip;
 import social.laika.app.models.UserAdoptDog;
@@ -43,6 +49,7 @@ import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
+import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 10-02-15.
@@ -57,7 +64,6 @@ public class BaseActivity extends ActionBarActivity
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle;
     protected PlaceHolderFragment mFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +192,7 @@ public class BaseActivity extends ActionBarActivity
         Owner.deleteAll();
         OwnerDog.deleteAll();
         UserAdoptDog.deleteAll();
-        DogPhoto.deleteAll();
+        Photo.deleteAll();
         VetVisit.deleteAll();
         AdoptDogForm.deleteAll();
         CalendarReminder.deleteAll();

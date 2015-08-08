@@ -39,7 +39,7 @@ import social.laika.app.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.City;
 import social.laika.app.models.Owner;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Region;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
@@ -350,7 +350,7 @@ public class EditUserActivity extends ActionBarActivity
             JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
 
             try {
-                jsonParams.put(DogPhoto.API_PHOTO, jsonPhoto);
+                jsonParams.put(Photo.API_PHOTO, jsonPhoto);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

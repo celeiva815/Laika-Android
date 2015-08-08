@@ -6,6 +6,7 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.AddOwnerResponse;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
@@ -13,6 +14,7 @@ import social.laika.app.utils.PrefsManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +36,7 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
     private EditText emailEditText;
     private Context mContext;
     private String mEmail;
+    private Fragment mFragment;
 
     public AddOwnerDogOnClickListener(Dog mDog) {
 
@@ -55,6 +58,13 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
         emailEditText = (EditText) view.findViewById(R.id.email_add_owners_my_dog_editext);
 
         return view;
+
+    }
+
+    public void addOwner(final Context context, Fragment mFragment) {
+
+        this.mFragment = mFragment;
+        addOwner(context);
 
     }
 
@@ -103,27 +113,34 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
         JSONObject jsonObject = new JSONObject(params);
-        SimpleResponse response = new SimpleResponse(this);
+        AddOwnerResponse response = new AddOwnerResponse(mDog, mEmail, mContext, this);
         String address = RequestManager.ADDRESS_ADD_DOG_OWNER;
         String token = PrefsManager.getUserToken(mContext);
 
         Request request = RequestManager.postRequest(jsonObject,address,response,response,token);
         VolleyManager.getInstance(mContext).addToRequestQueue(request, TAG);
 
+        String message = "Hemos enviado una invitación al correo " + mEmail;
+        Do.showShortToast(message, mContext);
+
     }
 
     @Override
     public void onSuccess() {
 
-        String message = Do.getRString(mContext, R.string.sent_email_owners_my_dog) + " " +
-                mEmail;
+        if (mFragment != null) {
 
-        Do.showLongToast(message, mContext);
+            mFragment.onResume();
+        }
+
 
     }
 
     @Override
     public void onFailure() {
+
+        String message = "Lo sentimos! No pudimos enviar la invitación. Inténtalo nuevamente más tarde";
+        Do.showLongToast(message, mContext);
 
     }
 }

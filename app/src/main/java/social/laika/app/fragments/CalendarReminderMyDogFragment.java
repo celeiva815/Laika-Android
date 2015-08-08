@@ -128,7 +128,7 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                     Do.showLongToast(message, v.getContext());
                 }
 
-                ((MyDogsActivity) getActivity()).setHistoryFragment(mDog);
+                ((MyDogsActivity) getActivity()).setDogProfileFragment(mDog);
             }
         });
 
