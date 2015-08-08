@@ -14,7 +14,7 @@ import com.android.volley.Request;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
@@ -23,10 +23,10 @@ import social.laika.app.utils.Do;
 public class AlbumAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<DogPhoto> mPhotos;
+    private List<Photo> mPhotos;
     public SquareImageView mImageView;
 
-    public AlbumAdapter(Context context, List<DogPhoto> photos) {
+    public AlbumAdapter(Context context, List<Photo> photos) {
 
         this.mContext = context;
         this.mPhotos = photos;
@@ -54,7 +54,7 @@ public class AlbumAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        DogPhoto photo = mPhotos.get(position);
+        Photo photo = mPhotos.get(position);
 
         if (view == null) {
             // if it's not recycled, initialize some attributes

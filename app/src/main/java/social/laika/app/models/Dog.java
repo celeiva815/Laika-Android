@@ -284,7 +284,7 @@ public class Dog extends Model {
     public void addOwner(Owner owner, int role) {
 
         OwnerDog ownerDog = new OwnerDog(owner.mOwnerId, this.mDogId, role);
-        ownerDog.save();
+        OwnerDog.createOrUpdate(ownerDog);
 
     }
 
@@ -393,9 +393,9 @@ public class Dog extends Model {
     public List<String> getThumbsPhotos() {
 
         List<String> thumbs = new ArrayList<>();
-        List<DogPhoto> photos = DogPhoto.getPhotos(mDogId);
+        List<Photo> photos = Photo.getPhotos(mDogId);
 
-        for (DogPhoto photo : photos) {
+        for (Photo photo : photos) {
 
             thumbs.add(photo.mUrlThumbnail);
         }
@@ -457,17 +457,17 @@ public class Dog extends Model {
 
     }
 
-    public static List<Dog> getDogs(int process) {
+    public static List<Dog> getDogs(int status) {
 
-        String condition = COLUMN_STATUS + DB.EQUALS + process;
+        String condition = COLUMN_STATUS + DB.EQUALS + status;
 
         return new Select().from(Dog.class).where(condition).execute();
 
     }
 
-    public static List<Dog> getDogs(int process, int ownerId) {
+    public static List<Dog> getDogs(int status, int ownerId) {
 
-        String condition = COLUMN_STATUS + DB.EQUALS + process + DB.AND;
+        String condition = COLUMN_STATUS + DB.EQUALS + status + DB.AND;
         condition += COLUMN_OWNER_ID + DB.EQUALS + ownerId;
         return new Select().from(Dog.class).where(condition).execute();
 

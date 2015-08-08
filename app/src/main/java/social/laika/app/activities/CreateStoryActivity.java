@@ -25,7 +25,7 @@ import social.laika.app.R;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.CreateStoryOnClickListener;
 import social.laika.app.listeners.PhotographerListener;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.utils.Photographer;
 import social.laika.app.models.Story;
 import social.laika.app.network.RequestManager;
@@ -227,7 +227,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
 
             JSONObject params = story.getJsonObject();
             JSONObject jsonPhoto = mPhotographer.getJsonPhoto(getApplicationContext());
-            params.put(DogPhoto.API_PHOTO, jsonPhoto);
+            params.put(Photo.API_PHOTO, jsonPhoto);
 
             CreateStoryResponse response = new CreateStoryResponse(this);
 

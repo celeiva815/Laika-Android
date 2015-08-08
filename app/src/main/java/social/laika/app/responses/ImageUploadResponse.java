@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.models.Dog;
-import social.laika.app.models.DogPhoto;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Story;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
@@ -47,7 +47,7 @@ public class ImageUploadResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
-        DogPhoto photo = DogPhoto.saveDogPhoto(response, mContext, mDog);
+        Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
         mActivity.succeedUpload();
         cancelProgress();
 
