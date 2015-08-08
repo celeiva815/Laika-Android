@@ -103,7 +103,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
-
+        // TODO implement: code zero synchronization
         try {
 
             Context context = this.getContext();
@@ -150,14 +150,6 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
 
-//        String lastSync = Do.dateToString(PrefsManager.getLastSync(context), Do.DAY_FIRST);
-//
-//        if (!Do.isNullOrEmpty(lastSync)) {
-//
-//
-//        }
-
-
         Log.i(TAG, "Network synchronization complete");
     }
 
@@ -181,6 +173,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
                 break;
             case CODE_MY_DOG:
+                // TODO implement dog sync
 
                 break;
             case CODE_ALARM_REFRESH:

@@ -39,6 +39,6 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
-    compile 'com.newrelic.agent.android:android-agent:5.2.0'
+    compile 'com.newrelic.agent.android:android-agent:5.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }

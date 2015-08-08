@@ -87,8 +87,9 @@ public class SyncUtils {
         // data has been deleted. (Note that it's possible to clear app data WITHOUT affecting
         // the account list, so wee need to check both.)
         if (newAccount || !setupComplete) {
-            triggerRefresh(getFrequentData());
-            PrefsManager.setSyncSetupComplete(context, true);
+            // FIXME idk what to do :c
+            /* triggerRefresh(getFrequentData()); // FIXME remove this line
+            PrefsManager.setSyncSetupComplete(context, true); */
         }
 
         return account;
@@ -122,6 +123,8 @@ public class SyncUtils {
     public static void requestSync(Bundle data) {
 
         Account account = AccountService.GetAccount(ACCOUNT_TYPE);
+        data.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
 
         ContentResolver.requestSync(
                 account,                                // Sync account
@@ -132,6 +135,18 @@ public class SyncUtils {
     public static Bundle getFrequentData() {
 
         Bundle bundle = new Bundle();
+
+        return bundle;
+    }
+
+    /**
+     * Frecuent data bundle data for a code
+     * @param code The code
+     * @return A new bundle data, with the code included
+     */
+    public static Bundle getFrequentData(int code) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(CODE, code);
 
         return bundle;
     }

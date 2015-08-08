@@ -278,58 +278,24 @@ public class TutorialFragment extends Fragment {
 
         @Override
         public void onSuccess(LoginResult loginResult) {
-            Log.d(TAG, "Facebook Login Successfull");
-            final String token = loginResult.getAccessToken().getToken();
-            GraphRequest request = GraphRequest.newMeRequest(
-                    loginResult.getAccessToken(),
-                    new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(
-                                JSONObject object,
-                                GraphResponse graphResponse) {
-
-                            try {
-                                JSONObject rJson = graphResponse.getJSONObject();
-                                String email = rJson.getString("email");
-                                String first_name = rJson.getString("first_name");
-                                String last_name = rJson.getString("last_name");
-                                String id = rJson.getString("id");
-
-                                Map<String, String> params = new HashMap<>(5);
-                                params.put(API_TOKEN, token);
-                                params.put(API_EMAIL, email);
-                                params.put(API_FIRST_NAME, first_name);
-                                params.put(API_LAST_NAME, last_name);
-                                params.put(API_FB_ID, id);
-
-                                FacebookLoginResponse response = new FacebookLoginResponse(mFragment);
-                                JSONObject jsonParams = RequestManager.getJsonParams(params);
-                                Request loginRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_FB_LOGIN,
-                                        response, response, "");
-
-                                VolleyManager.getInstance(mContext).addToRequestQueue(loginRequest, TAG);
-
-                                Log.d(TAG, "Token: " + token);
-                                Log.d(TAG, "First Name: " + first_name);
-                                Log.d(TAG, "Last Name: " + last_name);
-                                Log.d(TAG, "Email: " + email);
-                                Log.d(TAG, "Id: " + id);
-
-                            } catch (JSONException e) {
-                                // TODO Notify facebook error
-                                Log.e(TAG, e.getMessage());
-                            }
-                        }
-                    });
-            /* Executing the request*/
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,first_name,last_name,email");
-            request.setParameters(parameters);
-            request.executeAsync();
-
-            /* Disabling views */
+            Log.d(TAG, "Facebook Login Successful");
+            /* First, we disable the views */
             mLoginProgressBar.setVisibility(View.VISIBLE);
             enableViews(false);
+
+            /* Then we get the token and sent it to the server */
+            String token = loginResult.getAccessToken().getToken();
+
+            Map<String, String> params = new HashMap<>(1);
+            params.put(API_TOKEN, token);
+
+            FacebookLoginResponse response = new FacebookLoginResponse(mFragment);
+            JSONObject jsonParams = RequestManager.getJsonParams(params);
+            Request loginRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_FB_LOGIN,
+                    response, response, "");
+
+            /* Executing the request */
+            VolleyManager.getInstance(mContext).addToRequestQueue(loginRequest, TAG);
         }
 
         @Override
