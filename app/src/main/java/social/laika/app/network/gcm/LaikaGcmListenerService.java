@@ -118,6 +118,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         JSONObject jsonData = new JSONObject(data.getString("data"));
 
         int code = jsonData.getInt("code");
+        Log.d(TAG, "Beginning GCM synchronization with code: " + code);
         switch (code) {
             case GCM_POSTULATED_DOGS:
                 int userAdoptDogID = jsonData.getInt(UserAdoptDog.COLUMN_USER_ADOPT_DOG_ID);
