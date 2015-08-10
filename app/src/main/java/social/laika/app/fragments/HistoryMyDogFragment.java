@@ -140,7 +140,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         if (mHistoryListView.getCount() == 0) {
 
-            requestReminders();
+            // requestReminders();
 
         }
 

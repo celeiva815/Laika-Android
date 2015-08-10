@@ -1,7 +1,6 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.activities.WebActivity;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Publication;
 import social.laika.app.network.RequestManager;
@@ -67,7 +65,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
         if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-            RequestManager.requestImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
+            RequestManager.getImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

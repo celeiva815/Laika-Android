@@ -56,7 +56,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
 
         if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.requestImage(story.mUrlImage, mProgressBar, mMainImageView, context);
+            RequestManager.getImage(story.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

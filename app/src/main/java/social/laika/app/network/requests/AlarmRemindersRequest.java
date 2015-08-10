@@ -19,10 +19,7 @@ import java.util.concurrent.TimeoutException;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
 import social.laika.app.network.sync.SyncUtils;
-import social.laika.app.responses.AlarmRemindersResponse;
-import social.laika.app.responses.RemindersResponse;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -37,10 +34,10 @@ public class AlarmRemindersRequest extends SyncRequest {
     private static final int CODE_ALARM_READ = SyncUtils.CODE_ALARM_READ;
     private static final int CODE_ALARM_UPDATE = SyncUtils.CODE_ALARM_SYNC;
     private static final int CODE_ALARM_DELETE = SyncUtils.CODE_ALARM_DELETE;
-    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR;
+    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR_REFRESH;
     private static final int CODE_CALENDAR_CREATE = SyncUtils.CODE_CALENDAR_CREATE;
     private static final int CODE_CALENDAR_READ = SyncUtils.CODE_CALENDAR_READ;
-    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_UPDATE;
+    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_SYNC;
     private static final int CODE_CALENDAR_DELETE = SyncUtils.CODE_CALENDAR_DELETE;
 
     private static final String TAG = AlarmRemindersRequest.class.getSimpleName();
@@ -70,7 +67,7 @@ public class AlarmRemindersRequest extends SyncRequest {
 
                 jsonObject = create();
                 mAlarmReminder.mAlarmReminderId = jsonObject.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
-                mAlarmReminder.save();
+                mAlarmReminder.refresh(mContext);
 
                 break;
 

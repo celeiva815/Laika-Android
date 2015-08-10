@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.activeandroid.Model;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,15 +47,15 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static final int CODE_MY_DOG = SyncUtils.CODE_MY_DOG;
     private static final int CODE_ALARM_REFRESH = SyncUtils.CODE_ALARM_REFRESH;
     private static final int CODE_ALARM_SYNC = SyncUtils.CODE_ALARM_SYNC;
-    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR;
+    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR_REFRESH;
     private static final int CODE_CALENDAR_CREATE = SyncUtils.CODE_CALENDAR_CREATE;
     private static final int CODE_CALENDAR_READ = SyncUtils.CODE_CALENDAR_READ;
-    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_UPDATE;
+    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_SYNC;
     private static final int CODE_CALENDAR_DELETE = SyncUtils.CODE_CALENDAR_DELETE;
-    private static final int CODE_VET_VISIT = SyncUtils.CODE_VET_VISIT;
+    private static final int CODE_VET_VISIT_REFRESH = SyncUtils.CODE_VET_VISIT_REFRESH;
     private static final int CODE_VET_VISIT_CREATE = SyncUtils.CODE_VET_VISIT_CREATE;
     private static final int CODE_VET_VISIT_READ = SyncUtils.CODE_VET_VISIT_READ;
-    private static final int CODE_VET_VISIT_UPDATE = SyncUtils.CODE_VET_VISIT_UPDATE;
+    private static final int CODE_VET_VISIT_SYNC = SyncUtils.CODE_VET_VISIT_SYNC;
     private static final int CODE_VET_VISIT_DELETE = SyncUtils.CODE_VET_VISIT_DELETE;
     private static final int CODE_OWNER = SyncUtils.CODE_OWNER;
     private static final int CODE_OWNER_CREATE = SyncUtils.CODE_OWNER_CREATE;
@@ -114,7 +112,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
                 code = extras.getInt(CODE);
 
-            } else if (extras.containsKey(DATA)){
+            } else if (extras.containsKey(DATA)) {
 
                 JSONObject jsonObject = new JSONObject(extras.getString(DATA));
                 code = jsonObject.getInt(CODE);
@@ -188,7 +186,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
             case CODE_ALARM_SYNC:
 
-                List<AlarmReminder> alarmReminders = AlarmReminder.getAllReminders();
+                List<AlarmReminder> alarmReminders = AlarmReminder.getNeedSyncReminders();
 
                 for (AlarmReminder alarmReminder : alarmReminders) {
                     request = new AlarmRemindersRequest(context, alarmReminder);
@@ -211,16 +209,16 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             case CODE_CALENDAR_DELETE:
 
                 break;
-            case CODE_VET_VISIT:
+            case CODE_VET_VISIT_REFRESH:
+
+                break;
+            case CODE_VET_VISIT_SYNC:
 
                 break;
             case CODE_VET_VISIT_CREATE:
 
                 break;
             case CODE_VET_VISIT_READ:
-
-                break;
-            case CODE_VET_VISIT_UPDATE:
 
                 break;
             case CODE_VET_VISIT_DELETE:

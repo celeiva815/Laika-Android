@@ -217,6 +217,14 @@ public class AlarmReminder extends Model {
 
     }
 
+    public void refresh(Context context) {
+
+        this.mNeedsSync = Tag.FLAG_READED;
+        this.save();
+        setAlarm(context);
+
+    }
+
     public void update(Context context) {
 
         if (this.mNeedsSync == Tag.FLAG_READED) {
@@ -250,6 +258,7 @@ public class AlarmReminder extends Model {
         this.mTime = alarmReminder.mTime;
         this.mOwnerId = alarmReminder.mOwnerId;
         this.mDogId = alarmReminder.mDogId;
+        this.mNeedsSync = alarmReminder.mNeedsSync;
 
         this.save();
 
@@ -810,7 +819,14 @@ public class AlarmReminder extends Model {
 
     public static List<AlarmReminder> getAllReminders() {
 
-        return new Select().from(AlarmReminder.class).execute();
+        String condition = AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
+        return new Select().from(AlarmReminder.class).where(condition).execute();
+    }
+
+    public static List<AlarmReminder> getNeedSyncReminders() {
+
+        String condition = AlarmReminder.COLUMN_NEEDS_SYNC + DB.GREATER_THAN + Tag.FLAG_READED;
+        return new Select().from(AlarmReminder.class).where(condition).execute();
     }
 
     public static AlarmReminder getSingleReminder(int reminderId) {

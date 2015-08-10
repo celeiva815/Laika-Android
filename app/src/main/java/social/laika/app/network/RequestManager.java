@@ -39,7 +39,7 @@ public class RequestManager {
     public static final String TAG = RequestManager.class.getSimpleName();
 
     //public static final String BASE_URL = "http://fundaciones.laika.social/";
-    public static final String BASE_URL = "http://192.168.1.160/";
+    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
@@ -156,7 +156,7 @@ public class RequestManager {
         return new ImageRequest(url, listener, maxWidth, maxHeight, null, errorListener);
     }
 
-    public static void requestImage(String imageUrl, ProgressBar progressBar, ImageView imageView , Context context) {
+    public static void getImage(String imageUrl, ProgressBar progressBar, ImageView imageView, Context context) {
 
         ImageResponse response = new ImageResponse(imageView, progressBar);
         Request request = imageRequest(imageUrl, imageView, response, response);

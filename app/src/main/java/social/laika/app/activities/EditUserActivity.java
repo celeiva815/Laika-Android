@@ -203,7 +203,7 @@ public class EditUserActivity extends ActionBarActivity
 
         }
 
-        RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+        RequestManager.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
                 getApplicationContext());
     }
 

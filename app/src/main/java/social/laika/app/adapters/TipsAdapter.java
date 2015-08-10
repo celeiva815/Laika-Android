@@ -54,7 +54,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
         if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.requestImage(tip.mUrlImage, mProgressBar, mMainImageView, context);
+            RequestManager.getImage(tip.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

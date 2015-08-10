@@ -1,6 +1,7 @@
 package social.laika.app.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
 
     private static final String TAG = CreateVetVisitActivity.class.getSimpleName();
     public static final String KEY_DOG = "dog_id";
+    public static final String KEY_VET_VISIT = "vet_visit";
     public static final String API_EMAIL = "email";
     public static final String API_PASSWORD = "password";
     public static final String API_PASSWORD_CONFIRMATION = "password_confirmation";
@@ -65,15 +67,21 @@ public class CreateVetVisitActivity extends ActionBarActivity
     public Dog mDog;
     public ImageView mVetImageView;
     public Photographer mPhotographer;
+    public VetVisit mVetVisit;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int dogId = getIntent().getExtras().getInt(KEY_DOG);
+        int vetVisitId = getIntent().getExtras().getInt(KEY_VET_VISIT);
+        mDog = Dog.getSingleDog(dogId);
+        mVetVisit = VetVisit.getSingleVetVisit(vetVisitId);
+
         setContentView(mIdLayout);
-        int dogInt = getIntent().getExtras().getInt(KEY_DOG);
-        mDog = Dog.getSingleDog(dogInt);
         setActivityView();
+        setValues();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -132,11 +140,55 @@ public class CreateVetVisitActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
 
-                requestCreateVetVisit();
+                Context context = v.getContext();
+                int ownerId = PrefsManager.getUserId(getApplicationContext());
+                String name = mNameEditText.getText().toString();
+                String doctor = mDoctorEditText.getText().toString();
+                String reason = mReasonEditText.getText().toString();
+                String detail = mDetailEditText.getText().toString();
+                String treatment = mTreatmentEditText.getText().toString();
+                String date = mDateButton.getText().toString();
 
+                if (mVetVisit != null) {
+
+                    mVetVisit.mVetName = name;
+                    mVetVisit.mVetDoctor = doctor;
+                    mVetVisit.mReason = reason;
+                    mVetVisit.mDetail = detail;
+                    mVetVisit.mTreatment = treatment;
+                    mVetVisit.mDate = date;
+
+                    mVetVisit.update();
+                    //TODO ver el caso de subir la foto con syncadapter
+
+                } else {
+
+                    VetVisit vetVisit = new VetVisit(ownerId, mDog.mDogId, date, detail, "", "", reason,
+                            treatment, doctor, name);
+
+                    vetVisit.create();
+
+                }
             }
         });
 
+    }
+
+    private void setValues() {
+
+        if (mVetVisit != null) {
+
+            mNameEditText.setText(mVetVisit.mVetName);
+            mDoctorEditText.setText(mVetVisit.mVetDoctor);
+            mDateButton.setText(mVetVisit.mDate);
+            mReasonEditText.setText(mVetVisit.mReason);
+            mDetailEditText.setText(mVetVisit.mDetail);
+            mTreatmentEditText.setText(mVetVisit.mTreatment);
+
+            RequestManager.getImage(mVetVisit.mLargeUrl, null, mVetImageView,
+                    getApplicationContext());
+
+        }
     }
 
     @Override
@@ -250,6 +302,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
         mCreateButton.setEnabled(enable);
 
     }
+
 
     public void requestCreateVetVisit() {
 

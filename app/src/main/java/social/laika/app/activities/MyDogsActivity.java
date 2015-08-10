@@ -40,6 +40,7 @@ import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.network.observers.AlarmReminderObserver;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
@@ -512,8 +513,10 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 case 1:
 
-                    mHistoryFragment.refresh();
+                    if (mHistoryFragment != null) {
+                        mHistoryFragment.refresh();
 
+                    }
                     break;
 
             }
@@ -524,37 +527,8 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public void registerContentObserver() {
 
         mResolver = getContentResolver();
-        mAlarmObserver = new ContentObserver(new Handler(getMainLooper())) {
-            @Override
-            public void onChange(boolean selfChange) {
-                onChange(selfChange, null);
-            }
+        mAlarmObserver = new AlarmReminderObserver(new Handler(getMainLooper()));
 
-            @Override
-            public void onChange(boolean selfChange, Uri changeUri) {
-
-                Bundle settingsBundle = new Bundle();
-                AlarmReminder alarmReminder;
-
-                try {
-
-                    alarmReminder = Model.load(AlarmReminder.class,
-                            Long.parseLong(changeUri.getLastPathSegment()));
-
-                    if (alarmReminder != null && alarmReminder.mNeedsSync > Tag.FLAG_READED) {
-
-                        settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_SYNC);
-                        SyncUtils.requestSync(settingsBundle);
-                        mHistoryFragment.refresh();
-                    }
-
-                } catch (NumberFormatException e) {
-                    Log.i("URI", "AlarmReminder deleted");
-                    return;
-                }
-
-            }
-        };
         mResolver.registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
                 true, mAlarmObserver);
 

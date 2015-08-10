@@ -150,7 +150,7 @@ public class UserProfileActivity extends ActionBarActivity {
 
         setTitle("Mi Perfil");
 
-        RequestManager.requestImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+        RequestManager.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
                 getApplicationContext());
     }
 

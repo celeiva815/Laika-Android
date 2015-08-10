@@ -65,6 +65,8 @@ public class ImageResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
         // mImageView.setImageResource(R.drawable.lk_blanquito_picture);
 
-        mProgressBar.setVisibility(View.GONE);
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 }
