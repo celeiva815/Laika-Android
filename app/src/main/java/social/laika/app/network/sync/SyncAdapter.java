@@ -24,6 +24,7 @@ import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.requests.AlarmRemindersRequest;
+import social.laika.app.network.requests.DogRequest;
 import social.laika.app.network.requests.SyncRequest;
 
 /**
@@ -174,9 +175,13 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
                 break;
             case CODE_MY_DOG:
-                // TODO implement dog sync
+
+                int dogID = extras.getInt(Dog.COLUMN_DOG_ID);
+                request = new DogRequest(context, dogID);
+                ((DogRequest) request).download();
 
                 break;
+
             case CODE_ALARM_REFRESH:
 
                 int dogId = extras.getInt(DOG_ID);

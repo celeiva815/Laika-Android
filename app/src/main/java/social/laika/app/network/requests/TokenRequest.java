@@ -49,8 +49,7 @@ public class TokenRequest implements Requestable {
 
     @Override
     public void onSuccess() {
-        Log.i(TAG, "GCM Registration Token: " + mToken);
-
+        Log.d(TAG, "GCM token registered.");
     }
 
     @Override

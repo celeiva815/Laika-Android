@@ -1,6 +1,7 @@
 package social.laika.app.network.requests;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,16 +33,6 @@ import social.laika.app.utils.Tag;
  */
 public class AlarmRemindersRequest extends SyncRequest {
 
-    private static final int CODE_ALARM = SyncUtils.CODE_ALARM_REFRESH;
-    private static final int CODE_ALARM_CREATE = SyncUtils.CODE_ALARM_CREATE;
-    private static final int CODE_ALARM_READ = SyncUtils.CODE_ALARM_READ;
-    private static final int CODE_ALARM_UPDATE = SyncUtils.CODE_ALARM_SYNC;
-    private static final int CODE_ALARM_DELETE = SyncUtils.CODE_ALARM_DELETE;
-    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR;
-    private static final int CODE_CALENDAR_CREATE = SyncUtils.CODE_CALENDAR_CREATE;
-    private static final int CODE_CALENDAR_READ = SyncUtils.CODE_CALENDAR_READ;
-    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_UPDATE;
-    private static final int CODE_CALENDAR_DELETE = SyncUtils.CODE_CALENDAR_DELETE;
 
     private static final String TAG = AlarmRemindersRequest.class.getSimpleName();
 
@@ -62,11 +53,13 @@ public class AlarmRemindersRequest extends SyncRequest {
     @Override
     public void sync() throws InterruptedException, ExecutionException, TimeoutException, JSONException {
 
-        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject;
 
         switch (mAlarmReminder.mNeedsSync) {
 
             case Tag.FLAG_CREATED:
+
+                Log.d(TAG, "FLAG_CREATED Uploading the new alarm to the server");
 
                 jsonObject = create();
                 mAlarmReminder.mAlarmReminderId = jsonObject.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
@@ -76,12 +69,16 @@ public class AlarmRemindersRequest extends SyncRequest {
 
             case Tag.FLAG_UPDATED:
 
+                Log.d(TAG, "FLAG_UPDATED Uploading the updated alarm to the server");
+
                 jsonObject = update();
                 AlarmReminder.saveReminder(jsonObject, mContext);
 
                 break;
 
             case Tag.FLAG_DELETED:
+
+                Log.d(TAG, "FLAG_DELETED Deleting the alarm with the server");
 
                 jsonObject = delete();
 
