@@ -18,8 +18,11 @@ import org.json.JSONObject;
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.models.AlarmReminder;
+import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.models.Photo;
 import social.laika.app.models.UserAdoptDog;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.requests.PostulationRequest;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.Do;
@@ -35,18 +38,21 @@ public class LaikaGcmListenerService extends GcmListenerService {
     /* GCM Codes */
     public static final int GCM_POSTULATED_DOGS = 200;              /* When a postulation is updated */
     public static final int GCM_ALERT_REMINDER = 310;               /* ? */
-    public static final int GCM_ALERT_REMINDER_UPDATE = 313;        /* When a reminder is updated */
-    public static final int GCM_ALERT_REMINDER_DELETE = 314;        /* When a reminder is deleted */
+    public static final int GCM_ALERT_REMINDER_UPDATE = 313;        /* When a alert reminder is updated */
+    public static final int GCM_ALERT_REMINDER_DELETE = 314;        /* When a alert reminder is deleted */
+    public static final int GCM_CALENDAR_REMINDER_UPDATE = 323;     /* When a calendar reminder is updated */
+    public static final int GCM_CALENDAR_REMINDER_DELETE = 324;     /* When a calender reminder is deleted */
+    public static final int GCM_VET_VISIT_UPDATE = 333;             /* When a vet visit is updated */
+    public static final int GCM_VET_VISIT_DELETE = 334;             /* When a vet visit is deleted */
     public static final int GCM_ADDED_AS_OWNER = 340;               /* When a users add you as a dog owner */
+    public static final int GCM_PHOTO_UPDATE = 353;                 /* When a photo is either created or updated */
+    public static final int GCM_PHOTO_DELETE = 354;                 /* When a photo is deleted */
 
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
         String message = data.getString("title");
-
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
 
         if (!Do.isNullOrEmpty(message)) {
             sendNotification(message);
@@ -63,6 +69,8 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
     public static void sendNotification(String message, Class activityClass, Bundle data,
                                         Context context) {
+
+        Log.d(TAG, "Displaying GCM message: " + message);
 
         Intent intent = new Intent(context, activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -130,25 +138,59 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 Log.e(TAG, "GCM_ALERT_REMINDER not implemented");
                 break;
             case GCM_ALERT_REMINDER_UPDATE:
-                JSONObject alarmReminder = jsonData.getJSONObject(AlarmReminder.TABLE_NAME);
+                JSONObject reminder = jsonData.getJSONObject(AlarmReminder.TABLE_NAME);
                 /* Update Operation */
-                AlarmReminder.saveReminder(alarmReminder, getApplicationContext());
+                AlarmReminder.saveReminder(reminder, getApplicationContext());
                 break;
             case GCM_ALERT_REMINDER_DELETE:
                 int reminderId = jsonData.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
                 /* Deletion Operation */
                 deleteAlarmReminder(reminderId);
                 break;
+            case GCM_CALENDAR_REMINDER_UPDATE:
+                Log.e(TAG, "GCM_CALENDAR_REMINDER_UPDATE not implemented");
+                /* TODO implement GCM_CALENDAR_REMINDER_UPDATE
+                reminder = jsonData.getJSONObject(CalendarReminder.TABLE_NAME);
+                /* Update Operation */
+                /* CalendarReminder.saveReminder(reminder, getApplicationContext()); */
+                break;
+            case GCM_CALENDAR_REMINDER_DELETE:
+                reminderId = jsonData.getInt(CalendarReminder.COLUMN_CALENDAR_REMINDER_ID);
+                /* Deletion Operation */
+                deleteCalendarReminder(reminderId);
+                break;
+            case GCM_VET_VISIT_UPDATE:
+                Log.e(TAG, "GCM_VET_VISIT_UPDATE not implemented");
+                JSONObject vetVisit = jsonData.getJSONObject(VetVisit.TABLE_NAME);
+                /* Update Operation */
+                VetVisit.saveVetVisit(vetVisit);
+                break;
+            case GCM_VET_VISIT_DELETE:
+                int vetVisitID = jsonData.getInt(VetVisit.COLUMN_VET_VISIT_ID);
+                /* Deletion Operation */
+                deleteVetVisit(vetVisitID);
+                break;
             case GCM_ADDED_AS_OWNER:
                 int dog_id = jsonData.getInt(Dog.COLUMN_DOG_ID);
                 /* Hard Dog Synchronization */
                 syncDogHard(dog_id);
                 break;
+            case GCM_PHOTO_UPDATE:
+                JSONObject photo = jsonData.getJSONObject(Photo.TABLE_PHOTOS);
+                /* Hard Photo Synchronization */
+                Photo.saveDogPhoto(photo, getApplicationContext());
+                break;
+            case GCM_PHOTO_DELETE:
+                int photoID = jsonData.getInt(Photo.COLUMN_PHOTO_ID);
+                /* Deletion Operation */
+                deletePhoto(photoID);
+                break;
         }
+        Log.d(TAG, "GCM synchronization completed");
     }
 
     /** Performs a delete operation to a AlarmReminder instance.
-     * @param reminderId The alarm reminder id to be deleted.
+     * @param reminderId The alarm_reminder id to be deleted.
      */
     private static void deleteAlarmReminder(int reminderId) {
         /* We get the single instance */
@@ -159,6 +201,36 @@ public class LaikaGcmListenerService extends GcmListenerService {
         }  else {
             /* Login the error */
             Log.e(TAG, "Attempting to delete alarm reminder @" + reminderId + ", but no alarm was found.");
+        }
+    }
+
+    /** Performs a delete operation to a CalendarReminder instance.
+     * @param reminderId The alarm_reminder id to be deleted.
+     */
+    private static void deleteCalendarReminder(int reminderId) {
+        /* We get the single instance */
+        CalendarReminder calendarReminder = CalendarReminder.getSingleReminder(reminderId);
+        if (calendarReminder != null) {
+            /* Deleting the alarm */
+            calendarReminder.delete();
+        }  else {
+            /* Login the error */
+            Log.e(TAG, "Attempting to delete calendar reminder @" + reminderId + ", but no reminder was found.");
+        }
+    }
+
+    /** Performs a delete operation to a VetVisit instance.
+     * @param vetVisitID The vet_visit id to be deleted.
+     */
+    private void deleteVetVisit(int vetVisitID) {
+        /* We get the single instance */
+        VetVisit vetVisit = VetVisit.getSingleVetVisit(vetVisitID);
+        if (vetVisit != null) {
+            /* Deleting the alarm */
+            vetVisit.delete();
+        }  else {
+            /* Login the error */
+            Log.e(TAG, "Attempting to delete vet_visit @" + vetVisitID + ", but no vet_visit was found.");
         }
     }
 
@@ -182,6 +254,21 @@ public class LaikaGcmListenerService extends GcmListenerService {
         syncInfo.putInt(Dog.COLUMN_DOG_ID, dogID);
         /* Then we request the synchronization through sync adapter. */
         SyncUtils.triggerRefresh(syncInfo);
+    }
+
+    /** Performs a delete operation to a Photo instance.
+     * @param photoID The photo's id to be deleted.
+     */
+    private void deletePhoto(int photoID) {
+        /* We get the single instance */
+        Photo photo = Photo.getPhoto(photoID);
+        if (photo != null) {
+            /* Deleting the alarm */
+            photo.delete();
+        }  else {
+            /* Login the error */
+            Log.e(TAG, "Attempting to delete photo @" + photoID + ", but no photo was found.");
+        }
     }
 
 

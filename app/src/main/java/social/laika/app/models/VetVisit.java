@@ -24,6 +24,7 @@ import social.laika.app.utils.Tag;
 public class VetVisit extends Model {
 
     public final static String TABLE_VET_VISITS = "vet_visits";
+    public final static String TABLE_NAME = "vet_visit";
 
     public final static String COLUMN_VET_VISIT_ID = "vet_visit_id";
     public final static String COLUMN_USER_ID = "user_id";
