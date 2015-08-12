@@ -13,7 +13,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.activities.WebActivity;
+import social.laika.app.activities.CreateVetVisitActivity;
+import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
@@ -52,7 +53,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
 
     public View getVetVisitView(int position, View view, ViewGroup parent) {
 
-        VetVisit vetVisit = mVetVisits.get(position);
+        final VetVisit vetVisit = mVetVisits.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
@@ -68,7 +69,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
 
         if (!Do.isNullOrEmpty(vetVisit.mSmallUrl) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.requestImage(vetVisit.mSmallUrl, mProgressBar, mMainImageView, context);
+            RequestManager.getImage(vetVisit.mSmallUrl, mProgressBar, mMainImageView, context);
 
         } else {
 
@@ -84,8 +85,9 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
             public void onClick(View v) {
 
                 Context context = v.getContext();
-                Intent intent = new Intent(context, WebActivity.class);
-                //FIXME intent.putExtra(WebActivity.URL, mVetVisits.get(pos).mUrlVetVisit);
+                Intent intent = new Intent(context, CreateVetVisitActivity.class);
+                intent.putExtra(CreateVetVisitActivity.KEY_DOG, mDog.mDogId);
+                intent.putExtra(CreateVetVisitActivity.KEY_VET_VISIT, vetVisit.mVetVisitId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

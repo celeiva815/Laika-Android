@@ -156,7 +156,7 @@ public class RequestManager {
         return new ImageRequest(url, listener, maxWidth, maxHeight, null, errorListener);
     }
 
-    public static void requestImage(String imageUrl, ProgressBar progressBar, ImageView imageView , Context context) {
+    public static void getImage(String imageUrl, ProgressBar progressBar, ImageView imageView, Context context) {
 
         ImageResponse response = new ImageResponse(imageView, progressBar);
         Request request = imageRequest(imageUrl, imageView, response, response);

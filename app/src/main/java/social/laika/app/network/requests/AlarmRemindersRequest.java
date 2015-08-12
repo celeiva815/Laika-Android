@@ -20,10 +20,7 @@ import java.util.concurrent.TimeoutException;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
 import social.laika.app.network.sync.SyncUtils;
-import social.laika.app.responses.AlarmRemindersResponse;
-import social.laika.app.responses.RemindersResponse;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -63,7 +60,7 @@ public class AlarmRemindersRequest extends SyncRequest {
 
                 jsonObject = create();
                 mAlarmReminder.mAlarmReminderId = jsonObject.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
-                mAlarmReminder.save();
+                mAlarmReminder.refresh(mContext);
 
                 break;
 

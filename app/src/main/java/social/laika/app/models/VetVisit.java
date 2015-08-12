@@ -1,5 +1,7 @@
 package social.laika.app.models;
 
+import android.util.Log;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -13,6 +15,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 27-07-15.
@@ -34,6 +37,7 @@ public class VetVisit extends Model {
     public final static String COLUMN_TREATMENT = "treatment";
     public final static String COLUMN_VET_DOCTOR = "vet_doctor";
     public final static String COLUMN_VET_NAME = "vet_name";
+    public final static String COLUMN_NEEDS_SYNC = "need_sync";
 
     @Column(name = COLUMN_VET_VISIT_ID)
     public int mVetVisitId;
@@ -68,6 +72,9 @@ public class VetVisit extends Model {
     @Column(name = COLUMN_VET_NAME)
     public String mVetName;
 
+    @Column(name = COLUMN_NEEDS_SYNC)
+    public int mNeedsSync;
+
 
     public VetVisit() { }
 
@@ -100,9 +107,34 @@ public class VetVisit extends Model {
         this.mTreatment = jsonObject.optString(COLUMN_TREATMENT);
         this.mVetDoctor = jsonObject.optString(COLUMN_VET_DOCTOR);
         this.mVetName = jsonObject.optString(COLUMN_VET_NAME);
+        this.mNeedsSync = Tag.FLAG_READED;
     }
 
-    public void update(VetVisit vetVisit) {
+    public void create() {
+
+        this.mNeedsSync = Tag.FLAG_CREATED;
+        this.save();
+        Log.i("VetVisits", "VetVisit created. Need Sync");
+
+    }
+
+    public void update() {
+
+        if (this.mNeedsSync == Tag.FLAG_READED) {
+            this.mNeedsSync = Tag.FLAG_UPDATED;
+        }
+        this.save();
+        Log.i("VetVisits", "VetVisit updated. Need Sync");
+    }
+
+    public void remove() {
+
+        this.mNeedsSync = Tag.FLAG_DELETED;
+        this.save();
+    }
+
+
+    private void update(VetVisit vetVisit) {
 
         this.mVetVisitId = vetVisit.mVetVisitId;
         this.mUserId = vetVisit.mUserId;
@@ -115,6 +147,7 @@ public class VetVisit extends Model {
         this.mTreatment = vetVisit.mTreatment;
         this.mVetDoctor = vetVisit.mVetDoctor;
         this.mVetName = vetVisit.mVetName;
+        this.mNeedsSync = vetVisit.mNeedsSync;
 
         this.save();
 
@@ -170,6 +203,8 @@ public class VetVisit extends Model {
 
     public static VetVisit createOrUpdate(VetVisit vetVisit) {
 
+        vetVisit.mNeedsSync = Tag.FLAG_READED;
+
         if (!isSaved(vetVisit)) {
             vetVisit.save();
             return vetVisit;
@@ -198,10 +233,16 @@ public class VetVisit extends Model {
     public static List<VetVisit> getVetVisits(int dogId) {
 
         String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
+        condition += DB.AND + VetVisit.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(VetVisit.class).where(condition).execute();
 
     }
 
+    public static List<VetVisit> getNeedSyncReminders() {
+
+        String condition = VetVisit.COLUMN_NEEDS_SYNC + DB.GREATER_THAN + Tag.FLAG_READED;
+        return new Select().from(VetVisit.class).where(condition).execute();
+    }
 
     public static void deleteAll() {
 

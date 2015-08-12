@@ -9,6 +9,7 @@ public class DB {
     public final static String AND = " AND ";
     public final static String OR = " OR ";
     public final static String EQUALS = " = ";
+    public final static String GREATER_THAN = " > ";
     public final static String NOT_EQUALS = " != ";
     public final static String _QUESTION = " = ?";
     public final static String ORDER_BY = "ORDER BY";

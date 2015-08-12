@@ -43,11 +43,6 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
     public VetVisitAdapter mVetVisitAdapter;
 
 
-    public VetVisitsFragment(Dog mDog) {
-        this.mDog = mDog;
-        this.mTag = Long.toString(mDog.getId());
-    }
-
     public VetVisitsFragment() {  }
 
     public static final VetVisitsFragment newInstance(int dogId)
