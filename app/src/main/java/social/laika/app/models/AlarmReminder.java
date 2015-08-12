@@ -236,6 +236,7 @@ public class AlarmReminder extends Model {
 
     public void remove(Context context) {
 
+        this.mNeedsSync = Tag.FLAG_DELETED;
         this.cancelAlarm(context);
 
         if (mNeedsSync == Tag.FLAG_CREATED) {
@@ -244,7 +245,6 @@ public class AlarmReminder extends Model {
 
         } else {
 
-            this.mNeedsSync = Tag.FLAG_DELETED;
             this.save();
         }
     }

@@ -52,10 +52,13 @@ public class LaikaGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
-        String message = data.getString("title");
+        String title = data.getString("title");
+        String message = data.getString("message");
 
         if (!Do.isNullOrEmpty(message)) {
-            sendNotification(message);
+
+            title = !Do.isNullOrEmpty(title)? title : "Laika";
+            sendNotification(message, title);
         }
 
         try {
@@ -93,7 +96,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
-    private void sendNotification(String message) {
+    private void sendNotification(String message, String title) {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -103,7 +106,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logo_laika)
-                .setContentTitle("Laika")
+                .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
