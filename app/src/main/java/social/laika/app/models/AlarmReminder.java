@@ -236,9 +236,17 @@ public class AlarmReminder extends Model {
 
     public void remove(Context context) {
 
-        this.mNeedsSync = Tag.FLAG_DELETED;
-        this.save();
         this.cancelAlarm(context);
+
+        if (mNeedsSync == Tag.FLAG_CREATED) {
+
+            this.delete();
+
+        } else {
+
+            this.mNeedsSync = Tag.FLAG_DELETED;
+            this.save();
+        }
     }
 
     private void update(AlarmReminder alarmReminder) {
@@ -814,6 +822,7 @@ public class AlarmReminder extends Model {
     public static List<AlarmReminder> getDogReminders(int dogId) {
 
         String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
+        condition += DB.AND + AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(AlarmReminder.class).where(condition).execute();
     }
 

@@ -47,7 +47,7 @@ public class AlarmReminderObserver extends ContentObserver {
             if (mAlarmReminder != null && mAlarmReminder.mNeedsSync > Tag.FLAG_READED) {
 
                 settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_ALARM_SYNC);
-                SyncUtils.requestSync(settingsBundle);
+                SyncUtils.triggerRefresh(settingsBundle);
             }
 
         } catch (NumberFormatException e) {

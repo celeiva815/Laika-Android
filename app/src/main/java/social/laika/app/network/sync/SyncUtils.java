@@ -125,7 +125,6 @@ public class SyncUtils {
         Account account = AccountService.GetAccount(ACCOUNT_TYPE);
         data.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 
-
         ContentResolver.requestSync(
                 account,                                // Sync account
                 CONTENT_AUTHORITY,                       // Content authority

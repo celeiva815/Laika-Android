@@ -277,6 +277,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         }
 
+        mHistoryAdapter.remove(history);
         refresh();
     }
 

@@ -13,6 +13,6 @@
         android:layout_height="match_parent"
         android:id="@+id/simple_listview"
         android:layout_gravity="center_horizontal"
-        android:divider="@color/laika_light_red"
-        android:dividerHeight="2dp"/>
+        android:divider="@color/laika_lighter_red"
+        android:dividerHeight="1dp"/>
 </LinearLayout>
