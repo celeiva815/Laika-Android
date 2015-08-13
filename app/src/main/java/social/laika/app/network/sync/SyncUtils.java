@@ -45,10 +45,10 @@ public class SyncUtils {
     public static final int CODE_OWNER_READ = 342;
     public static final int CODE_OWNER_UPDATE = 343;
     public static final int CODE_OWNER_DELETE = 344;
-    public static final int CODE_PHOTO = 350;
+    public static final int CODE_PHOTO_REFRESH = 350;
     public static final int CODE_PHOTO_CREATE = 351;
     public static final int CODE_PHOTO_READ = 352;
-    public static final int CODE_PHOTO_UPDATE = 353;
+    public static final int CODE_PHOTO_SYNC = 353;
     public static final int CODE_PHOTO_DELETE = 354;
 
 

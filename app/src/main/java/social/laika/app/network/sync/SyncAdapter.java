@@ -21,9 +21,13 @@ import java.util.concurrent.TimeoutException;
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.models.VetVisit;
+import social.laika.app.models.Photo;
 import social.laika.app.network.requests.AlarmRemindersRequest;
 import social.laika.app.network.requests.DogRequest;
+import social.laika.app.network.requests.PhotosRequest;
 import social.laika.app.network.requests.SyncRequest;
+import social.laika.app.network.requests.VetVisitsRequest;
 
 /**
  * Define a sync adapter for the app.
@@ -35,7 +39,7 @@ import social.laika.app.network.requests.SyncRequest;
  * SyncService.
  */
 class SyncAdapter extends AbstractThreadedSyncAdapter {
-    public static final String TAG = "SyncAdapter";
+    public static final String TAG = "Laika Sync Service";
 
     private static final String DATA = "data";
     private static final String CODE = SyncUtils.CODE;
@@ -48,26 +52,17 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static final int CODE_MY_DOG = SyncUtils.CODE_MY_DOG;
     private static final int CODE_ALARM_REFRESH = SyncUtils.CODE_ALARM_REFRESH;
     private static final int CODE_ALARM_SYNC = SyncUtils.CODE_ALARM_SYNC;
-    private static final int CODE_CALENDAR = SyncUtils.CODE_CALENDAR_REFRESH;
-    private static final int CODE_CALENDAR_CREATE = SyncUtils.CODE_CALENDAR_CREATE;
-    private static final int CODE_CALENDAR_READ = SyncUtils.CODE_CALENDAR_READ;
-    private static final int CODE_CALENDAR_UPDATE = SyncUtils.CODE_CALENDAR_SYNC;
-    private static final int CODE_CALENDAR_DELETE = SyncUtils.CODE_CALENDAR_DELETE;
+    private static final int CODE_CALENDAR_REFRESH = SyncUtils.CODE_CALENDAR_REFRESH;
+    private static final int CODE_CALENDAR_SYNC = SyncUtils.CODE_CALENDAR_SYNC;
     private static final int CODE_VET_VISIT_REFRESH = SyncUtils.CODE_VET_VISIT_REFRESH;
-    private static final int CODE_VET_VISIT_CREATE = SyncUtils.CODE_VET_VISIT_CREATE;
-    private static final int CODE_VET_VISIT_READ = SyncUtils.CODE_VET_VISIT_READ;
     private static final int CODE_VET_VISIT_SYNC = SyncUtils.CODE_VET_VISIT_SYNC;
-    private static final int CODE_VET_VISIT_DELETE = SyncUtils.CODE_VET_VISIT_DELETE;
+    private static final int CODE_PHOTO_REFRESH = SyncUtils.CODE_PHOTO_REFRESH;
+    private static final int CODE_PHOTO_SYNC = SyncUtils.CODE_PHOTO_SYNC;
     private static final int CODE_OWNER = SyncUtils.CODE_OWNER;
     private static final int CODE_OWNER_CREATE = SyncUtils.CODE_OWNER_CREATE;
     private static final int CODE_OWNER_READ = SyncUtils.CODE_OWNER_READ;
     private static final int CODE_OWNER_UPDATE = SyncUtils.CODE_OWNER_UPDATE;
     private static final int CODE_OWNER_DELETE = SyncUtils.CODE_OWNER_DELETE;
-    private static final int CODE_PHOTO = SyncUtils.CODE_PHOTO;
-    private static final int CODE_PHOTO_CREATE = SyncUtils.CODE_PHOTO_CREATE;
-    private static final int CODE_PHOTO_READ = SyncUtils.CODE_PHOTO_READ;
-    private static final int CODE_PHOTO_UPDATE = SyncUtils.CODE_PHOTO_UPDATE;
-    private static final int CODE_PHOTO_DELETE = SyncUtils.CODE_PHOTO_DELETE;
 
 
     /**
@@ -149,7 +144,6 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
 
-
         Log.i(TAG, "Network synchronization complete");
     }
 
@@ -157,6 +151,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             ExecutionException, TimeoutException, JSONException {
 
         SyncRequest request;
+        JSONObject jsonObject;
+        int dogId = extras.getInt(DOG_ID);
 
         switch (code) {
 
@@ -174,24 +170,22 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 break;
             case CODE_MY_DOG:
 
-                int dogID = extras.getInt(Dog.COLUMN_DOG_ID);
-                request = new DogRequest(context, dogID);
+                request = new DogRequest(context, dogId);
                 ((DogRequest) request).download();
 
                 break;
 
             case CODE_ALARM_REFRESH:
 
-                int dogId = extras.getInt(DOG_ID);
                 request = new AlarmRemindersRequest(context, dogId);
-                JSONObject jsonObject = request.refresh();
+                jsonObject = request.refresh();
                 AlarmReminder.saveReminders(jsonObject, context);
 
                 break;
 
             case CODE_ALARM_SYNC:
 
-                List<AlarmReminder> alarmReminders = AlarmReminder.getNeedSyncReminders();
+                List<AlarmReminder> alarmReminders = AlarmReminder.getNeedSync();
 
                 for (AlarmReminder alarmReminder : alarmReminders) {
                     request = new AlarmRemindersRequest(context, alarmReminder);
@@ -199,34 +193,27 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 }
                 break;
 
-            case CODE_CALENDAR:
+            case CODE_CALENDAR_REFRESH:
 
                 break;
-            case CODE_CALENDAR_CREATE:
-
-                break;
-            case CODE_CALENDAR_READ:
-
-                break;
-            case CODE_CALENDAR_UPDATE:
-
-                break;
-            case CODE_CALENDAR_DELETE:
+            case CODE_CALENDAR_SYNC:
 
                 break;
             case CODE_VET_VISIT_REFRESH:
 
+                request = new VetVisitsRequest(context, dogId);
+                jsonObject = request.refresh();
+                VetVisit.saveVetVisits(jsonObject);
+
                 break;
             case CODE_VET_VISIT_SYNC:
 
-                break;
-            case CODE_VET_VISIT_CREATE:
+                List<VetVisit> vetVisits = VetVisit.getNeedSync();
 
-                break;
-            case CODE_VET_VISIT_READ:
-
-                break;
-            case CODE_VET_VISIT_DELETE:
+                for (VetVisit vetVisit : vetVisits) {
+                    request = new VetVisitsRequest(context, vetVisit);
+                    request.sync();
+                }
 
                 break;
             case CODE_OWNER:
@@ -244,26 +231,27 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             case CODE_OWNER_DELETE:
 
                 break;
-            case CODE_PHOTO:
+            case CODE_PHOTO_REFRESH:
+
+                request = new PhotosRequest(context, dogId);
+                jsonObject = request.refresh();
+                Photo.saveDogPhotos(jsonObject,context);
 
                 break;
-            case CODE_PHOTO_CREATE:
+            case CODE_PHOTO_SYNC:
 
-                break;
-            case CODE_PHOTO_READ:
+                List<Photo> photos = Photo.getNeedSync();
 
-                break;
-            case CODE_PHOTO_UPDATE:
-
-                break;
-            case CODE_PHOTO_DELETE:
+                for (Photo photo : photos) {
+                    request = new PhotosRequest(context, photo);
+                    request.sync();
+                }
 
                 break;
 
         }
 
     }
-
 
     public void syncGeneral(Context context) {
 

@@ -832,7 +832,7 @@ public class AlarmReminder extends Model {
         return new Select().from(AlarmReminder.class).where(condition).execute();
     }
 
-    public static List<AlarmReminder> getNeedSyncReminders() {
+    public static List<AlarmReminder> getNeedSync() {
 
         String condition = AlarmReminder.COLUMN_NEEDS_SYNC + DB.GREATER_THAN + Tag.FLAG_READED;
         return new Select().from(AlarmReminder.class).where(condition).execute();

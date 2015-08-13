@@ -15,6 +15,7 @@ import social.laika.app.interfaces.Requestable;
  */
 public abstract class SyncRequest {
 
+    public static final String SUCCESS = "success";
     public Context mContext;
 
     public SyncRequest(Context mContext) {

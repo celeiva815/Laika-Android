@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -51,6 +52,7 @@ public class Photo extends Model {
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_DETAIL = "detail";
+    public final static String COLUMN_NEEDS_SYNC = "need_sync";
 
     public static final String API_PHOTO = "photo";
     public static final String API_CONTENT = "content";
@@ -99,27 +101,11 @@ public class Photo extends Model {
     @Column(name = COLUMN_DETAIL)
     public String mDetail;
 
+    @Column(name = COLUMN_NEEDS_SYNC)
+    public int mNeedsSync;
+
     public Photo() { }
 
-
-    public Bitmap getPicture(int imageMaxSize) {
-
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scale = Math.min(photoW/imageMaxSize, photoH/imageMaxSize);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions = new BitmapFactory.Options();
-        bmOptions.inSampleSize = scale;
-        Bitmap bitmap = BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
-
-        return bitmap;
-    }
 
     public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlOriginal, String mDate,
                  String mDetail) {
@@ -131,20 +117,6 @@ public class Photo extends Model {
         this.mUrlOriginal = mUrlOriginal;
         this.mDate = mDate;
         this.mDetail = mDetail;
-    }
-
-    public void update(Photo photo) {
-
-        this.mPhotoId = photo.mPhotoId;
-        this.mOwnerId = photo.mOwnerId;
-        this.mOwnerName = photo.mOwnerName;
-        this.mDogId = photo.mDogId;
-        this.mUrlOriginal = photo.mUrlOriginal;
-        this.mDate = photo.mDate;
-        this.mDetail = photo.mDetail;
-
-        this.save();
-
     }
 
     public Photo(JSONObject jsonObject, Context context, Dog dog) {
@@ -163,6 +135,7 @@ public class Photo extends Model {
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
         this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
+        this.mNeedsSync = Tag.FLAG_READED;
     }
 
     public Photo(JSONObject jsonObject, Context context) {
@@ -181,6 +154,111 @@ public class Photo extends Model {
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL, "");
         this.mUrlThumbnail = getImage(Tag.IMAGE_THUMB);
+        this.mNeedsSync = Tag.FLAG_READED;
+    }
+
+    public void create() {
+
+        this.mNeedsSync = Tag.FLAG_CREATED;
+        this.save();
+        Log.i("Laika Sync Service", "Photo created. Local ID:" + getId() + ". Need Sync");
+
+    }
+
+    public void refresh() {
+
+        this.mNeedsSync = Tag.FLAG_READED;
+        this.save();
+
+        Log.i("Laika Sync Service", "Photo refreshed. Local ID: " + getId() + ". " +
+                "Server ID:" + mPhotoId);
+    }
+
+    public void update() {
+
+        if (this.mNeedsSync == Tag.FLAG_READED) {
+            this.mNeedsSync = Tag.FLAG_UPDATED;
+        }
+        this.save();
+        Log.i("Laika Sync Service", "Photo updated. Local ID: " + getId() + ". " +
+                "Server ID:" + mPhotoId + ". Need Sync");
+    }
+
+    public void remove() {
+
+        this.mNeedsSync = Tag.FLAG_DELETED;
+
+        if (mNeedsSync == Tag.FLAG_CREATED) {
+
+            Log.i("Laika Sync Service", "Photo deleted. Local ID: " + getId());
+            this.delete();
+        } else {
+
+            this.save();
+        }
+
+        Log.i("Laika Sync Service", "Photo removed. Local ID: " + getId() + ". " +
+                "Server ID:" + mPhotoId  + ". Need Sync");
+    }
+
+    private void update(Photo photo) {
+
+        this.mPhotoId = photo.mPhotoId;
+        this.mOwnerId = photo.mOwnerId;
+        this.mOwnerName = photo.mOwnerName;
+        this.mDogId = photo.mDogId;
+        this.mUrlOriginal = photo.mUrlOriginal;
+        this.mDate = photo.mDate;
+        this.mDetail = photo.mDetail;
+        this.mNeedsSync = photo.mNeedsSync;
+
+        this.save();
+
+    }
+
+    public JSONObject getJsonObject() {
+
+        //FIXME definir bien que es lo que se va a mandar al servidor
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put(COLUMN_PHOTO_ID, mPhotoId);
+            jsonObject.put(COLUMN_USER_ID, mOwnerId);
+            jsonObject.put(COLUMN_OWNER_NAME, mOwnerName);
+            jsonObject.put(COLUMN_DOG_ID, mDogId);
+            jsonObject.put(COLUMN_URL_THUMB, mUrlThumbnail);
+            jsonObject.put(COLUMN_URL_SMALL, mUrlSmall);
+            jsonObject.put(COLUMN_URL_MEDIUM, mUrlMedium);
+            jsonObject.put(COLUMN_URL_LARGE, mUrlLarge);
+            jsonObject.put(COLUMN_URL_ORIGINAL, mUrlOriginal);
+            jsonObject.put(COLUMN_TIME, mTime);
+            jsonObject.put(COLUMN_DATE, mDate);
+
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    public Bitmap getPicture(int imageMaxSize) {
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scale = Math.min(photoW/imageMaxSize, photoH/imageMaxSize);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions = new BitmapFactory.Options();
+        bmOptions.inSampleSize = scale;
+        Bitmap bitmap = BitmapFactory.decodeFile(mUrlOriginal, bmOptions);
+
+        return bitmap;
     }
 
     public static void saveDogPhotos(JSONObject jsonObject, Context context, Dog dog) {
@@ -266,6 +344,8 @@ public class Photo extends Model {
 
     public static Photo createOrUpdate(Photo photo) {
 
+        photo.mNeedsSync = Tag.FLAG_READED;
+
         if (!isSaved(photo.mPhotoId)) {
             photo.save();
         }
@@ -292,6 +372,12 @@ public class Photo extends Model {
         String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
         return new Select().from(Photo.class).where(condition).execute();
 
+    }
+
+    public static List<Photo> getNeedSync() {
+
+        String condition = Photo.COLUMN_NEEDS_SYNC + DB.GREATER_THAN + Tag.FLAG_READED;
+        return new Select().from(Photo.class).where(condition).execute();
     }
 
     public String getImage(String size) {
