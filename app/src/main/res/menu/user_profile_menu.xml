@@ -9,4 +9,10 @@
         app:showAsAction="always"
         android:title="Editar Perfil" />
 
+    <item
+        android:id="@+id/edit_adoption_profile_settings"
+        android:orderInCategory="100"
+        android:title="Editar Preferencias de Adopción"
+        app:showAsAction="never" />
+
 </menu>
