@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import social.laika.app.R;
 import social.laika.app.activities.PhotosFragmentActivity;
 import social.laika.app.models.Photo;
+import social.laika.app.network.RequestManager;
 
 public class PhotoScreenSlideFragment extends Fragment {
 	
@@ -27,6 +29,7 @@ public class PhotoScreenSlideFragment extends Fragment {
     public TextView mOwnerTextView;
     public TextView mDateTextView;
     public ImageView mMainImageView;
+    public ProgressBar mProgressBar;
 
 	public PhotoScreenSlideFragment(Photo mPhoto, PhotosFragmentActivity mActivity) {
 
@@ -47,11 +50,13 @@ public class PhotoScreenSlideFragment extends Fragment {
         mOwnerTextView = (TextView) view.findViewById(R.id.owner_photo_screen_slider_textview);
         mDateTextView = (TextView) view.findViewById(R.id.date_photo_screen_slider_textview);
 		mMainImageView = (ImageView) view.findViewById(R.id.main_photo_screen_slider_imageview);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         
 		mDetailTextView.setText(mPhoto.mDetail);
         mOwnerTextView.setText(mPhoto.mOwnerName);
         mDateTextView.setText(mPhoto.mDate);
-        mMainImageView.setImageBitmap(mPhoto.getPicture(640));
+
+        RequestManager.getImage(mPhoto.mUrlLarge, mProgressBar, mMainImageView, view.getContext());
 
         return view;
     }
