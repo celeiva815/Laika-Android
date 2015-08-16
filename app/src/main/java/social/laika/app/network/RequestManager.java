@@ -38,8 +38,8 @@ public class RequestManager {
 
     public static final String TAG = RequestManager.class.getSimpleName();
 
-    public static final String BASE_URL = "http://fundaciones.laika.social/";
-    //public static final String BASE_URL = "http://develop.laika.social/";
+//    public static final String BASE_URL = "http://fundaciones.laika.social/";
+    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
 
@@ -117,17 +117,10 @@ public class RequestManager {
     }
 
     public static Request putRequest(JSONObject jsonParams, String address,
-                                      Response.Listener<JSONObject> listener,
-                                      Response.ErrorListener errorListener, final String token) {
-
-        return defaultRequest(METHOD_PUT, jsonParams, address, listener, errorListener, token);
-    }
-
-    public static Request patchRequest(JSONObject jsonParams, String address,
                                      Response.Listener<JSONObject> listener,
                                      Response.ErrorListener errorListener, final String token) {
 
-        return defaultRequest(METHOD_PATCH, jsonParams, address, listener, errorListener, token);
+        return defaultRequest(METHOD_PUT, jsonParams, address, listener, errorListener, token);
     }
 
     public static Request deleteRequest(JSONObject jsonParams, String address,

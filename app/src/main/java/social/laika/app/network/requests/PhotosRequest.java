@@ -140,7 +140,7 @@ public class PhotosRequest extends SyncRequest {
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.patchRequest(jsonObject, address, future, errorListener, token);
+        Request request = RequestManager.putRequest(jsonObject, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);

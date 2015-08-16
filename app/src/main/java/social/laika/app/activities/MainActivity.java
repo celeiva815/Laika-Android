@@ -1,12 +1,6 @@
 package social.laika.app.activities;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.ContentResolver;
-import android.database.ContentObserver;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,8 +9,6 @@ import social.laika.app.R;
 import social.laika.app.listeners.ToActivityOnCLickListener;
 import social.laika.app.listeners.ToAdoptActivityOnClickListener;
 import social.laika.app.listeners.ToMyDogOnCLickListener;
-import social.laika.app.network.sync.SyncService;
-import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import com.newrelic.agent.android.NewRelic;
 

@@ -142,7 +142,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 Log.e(TAG, "GCM_ALERT_REMINDER not implemented");
                 break;
             case GCM_ALERT_REMINDER_UPDATE:
-                JSONObject reminder = jsonData.getJSONObject(AlarmReminder.TABLE_NAME);
+                JSONObject reminder = new JSONObject(jsonData.getString(AlarmReminder.TABLE_NAME));
                 /* Update Operation */
                 AlarmReminder.saveReminder(reminder, getApplicationContext());
                 break;
@@ -180,7 +180,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 syncDogHard(dog_id);
                 break;
             case GCM_PHOTO_UPDATE:
-                JSONObject photo = jsonData.getJSONObject(Photo.TABLE_PHOTOS);
+                JSONObject photo = new JSONObject(jsonData.getString(Photo.TABLE_PHOTOS));
                 /* Hard Photo Synchronization */
                 Photo.saveDogPhoto(photo, getApplicationContext());
                 break;

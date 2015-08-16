@@ -17,7 +17,7 @@ import social.laika.app.utils.Tag;
  * Created by Tito_Leiva on 10-08-15.
  */
 public class AlarmReminderObserver extends ContentObserver {
-
+    public static final String TAG = AlarmReminderObserver.class.getSimpleName();
     public AlarmReminder mAlarmReminder;
 
     /**
@@ -38,6 +38,7 @@ public class AlarmReminderObserver extends ContentObserver {
     public void onChange(boolean selfChange, Uri changeUri) {
 
         Bundle settingsBundle = new Bundle();
+        Log.d(TAG, changeUri.toString());
 
         try {
 

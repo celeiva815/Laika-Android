@@ -121,17 +121,24 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         mIndicator.setViewPager(mPager);
         mIndicator.setOnPageChangeListener(pagerListener);
 
-        registerContentObserver();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        /* We register the content observer */
+        registerContentObserver();
 
         refreshFragments();
 
         mChanged = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        /* We unregister the content observer */
+        unregisterContentObserver();
     }
 
     @Override
@@ -526,11 +533,17 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public void registerContentObserver() {
 
-        mResolver = getContentResolver();
-        mAlarmObserver = new AlarmReminderObserver(new Handler(getMainLooper()));
+        if(mAlarmObserver == null)
+            mAlarmObserver = new AlarmReminderObserver(new Handler(getMainLooper()));
 
-        mResolver.registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
-                true, mAlarmObserver);
+        getContentResolver().
+                registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
+                        true, mAlarmObserver);
 
+    }
+
+    private void unregisterContentObserver() {
+        getContentResolver().
+                unregisterContentObserver(mAlarmObserver);
     }
 }

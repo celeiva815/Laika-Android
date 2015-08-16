@@ -359,7 +359,7 @@ public class EditUserActivity extends ActionBarActivity
         EditUserResponse response = new EditUserResponse(this);
         String token = PrefsManager.getUserToken(getApplicationContext());
 
-        Request registerRequest = RequestManager.patchRequest(jsonParams,
+        Request registerRequest = RequestManager.putRequest(jsonParams,
                 RequestManager.ADDRESS_USER, response, response, token);
 
         registerRequest.setRetryPolicy(new DefaultRetryPolicy(

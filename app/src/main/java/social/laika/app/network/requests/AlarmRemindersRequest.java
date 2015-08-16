@@ -20,7 +20,6 @@ import java.util.concurrent.TimeoutException;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
-import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -134,12 +133,12 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         JSONObject jsonObject = mAlarmReminder.getJsonObject();
 
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS;
+        String address = RequestManager.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.patchRequest(jsonObject, address, future, errorListener, token);
+        Request request = RequestManager.putRequest(jsonObject, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -152,16 +151,12 @@ public class AlarmRemindersRequest extends SyncRequest {
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
             TimeoutException {
 
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put(AlarmReminder.COLUMN_ALARM_REMINDER_ID, mAlarmReminder.mAlarmReminderId);
-
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS;
+        String address = RequestManager.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.deleteRequest(jsonObject, address, future, errorListener, token);
+        Request request = RequestManager.deleteRequest(null, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
