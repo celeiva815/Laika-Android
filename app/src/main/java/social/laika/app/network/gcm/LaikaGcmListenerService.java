@@ -200,6 +200,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         /* We get the single instance */
         AlarmReminder alarmReminder = AlarmReminder.getSingleReminder(reminderId);
         if (alarmReminder != null) {
+            Log.d(TAG, "Deleting alarm " + alarmReminder.mAlarmReminderId + "[" + alarmReminder.getId() + "]");
             /* Deleting the alarm */
             alarmReminder.delete();
         }  else {

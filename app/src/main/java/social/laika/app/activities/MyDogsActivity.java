@@ -126,8 +126,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     @Override
     protected void onResume() {
         super.onResume();
-        /* We register the content observer */
-        registerContentObserver();
 
         refreshFragments();
 
@@ -135,8 +133,15 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        /* We register the content observer */
+        registerContentObserver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         /* We unregister the content observer */
         unregisterContentObserver();
     }
@@ -426,7 +431,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                 case 1:
 
                     if (mHistoryFragment == null) {
-                        mHistoryFragment = mHistoryFragment.newInstance(dogId);
+                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
 
                     }
 
@@ -539,7 +544,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         getContentResolver().
                 registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
                         true, mAlarmObserver);
-
     }
 
     private void unregisterContentObserver() {

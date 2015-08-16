@@ -55,7 +55,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     private int mIdLayout = R.layout.simple_listview;
     public Dog mDog;
     public ListView mHistoryListView;
-    public List<History> mHistories;
+    private List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
 
 
@@ -155,10 +155,13 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     private List<History> getHistories(Context context) {
 
-        mHistories = new ArrayList<>();
+        if (mHistories == null)
+            mHistories = new ArrayList<>();
+        else
+            mHistories.clear();
+
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
-        Object something = AlarmReminder.getAllReminders();
 
         if (calendars.size() > 0) {
 
@@ -298,12 +301,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     @Override
     public void refresh() {
 
-        if (!mHistories.isEmpty()) {
-            mHistories.clear();
-
-        }
-
-        mHistories.addAll(getHistories(getActivity().getApplicationContext()));
+        getHistories(getActivity().getApplicationContext());
         mHistoryAdapter.notifyDataSetChanged();
     }
 
