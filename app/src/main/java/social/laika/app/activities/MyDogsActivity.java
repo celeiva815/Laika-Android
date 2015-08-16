@@ -140,8 +140,8 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         /* We unregister the content observer */
         unregisterContentObserver();
     }
@@ -538,16 +538,18 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public void registerContentObserver() {
 
-        if(mAlarmObserver == null)
+        if(mAlarmObserver == null) {
             mAlarmObserver = new AlarmReminderObserver(new Handler(getMainLooper()));
 
-        getContentResolver().
-                registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
-                        true, mAlarmObserver);
+            getContentResolver().
+                    registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
+                            true, mAlarmObserver);
+        }
     }
 
     private void unregisterContentObserver() {
         getContentResolver().
                 unregisterContentObserver(mAlarmObserver);
+        mAlarmObserver = null;
     }
 }
