@@ -38,9 +38,11 @@ import social.laika.app.listeners.AddOwnerDogOnClickListener;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.observers.AlarmReminderObserver;
+import social.laika.app.network.observers.VetVisitObserver;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
@@ -545,11 +547,23 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                     registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
                             true, mAlarmObserver);
         }
+
+        if(mVetVisitObserver == null) {
+            mVetVisitObserver = new VetVisitObserver(new Handler(getMainLooper()));
+
+            getContentResolver().
+                    registerContentObserver(ContentProvider.createUri(VetVisit.class, null),
+                            true, mAlarmObserver);
+        }
     }
 
     private void unregisterContentObserver() {
         getContentResolver().
                 unregisterContentObserver(mAlarmObserver);
         mAlarmObserver = null;
+
+        getContentResolver().
+                unregisterContentObserver(mVetVisitObserver);
+        mVetVisitObserver = null;
     }
 }

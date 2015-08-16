@@ -33,7 +33,7 @@ public class UserAdoptDog extends Model {
     public final static String COLUMN_DOG_ID = "dog_id";
 
     public final static String API_POSTULATIONS = "postulations";
-    public final static String API_DOG = "mDog";
+    public final static String API_DOG = "dog";
 
     @Column(name = COLUMN_USER_ADOPT_DOG_ID)
     public int mUserAdoptDogId;

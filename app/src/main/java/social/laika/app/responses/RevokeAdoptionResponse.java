@@ -13,6 +13,7 @@ import social.laika.app.activities.PostulatedDogsFragmentActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -37,8 +38,7 @@ public class RevokeAdoptionResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onResponse(JSONObject response) {
 
-        UserAdoptDog.deleteUserAdoptDog(mUserAdoptDog);
-        Dog.deleteDog(mDog);
+        mUserAdoptDog.mStatus = Tag.POSTULATION_REVOKED;
         mProgressDialog.dismiss();
         ((PostulatedDogsFragmentActivity) mActivity).updateDogs();
         Do.showLongToast("La postulación ha sido cancelada", mContext);

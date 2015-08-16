@@ -1,6 +1,8 @@
 package social.laika.app.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,14 +37,16 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
     public TextView mReasonTextView;
     public ImageView mMainImageView;
     public ProgressBar mProgressBar;
+    public VetVisitsFragment mFragment;
 
 
-    public VetVisitAdapter(Context context, int resource, List<VetVisit> objects, Dog mDog) {
+    public VetVisitAdapter(Context context, int resource, List<VetVisit> objects, Dog mDog, VetVisitsFragment fragment) {
         super(context, resource, objects);
 
         this.context = context;
         this.mVetVisits = objects;
         this.mDog = mDog;
+        this.mFragment = fragment;
     }
 
     @Override
@@ -82,14 +86,43 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-                Context context = v.getContext();
-                Intent intent = new Intent(context, CreateVetVisitActivity.class);
-                intent.putExtra(CreateVetVisitActivity.KEY_DOG, mDog.mDogId);
-                intent.putExtra(CreateVetVisitActivity.KEY_VET_VISIT, vetVisit.mVetVisitId);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                final Context context = view.getContext();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+                dialog.setTitle(R.string.choose_an_option);
+                dialog.setItems(new CharSequence[]{"Editar", "Eliminar"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                switch (which) {
+
+                                    case 0: // editar alarma
+
+                                        mFragment.editVetVisit(mVetVisits.get(pos));
+                                        break;
+
+                                    case 1: // eliminar alarma
+
+                                        mFragment.deleteVetVisit(mVetVisits.get(pos));
+
+                                        break;
+
+                                }
+
+                            }
+                        });
+
+                dialog.show();
+
+
+//                Context context = v.getContext();
+//                Intent intent = new Intent(context, CreateVetVisitActivity.class);
+//                intent.putExtra(CreateVetVisitActivity.KEY_DOG, mDog.mDogId);
+//                intent.putExtra(CreateVetVisitActivity.KEY_VET_VISIT, vetVisit.mVetVisitId);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
             }
         });
 

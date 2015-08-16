@@ -43,7 +43,17 @@ public class PostulatedDogsResponse implements Response.Listener<JSONObject>, Re
     public void onResponse(JSONObject response) {
 
         UserAdoptDog.saveUserAdoptDogs(response);
-        mRequest.onSuccess();
+
+        if (mRequest != null) {
+            mRequest.onSuccess();
+
+        }
+
+        if (mActivity != null) {
+
+            Do.changeActivity(mContext, PostulatedDogsFragmentActivity.class,
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
     }
 
     @Override

@@ -171,7 +171,8 @@
             android:text="Sube una foto del certificado o la visita"
             android:textColor="@color/laika_red"
             android:textSize="@dimen/laika_min_text"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/relative_layout_2"
@@ -182,7 +183,8 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp" >
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/profile_vet_visit_imageview"

@@ -1,6 +1,9 @@
 package social.laika.app.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,14 +20,17 @@ import java.util.List;
 import java.util.Map;
 
 import social.laika.app.R;
+import social.laika.app.activities.CreateVetVisitActivity;
 import social.laika.app.adapters.VetVisitAdapter;
 import social.laika.app.interfaces.Refreshable;
+import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.VetVisitsResponse;
 import social.laika.app.utils.PrefsManager;
+import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
@@ -43,10 +49,10 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
     public VetVisitAdapter mVetVisitAdapter;
 
 
-    public VetVisitsFragment() {  }
+    public VetVisitsFragment() {
+    }
 
-    public static final VetVisitsFragment newInstance(int dogId)
-    {
+    public static final VetVisitsFragment newInstance(int dogId) {
         VetVisitsFragment f = new VetVisitsFragment();
         Bundle bdl = new Bundle(1);
         bdl.putInt(KEY_DOG, dogId);
@@ -72,7 +78,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
 
         mVetVisitListView = (ListView) view.findViewById(R.id.simple_listview);
         mVetVisitAdapter = new VetVisitAdapter(view.getContext(), R.layout.lk_vet_visit_adapter,
-                getVetVisit(), mDog);
+                getVetVisit(), mDog, this);
 
         mVetVisitListView.setAdapter(mVetVisitAdapter);
         mVetVisitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,11 +86,27 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
             }
         });
 
         return view;
+    }
+
+    public void editVetVisit(VetVisit vetVisit) {
+
+        Context context = getActivity().getApplicationContext();
+        Intent intent = new Intent(context, CreateVetVisitActivity.class);
+        intent.putExtra(CreateVetVisitActivity.KEY_VET_VISIT, vetVisit.getId());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+    }
+
+    public void deleteVetVisit(VetVisit vetVisit) {
+
+        mVetVisitAdapter.remove(vetVisit);
+        vetVisit.remove();
+        refresh();
     }
 
     @Override
@@ -93,7 +115,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
 
         if (mVetVisitListView.getCount() == 0) {
 
-           // requestVetVisits();
+            // requestVetVisits();
 
         }
     }

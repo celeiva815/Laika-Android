@@ -16,7 +16,8 @@
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:background="@color/laika_picture_background">
+        android:background="@color/laika_picture_background"
+        android:descendantFocusability="blocksDescendants">
 
         <ImageView
             android:id="@+id/photo_vet_visits_imageview"

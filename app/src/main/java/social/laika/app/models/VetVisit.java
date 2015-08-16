@@ -140,14 +140,13 @@ public class VetVisit extends Model {
 
     public void remove() {
 
-        this.mNeedsSync = Tag.FLAG_DELETED;
-
         if (mNeedsSync == Tag.FLAG_CREATED) {
 
             Log.i("Laika Sync Service", "VetVisit deleted. Local ID: " + getId());
             this.delete();
         } else {
 
+            this.mNeedsSync = Tag.FLAG_DELETED;
             this.save();
         }
 

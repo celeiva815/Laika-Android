@@ -130,8 +130,7 @@ public class BaseActivity extends ActionBarActivity
                 break;
 
             case 1: // Mis postulaciones
-                Do.changeActivity(context, PostulatedDogsFragmentActivity.class,
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                openPostulatedDogs();
 
                 break;
 

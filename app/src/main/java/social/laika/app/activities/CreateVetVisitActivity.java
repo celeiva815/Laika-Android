@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.activeandroid.Model;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -75,9 +76,9 @@ public class CreateVetVisitActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         int dogId = getIntent().getExtras().getInt(KEY_DOG);
-        int vetVisitId = getIntent().getExtras().getInt(KEY_VET_VISIT);
+        long vetVisitId = getIntent().getExtras().getLong(KEY_VET_VISIT);
         mDog = Dog.getSingleDog(dogId);
-        mVetVisit = VetVisit.getSingleVetVisit(vetVisitId);
+        mVetVisit = Model.load(VetVisit.class, vetVisitId);
 
         setContentView(mIdLayout);
         setActivityView();
@@ -160,6 +161,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
 
                     mVetVisit.update();
                     //TODO ver el caso de subir la foto con syncadapter
+                    Do.showLongToast("La ficha médica ha sido actualizada", getApplicationContext());
 
                 } else {
 
@@ -167,8 +169,11 @@ public class CreateVetVisitActivity extends ActionBarActivity
                             treatment, doctor, name);
 
                     vetVisit.create();
+                    Do.showLongToast("Enhorabuena! Has creado una nueva ficha médica", getApplicationContext());
 
                 }
+
+                onBackPressed();
             }
         });
 
