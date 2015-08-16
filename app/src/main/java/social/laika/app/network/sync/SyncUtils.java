@@ -139,7 +139,7 @@ public class SyncUtils {
     }
 
     /**
-     * Frecuent data bundle data for a code
+     * Frequent data bundle data for a code
      * @param code The code
      * @return A new bundle data, with the code included
      */
