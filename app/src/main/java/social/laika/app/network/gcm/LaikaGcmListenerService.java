@@ -164,8 +164,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 deleteCalendarReminder(reminderId);
                 break;
             case GCM_VET_VISIT_UPDATE:
-                Log.e(TAG, "GCM_VET_VISIT_UPDATE not implemented");
-                JSONObject vetVisit = jsonData.getJSONObject(VetVisit.TABLE_NAME);
+                JSONObject vetVisit = new JSONObject(jsonData.getString(VetVisit.TABLE_NAME));
                 /* Update Operation */
                 VetVisit.saveVetVisit(vetVisit);
                 break;
