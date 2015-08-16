@@ -68,7 +68,7 @@ public class RequestManager {
     public static final String ADDRESS_USER = "user/";
     public static final String ADDRESS_USER_DOG_PHOTOS = "user_dog_photos/";
     public static final String ADDRESS_USER_POSTULATIONS = "user_postulations";
-    public static final String ADDRESS_VET_VISITS = "vet_visits";
+    public static final String ADDRESS_VET_VISITS = "vet_visits/";
 
     //Request Methods
     public static final int METHOD_DELETE = Request.Method.DELETE;

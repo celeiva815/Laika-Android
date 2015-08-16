@@ -135,7 +135,7 @@ public class VetVisitsRequest extends SyncRequest {
 
         JSONObject jsonObject = mVetVisit.getJsonObject();
 
-        String address = RequestManager.ADDRESS_VET_VISITS;
+        String address = RequestManager.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
@@ -145,7 +145,7 @@ public class VetVisitsRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(20, TimeUnit.SECONDS);
+        return future.get(10, TimeUnit.SECONDS);
     }
 
 
@@ -153,21 +153,17 @@ public class VetVisitsRequest extends SyncRequest {
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
             TimeoutException {
 
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put(VetVisit.COLUMN_VET_VISIT_ID, mVetVisit.mVetVisitId);
-
-        String address = RequestManager.ADDRESS_VET_VISITS;
+        String address = RequestManager.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.deleteRequest(jsonObject, address, future, errorListener, token);
+            SimpleResponse errorListener = new SimpleResponse();
+        Request request = RequestManager.deleteRequest(null, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(20, TimeUnit.SECONDS);
+        return future.get(10, TimeUnit.SECONDS);
 
     }
 }
