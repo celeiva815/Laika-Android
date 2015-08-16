@@ -24,6 +24,7 @@ import social.laika.app.models.City;
 import social.laika.app.models.Owner;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -69,12 +70,11 @@ public class UserProfileActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         setOwnerInformation();
         setValues();
-
     }
 
     public void setActivityView() {
@@ -189,6 +189,15 @@ public class UserProfileActivity extends ActionBarActivity {
                 Do.changeActivity(getApplicationContext(), EditUserActivity.class,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 return true;
+
+            case R.id.edit_adoption_profile_settings:
+
+                Intent intent = new Intent(getApplicationContext(), AdoptDogUserFormActivity.class);
+                intent.putExtra(AdoptDogUserFormActivity.KEY_NEXT_ACTIVITY, AdoptDogUserFormResponse.NEXT_USER_PROFILE);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

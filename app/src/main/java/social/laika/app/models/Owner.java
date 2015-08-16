@@ -35,7 +35,7 @@ public class Owner extends Model {
     public final static String COLUMN_GENDER = "gender";
     public final static String COLUMN_PHONE = "phone";
     public final static String COLUMN_EMAIL = "email";
-    public final static String COLUMN_LOCATION_ID = "location_id";
+    public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_URL_IMAGE = "url_image";
 
     public final static String API_OWNERS = "owners";
@@ -74,7 +74,7 @@ public class Owner extends Model {
     @Column(name = COLUMN_PHONE)
     public String mPhone;
 
-    @Column(name = COLUMN_LOCATION_ID)
+    @Column(name = COLUMN_CITY_ID)
     public int mCityId;
 
     @Column(name = COLUMN_URL_IMAGE)
@@ -120,7 +120,7 @@ public class Owner extends Model {
         this.mGender = jsonObject.optInt(COLUMN_GENDER);
         this.mEmail = jsonObject.optString(COLUMN_EMAIL);
         this.mPhone = jsonObject.optString(COLUMN_PHONE);
-        this.mCityId = jsonObject.optInt(COLUMN_LOCATION_ID);
+        this.mCityId = jsonObject.optInt(COLUMN_CITY_ID);
         this.mUrlImage= jsonObject.optString(COLUMN_URL_IMAGE);
 
     }
@@ -181,7 +181,7 @@ public class Owner extends Model {
             jsonObject.put(COLUMN_BIRTH_DATE, mBirthDate);
             jsonObject.put(COLUMN_GENDER, mGender);
             jsonObject.put(COLUMN_PHONE,mPhone);
-            jsonObject.put(COLUMN_LOCATION_ID, mCityId);
+            jsonObject.put(COLUMN_CITY_ID, mCityId);
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -27,6 +27,7 @@ import social.laika.app.adapters.CitiesAdapter;
 import social.laika.app.adapters.FreeTimeAdapter;
 import social.laika.app.adapters.RegionAdapter;
 import social.laika.app.adapters.SpaceAdapter;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import social.laika.app.listeners.SubmitUserAdoptionFormOnClickListener;
 import social.laika.app.models.AdoptDogForm;
@@ -42,7 +43,7 @@ import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
-public class AdoptDogUserFormActivity extends ActionBarActivity {
+public class AdoptDogUserFormActivity extends ActionBarActivity implements Requestable {
 
     public static final String TAG = AdoptDogUserFormActivity.class.getSimpleName();
     public static final String API_LIMIT = "limit";
@@ -69,10 +70,13 @@ public class AdoptDogUserFormActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
+
+        Owner owner = PrefsManager.getLoggedOwner(getApplicationContext());
+        mCity = City.getSingleLocation(owner.mCityId);
+        mNext = getIntent().getExtras().getInt(KEY_NEXT_ACTIVITY, AdoptDogUserFormResponse.NEXT_ADOPT_DOG);
+
         setActivityView();
         setValues();
-
-        mNext = getIntent().getExtras().getInt(KEY_NEXT_ACTIVITY, AdoptDogUserFormResponse.NEXT_ADOPT_DOG);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -108,6 +112,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
+        setValues();
         Do.hideKeyboard(this);
     }
 
@@ -146,7 +151,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity {
 
         //Setting the listeners
         mSearchButton.setOnClickListener(listener);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner));
+        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
         mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -179,6 +184,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity {
             mRegionSpinner.setSelection(regionPosition);
 
         }
+
     }
 
     public void requestAdoptionDogForm(AdoptDogForm adoptDogForm) {
@@ -287,4 +293,18 @@ public class AdoptDogUserFormActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public void request() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
 }
