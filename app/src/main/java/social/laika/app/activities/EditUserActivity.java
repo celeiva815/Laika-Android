@@ -22,6 +22,8 @@ import android.widget.Spinner;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.soundcloud.android.crop.Crop;
 
@@ -44,13 +46,15 @@ import social.laika.app.models.Region;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.EditUserResponse;
+import social.laika.app.responses.ResponseHandler;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 public class EditUserActivity extends ActionBarActivity
-        implements DatePickerDialog.OnDateSetListener, Photographable {
+        implements DatePickerDialog.OnDateSetListener, Photographable, Response.ErrorListener,
+        Response.Listener<JSONObject> {
 
     public int mIdLayout = R.layout.lk_edit_owner_activity;
 
@@ -183,9 +187,11 @@ public class EditUserActivity extends ActionBarActivity
         mPhoneEditText.setText(mOwner.mPhone);
 
         if (mOwner.mGender == Tag.GENDER_MALE) {
+            mGender = Tag.GENDER_MALE;
             mGenderRadioGroup.check(R.id.human_male_edit_user_radiobutton);
 
         } else {
+            mGender = Tag.GENDER_FEMALE;
             mGenderRadioGroup.check(R.id.human_female_edit_user_radiobutton);
 
         }
@@ -356,11 +362,10 @@ public class EditUserActivity extends ActionBarActivity
             }
         }
 
-        EditUserResponse response = new EditUserResponse(this);
         String token = PrefsManager.getUserToken(getApplicationContext());
 
         Request registerRequest = RequestManager.putRequest(jsonParams,
-                RequestManager.ADDRESS_USER, response, response, token);
+                RequestManager.ADDRESS_USER, this, this, token);
 
         registerRequest.setRetryPolicy(new DefaultRetryPolicy(
                 50000,
@@ -461,5 +466,27 @@ public class EditUserActivity extends ActionBarActivity
         mDate = Do.getToStringDate(day, month, year);
         mBirthDateButton.setText(mDate);
 
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        Context context = getApplicationContext();
+        Owner owner = new Owner(response);
+
+        mOwner.update(owner);
+        PrefsManager.editUser(context, mOwner);
+        mProgressDialog.dismiss();
+        Do.showLongToast("Su perfil ha sido actualizado", context);
+
+        onBackPressed();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+        ResponseHandler.error(error, this);
+        mProgressDialog.dismiss();
+        enableViews(true);
     }
 }
