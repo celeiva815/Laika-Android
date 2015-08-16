@@ -30,6 +30,7 @@ import social.laika.app.adapters.BreedAdapter;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
 import social.laika.app.interfaces.Photographable;
+import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.listeners.NewDogOnClickListener;
 import social.laika.app.listeners.ChangeDogBreedsOnItemSelectedListener;
 import social.laika.app.models.Dog;
@@ -51,7 +52,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public static final String TAG = CreateDogActivity.class.getSimpleName();
     public static final String KEY_DOG_ID = "dog_id";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    protected int mIdLayout = R.layout.lk_new_dog_register_activity;
+    protected int mIdLayout = R.layout.lk_create_dog_activity;
 
     public Dog mDog;
     public EditText mNameEditText;
@@ -135,15 +136,23 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mPictureImageView = (ImageView) findViewById(R.id.picture_create_dog_imageview);
         mProgressBar = (ProgressBar) findViewById(R.id.new_dog_progressbar);
         mImageProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
-
-        SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getSizeList());
+        ImageView sizeHelper = (ImageView) findViewById(R.id.size_helper);
+        ImageView birthHelper = (ImageView) findViewById(R.id.birth_helper);
+        ImageView personalityHelper = (ImageView) findViewById(R.id.personality_helper);
+        ImageView chipHelper = (ImageView) findViewById(R.id.chip_helper);
         mBreedAdapter = new BreedAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getBreedList(mSizeSpinner));
+        SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
+                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getSizeList());
         PersonalityAdapter personalityAdapter = new PersonalityAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getPersonalityList());
         ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(this);
         NewDogOnClickListener addListener = new NewDogOnClickListener(this);
+
+        sizeHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.size_helper, CreateDogActivity.this));
+        birthHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.birth_helper, CreateDogActivity.this));
+        personalityHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.personality_helper, CreateDogActivity.this));
+        chipHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.chip_helper, CreateDogActivity.this));
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this,

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home_type_helper">Departamento pequeño: Donde pueden vivir máximo 2 personas.\n
+        Departamento mediano: Donde pueden vivir máximo 4 personas.\n
+        Departamento grande: Donde pueden vivir máximo 7 personas.\n
+        Casa Pequeña: Donde pueden vivir máximo 3 personas.\n
+        Casa mediana: Donde pueden vivir máximo 5 personas.\n
+        Casa grande: Donde pueden vivir más de 6 personas.\n
+        Parcela abierta: Sin cerco de fierro.\n
+        Parcela con cerco perimetral: Cerrado absolutamente.</string>
+
+    <string name="phone_helper">
+        Es tu número telefónico. Debe estar ingresado en el formato +56912345678 (como el usado en la aplicación 
+        Whatsapp).\n
+        Esta información es privada y sólo se utilizará para que la Fundación se contacte más rápido contigo.
+    </string>
+    
+    <string name="kids_helper">
+        Indica si tienes o vives con hijos menores de 10 años. Piensa también si a futuro planificas tener un hijo, pues hay perritos que quieren ser hijos únicos.</string>
+
+    <string name="elderly_helper">Indica si tienes o vives con adultos mayores o personas que requieran un mayor cuidado. Considera que hay perritos con mucha energía.</string>
+
+    <string name="pets_helper">Indica si tienes otras mascotas que puedan interactuar directamente con el perro. Principalmente otros perros, gatos, conejos, entre otros. No todos los perros están acostumbrados a vivir con otros animales.</string>
+
+    <string name="time_helper">Indica las horas que tendrás disponible para dedicarle a tu perro día a día. Es decir las horas que tu perrito estará acompañado de ti.</string>
+    
+    <string name="gender_helper">Te recordamos que los perritos machos y hembras pueden tener distintas personalidades y diferentes cuidados.</string>
+    
+    <string name="size_helper">Muy pequeño: Como un Chihuahua.\nPequeño: Como un Poodle.\nMediano: Como un Cocker Spaniel.\nGrande: Como un Pastor Alemán.\nMuy Grande: Como un San Bernardo.</string>
+    
+    <string name="personality_helper">Tranquilo: es una perrito que no requiere tanta atención como otros, es más independiente.\n\n
+        Juguetón: es un perro que  le gusta jugar y tiene harta energía.\n\n
+        Sociable: es un perrito que le gusta la atención y estar con personas.\n\n
+        Guardián: es un perro que cuida muy bien su territorio y es buen compañero.\n\n
+        Si colocas \"Me da igual\" buscarás todas las personalidades de los perritos.</string>
+
+    <string name="birth_helper">Es la fecha exacta cuando nació tu perrito. Si no la sabes, es preferible que consultes la edad con un Veterinario.</string>
+
+    <string name="chip_helper">Si tu perro posee un "chip" intradérmico, ingresa el número o código identificador asociado a éste.\n Si tu perro no tiene chip, te recomendamos que te acerques a la municipalidad de tu comuna y solicites un chip para tu perro.  </string>
+
+</resources>

@@ -13,14 +13,25 @@
     <ImageView
         android:id="@+id/main_photo_screen_slider_imageview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:keepScreenOn="true"
         android:gravity="center"
-        android:src="@drawable/filipo3"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
+    <ProgressBar
+        android:id="@+id/download_image_progressbar"
+        style="?android:attr/progressBarStyleLargeInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:focusableInTouchMode="false"
+        android:visibility="gone" />
 
     <LinearLayout
         android:orientation="vertical"
