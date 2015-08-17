@@ -42,8 +42,10 @@ public class TokenRequest implements Requestable {
 
         JSONObject jsonParams = new JSONObject(params);
         String token = PrefsManager.getUserToken(mContext);
-        Request request = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_SUBSCRIBE,
+        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_SUBSCRIBE,
                 response, response, token);
+
+        request.setDeviceId(mContext);
 
         VolleyManager.getInstance(mContext).addToRequestQueue(request, TAG);
     }

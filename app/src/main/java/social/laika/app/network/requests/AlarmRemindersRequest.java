@@ -97,10 +97,11 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         String address = RequestManager.ADDRESS_ALERT_REMINDERS;
         String token = PrefsManager.getUserToken(mContext);
-
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.getRequest(params, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) RequestManager.getRequest(params, address, future, errorListener, token);
+
+        request.setDeviceId(mContext);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -120,7 +121,9 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+
+        request.setDeviceId(mContext);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -139,7 +142,9 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+
+        request.setDeviceId(mContext);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -157,7 +162,9 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.deleteRequest(null, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) RequestManager.deleteRequest(null, address, future, errorListener, token);
+
+        request.setDeviceId(mContext);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
