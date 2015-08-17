@@ -22,7 +22,7 @@ public class ModelSync extends Model {
 
         this.mNeedsSync = Tag.FLAG_CREATED;
         this.save();
-        Log.i("Laika Sync Service", this.getClass().getName() + " created. Local ID:" + getId() + ". Need Sync");
+        Log.i("Laika Sync Service", this.getClass().getSimpleName() + " created. Local ID:" + getId() + ". Need Sync");
 
     }
 
@@ -31,7 +31,8 @@ public class ModelSync extends Model {
         this.mNeedsSync = Tag.FLAG_READED;
         this.save();
 
-        Log.i("Laika Sync Service", this.getClass().getName() + " refreshed. Local ID: " + getId() + ".");
+        Log.i("Laika Sync Service", this.getClass().getSimpleName() + " refreshed. Local ID: " + getId() + ". " +
+                "Server Id: " + getServerId() + ".");
     }
 
     public void update() {
@@ -40,24 +41,32 @@ public class ModelSync extends Model {
             this.mNeedsSync = Tag.FLAG_UPDATED;
         }
         this.save();
-        Log.i("Laika Sync Service", this.getClass().getName() + " updated. Local ID: " + getId() + ". " +
-                ". Need Sync");
+
+        Log.i("Laika Sync Service", this.getClass().getSimpleName() + " updated. Local ID: " + getId() + ". " +
+                "Server Id: " + getServerId() + ". Need Sync");
     }
 
     public void remove() {
 
         if (mNeedsSync == Tag.FLAG_CREATED) {
 
-            Log.i("Laika Sync Service", this.getClass().getName() +" deleted. Local ID: " + getId());
+            Log.i("Laika Sync Service", this.getClass().getSimpleName() +" deleted. Local ID: " + getId());
             this.delete();
         } else {
 
             this.mNeedsSync = Tag.FLAG_DELETED;
             this.save();
+
+            Log.i("Laika Sync Service", this.getClass().getSimpleName() + " removed. Local ID: " + getId() + ". " +
+                    "Server Id: " + getServerId() + ". Need Sync");
         }
 
-        Log.i("Laika Sync Service", this.getClass().getName() +" removed. Local ID: " + getId() + ". " +
-                ". Need Sync");
+
+    }
+
+    public int getServerId() {
+
+        return -2;
     }
 
 }

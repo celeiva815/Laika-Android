@@ -61,7 +61,7 @@ public class AlarmReminder extends ModelSync {
     public final static String API_ALERT_REMINDER = "alert_reminder";
     public final static String API_USER_ID = "user_id";
 
-    @Column(name = COLUMN_ALARM_REMINDER_ID)
+    @Column(name = COLUMN_ALARM_REMINDER_ID, unique = true)
     public int mAlarmReminderId;
 
     @Column(name = COLUMN_TYPE)
@@ -227,6 +227,11 @@ public class AlarmReminder extends ModelSync {
 
         this.save();
 
+    }
+
+    @Override
+    public int getServerId() {
+        return mAlarmReminderId;
     }
 
     public int getImageResource() {

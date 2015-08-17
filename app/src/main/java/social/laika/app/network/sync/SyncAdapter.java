@@ -102,22 +102,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
         try {
 
             Context context = this.getContext();
-            int code = 0;
-
-            if (extras.containsKey(CODE)) {
-
-                code = extras.getInt(CODE);
-
-            } else if (extras.containsKey(DATA)) {
-
-                JSONObject jsonObject = new JSONObject(extras.getString(DATA));
-                code = jsonObject.getInt(CODE);
-                int dogId = jsonObject.optInt(DOG_ID);
-
-                extras.putInt(CODE, code);
-                extras.putInt(DOG_ID, dogId);
-
-            }
+            int code =  extras.getInt(CODE);
 
             Log.i(TAG, "Beginning network synchronization | code:" + code);
             sync(context, code, extras);

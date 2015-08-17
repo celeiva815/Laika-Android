@@ -31,7 +31,7 @@ public class CalendarReminder extends Model {
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
 
-    @Column(name = COLUMN_CALENDAR_REMINDER_ID)
+    @Column(name = COLUMN_CALENDAR_REMINDER_ID, unique = true)
     public int mCalendarReminderId;
 
     @Column(name = COLUMN_TYPE)

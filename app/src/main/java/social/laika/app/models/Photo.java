@@ -59,7 +59,7 @@ public class Photo extends Model {
     public static final String API_FILE_NAME = "file_name";
     public static final String API_USER = "user";
 
-    @Column(name = COLUMN_PHOTO_ID)
+    @Column(name = COLUMN_PHOTO_ID, unique = true)
     public int mPhotoId;
 
     @Column(name = COLUMN_USER_ID)

@@ -40,7 +40,7 @@ public class VetVisit extends ModelSync {
     public final static String COLUMN_VET_DOCTOR = "vet_doctor";
     public final static String COLUMN_VET_NAME = "vet_name";
 
-    @Column(name = COLUMN_VET_VISIT_ID)
+    @Column(name = COLUMN_VET_VISIT_ID, unique = true)
     public int mVetVisitId;
 
     @Column(name = COLUMN_USER_ID)
@@ -150,6 +150,11 @@ public class VetVisit extends ModelSync {
         return jsonObject;
     }
 
+    @Override
+    public int getServerId() {
+        return mVetVisitId;
+    }
+
     //DATABASE
 
     public static void saveVetVisits(JSONObject jsonObject) {
@@ -208,7 +213,9 @@ public class VetVisit extends ModelSync {
 
         String condition = COLUMN_DOG_ID + DB.EQUALS + dogId;
         condition += DB.AND + VetVisit.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
-        return new Select().from(VetVisit.class).where(condition).execute();
+        String order = "date(" + COLUMN_DATE + ")" + DB.ASC;
+
+        return new Select().from(VetVisit.class).where(condition).orderBy(order).execute();
 
     }
 
