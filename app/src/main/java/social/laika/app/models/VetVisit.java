@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Tag;
 
@@ -22,7 +23,7 @@ import social.laika.app.utils.Tag;
  * Created by Tito_Leiva on 27-07-15.
  */
 @Table(name = VetVisit.TABLE_VET_VISITS)
-public class VetVisit extends Model {
+public class VetVisit extends ModelSync {
 
     public final static String TABLE_VET_VISITS = "vet_visits";
     public final static String TABLE_NAME = "vet_visit";
@@ -38,7 +39,6 @@ public class VetVisit extends Model {
     public final static String COLUMN_TREATMENT = "treatment";
     public final static String COLUMN_VET_DOCTOR = "vet_doctor";
     public final static String COLUMN_VET_NAME = "vet_name";
-    public final static String COLUMN_NEEDS_SYNC = "need_sync";
 
     @Column(name = COLUMN_VET_VISIT_ID)
     public int mVetVisitId;
@@ -73,11 +73,9 @@ public class VetVisit extends Model {
     @Column(name = COLUMN_VET_NAME)
     public String mVetName;
 
-    @Column(name = COLUMN_NEEDS_SYNC)
-    public int mNeedsSync;
 
-
-    public VetVisit() { }
+    public VetVisit() {
+    }
 
     public VetVisit(int mUserId, int mDogId, String mDate, String mDetail,
                     String mLargeUrl, String mSmallUrl, String mReason, String mTreatment,
@@ -110,50 +108,6 @@ public class VetVisit extends Model {
         this.mVetName = jsonObject.optString(COLUMN_VET_NAME);
         this.mNeedsSync = Tag.FLAG_READED;
     }
-
-    public void create() {
-
-        this.mNeedsSync = Tag.FLAG_CREATED;
-        this.save();
-        Log.i("Laika Sync Service", "VetVisit created. Local ID:" + getId() + ". Need Sync");
-
-    }
-
-    public void refresh() {
-
-        this.mNeedsSync = Tag.FLAG_READED;
-        this.save();
-
-        Log.i("Laika Sync Service", "VetVisit refreshed. Local ID: " + getId() + ". " +
-                "Server ID:" + mVetVisitId);
-    }
-
-    public void update() {
-
-        if (this.mNeedsSync == Tag.FLAG_READED) {
-            this.mNeedsSync = Tag.FLAG_UPDATED;
-        }
-        this.save();
-        Log.i("Laika Sync Service", "VetVisit updated. Local ID: " + getId() + ". " +
-        "Server ID:" + mVetVisitId  + ". Need Sync");
-    }
-
-    public void remove() {
-
-        if (mNeedsSync == Tag.FLAG_CREATED) {
-
-            Log.i("Laika Sync Service", "VetVisit deleted. Local ID: " + getId());
-            this.delete();
-        } else {
-
-            this.mNeedsSync = Tag.FLAG_DELETED;
-            this.save();
-        }
-
-        Log.i("Laika Sync Service", "VetVisit removed. Local ID: " + getId() + ". " +
-                "Server ID:" + mVetVisitId  + ". Need Sync");
-    }
-
 
     private void update(VetVisit vetVisit) {
 
@@ -196,7 +150,6 @@ public class VetVisit extends Model {
         return jsonObject;
     }
 
-    
     //DATABASE
 
     public static void saveVetVisits(JSONObject jsonObject) {

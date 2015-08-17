@@ -59,7 +59,8 @@ public class AlarmRemindersRequest extends SyncRequest {
 
                 jsonObject = create();
                 mAlarmReminder.mAlarmReminderId = jsonObject.getInt(AlarmReminder.COLUMN_ALARM_REMINDER_ID);
-                mAlarmReminder.refresh(mContext);
+                mAlarmReminder.refresh();
+                mAlarmReminder.setAlarm(mContext);
 
                 break;
 

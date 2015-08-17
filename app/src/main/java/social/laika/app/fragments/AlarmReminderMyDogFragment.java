@@ -141,7 +141,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                     mAlarmReminder.mTime = mTime;
                     mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
 
-                    mAlarmReminder.update(context);
+                    mAlarmReminder.update();
+                    mAlarmReminder.setAlarm(context);
 
                     mMessage = Do.getRString(context, R.string.edit_reminder_added);
 
@@ -152,7 +153,8 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
                             PrefsManager.getUserId(context), mDog.mDogId);
 
-                    mAlarmReminder.create(context);
+                    mAlarmReminder.create();
+                    mAlarmReminder.setAlarm(context);
                     mMessage = Do.getRString(context, R.string.new_reminder_added);
 
                 }

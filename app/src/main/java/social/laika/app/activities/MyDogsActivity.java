@@ -553,7 +553,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
             getContentResolver().
                     registerContentObserver(ContentProvider.createUri(VetVisit.class, null),
-                            true, mAlarmObserver);
+                            true, mVetVisitObserver);
         }
     }
 

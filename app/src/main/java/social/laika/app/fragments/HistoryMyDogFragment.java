@@ -269,7 +269,8 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             case Tag.TYPE_ALARM:
 
                 AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
-                reminder.remove(context);
+                reminder.cancelAlarm(context);
+                reminder.remove();
 
                 break;
 

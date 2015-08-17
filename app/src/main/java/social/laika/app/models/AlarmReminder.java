@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.R;
+import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.AlarmReceiver;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.DateFormatter;
@@ -29,7 +30,7 @@ import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 @Table(name = AlarmReminder.TABLE_NAME)
-public class AlarmReminder extends Model {
+public class AlarmReminder extends ModelSync {
 
     public final static int ID_NOT_SET = 0;
 
@@ -50,7 +51,6 @@ public class AlarmReminder extends Model {
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_DOG_ID = "dog_id";
-    public final static String COLUMN_NEEDS_SYNC = "need_sync";
 
     public final static String LOCAL_ID = "local_id";
     public final static String WEEKDAY = "weekday";
@@ -108,9 +108,6 @@ public class AlarmReminder extends Model {
 
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
-
-    @Column(name = COLUMN_NEEDS_SYNC)
-    public int mNeedsSync;
 
     public static AlarmManager mAlarmManager;
 
@@ -207,46 +204,6 @@ public class AlarmReminder extends Model {
 
         return jsonObject;
 
-    }
-
-    public void create(Context context) {
-
-        this.mNeedsSync = Tag.FLAG_CREATED;
-        this.save();
-        setAlarm(context);
-
-    }
-
-    public void refresh(Context context) {
-
-        this.mNeedsSync = Tag.FLAG_READED;
-        this.save();
-        setAlarm(context);
-
-    }
-
-    public void update(Context context) {
-
-        if (this.mNeedsSync == Tag.FLAG_READED) {
-            this.mNeedsSync = Tag.FLAG_UPDATED;
-        }
-        this.save();
-        setAlarm(context);
-    }
-
-    public void remove(Context context) {
-
-        this.cancelAlarm(context);
-
-        if (mNeedsSync == Tag.FLAG_CREATED) {
-
-            this.delete();
-
-        } else {
-
-            this.mNeedsSync = Tag.FLAG_DELETED;
-            this.save();
-        }
     }
 
     private void update(AlarmReminder alarmReminder) {
