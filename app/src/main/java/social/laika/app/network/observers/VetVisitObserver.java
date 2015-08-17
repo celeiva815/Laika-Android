@@ -46,7 +46,7 @@ public class VetVisitObserver extends ContentObserver {
             if (mVetVisit != null && mVetVisit.mNeedsSync > Tag.FLAG_READED) {
 
                 settingsBundle.putInt(SyncUtils.CODE, SyncUtils.CODE_VET_VISIT_SYNC);
-                SyncUtils.requestSync(settingsBundle);
+                SyncUtils.triggerRefresh(settingsBundle);
             }
 
         } catch (NumberFormatException e) {
