@@ -1,15 +1,10 @@
 package social.laika.app.fragments;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.ContentObserver;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.activeandroid.Model;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
@@ -37,8 +31,6 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.History;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.network.sync.SyncService;
-import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.RemindersResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -101,10 +93,12 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
                 final Context context = view.getContext();
                 final int pos = position;
+                final History history = mHistories.get(pos);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                final int alarmStatus = history.mReminder.checkStatusAlarm(context);
 
                 dialog.setTitle(R.string.choose_an_option);
-                dialog.setItems(new CharSequence[]{"Editar", "Eliminar"},
+                dialog.setItems(getItems(alarmStatus),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -112,12 +106,24 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
                                     case 0: // editar alarma
 
-                                        editReminder(mHistories.get(pos));
+                                        if (alarmStatus == Tag.STATUS_ACTIVATED) {
+                                            history.mReminder.cancelAlarm(context);
+
+                                        } else {
+
+                                            history.mReminder.setAlarm(context);
+                                        }
+
                                         break;
 
-                                    case 1: // eliminar alarma
+                                    case 1: // editar alarma
 
-                                        deleteReminder(mHistories.get(pos));
+                                        editReminder(history);
+                                        break;
+
+                                    case 2: // eliminar alarma
+
+                                        deleteReminder(history);
 
                                         break;
 
@@ -313,7 +319,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         for (AlarmReminder alarm : alarms) {
 
             Log.i(alarm.mTitle, "CHECKING EVERY WEEKDAY");
-            alarm.checkAlarm(context);
+            alarm.checkStatusAlarm(context);
 
         }
     }
@@ -327,6 +333,18 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         return Uri.parse(uri.toString());
     }
 
+    public CharSequence[] getItems(int status) {
 
+        if (status == Tag.STATUS_ACTIVATED) {
+
+         return new CharSequence[]{"Desactivar", "Editar", "Eliminar"};
+
+        } else if (status == Tag.STATUS_NOT_ACTIVATED) {
+
+            return new CharSequence[]{"Activar", "Editar", "Eliminar"};
+        }
+
+        return null;
+    }
 
 }

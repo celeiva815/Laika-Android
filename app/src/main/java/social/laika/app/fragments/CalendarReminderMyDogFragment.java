@@ -1,5 +1,6 @@
 package social.laika.app.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import social.laika.app.R;
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -40,17 +42,21 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
     public Button mSaveButton;
     public String mDate;
     public String mTime;
+    public int mRequestMethod;
+    public String mMessage = "";
 
     public CalendarReminderMyDogFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
+        this.mRequestMethod = RequestManager.METHOD_POST;
     }
 
     public CalendarReminderMyDogFragment(Dog mDog, CalendarReminder mCalendarReminder) {
 
         this.mDog = mDog;
         this.mCalendarReminder = mCalendarReminder;
+        this.mRequestMethod = RequestManager.METHOD_PATCH;
     }
 
     @Override
@@ -100,6 +106,8 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
             @Override
             public void onClick(View v) {
 
+                Context context = v.getContext();
+
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
@@ -112,23 +120,25 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                     mCalendarReminder.mTime = mTime;
                     mCalendarReminder.mOwnerId = PrefsManager.getUserId(v.getContext());
 
-                    mCalendarReminder.save();
+                    mCalendarReminder.update();
+                    mCalendarReminder.setAlarm(context);
 
-                    String message = Do.getRString(v.getContext(), R.string.edit_reminder_added);
-                    Do.showLongToast(message, v.getContext());
+                    mMessage = Do.getRString(context, R.string.edit_reminder_added);
 
                 } else {
 
-                    CalendarReminder reminder = new CalendarReminder(CalendarReminder.ID++,
+                    mCalendarReminder = new CalendarReminder(
                             Tag.TYPE_CALENDAR, mReminderCategory, title, detail, mDate, mTime,
-                            PrefsManager.getUserId(v.getContext()), mDog.mDogId);
+                            PrefsManager.getUserId(context), mDog.mDogId);
 
-                    reminder.save();
-                    String message = Do.getRString(v.getContext(), R.string.new_reminder_added);
-                    Do.showLongToast(message, v.getContext());
+                    mCalendarReminder.create();
+                    mCalendarReminder.setAlarm(context);
+                    mMessage = Do.getRString(context, R.string.new_reminder_added);
                 }
 
-                ((MyDogsActivity) getActivity()).setDogProfileFragment(mDog);
+                Do.showLongToast(mMessage, context);
+                getActivity().onBackPressed();
+
             }
         });
 

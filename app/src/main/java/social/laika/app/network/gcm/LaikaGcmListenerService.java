@@ -154,7 +154,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
             case GCM_CALENDAR_REMINDER_UPDATE:
                 Log.e(TAG, "GCM_CALENDAR_REMINDER_UPDATE not implemented");
                 /* TODO implement GCM_CALENDAR_REMINDER_UPDATE
-                reminder = jsonData.getJSONObject(CalendarReminder.TABLE_NAME);
+                reminder = jsonData.getJSONObject(CalendarReminder.TABLE_CALENDAR_REMINDERS);
                 /* Update Operation */
                 /* CalendarReminder.saveReminder(reminder, getApplicationContext()); */
                 break;

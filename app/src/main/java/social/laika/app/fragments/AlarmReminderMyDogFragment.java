@@ -149,7 +149,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
                 } else {
 
                     mAlarmReminder = new AlarmReminder(Tag.TYPE_ALARM,
-                            mReminderCategory, title, detail, Tag.STATUS_IN_PROGRESS, mMonday,
+                            mReminderCategory, title, detail, Tag.STATUS_NOT_ACTIVATED, mMonday,
                             mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
                             PrefsManager.getUserId(context), mDog.mDogId);
 

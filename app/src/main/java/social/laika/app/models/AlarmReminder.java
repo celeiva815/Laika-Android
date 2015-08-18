@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.R;
+import social.laika.app.interfaces.Alertable;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.AlarmReceiver;
 import social.laika.app.utils.DB;
@@ -30,7 +31,7 @@ import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 @Table(name = AlarmReminder.TABLE_NAME)
-public class AlarmReminder extends ModelSync {
+public class AlarmReminder extends ModelSync implements Alertable {
 
     public final static int ID_NOT_SET = 0;
 
@@ -141,7 +142,6 @@ public class AlarmReminder extends ModelSync {
         this.mCategory = jsonObject.optInt(COLUMN_CATEGORY, Tag.CATEGORY_FOOD);
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
         this.mDetail = jsonObject.optString(COLUMN_DETAIL);
-        this.mStatus = jsonObject.optInt(COLUMN_STATUS, Tag.STATUS_IN_PROGRESS);
         this.mHasMonday = jsonObject.optBoolean(COLUMN_HAS_MONDAY);
         this.mHasTuesday = jsonObject.optBoolean(COLUMN_HAS_TUESDAY);
         this.mHasWednesday = jsonObject.optBoolean(COLUMN_HAS_WEDNESDAY);
@@ -152,6 +152,7 @@ public class AlarmReminder extends ModelSync {
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mOwnerId = jsonObject.optInt(API_USER_ID, PrefsManager.getUserId(context));
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
+        this.mStatus = Tag.STATUS_NOT_ACTIVATED;
         this.mNeedsSync = Tag.FLAG_READED;
     }
 
@@ -188,7 +189,6 @@ public class AlarmReminder extends ModelSync {
             jsonObject.put(COLUMN_CATEGORY, mCategory);
             jsonObject.put(COLUMN_TITLE, mTitle);
             jsonObject.put(COLUMN_DETAIL, mDetail);
-            jsonObject.put(COLUMN_STATUS, mStatus);
             jsonObject.put(COLUMN_HAS_MONDAY, mHasMonday);
             jsonObject.put(COLUMN_HAS_TUESDAY, mHasTuesday);
             jsonObject.put(COLUMN_HAS_WEDNESDAY, mHasWednesday);
@@ -212,7 +212,6 @@ public class AlarmReminder extends ModelSync {
         this.mCategory = alarmReminder.mCategory;
         this.mTitle = alarmReminder.mTitle;
         this.mDetail = alarmReminder.mDetail;
-        this.mStatus = alarmReminder.mStatus;
         this.mHasMonday = alarmReminder.mHasMonday;
         this.mHasTuesday = alarmReminder.mHasTuesday;
         this.mHasWednesday = alarmReminder.mHasWednesday;
@@ -223,6 +222,7 @@ public class AlarmReminder extends ModelSync {
         this.mTime = alarmReminder.mTime;
         this.mOwnerId = alarmReminder.mOwnerId;
         this.mDogId = alarmReminder.mDogId;
+        this.mStatus = alarmReminder.mStatus;
         this.mNeedsSync = alarmReminder.mNeedsSync;
 
         this.save();
@@ -522,7 +522,7 @@ public class AlarmReminder extends ModelSync {
     public History toHistory(Context context) {
 
         return new History(mAlarmReminderId, mCategory, mType, mTitle, mDetail, toDate(context),
-                mTime);
+                mTime, this);
     }
 
     public void setAlarm(Context context) {
@@ -530,6 +530,8 @@ public class AlarmReminder extends ModelSync {
         int[] time = DateFormatter.parseTimeFromString(mTime);
         int hour = time[0];
         int minutes = time[1];
+        mStatus = Tag.STATUS_ACTIVATED;
+        this.save();
 
         if (mHasMonday) {
             setAlarm(context, Calendar.MONDAY, hour, minutes);
@@ -566,6 +568,9 @@ public class AlarmReminder extends ModelSync {
         int hour = time[0];
         int minutes = time[1];
 
+        mStatus = Tag.STATUS_NOT_ACTIVATED;
+        this.save();
+
         if (mHasMonday) {
             cancelAlarm(context, Calendar.MONDAY, hour, minutes);
         }
@@ -595,46 +600,43 @@ public class AlarmReminder extends ModelSync {
         }
     }
 
-    public void checkAlarm(Context context) {
+    public int checkStatusAlarm(Context context) {
+
+        boolean isActivated = true;
 
         if (mHasMonday) {
-            checkAlarmUp(context, Calendar.MONDAY);
+            isActivated &= checkAlarmUp(context, Calendar.MONDAY);
         }
 
         if (mHasTuesday) {
-            checkAlarmUp(context, Calendar.TUESDAY);
+            isActivated &= checkAlarmUp(context, Calendar.TUESDAY);
         }
 
         if (mHasWednesday) {
-            checkAlarmUp(context, Calendar.WEDNESDAY);
+            isActivated &= checkAlarmUp(context, Calendar.WEDNESDAY);
         }
 
         if (mHasThursday) {
-            checkAlarmUp(context, Calendar.THURSDAY);
+            isActivated &= checkAlarmUp(context, Calendar.THURSDAY);
         }
 
         if (mHasFriday) {
-            checkAlarmUp(context, Calendar.FRIDAY);
+            isActivated &= checkAlarmUp(context, Calendar.FRIDAY);
         }
 
         if (mHasSaturday) {
-            checkAlarmUp(context, Calendar.SATURDAY);
+            isActivated &= checkAlarmUp(context, Calendar.SATURDAY);
         }
 
         if (mHasSunday) {
-            checkAlarmUp(context, Calendar.SUNDAY);
+            isActivated &= checkAlarmUp(context, Calendar.SUNDAY);
         }
-    }
 
-    private void setAlarm(Context context, int i) {
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(AlarmReceiver.ONE_TIME, Boolean.FALSE);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        //After after 10 seconds
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60, pi);
-    }
+        mStatus = isActivated ? Tag.STATUS_ACTIVATED : Tag.STATUS_NOT_ACTIVATED;
+        this.save();
 
+        return mStatus;
+    }
 
     private void setAlarm(Context context, int weekday, int hour, int minutes) {
 
@@ -667,15 +669,7 @@ public class AlarmReminder extends ModelSync {
         mAlarmManager.cancel(pendingIntent);
     }
 
-    private void updateAlarm(Context context, int oldWeekday, int oldHour, int oldMinutes,
-                             int newWeekday, int newHour, int newMinutes) {
-
-        cancelAlarm(context, oldWeekday, oldHour, oldMinutes);
-        setAlarm(context, newWeekday, newHour, newMinutes);
-
-    }
-
-    public boolean checkAlarmUp(Context context, int weekday) {
+    private boolean checkAlarmUp(Context context, int weekday) {
 
         Intent intent = getAlarmIntent(context, weekday);
         boolean alarmUp = (PendingIntent.getBroadcast(context, getAlarmRequestCode(weekday),
@@ -692,25 +686,26 @@ public class AlarmReminder extends ModelSync {
         return alarmUp;
     }
 
-    public Intent getAlarmIntent(Context context, int weekday) {
+    private Intent getAlarmIntent(Context context, int weekday) {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
 
         intent.putExtra(LOCAL_ID, this.getId());
         intent.putExtra(COLUMN_TIME, this.mTime);
         intent.putExtra(WEEKDAY, weekday);
+        intent.putExtra(COLUMN_TYPE, Tag.TYPE_ALARM);
         intent.putExtra(USER_ID, PrefsManager.getUserId(context));
 
         return intent;
     }
 
-    public int getAlarmRequestCode(int weekday) {
+    private int getAlarmRequestCode(int weekday) {
 
         return (int) ((getId() * 100) + (Tag.TYPE_ALARM * 10) + weekday);
 
     }
 
-    public Calendar getAlarmCalendar(int weekday, int hour, int minutes) {
+    private Calendar getAlarmCalendar(int weekday, int hour, int minutes) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -753,6 +748,7 @@ public class AlarmReminder extends ModelSync {
 
     /**
      * Crea o actualiza un alarma que fue creada en el servidor.
+     *
      * @param reminder
      * @param context
      */

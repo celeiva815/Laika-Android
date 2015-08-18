@@ -315,6 +315,10 @@
 
         <!-- ########### SERVICES ########### -->
 
+        <!-- Alarm & Calendar Receiver -->
+        <receiver android:name=".utils.AlarmReceiver">
+        </receiver>
+
         <!-- GCM -->
 
         <receiver

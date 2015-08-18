@@ -45,9 +45,8 @@ public class Tag {
     public static final int CATEGORY_VACCINE = 5;
     public static final int CATEGORY_HYGIENE = 6;
     public static final int CATEGORY_VET = 7;
-    public static final int STATUS_NOT_COMPLETED = 1;
-    public static final int STATUS_IN_PROGRESS = 2;
-    public static final int STATUS_COMPLETED = 3;
+    public static final int STATUS_NOT_ACTIVATED = 0;
+    public static final int STATUS_ACTIVATED = 1;
     public static final int TYPE_CALENDAR = 1;
     public static final int TYPE_ALARM = 2;
 

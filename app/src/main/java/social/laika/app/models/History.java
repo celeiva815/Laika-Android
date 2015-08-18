@@ -2,6 +2,9 @@ package social.laika.app.models;
 
 import android.content.Context;
 
+import social.laika.app.interfaces.Alertable;
+import social.laika.app.utils.Tag;
+
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
@@ -14,9 +17,10 @@ public class History {
     public String mDetail;
     public String mDate;
     public String mTime;
+    public Alertable mReminder;
 
     public History(int mReminderId, int mCategory, int mType, String mTitle, String mDetail,
-                   String mDate, String mTime) {
+                   String mDate, String mTime, Alertable mReminder) {
 
         this.mReminderId = mReminderId;
         this.mCategory = mCategory;
@@ -25,6 +29,8 @@ public class History {
         this.mDetail = mDetail;
         this.mDate = mDate;
         this.mTime = mTime;
+        this.mReminder = mReminder;
+
     }
 
     public String getDateTime(Context context) {
@@ -33,5 +39,7 @@ public class History {
 
         return mDate + " a las " + mTime;
     }
+
+
 
 }
