@@ -176,6 +176,7 @@
     <string name="weight_hint_new_dog_register">Ejemplo: "17"</string>
     <string name="breed_new_dog_register">¿De qué raza es?</string>
     <string name="add_new_dog_register">Añadir</string>
+    <string name="congrats_new_dog_added">¡Felicitaciones! Haz agregado una nueva mascota: </string>
 
     <!-- GiveInAdoptionActivity -->
     <string name="give_in_adoption_activity_name">Dar en Adopción</string>

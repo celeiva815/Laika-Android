@@ -51,7 +51,6 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
 
     private void setNewsList() {
 
-    	//FIXME ver con la API    	
     	this.aNews = new ArrayList<Publication>();
 	}
     

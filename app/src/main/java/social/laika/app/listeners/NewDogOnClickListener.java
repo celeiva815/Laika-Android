@@ -1,8 +1,10 @@
 package social.laika.app.listeners;
 
+import social.laika.app.R;
 import social.laika.app.activities.CreateDogActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
+import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -21,7 +23,6 @@ public class NewDogOnClickListener implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
-		//FIXME crear los valores posibles, Esperar por la API
 		String name = mActivity.mNameEditText.getText().toString();
 	    String birth = mActivity.mBirthButton.getText().toString();
 		int breed = (int) mActivity.mBreedSpinner.getSelectedItemId();
@@ -35,7 +36,7 @@ public class NewDogOnClickListener implements OnClickListener {
 		Dog newDog = new Dog(name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
-		mActivity.requestCreateOrUpdateDog(newDog, "¡Felicitaciones! Haz agregado una nueva mascota: ",
+		mActivity.requestCreateOrUpdateDog(newDog, Do.getRString(v.getContext(), R.string.congrats_new_dog_added),
 				RequestManager.METHOD_POST);
 
 	}

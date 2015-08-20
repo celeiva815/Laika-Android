@@ -36,7 +36,7 @@ public class StoriesScreenSlideFragment extends Fragment {
         sponsorTextView.setText(mStory.getOwnerName());
         dateTextView.setText(mStory.mDate);
         bodyTextView.setText(mStory.mBody);
-        mainImageView.setImageResource(R.drawable.abuelo); //FIXME
+        mainImageView.setImageResource(R.drawable.abuelo); //DESIGN una imagen default por si no tiene imagen o no se alcanza a descargar
 
         return view;
     }

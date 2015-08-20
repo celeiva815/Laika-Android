@@ -77,25 +77,6 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
 		return super.onOptionsItemSelected(item);
 	}
 
-    
-
-    @Override
-    public void onBackPressed() {
-        /*if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.*/
-        /*} else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-         }*/
-
-        Log.d("CDA", "onBackPressed Called");
-        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-        setIntent.addCategory(Intent.CATEGORY_HOME);
-        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(setIntent);
-    }
-
     protected void setViewPager() {
 
         // Instantiate a ViewPager and a PagerAdapter.

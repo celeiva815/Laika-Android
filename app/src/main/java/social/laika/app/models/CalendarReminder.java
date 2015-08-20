@@ -217,7 +217,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
 
     public String getDate(Context context) {
 
-        //TODO implementar este método de mejor manera
+        //MAYBE implementar este método de mejor manera
 
         return mDate + " " + mTime;
 

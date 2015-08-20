@@ -97,7 +97,7 @@ public class Story extends Model {
 
     public String getOwnerName() {
 
-        //TODO si es que se agregan nuevos idiomas esto tendría que pasar a los strings
+        //MAYBE si es que se agregan nuevos idiomas esto tendría que pasar a los strings
         return "por " + mOwnerName;
 
     }

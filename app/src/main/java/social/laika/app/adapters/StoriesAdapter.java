@@ -60,7 +60,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
 
         } else {
 
-            // mMainImageView.setImageResource(R.drawable.event_1); TODO definir una imagen predeterminada
+            // mMainImageView.setImageResource(R.drawable.event_1); DESIGN definir una imagen predeterminada
         }
 
 

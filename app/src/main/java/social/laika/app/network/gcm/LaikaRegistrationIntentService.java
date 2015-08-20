@@ -42,12 +42,9 @@ public class LaikaRegistrationIntentService extends IntentService {
                 String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                 // [END get_token]
-                // FIXME Log.i(TAG, "GCM Registration Token: " + token);
+                Log.i(TAG, "GCM Registration Token: " + token);
 
                 sendRegistrationToServer(token);
-
-                // FIXME Subscribe to topic channels
-//                subscribeTopics(token);
 
                 // You should store a boolean that indicates whether the generated token has been
                 // sent to your server. If the boolean is false, send the token to your server,

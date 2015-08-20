@@ -72,7 +72,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
         } else {
 
-            // mMainImageView.setImageResource(R.drawable.event_1); TODO definir una imagen predeterminada
+            // mMainImageView.setImageResource(R.drawable.event_1); DESIGN definir una imagen predeterminada
         }
 
         if (event.mIsPaid) {

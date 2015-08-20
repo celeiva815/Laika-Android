@@ -40,7 +40,6 @@ public class WelcomeActivity extends Activity
 
     public void createFragmentView(int layoutId) {
 
-        //FIXME agregar la clase hija
         mFragment = new SimpleFragment(layoutId, this);
         getFragmentManager().beginTransaction().add(R.id.container, mFragment).commit();
     }

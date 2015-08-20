@@ -270,4 +270,9 @@ public class Owner extends Model {
 
         return "";
     }
+
+    public City getCity() {
+
+        return City.getSingleCity(mCityId);
+    }
 }

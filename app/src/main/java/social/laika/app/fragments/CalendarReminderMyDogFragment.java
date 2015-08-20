@@ -111,7 +111,6 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
                 String title = mTitleEditText.getText().toString();
                 String detail = mDetailEditText.getText().toString();
 
-                //FIXME agregar el owner otras variables y verificar que no sean nullOrEmpty.
                 if (mCalendarReminder != null) {
 
                     mCalendarReminder.mTitle = title;

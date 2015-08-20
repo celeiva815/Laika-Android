@@ -454,9 +454,7 @@ public class EditUserActivity extends ActionBarActivity
 
     public List<Region> getRegions(Context context) {
 
-        //TODO agregar el filtro por location del usuario
-        int locationId = 1;
-        City city = City.getSingleLocation(locationId);
+        City city = mOwner.getCity();
         return Region.getRegions(city.getCountry().mCountryId);
     }
 

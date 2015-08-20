@@ -77,7 +77,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
 
         } else {
 
-            // mMainImageView.setImageResource(R.drawable.vetVisit_1); TODO definir una imagen predeterminada
+            // mMainImageView.setImageResource(R.drawable.vetVisit_1); DESIGN definir una imagen predeterminada
         }
 
         final int pos = position;

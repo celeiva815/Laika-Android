@@ -71,7 +71,7 @@ public class EditDogActivity extends CreateDogActivity {
             mChipEditText.setText(mDog.mChipCode);
         }
 
-        mAddButton.setText("Guardar"); //XXX agregar el string respectivo
+        mAddButton.setText(Do.getRString(this, R.string.save_reminder));
         mAddButton.setOnClickListener(new EditDogOnClickListener(this, mDog));
 
     }

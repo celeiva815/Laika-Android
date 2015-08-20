@@ -70,7 +70,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         //sync postulaciones
         UserAdoptDog.saveUserAdoptDogs(response);
 
-        if (mRequestable != null) { //FIXME
+        if (mRequestable != null) {
 
             mRequestable.onSuccess();
             return;

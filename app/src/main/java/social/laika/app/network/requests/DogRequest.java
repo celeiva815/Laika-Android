@@ -71,34 +71,29 @@ public class DogRequest extends SyncRequest {
 
     @Override
     public void sync() throws JSONException, InterruptedException, ExecutionException, TimeoutException {
-        // TODO implement sync
         Log.e(TAG, "sync not implemented");
     }
 
     @Override
     public JSONObject refresh() throws JSONException, InterruptedException, ExecutionException, TimeoutException {
-        // TODO implement refresh
         Log.e(TAG, "refresh not implemented");
         return null;
     }
 
     @Override
     protected JSONObject create() throws JSONException, InterruptedException, ExecutionException, TimeoutException {
-        // TODO implement create
         Log.e(TAG, "create not implemented");
         return null;
     }
 
     @Override
     protected JSONObject update() throws JSONException, InterruptedException, ExecutionException, TimeoutException {
-        // TODO implement update
         Log.e(TAG, "update not implemented");
         return null;
     }
 
     @Override
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException, TimeoutException {
-        // TODO implement delete
         Log.e(TAG, "delete not implemented");
         return null;
     }

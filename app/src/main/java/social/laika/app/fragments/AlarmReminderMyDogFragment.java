@@ -65,7 +65,7 @@ public class AlarmReminderMyDogFragment extends Fragment implements
     public int mRequestMethod;
     public String mMessage = "";
 
-    //TODO cambiarlo a la forma comun de instanciar fragments
+    //FIXME cambiarlo a la forma comun de instanciar fragments
     public AlarmReminderMyDogFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;

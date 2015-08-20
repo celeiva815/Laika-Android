@@ -114,11 +114,6 @@ public class Do {
         showLongToast(message, context);
     }
 
-    public static String getToken(Context context){
-
-        return ""; //FIXME getToken
-    }
-
     public static String getToStringDate(int day, int month, int year) {
 
         String yearText = Integer.toString(year);

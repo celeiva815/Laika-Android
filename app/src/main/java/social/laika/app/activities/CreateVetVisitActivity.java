@@ -160,7 +160,6 @@ public class CreateVetVisitActivity extends ActionBarActivity
                     mVetVisit.mDate = date;
 
                     mVetVisit.update();
-                    //TODO ver el caso de subir la foto con syncadapter
                     Do.showLongToast("La ficha médica ha sido actualizada", getApplicationContext());
 
                 } else {

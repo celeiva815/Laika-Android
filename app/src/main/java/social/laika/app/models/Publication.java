@@ -108,7 +108,7 @@ public class Publication extends Model {
 
     public String getSponsor() {
 
-        //TODO si es que se agregan nuevos idiomas esto tendría que pasar a los strings
+        //MAYBE si es que se agregan nuevos idiomas esto tendría que pasar a los strings
         return "por " + mSponsor;
 
     }

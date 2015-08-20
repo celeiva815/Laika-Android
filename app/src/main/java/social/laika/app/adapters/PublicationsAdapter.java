@@ -69,7 +69,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
         } else {
 
-            mMainImageView.setImageResource(R.drawable.event_1); //TODO definir una imagen predeterminada
+            mMainImageView.setImageResource(R.drawable.event_1); //DESIGN definir una imagen predeterminada
         }
 
         mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
