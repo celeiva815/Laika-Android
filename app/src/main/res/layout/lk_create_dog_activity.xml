@@ -300,7 +300,8 @@
                 android:textColor="@color/light_black_font"
                 android:textColorHint="@color/darker_white_font"
                 android:textSize="@dimen/laika_medium_text"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:inputType="phone"/>
 
             <TextView
                 android:id="@+id/textView13"
