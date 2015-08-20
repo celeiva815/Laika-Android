@@ -85,6 +85,10 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
                     mEmail = email;
                     request();
 
+                } else {
+
+                    Do.showLongToast(R.string.not_valid_email_error, context);
+
                 }
             }
         });

@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:background="@drawable/laikatheme_edit_text_holo_light"
         android:inputType="textEmailAddress">
 	<requestFocus />
        

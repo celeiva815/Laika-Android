@@ -21,7 +21,7 @@
     <string name="password">Contraseña</string>
     <string name="email_address">Correo</string>
     <string name="error_empty_search_query">You didn\'t enter the search field</string>
-    <string name="not_valid_email_error">Correo Inválido</string>
+    <string name="not_valid_email_error">Este no es correo electrónico válido</string>
     <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
     <string name="field_not_empty_error">Este campo no puede estar vacío</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
