@@ -109,8 +109,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
                                         if (alarmStatus == Tag.STATUS_ACTIVATED) {
                                             history.mReminder.cancelAlarm(context);
 
-                                        } else {
-
+                                        } else if (alarmStatus == Tag.STATUS_NOT_ACTIVATED) {
                                             history.mReminder.setAlarm(context);
                                         }
 

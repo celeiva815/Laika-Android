@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -29,6 +30,7 @@ import social.laika.app.adapters.RegionAdapter;
 import social.laika.app.adapters.SpaceAdapter;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.listeners.ChangeRegionLocationsOnItemSelectedListener;
+import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.listeners.SubmitUserAdoptionFormOnClickListener;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.City;
@@ -128,6 +130,12 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
         mElderlyRadioGroup = (RadioGroup) findViewById(R.id.elderly_dog_form_radiogroup);
         mPetsRadioGroup = (RadioGroup) findViewById(R.id.pets_dog_form_radiogroup);
         mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
+        ImageView spaceHelper = (ImageView) findViewById(R.id.space_helper);
+        ImageView phoneHelper = (ImageView) findViewById(R.id.phone_helper);
+        ImageView kidsHelper = (ImageView) findViewById(R.id.kids_helper);
+        ImageView elderlyHelper = (ImageView) findViewById(R.id.elderly_helper);
+        ImageView petsHelper = (ImageView) findViewById(R.id.pets_helper);
+        ImageView freeTimeHelper = (ImageView) findViewById(R.id.free_time_helper);
 
         //Adapters creation
         SpaceAdapter spaceAdapter = new SpaceAdapter(this.getApplicationContext(),
@@ -143,6 +151,13 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
                 getRegions(getApplicationContext()));
 
         SubmitUserAdoptionFormOnClickListener listener = new SubmitUserAdoptionFormOnClickListener(this);
+
+        spaceHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.home_type_helper, AdoptDogUserFormActivity.this));
+        phoneHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.phone_helper, AdoptDogUserFormActivity.this));
+        kidsHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.kids_helper, AdoptDogUserFormActivity.this));
+        elderlyHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.elderly_helper, AdoptDogUserFormActivity.this));
+        petsHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.pets_helper, AdoptDogUserFormActivity.this));
+        freeTimeHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.time_helper, AdoptDogUserFormActivity.this));
 
         //Setting the adapters
         mRegionSpinner.setAdapter(regionAdapter);

@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -23,10 +22,8 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.requests.PostulationRequest;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 30-07-15.
@@ -142,7 +139,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 Log.e(TAG, "GCM_ALERT_REMINDER not implemented");
                 break;
             case GCM_ALERT_REMINDER_UPDATE:
-                JSONObject reminder = new JSONObject(jsonData.getString(AlarmReminder.TABLE_NAME));
+                JSONObject reminder = new JSONObject(jsonData.getString(AlarmReminder.TABLE_ALARM_REMINDER));
                 /* Update Operation */
                 AlarmReminder.saveReminder(reminder, getApplicationContext());
                 break;
@@ -153,15 +150,14 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 break;
             case GCM_CALENDAR_REMINDER_UPDATE:
                 Log.e(TAG, "GCM_CALENDAR_REMINDER_UPDATE not implemented");
-                /* TODO implement GCM_CALENDAR_REMINDER_UPDATE
-                reminder = jsonData.getJSONObject(CalendarReminder.TABLE_CALENDAR_REMINDERS);
+                JSONObject calendarReminder = jsonData.getJSONObject(CalendarReminder.TABLE_CALENDAR_REMINDERS);
                 /* Update Operation */
-                /* CalendarReminder.saveReminder(reminder, getApplicationContext()); */
+                CalendarReminder.saveReminder(calendarReminder, getApplicationContext());
                 break;
             case GCM_CALENDAR_REMINDER_DELETE:
-                reminderId = jsonData.getInt(CalendarReminder.COLUMN_CALENDAR_REMINDER_ID);
+                int calendarId = jsonData.getInt(CalendarReminder.COLUMN_CALENDAR_REMINDER_ID);
                 /* Deletion Operation */
-                deleteCalendarReminder(reminderId);
+                deleteCalendarReminder(calendarId);
                 break;
             case GCM_VET_VISIT_UPDATE:
                 JSONObject vetVisit = new JSONObject(jsonData.getString(VetVisit.TABLE_NAME));

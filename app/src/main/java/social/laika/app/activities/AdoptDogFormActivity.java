@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 import social.laika.app.R;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
+import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Size;
 import social.laika.app.network.RequestManager;
@@ -96,6 +98,8 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         mPersonalitySpinner = (Spinner) findViewById(R.id.personality_dog_form_spinner);
         mSearchButton = (Button) findViewById(R.id.search_dog_form_button);
         mGender = Tag.GENDER_BOTH;
+        ImageView sizeHelper = (ImageView) findViewById(R.id.size_helper);
+        ImageView personalityHelper = (ImageView) findViewById(R.id.personality_helper);
 
         //Adapters creation
         SizeAdapter sizeAdapter = new SizeAdapter(this.getApplicationContext(),
@@ -105,6 +109,9 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         PersonalityAdapter personalityAdapter = new PersonalityAdapter(this.getApplicationContext(),
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
                 getPersonalities());
+
+        sizeHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.size_helper, AdoptDogFormActivity.this));
+        personalityHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.personality_helper, AdoptDogFormActivity.this));
 
         //Setting the adapters
         mSizeSpinner.setAdapter(sizeAdapter);

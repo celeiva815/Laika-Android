@@ -38,7 +38,8 @@ public class RequestManager {
 
     public static final String TAG = RequestManager.class.getSimpleName();
 
-    public static final String BASE_URL = "http://fundaciones.laika.social/";
+//    public static final String BASE_URL = "http://fundaciones.laika.social/";
+    public static final String BASE_URL = "http://test.laika.social/";
 //    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;

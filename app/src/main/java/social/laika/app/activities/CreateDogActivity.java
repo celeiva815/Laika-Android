@@ -193,6 +193,8 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
         mAddButton.setOnClickListener(addListener);
 
+        mGender = Tag.GENDER_FEMALE;
+
     }
 
     public void requestCreateOrUpdateDog(Dog dog, String message, int method) {
@@ -229,7 +231,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public void setGenderRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
-        this.mGender = Tag.GENDER_MALE;
+        this.mGender = Tag.GENDER_FEMALE;
 
         // Check which radio button was clicked
         switch (view.getId()) {

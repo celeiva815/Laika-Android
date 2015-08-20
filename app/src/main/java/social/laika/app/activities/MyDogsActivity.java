@@ -42,6 +42,7 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.observers.AlarmReminderObserver;
+import social.laika.app.network.observers.CalendarReminderObserver;
 import social.laika.app.network.observers.VetVisitObserver;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
@@ -546,6 +547,14 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
             getContentResolver().
                     registerContentObserver(ContentProvider.createUri(AlarmReminder.class, null),
                             true, mAlarmObserver);
+        }
+
+        if(mCalendarObserver == null) {
+            mCalendarObserver = new CalendarReminderObserver(new Handler(getMainLooper()));
+
+            getContentResolver().
+                    registerContentObserver(ContentProvider.createUri(CalendarReminder.class, null),
+                            true, mCalendarObserver);
         }
 
         if(mVetVisitObserver == null) {

@@ -46,11 +46,14 @@ public class PostulatedDogsResponse implements Response.Listener<JSONObject>, Re
 
         if (mRequest != null) {
             mRequest.onSuccess();
+        }
+
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
 
         }
 
         if (mActivity != null) {
-
             Do.changeActivity(mContext, PostulatedDogsFragmentActivity.class,
                     Intent.FLAG_ACTIVITY_NEW_TASK);
         }

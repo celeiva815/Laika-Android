@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="home_type_helper">Departamento pequeño: Donde pueden vivir máximo 2 personas.\n
-        Departamento mediano: Donde pueden vivir máximo 4 personas.\n
-        Departamento grande: Donde pueden vivir máximo 7 personas.\n
-        Casa Pequeña: Donde pueden vivir máximo 3 personas.\n
-        Casa mediana: Donde pueden vivir máximo 5 personas.\n
-        Casa grande: Donde pueden vivir más de 6 personas.\n
-        Parcela abierta: Sin cerco de fierro.\n
+    <string name="home_type_helper">Departamento pequeño: Donde pueden vivir máximo 2 personas.\n\n
+        Departamento mediano: Donde pueden vivir máximo 4 personas.\n\n
+        Departamento grande: Donde pueden vivir máximo 7 personas.\n\n
+        Casa Pequeña: Donde pueden vivir máximo 3 personas.\n\n
+        Casa mediana: Donde pueden vivir máximo 5 personas.\n\n
+        Casa grande: Donde pueden vivir más de 6 personas.\n\n
+        Parcela abierta: Sin cerco de fierro.\n\n
         Parcela con cerco perimetral: Cerrado absolutamente.</string>
 
     <string name="phone_helper">
-        Es tu número telefónico. Debe estar ingresado en el formato +56912345678 (como el usado en la aplicación 
-        Whatsapp).\n
+        Es tu número telefónico. Debe estar ingresado en el formato +56912345678 (como el usado en Whatsapp).\n
         Esta información es privada y sólo se utilizará para que la Fundación se contacte más rápido contigo.
     </string>
     

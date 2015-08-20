@@ -20,10 +20,12 @@ import java.util.concurrent.TimeoutException;
 
 import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
+import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.models.Photo;
 import social.laika.app.network.requests.AlarmRemindersRequest;
+import social.laika.app.network.requests.CalendarRemindersRequest;
 import social.laika.app.network.requests.DogRequest;
 import social.laika.app.network.requests.PhotosRequest;
 import social.laika.app.network.requests.SyncRequest;
@@ -180,8 +182,19 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
             case CODE_CALENDAR_REFRESH:
 
+                request = new CalendarRemindersRequest(context, dogId);
+                jsonObject = request.refresh();
+                CalendarReminder.saveReminders(jsonObject, context);
+
                 break;
             case CODE_CALENDAR_SYNC:
+
+                List<CalendarReminder> calendarReminders = CalendarReminder.getNeedSync();
+
+                for (CalendarReminder calendarReminder : calendarReminders) {
+                    request = new CalendarRemindersRequest(context, calendarReminder);
+                    request.sync();
+                }
 
                 break;
             case CODE_VET_VISIT_REFRESH:

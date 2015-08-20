@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.interfaces.Alertable;
-import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.AlarmReceiver;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.DateFormatter;
@@ -30,12 +28,12 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
-@Table(name = AlarmReminder.TABLE_NAME)
+@Table(name = AlarmReminder.TABLE_ALARM_REMINDER)
 public class AlarmReminder extends ModelSync implements Alertable {
 
     public final static int ID_NOT_SET = 0;
 
-    public final static String TABLE_NAME = "alarm_reminder";
+    public final static String TABLE_ALARM_REMINDER = "alarm_reminder";
     public final static String COLUMN_ALARM_REMINDER_ID = "alarm_reminder_id";
     public final static String COLUMN_TYPE = "type";
     public final static String COLUMN_CATEGORY = "category";

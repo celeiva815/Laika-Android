@@ -58,13 +58,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp" />
 
-            <TextView
-                android:id="@+id/space_new_dog_register_textview"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/space_adopt_dog_form"
-                android:textColor="@color/laika_red" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/space_new_dog_register_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:text="@string/space_adopt_dog_form"
+                    android:textColor="@color/laika_red" />
+
+                <ImageView
+                    android:id="@+id/space_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey" />
+
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/space_dog_form_spinner"
@@ -72,15 +86,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp" />
 
-            <TextView
-                android:id="@+id/textView31"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/phone_question"
-                android:textColor="@color/laika_red"
-                android:textSize="@dimen/laika_min_text"
-                android:layout_gravity="center_horizontal|left" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_question"
+                    android:textColor="@color/laika_red"
+                    android:textSize="@dimen/laika_min_text"
+                    android:layout_gravity="center|left" />
+
+                <ImageView
+                    android:id="@+id/phone_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey" />
+
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/phone_adopt_dog_user_edittext"
@@ -96,13 +124,28 @@
                 android:textSize="@dimen/laika_small_text"
                 android:inputType="phone" />
 
-            <TextView
-                android:id="@+id/textView15"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/kids_adopt_dog_form"
-                android:textColor="@color/laika_red" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kids_adopt_dog_form"
+                    android:layout_gravity="center|left"
+                    android:textColor="@color/laika_red" />
+
+                <ImageView
+                    android:id="@+id/kids_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey" />
+
+            </LinearLayout>
+
 
             <RadioGroup
                 android:id="@+id/kids_dog_form_radiogroup"
@@ -135,13 +178,27 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView17"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/elderly_adopt_dog_form"
-                android:textColor="@color/laika_red" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/elderly_adopt_dog_form"
+                    android:layout_gravity="center|left"
+                    android:textColor="@color/laika_red" />
+
+                <ImageView
+                    android:id="@+id/elderly_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey" />
+
+            </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/elderly_dog_form_radiogroup"
@@ -174,13 +231,26 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView18"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/pets_adopt_dog_form"
-                android:textColor="@color/laika_red" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:text="@string/pets_adopt_dog_form"
+                    android:textColor="@color/laika_red"/>
+
+                <ImageView
+                    android:id="@+id/pets_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey"/>
+            </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/pets_dog_form_radiogroup"
@@ -213,13 +283,26 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/free_time_new_dog_register_textview"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/free_time_adopt_dog_form"
-                android:textColor="@color/laika_red" />
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/free_time_new_dog_register_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/free_time_adopt_dog_form"
+                    android:layout_gravity="center|left"
+                    android:textColor="@color/laika_red" />
+
+                <ImageView
+                    android:id="@+id/free_time_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|left"
+                    android:src="@drawable/laika_question_grey" />
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/free_time_dog_form_spinner"
