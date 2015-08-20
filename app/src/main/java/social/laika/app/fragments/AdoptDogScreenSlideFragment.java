@@ -42,6 +42,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public TextView mChipTextView;
     public TextView mTrainedTextView;
     public TextView mSizeTextView;
+    public TextView mPersonalityTextView;
     public TextView mYearsTextView;
     public TextView mDetailsTextView;
     public TextView mFoundationTextView;
@@ -70,6 +71,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mChipTextView = (TextView) view.findViewById(R.id.chip_adopt_dog_screen_slide_textview);
         mTrainedTextView = (TextView) view.findViewById(R.id.trained_adopt_dog_screen_slide_textview);
         mSizeTextView = (TextView) view.findViewById(R.id.size_adopt_dog_screen_slide_textview);
+        mPersonalityTextView = (TextView) view.findViewById(R.id.personality_adopt_dog_screen_slide_textview);
         mYearsTextView = (TextView) view.findViewById(R.id.years_adopt_dog_screen_slide_textview);
         mDetailsTextView = (TextView) view.findViewById(R.id.detail_adopt_dog_textview);
         mFoundationTextView = (TextView) view.findViewById(R.id.foundation_adopt_dog_screen_slide_textview);
@@ -79,6 +81,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
         mNameTextView.setText(mDog.mName);
         mSizeTextView.setText(mDog.getSize().mName);
+        mPersonalityTextView.setText(mDog.mPersonality > 0 ? mDog.getPersonality().mName : "Sin Personalidad");
         mGenderTextView.setText(mDog.getGender(view.getContext()));
         mYearsTextView.setText(mDog.getAge());
         mSterilizedTextView.setText(mDog.getSterilized(view.getContext()));

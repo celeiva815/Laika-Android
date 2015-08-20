@@ -35,7 +35,7 @@
             android:text="@string/contact_news_adopt_dog_success"
             android:textColor="#fff"
             android:textSize="@dimen/laika_min_text"
-            android:layout_below="@+id/textView26"
+            android:layout_below="@+id/id_adopt_dog_screen_slide_textview"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:gravity="center"
