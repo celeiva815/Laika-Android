@@ -34,7 +34,7 @@
         Guardián: es un perro que cuida muy bien su territorio y es buen compañero.\n\n
         Si colocas \"Me da igual\" buscarás todas las personalidades de los perritos.</string>
 
-    <string name="birth_helper">Es la fecha exacta cuando nació tu perrito. Si no la sabes, es preferible que consultes la edad con un Veterinario.</string>
+    <string name="birth_helper">Es la fecha aproximada cuando nació tu perrito. Si no la sabes, es preferible que consultes la edad con un Veterinario.</string>
 
     <string name="chip_helper">Si tu perro posee un "chip" intradérmico, ingresa el número o código identificador asociado a éste.\n Si tu perro no tiene chip, te recomendamos que te acerques a la municipalidad de tu comuna y solicites un chip para tu perro.  </string>
 

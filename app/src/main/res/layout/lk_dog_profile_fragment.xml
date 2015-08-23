@@ -271,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chip: 998d8ash82s81h8sdj9"
+                    android:text="Chip:"
                     android:id="@+id/chip_dog_profile_textview"
                     android:layout_centerVertical="true"
                     android:textColor="@color/light_black_font"

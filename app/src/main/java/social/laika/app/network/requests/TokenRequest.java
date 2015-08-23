@@ -26,23 +26,29 @@ public class TokenRequest implements Requestable {
     public static final String KEY_TOKEN = "token";
     public String mToken;
     public Context mContext;
+    public boolean mSubscribe;
+    public String mAddress;
 
-    public TokenRequest(String mToken, Context mContext) {
-        this.mToken = mToken;
-        this.mContext = mContext;
+    public TokenRequest(String token, Context context, boolean subscribe) {
+
+        mToken = token;
+        mContext = context;
+        mSubscribe = subscribe;
+        mAddress = subscribe ? RequestManager.ADDRESS_SUBSCRIBE : RequestManager.ADDRESS_UNSUBSCRIBE;
+
     }
 
     @Override
     public void request() {
 
         SimpleResponse response = new SimpleResponse(this);
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         params.put(KEY_TOKEN, mToken);
 
         JSONObject jsonParams = new JSONObject(params);
         String token = PrefsManager.getUserToken(mContext);
-        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_SUBSCRIBE,
+        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonParams, mAddress,
                 response, response, token);
 
         request.setDeviceId(mContext);

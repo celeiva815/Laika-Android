@@ -15,7 +15,7 @@ public class AdoptDogForm extends Model {
     public final static String TABLE_ADOPT_DOG_FORM = "adopt_dog_form";
     public final static String COLUMN_ADOPT_DOG_FORM_ID = "adopt_dog_form_id";
     public final static String COLUMN_OWNER_ID = "owner_id";
-    public final static String COLUMN_CITY_ID = "location_id";
+    public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_PHONE = "phone";
     public final static String COLUMN_HOME_TYPE = "home_type";
     public final static String COLUMN_HAS_PET = "has_pet";

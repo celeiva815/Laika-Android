@@ -66,7 +66,7 @@ public class LaikaRegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token) {
 
-        TokenRequest tokenRequest = new TokenRequest(token, this);
+        TokenRequest tokenRequest = new TokenRequest(token, this, true);
 
         tokenRequest.request();
 

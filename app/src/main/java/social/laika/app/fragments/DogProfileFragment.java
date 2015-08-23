@@ -107,22 +107,6 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mOwnersAdapter = new OwnerMyDogAdapter(view.getContext(), R.layout.lk_owner_my_dog_row,
                 getOwners(), mDog);
 
-        mNameTextView.setText(mDog.mName);
-        mBirthDateTextView.setText(mDog.mBirth);
-        mSizeTextView.setText(mDog.getSize().mName);
-        mBreedTextView.setText(mDog.getBreed().mName);
-        mPersonalityTextView.setText(mDog.getPersonality().mName);
-        mSterilizedTextView.setText(Do.getRString(view.getContext(),
-                mDog.mIsSterilized ? R.string.is_sterilized : R.string.is_not_sterilized));
-
-        if (!Do.isNullOrEmpty(mDog.mChipCode)) {
-            mChipTextView.setText("Chip:" + mDog.mChipCode);
-
-        } else {
-            mChipTextView.setText(Do.getRString(view.getContext(), R.string.has_not_chip));
-
-        }
-
         mOwnersListView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -163,6 +147,26 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
     }
 
+    public void setValues(Context context) {
+
+        mNameTextView.setText(mDog.mName);
+        mBirthDateTextView.setText(mDog.mBirth);
+        mSizeTextView.setText(mDog.getSize().mName);
+        mBreedTextView.setText(mDog.getBreed().mName);
+        mPersonalityTextView.setText(mDog.getPersonality().mName);
+        mSterilizedTextView.setText(Do.getRString(context,
+                mDog.mIsSterilized ? R.string.is_sterilized : R.string.is_not_sterilized));
+
+        if (!Do.isNullOrEmpty(mDog.mChipCode)) {
+            mChipTextView.setText("Chip:" + mDog.mChipCode);
+
+        } else {
+            mChipTextView.setText(Do.getRString(context, R.string.has_not_chip));
+
+        }
+
+    }
+
     public void requestOwners() {
 
         Context context = getActivity().getApplicationContext();
@@ -198,6 +202,8 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
     @Override
     public void refresh() {
+
+        setValues(getActivity().getApplicationContext());
 
         if (!mOwnersAdapter.isEmpty()) {
 

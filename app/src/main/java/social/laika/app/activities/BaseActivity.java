@@ -20,6 +20,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+
+import java.io.IOException;
 
 import social.laika.app.R;
 import social.laika.app.fragments.NavigationDrawerFragment;
@@ -41,6 +45,7 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
+import social.laika.app.network.requests.TokenRequest;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
@@ -162,6 +167,8 @@ public class BaseActivity extends ActionBarActivity
                     LoginManager.getInstance().logOut();
                 }
 
+                unsubscribeToken();
+
                 Do.changeActivity(context, TutorialActivity.class, this,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
@@ -209,7 +216,7 @@ public class BaseActivity extends ActionBarActivity
 
         Context context = getApplicationContext();
 
-        if (Do.isNetworkAvailable(context)){
+        if (Do.isNetworkAvailable(context)) {
             requestPostulations(context);
 
         } else {
@@ -251,8 +258,6 @@ public class BaseActivity extends ActionBarActivity
             Intent intent = new Intent(this, LaikaRegistrationIntentService.class);
             startService(intent);
         }
-
-
     }
 
     protected boolean checkPlayServices() {
@@ -271,4 +276,12 @@ public class BaseActivity extends ActionBarActivity
         return true;
     }
 
+    private void unsubscribeToken() {
+
+        String token = PrefsManager.getUserToken(this);
+        TokenRequest tokenRequest = new TokenRequest(token, this, false);
+
+        tokenRequest.request();
+
+    }
 }

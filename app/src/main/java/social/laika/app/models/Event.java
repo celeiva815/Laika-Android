@@ -24,7 +24,7 @@ public class Event extends Model {
     public final static String COLUMN_SPONSOR_NAME = "sponsor_name";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_URL_EVENT = "url_event";
-    public final static String COLUMN_LOCATION_ID = "location_id";
+    public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_START_DATE = "start_date";
     public final static String COLUMN_FINISH_DATE = "finish_date";
     public final static String COLUMN_START_TIME = "start_time";
@@ -54,7 +54,7 @@ public class Event extends Model {
     @Column(name = COLUMN_URL_EVENT)
     public String mUrlEvent;
 
-    @Column(name = COLUMN_LOCATION_ID)
+    @Column(name = COLUMN_CITY_ID)
     public int mCityId;
 
     @Column(name = COLUMN_START_DATE)
@@ -103,7 +103,7 @@ public class Event extends Model {
             this.mSponsorName = jsonObject.getString(COLUMN_SPONSOR_NAME);
             this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
             this.mUrlEvent = jsonObject.getString(COLUMN_URL_EVENT);
-            this.mCityId = jsonObject.getInt(COLUMN_LOCATION_ID);
+            this.mCityId = jsonObject.getInt(COLUMN_CITY_ID);
             this.mStartDate = jsonObject.getString(COLUMN_START_DATE);
             this.mFinishDate = jsonObject.getString(COLUMN_FINISH_DATE);
             this.mStartTime = jsonObject.getString(COLUMN_START_TIME);

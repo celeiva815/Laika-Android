@@ -62,7 +62,10 @@ public class PostulatedDogsResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        mRequest.onFailure();
+        if (mRequest != null) {
+            mRequest.onFailure();
+
+        }
 
     }
 

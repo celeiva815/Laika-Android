@@ -64,6 +64,7 @@ public class RequestManager {
     public static final String ADDRESS_SYNC = "sync/";
     public static final String ADDRESS_SUBSCRIBE = "subscribe/";
     public static final String ADDRESS_TIPS = "tips/";
+    public static final String ADDRESS_UNSUBSCRIBE = "unsubscribe/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";
     public static final String ADDRESS_UPLOAD_DOG_PHOTOS = "upload_dog_photos/";
     public static final String ADDRESS_USER = "user/";
