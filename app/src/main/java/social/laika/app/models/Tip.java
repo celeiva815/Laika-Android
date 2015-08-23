@@ -87,8 +87,8 @@ public class Tip extends Model {
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
         this.mBody = jsonObject.optString(COLUMN_BODY);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
-        this.mUrlTip = ""; //FIXME jsonObject.optString(COLUMN_URL_TIP);
-        this.mType = 0; //FIXME jsonObject.optString(COLUMN_TYPE);
+        this.mUrlTip = jsonObject.optString(COLUMN_URL_TIP);
+        this.mType = jsonObject.optInt(COLUMN_TYPE);
         this.mIsPaid = jsonObject.optBoolean(COLUMN_IS_PAID);
 
     }
