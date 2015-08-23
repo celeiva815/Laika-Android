@@ -25,6 +25,7 @@ public class DateFormatter {
         Character weekDayCharacter = 'L';
 
         switch (weekDay) {
+
             case Calendar.SUNDAY:
                 weekDayCharacter = 'D';
                 break;
@@ -68,13 +69,13 @@ public class DateFormatter {
         return simpleDateFormat.format(date);
     }
 
- public static int[] parseTimeFromString(String time) {
+    public static int[] parseTimeFromString(String time) {
 
-     int hour = Integer.parseInt(time.substring(0, 2));
-     int minute = Integer.parseInt(time.substring(3, 5));
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int minute = Integer.parseInt(time.substring(3, 5));
 
-     return new int[] {hour, minute};
+        return new int[]{hour, minute};
 
- }
+    }
 
 }

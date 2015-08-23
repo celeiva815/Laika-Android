@@ -35,10 +35,8 @@ public class HistoryMyDogAdapter extends ArrayAdapter<History> {
     public View getView(int position, View view, ViewGroup parent) {
 
         History history = mHistories.get(position);
-
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
-
         TextView titleTextView = (TextView) view.findViewById(R.id.title_history_my_dog_textview);
         TextView detailTextView = (TextView) view.findViewById(R.id.detail_history_my_dog_textview);
         TextView dateTextView = (TextView) view.findViewById(R.id.date_history_my_dog_textview);
@@ -54,35 +52,37 @@ public class HistoryMyDogAdapter extends ArrayAdapter<History> {
 
             case Tag.CATEGORY_FOOD:
 
-                typeImageView.setImageResource(R.drawable.dog51_white);
-
+                typeImageView.setImageResource(R.drawable.laika_food_grey);
                 break;
 
             case Tag.CATEGORY_POO:
 
-                typeImageView.setImageResource(R.drawable.poo_white);
-
+                typeImageView.setImageResource(R.drawable.laika_poop_grey);
                 break;
 
             case Tag.CATEGORY_WALK:
 
-                typeImageView.setImageResource(R.drawable.walk_white);
+                typeImageView.setImageResource(R.drawable.laika_walk_grey);
                 break;
 
             case Tag.CATEGORY_MEDICINE:
-                typeImageView.setImageResource(R.drawable.pill_white);
+
+                typeImageView.setImageResource(R.drawable.laika_pill_grey);
                 break;
 
             case Tag.CATEGORY_VACCINE:
-                typeImageView.setImageResource(R.drawable.medicine_white);
+
+                typeImageView.setImageResource(R.drawable.laika_vaccine_grey);
                 break;
 
             case Tag.CATEGORY_HYGIENE:
-                typeImageView.setImageResource(R.drawable.hygiene_white);
+
+                typeImageView.setImageResource(R.drawable.laika_hygiene_grey);
                 break;
 
             case Tag.CATEGORY_VET:
-                typeImageView.setImageResource(R.drawable.cross_white);
+
+                typeImageView.setImageResource(R.drawable.laika_vetalarm_grey);
                 break;
         }
 

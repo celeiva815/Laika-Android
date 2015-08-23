@@ -3,6 +3,7 @@ package social.laika.app.activities;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -41,18 +42,28 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
             }
         };
 
-        mPager.setAdapter(mPagerAdapter);
+        if (mPagerAdapter.getCount() == 0) {
 
-        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setVisibility(View.GONE);
+            setContentView(R.layout.lk_adopt_dog_empty_layout);
+            TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
+            emptyTextView.setText("Aún no has realizado postulaciones de adopción.\n" +
+                    "Si quieres encontrar a tu perro ideal ingresa a \"Adóptame\"");
+
+        } else {
+
+            mPager.setAdapter(mPagerAdapter);
+
+            mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
+            mIndicator.setViewPager(mPager);
+            mIndicator.setVisibility(View.GONE);
+        }
     }
 
     public void updateDogs() {
 
         setDogList();
         mPagerAdapter.notifyDataSetChanged();
-        
+
     }
 
 

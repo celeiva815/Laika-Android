@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -82,12 +83,23 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
-        mPager.setAdapter(mPagerAdapter);
 
-        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
-        mIndicator.setViewPager(mPager);
+        if (mPagerAdapter.getCount() == 0) {
 
-        mIndicator.setVisibility(View.GONE);
+            setContentView(R.layout.lk_adopt_dog_empty_layout);
+            TextView emptyTextView = (TextView) findViewById(R.id.empty_view);
+            emptyTextView.setText("¡Lo sentimos!\nNo existen perros compatibles" +
+                    " con tu estilo de vida en estos momentos.");
+
+        } else {
+
+            mPager.setAdapter(mPagerAdapter);
+
+            mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
+            mIndicator.setViewPager(mPager);
+
+            mIndicator.setVisibility(View.GONE);
+        }
 
     }
 
