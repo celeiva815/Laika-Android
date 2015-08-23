@@ -121,7 +121,7 @@ public class Owner extends Model {
         this.mEmail = jsonObject.optString(COLUMN_EMAIL);
         this.mPhone = jsonObject.optString(COLUMN_PHONE);
         this.mCityId = jsonObject.optInt(COLUMN_CITY_ID);
-        this.mUrlImage= jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
 
     }
 
@@ -139,11 +139,14 @@ public class Owner extends Model {
 
     public void createOwnerDog(Context context, Dog dog) {
 
-        int role = Tag.ROLE_EDITOR;
+        int role;
 
-        if (PrefsManager.getUserId(context) == mOwnerId) {
-
+        if (mOwnerId == dog.mOwnerId) {
             role = Tag.ROLE_ADMIN;
+
+        } else {
+            role = Tag.ROLE_EDITOR;
+
         }
 
         OwnerDog ownerDog = new OwnerDog(mOwnerId, dog.mDogId, role);
@@ -180,7 +183,7 @@ public class Owner extends Model {
             jsonObject.put(COLUMN_SECOND_LAST_NAME, mSecondLastName);
             jsonObject.put(COLUMN_BIRTH_DATE, mBirthDate);
             jsonObject.put(COLUMN_GENDER, mGender);
-            jsonObject.put(COLUMN_PHONE,mPhone);
+            jsonObject.put(COLUMN_PHONE, mPhone);
             jsonObject.put(COLUMN_CITY_ID, mCityId);
 
         } catch (JSONException e) {

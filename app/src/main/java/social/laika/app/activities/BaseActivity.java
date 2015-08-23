@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Request;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -155,6 +157,11 @@ public class BaseActivity extends ActionBarActivity
             case 4: // Cerrar Sesión
 
                 clearDataBase();
+
+                if (LoginManager.getInstance() != null) {
+                    LoginManager.getInstance().logOut();
+                }
+
                 Do.changeActivity(context, TutorialActivity.class, this,
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;

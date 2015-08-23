@@ -85,7 +85,8 @@
                     android:paddingLeft="5dp"
                     android:text="ID: 1289391823"
                     android:textColor="@color/light_black_font"
-                    android:textSize="@dimen/laika_min_text" />
+                    android:textSize="@dimen/laika_min_text"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <ImageView
@@ -121,7 +122,8 @@
                 android:paddingLeft="5dp"
                 android:text="En espera"
                 android:textColor="@color/light_black_font"
-                android:textSize="@dimen/laika_min_text" />
+                android:textSize="@dimen/laika_min_text"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

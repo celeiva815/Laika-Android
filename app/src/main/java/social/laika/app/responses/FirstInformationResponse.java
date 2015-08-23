@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONObject;
 
@@ -92,7 +93,6 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     public void onErrorResponse(VolleyError error) {
 
         ResponseHandler.error(error, mContext);
-        //Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if (mProgressBar != null) {
 
@@ -102,6 +102,11 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         if (mActivity instanceof LoginActivity) {
             ((LoginActivity) mActivity).enableViews(true);
             PrefsManager.clearPrefs(mContext);
+
+        }
+
+        if (LoginManager.getInstance() != null) {
+            LoginManager.getInstance().logOut();
         }
 
         mRequestable.onFailure();

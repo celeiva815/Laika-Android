@@ -144,8 +144,8 @@ public class Dog extends Model {
 
     public Dog(JSONObject jsonObject, int status) {
 
-
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
+        this.mOwnerId = jsonObject.optInt(COLUMN_OWNER_ID);
         this.mName = jsonObject.optString(COLUMN_NAME);
         this.mBirth = jsonObject.optString(COLUMN_BIRTHDATE);
         this.mBreedId = jsonObject.optInt(COLUMN_BREED_ID);

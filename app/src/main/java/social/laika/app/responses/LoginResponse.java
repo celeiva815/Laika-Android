@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONObject;
 
@@ -45,6 +46,10 @@ public class LoginResponse implements Response.ErrorListener,
 
         ResponseHandler.error(error, mActivity);
         mLoginProgressBar.setVisibility(View.GONE);
+
+        if (LoginManager.getInstance() != null) {
+            LoginManager.getInstance().logOut();
+        }
 
         enableViews();
 

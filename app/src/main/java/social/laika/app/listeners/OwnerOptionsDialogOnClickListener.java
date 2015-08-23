@@ -190,8 +190,8 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
     public void viewProfile(Context context) {
 
         Intent intent = new Intent(context, UserProfileActivity.class);
-
-
+        intent.putExtra(UserProfileActivity.KEY_OWNER_ID, mOwner.mOwnerId);
+        context.startActivity(intent);
 
     }
 
