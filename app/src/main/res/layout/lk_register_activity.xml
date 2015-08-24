@@ -136,7 +136,7 @@
                 android:id="@+id/human_male_radiobutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_male"
@@ -173,12 +173,12 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/laikatheme_edit_text_holo_light"
             android:hint="@string/phone_example"
-            android:inputType="textPassword"
             android:minHeight="30dp"
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_small_text"
+            android:inputType="phone"/>
 
         <TextView
             android:id="@+id/textView22"
@@ -217,7 +217,6 @@
                 android:id="@+id/submit_register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/laika_button"
                 android:onClick="register"
                 android:text="@string/register_user"
@@ -232,57 +231,6 @@
                 android:layout_gravity="center_horizontal"
                 android:indeterminate="false"
                 android:visibility="gone" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/darkest_trans_black_background">
-
-                <TextView
-                    android:id="@+id/textView24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/sign_up_with_social_networks"
-                    android:textColor="@color/laika_dark_white"
-                    android:textSize="@dimen/laika_min_text" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="70dp"
-                    android:layout_below="@+id/textView24"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
-
-                    <ImageView
-                        android:id="@+id/imageView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/facebook_white_icon" />
-
-                    <ImageView
-                        android:id="@+id/imageView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:adjustViewBounds="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/google_plus_white_icon2" />
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </LinearLayout>
 
