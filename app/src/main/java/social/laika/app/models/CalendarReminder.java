@@ -391,7 +391,16 @@ public class CalendarReminder extends ModelSync implements Alertable {
         return new Select().from(CalendarReminder.class).where(condition).executeSingle();
     }
 
-    public static void deleteAll() {
+    public static void deleteAll(Context context) {
+
+        List<CalendarReminder> calendarReminders = new Select().from(CalendarReminder.class).execute();
+
+        for (CalendarReminder calendarReminder : calendarReminders) {
+
+            if (calendarReminder.checkStatusAlarm(context) == Tag.STATUS_ACTIVATED) {
+                calendarReminder.cancelAlarm(context);
+            }
+        }
 
         new Delete().from(CalendarReminder.class).execute();
 

@@ -15,11 +15,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.activeandroid.Model;
 import com.activeandroid.content.ContentProvider;
 import com.android.volley.Request;
 import com.soundcloud.android.crop.Crop;
@@ -44,11 +42,9 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.network.observers.AlarmReminderObserver;
 import social.laika.app.network.observers.CalendarReminderObserver;
 import social.laika.app.network.observers.VetVisitObserver;
-import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
-import social.laika.app.utils.Tag;
 import social.laika.app.utils.views.CustomPagerSlidingTabStrip;
 
 public class MyDogsActivity extends ActionBarActivity implements Photographable {
@@ -68,7 +64,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public static final int[] ICONS = new int[]{
             R.drawable.laika_history_selector,
             R.drawable.laika_reminder_selector,
-            R.drawable.laika_owner_selector,
+            R.drawable.laika_health_selector,
             R.drawable.laika_album_selector
     };
 

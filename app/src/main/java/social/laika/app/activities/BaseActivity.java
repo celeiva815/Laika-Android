@@ -194,6 +194,8 @@ public class BaseActivity extends ActionBarActivity
 
     private void clearDataBase() {
 
+        Context context = getApplicationContext();
+
         PrefsManager.clearPrefs(getApplicationContext());
         Dog.deleteAll();
         Owner.deleteAll();
@@ -202,8 +204,8 @@ public class BaseActivity extends ActionBarActivity
         Photo.deleteAll();
         VetVisit.deleteAll();
         AdoptDogForm.deleteAll();
-        CalendarReminder.deleteAll();
-        AlarmReminder.deleteAll();
+        CalendarReminder.deleteAll(context);
+        AlarmReminder.deleteAll(context);
         Event.deleteAll();
         Publication.deleteAll();
         Tip.deleteAll();

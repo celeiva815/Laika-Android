@@ -95,8 +95,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:scrollbarAlwaysDrawVerticalTrack="false"
-                    android:src="@drawable/news_white"
-                    android:adjustViewBounds="false" />
+                    android:src="@drawable/laika_news_white"
+                    android:adjustViewBounds="false"
+                    android:padding="2dp"/>
 
                 <TextView
                     android:id="@+id/breed_my_dog_profile_textview"
@@ -119,8 +120,9 @@
                     android:id="@+id/tips_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:src="@drawable/laika_tips_white"
-                    android:adjustViewBounds="false" />
+                    android:src="@drawable/laika_tip_white"
+                    android:adjustViewBounds="false"
+                    android:padding="4dp"/>
 
                 <TextView
                     android:id="@+id/owners_my_dog_textview"
@@ -142,7 +144,8 @@
                     android:id="@+id/events_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:src="@drawable/laika_events_white" />
+                    android:src="@drawable/laika_event_white"
+                    android:padding="2dp"/>
 
                 <TextView
                     android:id="@+id/TextView02"
@@ -164,7 +167,8 @@
                     android:id="@+id/stories_main_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:src="@drawable/laika_history_white" />
+                    android:src="@drawable/laika_history_white"
+                    android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/TextView03"

@@ -800,7 +800,16 @@ public class AlarmReminder extends ModelSync implements Alertable {
         return new Select().from(AlarmReminder.class).where(condition).executeSingle();
     }
 
-    public static void deleteAll() {
+    public static void deleteAll(Context context) {
+
+        List<AlarmReminder> alarmReminders = new Select().from(AlarmReminder.class).execute();
+
+        for (AlarmReminder alarmReminder : alarmReminders) {
+
+            if (alarmReminder.checkStatusAlarm(context) == Tag.STATUS_ACTIVATED) {
+                alarmReminder.cancelAlarm(context);
+            }
+        }
 
         new Delete().from(AlarmReminder.class).execute();
 

@@ -15,7 +15,7 @@ import com.newrelic.agent.android.NewRelic;
 
 public class MainActivity extends BaseActivity {
 
-    private int mIdLayout = R.layout.lk_main_activity;
+    private int mIdLayout = R.layout.laika_main_activity;
 
     @Override
     public void onStart() {

@@ -122,12 +122,12 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/name_events_textview"
         android:layout_alignStart="@+id/name_events_textview"
         android:layout_below="@+id/name_events_textview"
         android:adjustViewBounds="true"
-        android:src="@drawable/event_place" />
+        android:src="@drawable/laika_place_red" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -136,7 +136,8 @@
         android:layout_below="@+id/imageView"
         android:layout_toEndOf="@+id/photo_events_layout"
         android:layout_toRightOf="@+id/photo_events_layout"
-        android:src="@drawable/event_clock" />
+        android:src="@drawable/laika_time_red"
+        android:padding="2dp"/>
 
     <ImageView
         android:id="@+id/imageView13"
@@ -145,8 +146,8 @@
         android:layout_below="@+id/imageView12"
         android:layout_toEndOf="@+id/photo_events_layout"
         android:layout_toRightOf="@+id/photo_events_layout"
-        android:padding="3sp"
-        android:src="@drawable/event_calendar" />
+        android:src="@drawable/laika_days_red"
+        android:padding="2dp"/>
 
     <ImageView
         android:id="@+id/imageView14"

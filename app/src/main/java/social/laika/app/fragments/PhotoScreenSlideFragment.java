@@ -18,7 +18,7 @@ import social.laika.app.network.RequestManager;
 
 public class PhotoScreenSlideFragment extends Fragment {
 	
-	private int mIdLayout = R.layout.photo_screen_slider_fragment;
+	private int mIdLayout = R.layout.lk_photo_screen_slider_fragment;
 	public Photo mPhoto;
 	public PhotosFragmentActivity mActivity;
     public boolean mIsFullScreen;
@@ -31,7 +31,9 @@ public class PhotoScreenSlideFragment extends Fragment {
     public ImageView mMainImageView;
     public ProgressBar mProgressBar;
 
-	public PhotoScreenSlideFragment(Photo mPhoto, PhotosFragmentActivity mActivity) {
+    public PhotoScreenSlideFragment() { }
+
+    public PhotoScreenSlideFragment(Photo mPhoto, PhotosFragmentActivity mActivity) {
 
         this.mActivity = mActivity;
 		this.mPhoto = mPhoto;

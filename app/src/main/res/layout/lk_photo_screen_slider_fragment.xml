@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@android:color/black"
     tools:context="social.laika.app.activities.ShowImageActivity"
     android:id="@+id/fullscreen_photo_screen_slider_relativelayout">
 
@@ -43,29 +43,29 @@
         android:layout_alignParentStart="true"
         android:paddingBottom="20dp"
         android:id="@+id/information_photo_screen_slider_linearlayout"
-        android:background="@color/semi_trans_background"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="&quot;Filipo acostadito en su cama&quot;"
             android:id="@+id/detail_photo_screen_slider_textview"
-            android:textColor="@color/light_black_font" />
+            android:textColor="@color/laika_dark_white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="por Camila Ávalos"
             android:id="@+id/owner_photo_screen_slider_textview"
-            android:textColor="@color/light_black_font" />
+            android:textColor="@color/laika_dark_white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="08 de Abril de 2015, 12:30"
             android:id="@+id/date_photo_screen_slider_textview"
-            android:textColor="@color/light_black_font" />
+            android:textColor="@color/laika_dark_white" />
     </LinearLayout>
 
     <!-- This FrameLayout insets its children based on system windows using

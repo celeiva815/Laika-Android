@@ -34,6 +34,16 @@
         <item name="android:background">@android:drawable/bottom_bar</item>
     </style>
 
+    <style name="FacebookLoginButton">
+        <item name="android:textSize">@dimen/laika_big_text</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
 

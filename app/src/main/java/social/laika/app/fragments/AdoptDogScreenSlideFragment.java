@@ -48,6 +48,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public TextView mFoundationTextView;
     public TextView mIdTextView;
     public TextView mStatusTextView;
+    public ImageView mArrowImageView;
     public Button mPostulateButton;
 
 	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
@@ -77,6 +78,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mFoundationTextView = (TextView) view.findViewById(R.id.foundation_adopt_dog_screen_slide_textview);
         mIdTextView = (TextView) view.findViewById(R.id.id_adopt_dog_screen_slide_textview);
         mStatusTextView = (TextView) view.findViewById(R.id.status_postulated_adopt_dog_textview);
+        mArrowImageView = (ImageView) view.findViewById(R.id.arrow_swipe_imageview);
         mPostulateButton = (Button) view.findViewById(R.id.postulate_adopt_dog_button);
 
         mNameTextView.setText(mDog.mName);
@@ -111,12 +113,17 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             public void onPanelCollapsed(View view) {
 
                 ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(true);
+
+//                Do.ImageViewAnimatedChange(view.getContext(), mArrowImageView, R.drawable.laika_arrowup_grey);
+                mArrowImageView.setImageResource(R.drawable.laika_arrowup_grey);
             }
 
             @Override
             public void onPanelExpanded(View view) {
 
                 ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(false);
+//                Do.ImageViewAnimatedChange(view.getContext(), mArrowImageView, R.drawable.laika_arrowdown_grey);
+                mArrowImageView.setImageResource(R.drawable.laika_arrowdown_grey);
 
             }
 
@@ -129,6 +136,8 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             public void onPanelHidden(View view) {
 
                 ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(true);
+//                Do.ImageViewAnimatedChange(view.getContext(), mArrowImageView, R.drawable.laika_arrowup_grey);
+                mArrowImageView.setImageResource(R.drawable.laika_arrowup_grey);
 
             }
         });
