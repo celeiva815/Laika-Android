@@ -2,9 +2,11 @@ package social.laika.app.listeners;
 
 import social.laika.app.R;
 import social.laika.app.models.Dog;
+import social.laika.app.models.Owner;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ConfirmAdoptionResponse;
+import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
 import android.app.Activity;
@@ -48,43 +50,62 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-        final Context context = v.getContext();
-        dialog.setView(getView(context));
-        dialog.setPositiveButton(R.string.accept_dialog, new DialogInterface.OnClickListener() {
+        if (isGrownUp(v.getContext())) {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+            final Context context = v.getContext();
+            dialog.setView(getView(context));
+            dialog.setPositiveButton(R.string.accept_dialog, new DialogInterface.OnClickListener() {
 
-                mProgressDialog = ProgressDialog.show(context, "Postulando...",
-                        "Enviando notificación de postulación");
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                requestPostulation();
-                dialog.dismiss();
-            }
-        });
-        dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
+                    mProgressDialog = ProgressDialog.show(context, "Postulando...",
+                            "Enviando notificación de postulación");
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    requestPostulation();
+                    dialog.dismiss();
+                }
+            });
+            dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
 
-                dialog.dismiss();
-            }
-        });
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-        dialog.show();
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        } else {
+
+            Do.showLongToast("¡Lo sentimos! Debes ser mayor de edad para adoptar perritos.",
+                    v.getContext());
+            Do.showLongToast("Invita a tus padres o familia a Laika para que postulen por la " +
+                    "adopción de " + mDog.mName + ".", v.getContext());
+
+        }
     }
 
     private View getView(Context context) {
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(mIdLayout, null, false);
 
         TextView question = (TextView) view.findViewById(R.id.simple_textview);
-        question.setText("¿Estás seguro de que deseas postular por la adopción de " + mDog.mName + "?");
+        question.setText("¿Estás seguro de que deseas postular por la adopción de " + mDog.mName +
+                "?");
 
         return view;
+    }
 
+    public boolean isGrownUp(Context context) {
+
+        Owner owner = PrefsManager.getLoggedOwner(context);
+
+        return owner.isGrownUp();
     }
 
     public void requestPostulation() {

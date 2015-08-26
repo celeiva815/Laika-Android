@@ -13,6 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import social.laika.app.R;
@@ -277,5 +279,19 @@ public class Owner extends Model {
     public City getCity() {
 
         return City.getSingleCity(mCityId);
+    }
+
+    public boolean isGrownUp() {
+
+        //TODO mejorar el algoritmo para que sea 18 años bien.
+        Date birthDate = Do.stringToDate(mBirthDate, Do.DAY_FIRST);
+        Calendar birthCalendar = Calendar.getInstance();
+        birthCalendar.setTime(birthDate);
+
+        Calendar nowCalendar = Calendar.getInstance();
+
+        int years = nowCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+
+        return years >= 18;
     }
 }
