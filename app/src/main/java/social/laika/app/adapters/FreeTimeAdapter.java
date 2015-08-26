@@ -31,6 +31,17 @@ public class FreeTimeAdapter extends BaseAdapter {
 
     }
 
+    public int getPosition(int homeType) {
+
+        for (FreeTime freeTime : mFreeTimes) {
+            if (freeTime.mIndex == homeType) {
+                return mFreeTimes.indexOf(freeTime);
+            }
+        }
+
+        return 0;
+    }
+
     @Override
     public int getCount() {
         return mFreeTimes.size();

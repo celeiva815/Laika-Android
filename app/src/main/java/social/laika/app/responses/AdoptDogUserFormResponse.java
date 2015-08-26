@@ -67,7 +67,7 @@ public class AdoptDogUserFormResponse implements Response.ErrorListener,
             }
         }
 
-            mActivity.mProgressDialog.dismiss();
+        mActivity.mProgressDialog.dismiss();
 
     }
 

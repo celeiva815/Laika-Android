@@ -17,7 +17,7 @@ import social.laika.app.models.indexes.Space;
  */
 public class SpaceAdapter extends BaseAdapter {
 
-    public List<Space> mS;
+    public List<Space> mSpaces;
     public Context mContext;
     public int mIdLayout;
     public int mIdTextview;
@@ -27,30 +27,41 @@ public class SpaceAdapter extends BaseAdapter {
         mContext = context;
         mIdLayout = resource;
         mIdTextview = textViewResourceId;
-        mS = objects;
+        mSpaces = objects;
 
+    }
+
+    public int getPosition(int homeType) {
+
+        for (Space space : mSpaces) {
+            if (space.mIndex == homeType) {
+                return mSpaces.indexOf(space);
+            }
+        }
+
+        return 0;
     }
 
     @Override
     public int getCount() {
-        return mS.size();
+        return mSpaces.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mS.get(position);
+        return mSpaces.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return mS.get(position).mIndex;
+        return mSpaces.get(position).mIndex;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         TextView textView = (TextView) View.inflate(mContext, android.R.layout.simple_spinner_item, null);
-        textView.setText(mS.get(position).mName);
+        textView.setText(mSpaces.get(position).mName);
         textView.setTextColor(mContext.getResources().getColor(R.color.light_black_font));
         textView.setBackground(mContext.getResources().getDrawable(R.drawable.laikatheme_textfield_default_holo_light));
         return textView;
@@ -65,7 +76,7 @@ public class SpaceAdapter extends BaseAdapter {
             convertView = inflater.inflate(mIdLayout, null);
         }
 
-        ((TextView) convertView).setText(mS.get(position).mName);
+        ((TextView) convertView).setText(mSpaces.get(position).mName);
         return convertView;
 
 

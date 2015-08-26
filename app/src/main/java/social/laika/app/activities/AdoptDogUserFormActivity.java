@@ -184,10 +184,11 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
     private void setValues() {
 
         Owner owner = PrefsManager.getLoggedOwner(getApplicationContext());
+        AdoptDogForm form = AdoptDogForm.getSingleDogForm();
 
         mPhoneEditText.setText(owner.mPhone);
 
-        if (mCity != null && mCity.mCityId > 1) {
+        if (mCity != null && mCity.mCityId > 0) {
 
             int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
                     getPosition(mCity.getRegion());
@@ -200,6 +201,56 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
 
         }
 
+        if (form.mHomeType > 0) {
+
+            int homePosition = ((SpaceAdapter) mHomeSpinner.getAdapter()).getPosition(form.mHomeType);
+            mHomeSpinner.setSelection(homePosition);
+        }
+
+        if (form.mFreeTime > 0) {
+
+            int position = ((FreeTimeAdapter) mFreeTimeSpinner.getAdapter()).getPosition(form.mFreeTime);
+            mFreeTimeSpinner.setSelection(position);
+        }
+
+        if (!Do.isNullOrEmpty(form.mPhone)) {
+
+            mPhoneEditText.setText(form.mPhone);
+        }
+
+        if (form.mHasKids) {
+
+            ((RadioButton) findViewById(R.id.yes_kid_dog_form_radiobutton)).setChecked(true);
+            mKids = true;
+
+        } else {
+
+            ((RadioButton) findViewById(R.id.no_kid_dog_form_radiobutton)).setChecked(true);
+            mKids = false;
+        }
+
+        if (form.mHasElderly) {
+
+            ((RadioButton) findViewById(R.id.yes_elderly_dog_form_radiobutton)).setChecked(true);
+            mElderly = true;
+
+        } else {
+
+            ((RadioButton) findViewById(R.id.no_elderly_dog_form_radiobutton)).setChecked(true);
+            mElderly = false;
+
+        }
+
+        if (form.mHasPet) {
+
+            ((RadioButton) findViewById(R.id.yes_pet_dog_form_radiobutton)).setChecked(true);
+            mPets = true;
+
+        } else {
+
+            ((RadioButton) findViewById(R.id.no_pet_dog_form_radiobutton)).setChecked(true);
+            mPets = false;
+        }
     }
 
     public void requestAdoptionDogForm(AdoptDogForm adoptDogForm) {
