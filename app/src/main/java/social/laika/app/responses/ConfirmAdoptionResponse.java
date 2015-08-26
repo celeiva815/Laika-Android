@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.AdoptDogSuccessActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
+import social.laika.app.utils.Do;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -48,9 +49,19 @@ public class ConfirmAdoptionResponse implements Response.Listener<JSONObject>, R
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mActivity.getApplicationContext());
-        mProgressDialog.dismiss();
+        if (error.networkResponse.statusCode == 406) {
 
+            String message = Do.isNullOrEmpty(error.getMessage()) ?
+                    "¡Lo sentimos! No puedes postular a más de 3 perritos simultáneamente." :
+                    error.getMessage();
+
+            Do.showLongToast(message, mContext);
+
+        } else {
+            ResponseHandler.error(error, mActivity.getApplicationContext());
+        }
+
+        mProgressDialog.dismiss();
     }
 
     private void changeActivity(UserAdoptDog userAdoptDog) {
