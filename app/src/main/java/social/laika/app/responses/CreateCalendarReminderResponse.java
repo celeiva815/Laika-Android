@@ -7,17 +7,17 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.AlarmReminderMyDogFragment;
+import social.laika.app.fragments.CreateAlarmReminderFragment;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
  */
 public class CreateCalendarReminderResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    public AlarmReminderMyDogFragment mFragment;
+    public CreateAlarmReminderFragment mFragment;
     public Context mContext;
 
-    public CreateCalendarReminderResponse(AlarmReminderMyDogFragment mFragment) {
+    public CreateCalendarReminderResponse(CreateAlarmReminderFragment mFragment) {
         this.mFragment = mFragment;
         this.mContext = mFragment.getActivity().getApplicationContext();
     }

@@ -8,13 +8,9 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.R;
-import social.laika.app.activities.MyDogsActivity;
-import social.laika.app.fragments.AlarmReminderMyDogFragment;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.utils.Do;
 
 /**
  * Created by Tito_Leiva on 07-05-15.

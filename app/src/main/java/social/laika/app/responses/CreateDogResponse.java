@@ -9,14 +9,16 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.CreateDogActivity;
 import social.laika.app.models.Dog;
+import social.laika.app.models.Owner;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
  */
 public class CreateDogResponse implements Response.ErrorListener,
-        Response.Listener<JSONObject>  {
+        Response.Listener<JSONObject> {
 
     public CreateDogActivity mActivity;
     public String mMessage;
@@ -31,9 +33,11 @@ public class CreateDogResponse implements Response.ErrorListener,
 
         Context context = mActivity.getApplicationContext();
         Dog dog = Dog.saveDog(response, Tag.DOG_OWNED);
+        Owner owner = PrefsManager.getLoggedOwner(context);
+        owner.createOwnerDog(context, dog);
+
         Do.showShortToast(mMessage + dog.mName, context);
         mActivity.onBackPressed();
-
     }
 
     @Override
@@ -42,7 +46,5 @@ public class CreateDogResponse implements Response.ErrorListener,
         mActivity.enableViews(true);
         ResponseHandler.error(error, mActivity);
         Do.showShortToast("Hubo un error", mActivity);
-
     }
-
 }

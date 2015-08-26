@@ -29,7 +29,7 @@ import social.laika.app.fragments.AlbumMyDogFragment;
 import social.laika.app.fragments.DogProfileFragment;
 import social.laika.app.fragments.HistoryMyDogFragment;
 import social.laika.app.fragments.OwnersFragment;
-import social.laika.app.fragments.RemindersMyDogFragment;
+import social.laika.app.fragments.RemindersFragment;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.AddOwnerDogOnClickListener;
@@ -75,7 +75,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public DogProfileFragment mDogProfileFragment;
     public HistoryMyDogFragment mHistoryFragment;
     public VetVisitsFragment mVetVisitsFragment;
-    public RemindersMyDogFragment mRemindersFragment;
+    public RemindersFragment mRemindersFragment;
     public OwnersFragment mOwnerFragment;
     public AlbumMyDogFragment mAlbumFragment;
     public String mCurrentPhotoPath;
@@ -272,16 +272,16 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public void setReminderFragment(AlarmReminder alarmReminder) {
 
-        mRemindersFragment = RemindersMyDogFragment.newInstance(mDog.mDogId,
-                alarmReminder.mAlarmReminderId, RemindersMyDogFragment.KEY_ALARM);
+        mRemindersFragment = RemindersFragment.newInstance(mDog.mDogId,
+                alarmReminder.mAlarmReminderId, RemindersFragment.KEY_ALARM);
 
         mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
     }
 
     public void setReminderFragment(CalendarReminder calendarReminder) {
 
-        mRemindersFragment = RemindersMyDogFragment.newInstance(mDog.mDogId,
-                calendarReminder.mCalendarReminderId, RemindersMyDogFragment.KEY_CALENDAR);
+        mRemindersFragment = RemindersFragment.newInstance(mDog.mDogId,
+                calendarReminder.mCalendarReminderId, RemindersFragment.KEY_CALENDAR);
 
         mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
     }

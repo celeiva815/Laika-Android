@@ -31,10 +31,10 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class AlarmReminderMyDogFragment extends Fragment implements
+public class CreateAlarmReminderFragment extends Fragment implements
         TimePickerDialog.OnTimeSetListener, Requestable {
 
-    public static final String TAG = AlarmReminderMyDogFragment.class.getSimpleName();
+    public static final String TAG = CreateAlarmReminderFragment.class.getSimpleName();
     public static final String TIMEPICKER_TAG = "timepicker";
 
     private int mIdLayout = R.layout.lk_alarm_reminder_my_dog_fragment;
@@ -66,14 +66,14 @@ public class AlarmReminderMyDogFragment extends Fragment implements
     public String mMessage = "";
 
     //FIXME cambiarlo a la forma comun de instanciar fragments
-    public AlarmReminderMyDogFragment(Dog mDog, int mReminderCategory) {
+    public CreateAlarmReminderFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
         this.mRequestMethod = RequestManager.METHOD_POST;
     }
 
-    public AlarmReminderMyDogFragment(Dog mDog, AlarmReminder alarmReminder) {
+    public CreateAlarmReminderFragment(Dog mDog, AlarmReminder alarmReminder) {
 
         this.mDog = mDog;
         this.mAlarmReminder = alarmReminder;
@@ -122,44 +122,52 @@ public class AlarmReminderMyDogFragment extends Fragment implements
 
                 Context context = v.getContext();
 
-                String title = mTitleEditText.getText().toString();
-                String detail = mDetailEditText.getText().toString();
+                if (mMonday || mTuesday || mWednesday || mThursday || mFriday || mSaturday || mSunday) {
 
-                if (mAlarmReminder != null) {
+                    String title = mTitleEditText.getText().toString();
+                    String detail = mDetailEditText.getText().toString();
 
-                    mAlarmReminder.cancelAlarm(context);
+                    if (mAlarmReminder != null) {
 
-                    mAlarmReminder.mTitle = title;
-                    mAlarmReminder.mDetail = detail;
-                    mAlarmReminder.mHasMonday = mMonday;
-                    mAlarmReminder.mHasTuesday = mTuesday;
-                    mAlarmReminder.mHasWednesday = mWednesday;
-                    mAlarmReminder.mHasThursday = mThursday;
-                    mAlarmReminder.mHasFriday = mFriday;
-                    mAlarmReminder.mHasSaturday = mSaturday;
-                    mAlarmReminder.mHasSunday = mSunday;
-                    mAlarmReminder.mTime = mTime;
-                    mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
+                        mAlarmReminder.cancelAlarm(context);
 
-                    mAlarmReminder.update();
-                    mAlarmReminder.setAlarm(context);
+                        mAlarmReminder.mTitle = title;
+                        mAlarmReminder.mDetail = detail;
+                        mAlarmReminder.mHasMonday = mMonday;
+                        mAlarmReminder.mHasTuesday = mTuesday;
+                        mAlarmReminder.mHasWednesday = mWednesday;
+                        mAlarmReminder.mHasThursday = mThursday;
+                        mAlarmReminder.mHasFriday = mFriday;
+                        mAlarmReminder.mHasSaturday = mSaturday;
+                        mAlarmReminder.mHasSunday = mSunday;
+                        mAlarmReminder.mTime = mTime;
+                        mAlarmReminder.mOwnerId = PrefsManager.getUserId(context);
 
-                    mMessage = Do.getRString(context, R.string.edit_reminder_added);
+                        mAlarmReminder.update();
+                        mAlarmReminder.setAlarm(context);
+
+                        mMessage = Do.getRString(context, R.string.edit_reminder_added);
+
+                    } else {
+
+                        mAlarmReminder = new AlarmReminder(Tag.TYPE_ALARM,
+                                mReminderCategory, title, detail, Tag.STATUS_NOT_ACTIVATED, mMonday,
+                                mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
+                                PrefsManager.getUserId(context), mDog.mDogId);
+
+                        mAlarmReminder.create();
+                        mAlarmReminder.setAlarm(context);
+                        mMessage = Do.getRString(context, R.string.new_reminder_added);
+
+                    }
+
+                    onSuccess();
 
                 } else {
 
-                    mAlarmReminder = new AlarmReminder(Tag.TYPE_ALARM,
-                            mReminderCategory, title, detail, Tag.STATUS_NOT_ACTIVATED, mMonday,
-                            mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSunday, mTime,
-                            PrefsManager.getUserId(context), mDog.mDogId);
-
-                    mAlarmReminder.create();
-                    mAlarmReminder.setAlarm(context);
-                    mMessage = Do.getRString(context, R.string.new_reminder_added);
+                    Do.showShortToast("Debes seleccionar algún día de la semana", context);
 
                 }
-
-                onSuccess();
             }
         });
 

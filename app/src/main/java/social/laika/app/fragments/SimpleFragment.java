@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import social.laika.app.activities.WelcomeActivity;
+import social.laika.app.wasted.WelcomeActivity;
 
 public class SimpleFragment extends Fragment {
 

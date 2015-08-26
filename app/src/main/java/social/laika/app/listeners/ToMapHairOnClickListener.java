@@ -1,6 +1,6 @@
 package social.laika.app.listeners;
 
-import social.laika.app.activities.MapHairActivity;
+import social.laika.app.wasted.MapHairActivity;
 import social.laika.app.utils.Do;
 
 import android.view.View;

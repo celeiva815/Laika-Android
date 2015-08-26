@@ -1,8 +1,9 @@
-package social.laika.app.activities;
+package social.laika.app.wasted;
 
 import android.view.View;
 
 import social.laika.app.R;
+import social.laika.app.activities.BaseActivity;
 
 public class FoodActivity extends BaseActivity {
 	

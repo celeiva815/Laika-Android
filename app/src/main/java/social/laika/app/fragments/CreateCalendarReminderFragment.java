@@ -28,7 +28,7 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class CalendarReminderMyDogFragment extends Fragment implements OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class CreateCalendarReminderFragment extends Fragment implements OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     private int mIdLayout = R.layout.lk_calendar_reminder_my_dog_fragment;
     public Dog mDog;
@@ -45,14 +45,14 @@ public class CalendarReminderMyDogFragment extends Fragment implements OnDateSet
     public int mRequestMethod;
     public String mMessage = "";
 
-    public CalendarReminderMyDogFragment(Dog mDog, int mReminderCategory) {
+    public CreateCalendarReminderFragment(Dog mDog, int mReminderCategory) {
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
         this.mRequestMethod = RequestManager.METHOD_POST;
     }
 
-    public CalendarReminderMyDogFragment(Dog mDog, CalendarReminder mCalendarReminder) {
+    public CreateCalendarReminderFragment(Dog mDog, CalendarReminder mCalendarReminder) {
 
         this.mDog = mDog;
         this.mCalendarReminder = mCalendarReminder;

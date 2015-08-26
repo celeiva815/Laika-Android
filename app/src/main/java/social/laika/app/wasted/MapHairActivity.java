@@ -1,5 +1,4 @@
-package social.laika.app.activities;
-
+package social.laika.app.wasted;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,7 +14,7 @@ import android.os.Bundle;
 
 import social.laika.app.R;
 
-public class MapActivity extends Activity {
+public class MapHairActivity extends Activity {
 	private GoogleMap googleMap;
 	private LatLng myPosition;
 	private Context ctxt;
@@ -31,28 +30,12 @@ public class MapActivity extends Activity {
         LatLng loc = new LatLng(-33.439248, -70.63978);
        // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
-        
-        
 		
-		LatLng pos2 = new LatLng(-33.4402333,-70.6465263);
-		Marker vet2 = googleMap.addMarker(new MarkerOptions()
-		.position(pos2)
-		.title("Farmacia Veterinaria Dr. Schmidt Herman")
-		.snippet("Monjitas 668 Santiago Regi�n Metropolitana")
-		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-		
-		LatLng pos3 = new LatLng(-33.4439218,-70.6422348);
-		Marker vet3 = googleMap.addMarker(new MarkerOptions()
-		.position(pos3)
-		.title("Cl�nica Veterinaria")
-		.snippet("General Jofre 230 Santiago Centro Regi�n Metropolitana")
-		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-		
-		LatLng pos4 = new LatLng(-33.4461599,-70.6379218);
-		Marker vet4 = googleMap.addMarker(new MarkerOptions()
-		.position(pos4)
-		.title("Cl�nica Veterinaria Parque Bustamante")
-		.snippet("Joaqu�n D�az Garc�s 11 Providencia Regi�n Metropolitana")
+        LatLng pos = new LatLng(-33.4396245,-70.6421919);
+		Marker vet1 = googleMap.addMarker(new MarkerOptions()
+		.position(pos)
+		.title("Peluqueria Canina & Pet shop")
+		.snippet("Avda. Portugal 87 Remodelacion San Borja Torre 8 Santigo 8320000 Regi�n Metropolitana")
 		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
 		

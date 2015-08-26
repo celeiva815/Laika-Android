@@ -454,6 +454,7 @@ public class EditUserActivity extends ActionBarActivity
 
     public List<Region> getRegions(Context context) {
 
+        //FIXME se cae, seguramente porque no hay un city definido
         City city = mOwner.getCity();
         return Region.getRegions(city.getCountry().mCountryId);
     }

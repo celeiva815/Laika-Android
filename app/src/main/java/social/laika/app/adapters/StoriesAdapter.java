@@ -26,6 +26,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
     public TextView mDateTextView;
     public TextView mBodyTextView;
     public ImageView mMainImageView;
+    public ImageView mFavoriteImageView;
     public ProgressBar mProgressBar;
 
     public StoriesAdapter(Context context, int resource, List<Story> objects) {
@@ -47,6 +48,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         mDateTextView = (TextView) view.findViewById(R.id.date_stories_textview);
         mBodyTextView = (TextView) view.findViewById(R.id.body_stories_textview);
         mMainImageView = (ImageView) view.findViewById(R.id.main_stories_imageview);
+        mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_stories_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
 
         mTitleTextView.setText(story.mTitle);
@@ -63,8 +65,26 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
             // mMainImageView.setImageResource(R.drawable.event_1); DESIGN definir una imagen predeterminada
         }
 
+        setFavorite(story, story.mIsFavorite);
+
+        mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                setFavorite(story, !story.mIsFavorite);
+            }
+        });
 
         return view;
+
+    }
+
+    public void setFavorite(Story story, boolean isFavorite) {
+
+        story.setIsFavorite(true);
+        int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
+        mFavoriteImageView.setImageResource(resource);
 
     }
 }

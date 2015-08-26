@@ -20,7 +20,7 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class RemindersMyDogFragment extends Fragment {
+public class RemindersFragment extends Fragment {
 
     public static final String KEY_DOG = "mDog";
     public static final String KEY_ALARM = "alarm";
@@ -42,21 +42,21 @@ public class RemindersMyDogFragment extends Fragment {
     public LinearLayout mAlarmLayout;
     public LinearLayout mCalendarLayout;
 
-    public RemindersMyDogFragment() {
+    public RemindersFragment() {
     }
 
-    public static final RemindersMyDogFragment newInstance(int dogId)
+    public static final RemindersFragment newInstance(int dogId)
     {
-        RemindersMyDogFragment f = new RemindersMyDogFragment();
+        RemindersFragment f = new RemindersFragment();
         Bundle bdl = new Bundle(1);
         bdl.putInt(KEY_DOG, dogId);
         f.setArguments(bdl);
         return f;
     }
 
-    public static final RemindersMyDogFragment newInstance(int dogId, int reminderId, String key)
+    public static final RemindersFragment newInstance(int dogId, int reminderId, String key)
     {
-        RemindersMyDogFragment f = new RemindersMyDogFragment();
+        RemindersFragment f = new RemindersFragment();
         Bundle bundle = new Bundle(1);
         bundle.putInt(KEY_DOG, dogId);
         bundle.putInt(key, reminderId);
@@ -197,7 +197,7 @@ public class RemindersMyDogFragment extends Fragment {
             getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new AlarmReminderMyDogFragment(mDog, reminderCategory);
+        mFragment = new CreateAlarmReminderFragment(mDog, reminderCategory);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -208,7 +208,7 @@ public class RemindersMyDogFragment extends Fragment {
             getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new AlarmReminderMyDogFragment(mDog, alarmReminder);
+        mFragment = new CreateAlarmReminderFragment(mDog, alarmReminder);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -219,7 +219,7 @@ public class RemindersMyDogFragment extends Fragment {
             getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new CalendarReminderMyDogFragment(mDog, reminderCategory);
+        mFragment = new CreateCalendarReminderFragment(mDog, reminderCategory);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -230,7 +230,7 @@ public class RemindersMyDogFragment extends Fragment {
             getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new CalendarReminderMyDogFragment(mDog, calendarReminder);
+        mFragment = new CreateCalendarReminderFragment(mDog, calendarReminder);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }

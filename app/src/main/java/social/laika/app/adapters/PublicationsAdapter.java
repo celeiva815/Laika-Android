@@ -41,9 +41,9 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
 
-        final Publication publication = mPublications.get(position);
+        Publication publication = mPublications.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
@@ -55,7 +55,6 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mMainImageView = (ImageView) view.findViewById(R.id.main_news_imageview);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_publication_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
-
 
         mTitleTextView.setText(publication.mTitle);
         mSponsorTextView.setText(publication.getSponsor());
@@ -72,11 +71,14 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             mMainImageView.setImageResource(R.drawable.event_1); //DESIGN definir una imagen predeterminada
         }
 
+        setFavorite(publication, publication.mIsFavorite);
+
         mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
+                Publication publication = mPublications.get(position);
                 setFavorite(publication, !publication.mIsFavorite);
             }
         });
@@ -89,15 +91,11 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
     public void setFavorite(Publication publication, boolean isFavorite) {
 
-        if (isFavorite) {
-            publication.setIsFavorite(true);
-            mFavoriteImageView.setImageResource(R.drawable.star102_yellow);
+        publication.setIsFavorite(isFavorite);
+        int resource = publication.mIsFavorite ? R.drawable.laika_favorite_red :
+                R.drawable.laika_favorite_white;
 
-        } else {
-            publication.setIsFavorite(false);
-            mFavoriteImageView.setImageResource(R.drawable.star102);
-
-        }
+        mFavoriteImageView.setImageResource(resource);
 
     }
 

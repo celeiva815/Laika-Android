@@ -1,4 +1,4 @@
-package social.laika.app.activities;
+package social.laika.app.wasted;
 
 import android.app.Activity;
 import android.app.Fragment;

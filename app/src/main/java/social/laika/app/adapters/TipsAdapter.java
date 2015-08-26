@@ -26,6 +26,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
     public TextView mTitleTextView;
     public TextView mBodyTextView;
     public ImageView mMainImageView;
+    public ImageView mFavoriteImageView;
     public ProgressBar mProgressBar;
 
     public TipsAdapter(Context context, int resource, List<Tip> objects) {
@@ -38,7 +39,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        Tip tip = tips.get(position);
+        final Tip tip = tips.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
         mSponsorTextView = (TextView) view.findViewById(R.id.sponsor_tip_textview);
@@ -46,6 +47,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mBodyTextView = (TextView) view.findViewById(R.id.body_tip_textview);
         mMainImageView = (ImageView) view.findViewById(R.id.main_tip_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
+        mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_tip_imageview);
         mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrlTip));
 
         mSponsorTextView.setText(tip.mSponsorName);
@@ -61,7 +63,26 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
             // mMainImageView.setImageResource(R.drawable.event_1); DESIGN definir una imagen predeterminada
         }
 
+        setFavorite(tip, tip.mIsFavorite);
+
+        mFavoriteImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                setFavorite(tip, !tip.mIsFavorite);
+            }
+        });
+
         return view;
+
+    }
+
+    public void setFavorite(Tip tip, boolean isFavorite) {
+
+        tip.setIsFavorite(isFavorite);
+        int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
+        mFavoriteImageView.setImageResource(resource);
 
     }
 }

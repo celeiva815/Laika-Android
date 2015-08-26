@@ -1,6 +1,6 @@
 package social.laika.app.listeners;
 
-import social.laika.app.activities.PublicationsFragmentActivity;
+import social.laika.app.wasted.PublicationsFragmentActivity;
 import social.laika.app.utils.Do;
 
 import android.view.View;

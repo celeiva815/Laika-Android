@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import social.laika.app.R;
-import social.laika.app.fragments.AlarmReminderMyDogFragment;
-import social.laika.app.fragments.CalendarReminderMyDogFragment;
+import social.laika.app.fragments.CreateAlarmReminderFragment;
+import social.laika.app.fragments.CreateCalendarReminderFragment;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
@@ -208,7 +208,7 @@ public class CreateReminderActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new AlarmReminderMyDogFragment(mDog, reminderCategory);
+        mFragment = new CreateAlarmReminderFragment(mDog, reminderCategory);
         getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -219,7 +219,7 @@ public class CreateReminderActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new AlarmReminderMyDogFragment(mDog, alarmReminder);
+        mFragment = new CreateAlarmReminderFragment(mDog, alarmReminder);
         getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -230,7 +230,7 @@ public class CreateReminderActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new CalendarReminderMyDogFragment(mDog, reminderCategory);
+        mFragment = new CreateCalendarReminderFragment(mDog, reminderCategory);
         getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }
@@ -241,7 +241,7 @@ public class CreateReminderActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
         }
 
-        mFragment = new CalendarReminderMyDogFragment(mDog, calendarReminder);
+        mFragment = new CreateCalendarReminderFragment(mDog, calendarReminder);
         getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
 
     }

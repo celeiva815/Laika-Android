@@ -1,4 +1,4 @@
-package social.laika.app.fragments;
+package social.laika.app.wasted;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

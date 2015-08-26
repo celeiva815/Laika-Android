@@ -1,6 +1,6 @@
 package social.laika.app.listeners;
 
-import social.laika.app.activities.GPlusSignInActivity;
+import social.laika.app.wasted.GPlusSignInActivity;
 import social.laika.app.utils.Do;
 
 import android.app.Activity;

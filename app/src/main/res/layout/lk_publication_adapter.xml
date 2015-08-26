@@ -105,7 +105,7 @@
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/share_news_imageview"
-                android:src="@drawable/share41"
+                android:src="@drawable/laika_share_grey"
                 android:adjustViewBounds="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -118,7 +118,7 @@
                 android:layout_alignTop="@+id/share_news_imageview"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/star102_yellow"
+                android:src="@drawable/laika_favorite_white"
                 android:adjustViewBounds="true" />
         </RelativeLayout>
 

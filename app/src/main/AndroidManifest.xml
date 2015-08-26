@@ -37,7 +37,7 @@
         android:icon="@drawable/laika_logo"
         android:theme="@style/LaikaTheme" >
         <activity
-            android:name="social.laika.app.activities.WelcomeActivity"
+            android:name=".wasted.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
@@ -66,7 +66,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.GPlusSignInActivity"
+            android:name=".wasted.GPlusSignInActivity"
             android:exported="false"
             android:label="@string/log_in_activity_name" >
             <intent-filter>
@@ -74,11 +74,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.MapActivity"
+            android:name=".wasted.MapActivity"
             android:label="Veterinarias" >
         </activity>
         <activity
-            android:name="social.laika.app.activities.MapHairActivity"
+            android:name=".wasted.MapHairActivity"
             android:label="Peliquerías" >
         </activity>
 
@@ -211,7 +211,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.PublicationsFragmentActivity"
+            android:name=".wasted.PublicationsFragmentActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
             android:screenOrientation="portrait" >
@@ -283,7 +283,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.StoriesFragmentActivity"
+            android:name=".wasted.StoriesFragmentActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
             android:screenOrientation="portrait" >

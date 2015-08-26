@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package social.laika.app.activities;
+package social.laika.app.wasted;
 
 import java.io.InputStream;
 
@@ -46,6 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import social.laika.app.R;
+import social.laika.app.activities.BaseActivity;
 
 public class GPlusSignInActivity extends BaseActivity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener,

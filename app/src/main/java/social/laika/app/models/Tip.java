@@ -28,6 +28,7 @@ public class Tip extends Model {
     public static final String COLUMN_URL_TIP = "url_tip";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_IS_PAID = "is_paid";
+    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     public final static String API_TIPS = "tips";
     public final static String API_ID = "id";
@@ -61,6 +62,9 @@ public class Tip extends Model {
     @Column(name = COLUMN_IS_PAID)
     public boolean mIsPaid;
 
+    @Column(name = COLUMN_IS_FAVORITE)
+    public boolean mIsFavorite;
+
 
     public Tip() {
     }
@@ -90,6 +94,7 @@ public class Tip extends Model {
         this.mUrlTip = jsonObject.optString(COLUMN_URL_TIP);
         this.mType = jsonObject.optInt(COLUMN_TYPE);
         this.mIsPaid = jsonObject.optBoolean(COLUMN_IS_PAID);
+        this.mIsFavorite = false;
 
     }
 
@@ -105,8 +110,14 @@ public class Tip extends Model {
         this.mUrlTip = tip.mUrlTip;
         this.mType = tip.mType;
         this.mIsPaid = tip.mIsPaid;
+        this.mIsFavorite = tip.mIsFavorite;
 
         this.save();
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+
+        mIsFavorite = isFavorite;
     }
 
     public static List<Tip> getTips() {

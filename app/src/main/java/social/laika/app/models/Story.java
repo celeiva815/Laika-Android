@@ -27,6 +27,7 @@ public class Story extends Model {
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     public final static String API_STORIES = "stories";
     public final static String API_ID = "id";
@@ -56,6 +57,9 @@ public class Story extends Model {
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
+
+    @Column(name = COLUMN_IS_FAVORITE)
+    public boolean mIsFavorite;
 
 
     public Story() {
@@ -92,6 +96,7 @@ public class Story extends Model {
         this.mTime = jsonObject.optString(COLUMN_TIME);
         this.mBody = jsonObject.optString(COLUMN_BODY);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE, "http://www.uvhs.org/wp-content/uploads/2012/12/2013_08_AdoptionInformation.jpg");
+        this.mIsFavorite = false;
 
     }
 
@@ -112,9 +117,16 @@ public class Story extends Model {
         this.mTime = story.mTime;
         this.mBody = story.mBody;
         this.mUrlImage = story.mUrlImage;
+        this.mIsFavorite = story.mIsFavorite;
 
         this.save();
 
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+
+        mIsFavorite = isFavorite;
+        this.save();
     }
 
     // DataBase Methods

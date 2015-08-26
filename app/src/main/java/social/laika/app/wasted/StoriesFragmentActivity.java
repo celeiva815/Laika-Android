@@ -1,4 +1,4 @@
-package social.laika.app.activities;
+package social.laika.app.wasted;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.fragments.PublicationScreenSlideFragment;
-import social.laika.app.models.Publication;
+import social.laika.app.activities.MainActivity;
+import social.laika.app.fragments.StoriesScreenSlideFragment;
+import social.laika.app.models.Story;
 
-public class PublicationsFragmentActivity extends ActionBarActivity{
+public class StoriesFragmentActivity extends ActionBarActivity{
     
     private int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
@@ -31,13 +32,13 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-    private List<Publication> aNews;
+    private List<Story> stories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
-        setNewsList();
+        setStoriesList();
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
@@ -49,9 +50,10 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
         mPager.setAdapter(mPagerAdapter);
     }
 
-    private void setNewsList() {
+    private void setStoriesList() {
 
-    	this.aNews = new ArrayList<Publication>();
+    	this.stories = new ArrayList<Story>();
+    	
 	}
     
     @Override
@@ -75,23 +77,9 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
             super.onBackPressed();
             return true;
         }
+
 		return super.onOptionsItemSelected(item);
-
 	}
-
-
-	@Override
-    public void onBackPressed() {
-        /*if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.*/
-            super.onBackPressed();
-        /*} else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-         }*/ 
-    }
-       
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -105,12 +93,12 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
         @Override
         public Fragment getItem(int position) {
         	     	
-            return new PublicationScreenSlideFragment(aNews.get(position));
+            return new StoriesScreenSlideFragment(stories.get(position));
         }
 
         @Override
         public int getCount() {
-            return aNews.size();
+            return stories.size();	
         }
     }
 
