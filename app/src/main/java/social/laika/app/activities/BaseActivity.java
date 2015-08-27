@@ -280,7 +280,7 @@ public class BaseActivity extends ActionBarActivity
 
     private void unsubscribeToken() {
 
-        String token = PrefsManager.getUserToken(this);
+        String token = PrefsManager.getGCMToken(this);
         TokenRequest tokenRequest = new TokenRequest(token, this, false);
 
         tokenRequest.request();

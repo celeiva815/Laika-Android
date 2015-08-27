@@ -16,6 +16,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.activities.CreateVetVisitActivity;
+import social.laika.app.activities.VetVisitActivity;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
@@ -52,7 +53,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-            return getVetVisitView(position,view,parent);
+        return getVetVisitView(position, view, parent);
     }
 
     public View getVetVisitView(int position, View view, ViewGroup parent) {
@@ -86,9 +87,23 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                final Context context = view.getContext();
+                Context context = v.getContext();
+                Intent intent = new Intent(context, VetVisitActivity.class);
+                intent.putExtra(VetVisitActivity.KEY_DOG, mDog.mDogId);
+                intent.putExtra(VetVisitActivity.KEY_VET_VISIT, vetVisit.mVetVisitId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+
+                final Context context = v.getContext();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
                 dialog.setTitle(R.string.choose_an_option);
@@ -108,7 +123,6 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
                                         mFragment.deleteVetVisit(mVetVisits.get(pos));
 
                                         break;
-
                                 }
 
                             }
@@ -116,13 +130,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
 
                 dialog.show();
 
-
-//                Context context = v.getContext();
-//                Intent intent = new Intent(context, CreateVetVisitActivity.class);
-//                intent.putExtra(CreateVetVisitActivity.KEY_DOG, mDog.mDogId);
-//                intent.putExtra(CreateVetVisitActivity.KEY_VET_VISIT, vetVisit.mVetVisitId);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(intent);
+                return true;
             }
         });
 

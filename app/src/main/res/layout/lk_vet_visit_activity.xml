@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_marginBottom="5dp"
+            android:text="¿Cual es el nombre de la veterinaria?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text" />
+
+        <TextView
+            android:id="@+id/name_vet_visit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="¿Cuál es el nombre del Doctor?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="center_horizontal|left" />
+
+        <TextView
+            android:id="@+id/doctor_vet_visit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_marginBottom="5dp"
+            android:text="¿Que día fue la visita?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text" />
+
+        <Button
+            android:id="@+id/birthdate_vet_visit_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            android:padding="15dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/example_date_reminder"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_biggest_text" />
+
+        <TextView
+            android:id="@+id/textView44"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="¿Cual fue el motivo de la consulta?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="left" />
+
+        <TextView
+            android:id="@+id/reason_vet_visit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="false"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text"
+            android:lines="2"
+            android:gravity="top" />
+
+        <TextView
+            android:id="@+id/textView45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="¿Cuál fue la observación del médico?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="left" />
+
+        <TextView
+            android:id="@+id/detail_vet_visit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="false"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text"
+            android:lines="5"
+            android:gravity="top" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="¿Cuál fue el tratamiento?"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="left" />
+
+        <TextView
+            android:id="@+id/treatment_vet_visit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="30dp"
+            android:padding="5dp"
+            android:singleLine="false"
+            android:textColor="@color/light_black_font"
+            android:textSize="@dimen/laika_small_text"
+            android:lines="5"
+            android:gravity="top" />
+
+        <TextView
+            android:id="@+id/textView47"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Sube una foto del certificado o la visita"
+            android:textColor="@color/laika_red"
+            android:textSize="@dimen/laika_min_text"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout3"
+            android:background="@color/laika_light_red"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/profile_vet_visit_imageview"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false" />
+
+            <ProgressBar
+                android:id="@+id/download_image_progressbar"
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:focusableInTouchMode="false"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -195,6 +195,7 @@
     <string name="health_my_dog">Salud</string>
     <string name="history_my_dog">Historial</string>
     <string name="create_reminder_my_dog">Crear Recordatorio</string>
+    <string name="vet_visit_my_dog">Ficha Médica</string>
     <string name="create_vet_visit_my_dog">Crear Ficha Médica</string>
     <string name="reminders_my_dog">Recordatorios</string>
     <string name="poo_my_dog">Recoger Fecas</string>

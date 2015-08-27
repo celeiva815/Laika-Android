@@ -44,6 +44,7 @@ public class LaikaRegistrationIntentService extends IntentService {
                 // [END get_token]
                 Log.i(TAG, "GCM Registration Token: " + token);
 
+                PrefsManager.setGCMToken(this, token);
                 sendRegistrationToServer(token);
 
                 // You should store a boolean that indicates whether the generated token has been

@@ -31,6 +31,7 @@ public class PrefsManager {
 
     public static final String GCM_SENT_TOKEN_TO_SERVER = "setSentTokenToServer";
     public static final String GCM_REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String GCM_TOKEN = "GCMToken";
 
     private PrefsManager() {
 
@@ -150,6 +151,18 @@ public class PrefsManager {
 
         SharedPreferences prefs = getPrefs(context);
         return prefs.getBoolean(GCM_SENT_TOKEN_TO_SERVER, false);
+    }
+
+    public static void setGCMToken(Context context, String token) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putString(GCM_TOKEN, token);
+        editor.apply();
+    }
+
+    public static String getGCMToken(Context context) {
+
+        SharedPreferences prefs = getPrefs(context);
+        return prefs.getString(GCM_TOKEN, "");
     }
 
     // #####################################

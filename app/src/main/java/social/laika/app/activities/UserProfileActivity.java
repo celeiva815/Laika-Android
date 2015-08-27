@@ -91,16 +91,6 @@ public class UserProfileActivity extends ActionBarActivity {
         mDogsListView = (ListView) findViewById(R.id.dogs_user_profile_listview);
         mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
 
-        mDogsListView.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
         mProfileImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -129,6 +119,16 @@ public class UserProfileActivity extends ActionBarActivity {
         }
 
         mDogsAdapter = new DogsAdapter(context, R.layout.lk_dog_user_profile_row, mDogs);
+
+        mDogsListView.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         mDogsListView.setAdapter(mDogsAdapter);
         Do.setListViewHeightBasedOnChildren(mDogsListView);
 

@@ -201,55 +201,58 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
 
         }
 
-        if (form.mHomeType > 0) {
+        if (form != null) {
 
-            int homePosition = ((SpaceAdapter) mHomeSpinner.getAdapter()).getPosition(form.mHomeType);
-            mHomeSpinner.setSelection(homePosition);
-        }
+            if (form.mHomeType > 0) {
 
-        if (form.mFreeTime > 0) {
+                int homePosition = ((SpaceAdapter) mHomeSpinner.getAdapter()).getPosition(form.mHomeType);
+                mHomeSpinner.setSelection(homePosition);
+            }
 
-            int position = ((FreeTimeAdapter) mFreeTimeSpinner.getAdapter()).getPosition(form.mFreeTime);
-            mFreeTimeSpinner.setSelection(position);
-        }
+            if (form.mFreeTime > 0) {
 
-        if (!Do.isNullOrEmpty(form.mPhone)) {
+                int position = ((FreeTimeAdapter) mFreeTimeSpinner.getAdapter()).getPosition(form.mFreeTime);
+                mFreeTimeSpinner.setSelection(position);
+            }
 
-            mPhoneEditText.setText(form.mPhone);
-        }
+            if (!Do.isNullOrEmpty(form.mPhone)) {
 
-        if (form.mHasKids) {
+                mPhoneEditText.setText(form.mPhone);
+            }
 
-            ((RadioButton) findViewById(R.id.yes_kid_dog_form_radiobutton)).setChecked(true);
-            mKids = true;
+            if (form.mHasKids) {
 
-        } else {
+                ((RadioButton) findViewById(R.id.yes_kid_dog_form_radiobutton)).setChecked(true);
+                mKids = true;
 
-            ((RadioButton) findViewById(R.id.no_kid_dog_form_radiobutton)).setChecked(true);
-            mKids = false;
-        }
+            } else {
 
-        if (form.mHasElderly) {
+                ((RadioButton) findViewById(R.id.no_kid_dog_form_radiobutton)).setChecked(true);
+                mKids = false;
+            }
 
-            ((RadioButton) findViewById(R.id.yes_elderly_dog_form_radiobutton)).setChecked(true);
-            mElderly = true;
+            if (form.mHasElderly) {
 
-        } else {
+                ((RadioButton) findViewById(R.id.yes_elderly_dog_form_radiobutton)).setChecked(true);
+                mElderly = true;
 
-            ((RadioButton) findViewById(R.id.no_elderly_dog_form_radiobutton)).setChecked(true);
-            mElderly = false;
+            } else {
 
-        }
+                ((RadioButton) findViewById(R.id.no_elderly_dog_form_radiobutton)).setChecked(true);
+                mElderly = false;
 
-        if (form.mHasPet) {
+            }
 
-            ((RadioButton) findViewById(R.id.yes_pet_dog_form_radiobutton)).setChecked(true);
-            mPets = true;
+            if (form.mHasPet) {
 
-        } else {
+                ((RadioButton) findViewById(R.id.yes_pet_dog_form_radiobutton)).setChecked(true);
+                mPets = true;
 
-            ((RadioButton) findViewById(R.id.no_pet_dog_form_radiobutton)).setChecked(true);
-            mPets = false;
+            } else {
+
+                ((RadioButton) findViewById(R.id.no_pet_dog_form_radiobutton)).setChecked(true);
+                mPets = false;
+            }
         }
     }
 

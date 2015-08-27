@@ -175,6 +175,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="social.laika.app.activities.VetVisitActivity"
+            android:exported="false"
+            android:label="@string/vet_visit_my_dog"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="social.laika.app.activities.CreateVetVisitActivity"
             android:exported="false"
             android:label="@string/create_vet_visit_my_dog"

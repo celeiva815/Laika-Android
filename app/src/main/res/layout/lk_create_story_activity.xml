@@ -78,7 +78,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearLayout3"
-            android:background="@color/laika_light_red"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
@@ -86,11 +85,11 @@
 
             <ImageView
                 android:id="@+id/adoption_story_imageview"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="false"
                 android:cropToPadding="false"
-                android:background="@drawable/laika_ic_action_camera" />
+                android:background="@drawable/laika_photo_red" />
         </RelativeLayout>
 
         <Button
