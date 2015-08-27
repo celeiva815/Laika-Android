@@ -136,7 +136,7 @@
             android:textSize="@dimen/laika_biggest_text" />
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/region_edit_user_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -150,7 +150,7 @@
             android:layout_marginBottom="20dp" />
 
         <TextView
-            android:id="@+id/textView33"
+            android:id="@+id/city_edit_user_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

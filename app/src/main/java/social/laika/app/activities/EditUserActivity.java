@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -40,6 +41,7 @@ import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.ChangeRegionLocationsOnItemSelectedListener;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.City;
+import social.laika.app.models.Country;
 import social.laika.app.models.Owner;
 import social.laika.app.models.Photo;
 import social.laika.app.models.Region;
@@ -129,24 +131,35 @@ public class EditUserActivity extends ActionBarActivity
         mProfileImageView.setOnClickListener(listener);
         mProfileImageView.setOnLongClickListener(listener);
 
-        RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
-                R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
-                getRegions(getApplicationContext()));
+        if (Country.existIso(Do.getCountryIso(getApplicationContext()))) {
 
-        mRegionSpinner.setAdapter(regionAdapter);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
-        mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
+                    R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                    getRegions(getApplicationContext()));
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCity = (City) parent.getItemAtPosition(position);
-            }
+            mRegionSpinner.setAdapter(regionAdapter);
+            mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
+            mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mCity = (City) parent.getItemAtPosition(position);
+                }
 
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+        } else {
+
+            mRegionSpinner.setVisibility(View.GONE);
+            mCitySpinner.setVisibility(View.GONE);
+            findViewById(R.id.region_edit_user_textview).setVisibility(View.GONE);
+            findViewById(R.id.city_edit_user_textview).setVisibility(View.GONE);
+
+        }
 
         mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH),
                 calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
@@ -196,7 +209,7 @@ public class EditUserActivity extends ActionBarActivity
 
         }
 
-        if (mCity != null && mCity.mCityId > 1) {
+        if (Country.existIso(Do.getCountryIso(this)) && mCity != null && mCity.mCityId > 1) {
 
             int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
                     getPosition(mCity.getRegion());
@@ -454,9 +467,16 @@ public class EditUserActivity extends ActionBarActivity
 
     public List<Region> getRegions(Context context) {
 
-        //FIXME se cae, seguramente porque no hay un city definido
-        City city = mOwner.getCity();
-        return Region.getRegions(city.getCountry().mCountryId);
+        if (mOwner.mCityId > 0) {
+
+            City city = mOwner.getCity();
+            return Region.getRegions(city.getCountry().mCountryId);
+
+        } else {
+
+            Country country = Country.getSingleCountry(Do.getCountryIso(context));
+            return Region.getRegions(country.mCountryId);
+        }
     }
 
     @Override

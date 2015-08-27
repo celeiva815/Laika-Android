@@ -67,7 +67,10 @@ public class ResponseHandler {
                 if (response.has(AdoptDogForm.TABLE_ADOPT_DOG_FORM)) {
 
                     JSONObject jsonForm = response.optJSONObject(AdoptDogForm.TABLE_ADOPT_DOG_FORM);
-                    AdoptDogForm.saveAdoptForm(jsonForm);
+
+                    if (jsonForm != null) {
+                        AdoptDogForm.saveAdoptForm(jsonForm);
+                    }
                 }
 
                 token = jsonUser.getString(RequestManager.ACCESS_TOKEN);

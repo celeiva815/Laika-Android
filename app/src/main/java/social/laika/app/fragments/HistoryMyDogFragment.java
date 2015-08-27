@@ -265,29 +265,50 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         }
     }
 
-    public void deleteReminder(History history) {
+    public void deleteReminder(final History history) {
 
-        Context context = getActivity().getApplicationContext();
+        final Context context = getActivity().getApplicationContext();
 
-        switch (history.mType) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
-            case Tag.TYPE_ALARM:
+        dialog.setMessage("¿Estás seguro de eliminar este recordatorio?");
+        dialog.setPositiveButton(R.string.accept_dialog, new DialogInterface.OnClickListener() {
 
-                AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
-                reminder.cancelAlarm(context);
-                reminder.remove();
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-                break;
+                switch (history.mType) {
 
-            case Tag.TYPE_CALENDAR:
+                    case Tag.TYPE_ALARM:
+
+                        AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
+                        reminder.cancelAlarm(context);
+                        reminder.remove();
+
+                        break;
+
+                    case Tag.TYPE_CALENDAR:
 
 
-                break;
+                        break;
 
-        }
+                }
 
-        mHistoryAdapter.remove(history);
-        refresh();
+                mHistoryAdapter.remove(history);
+                refresh();
+
+            }
+        });
+
+        dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     public void requestReminders() {
@@ -301,7 +322,6 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);
-
     }
 
     @Override

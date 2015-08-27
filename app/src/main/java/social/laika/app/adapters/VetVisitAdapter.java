@@ -128,6 +128,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
                             }
                         });
 
+                dialog.setCancelable(true);
                 dialog.show();
 
                 return true;

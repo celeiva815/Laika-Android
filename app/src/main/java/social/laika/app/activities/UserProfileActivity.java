@@ -19,6 +19,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.adapters.DogsAdapter;
+import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.City;
 import social.laika.app.models.Owner;
@@ -164,8 +165,16 @@ public class UserProfileActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.user_profile_menu, menu);
+        if (!this.getClass().equals(MainActivity.class)) {
+
+            if (Country.existIso(Do.getCountryIso(this))) {
+                getMenuInflater().inflate(R.menu.user_profile_menu, menu);
+
+            } else {
+                getMenuInflater().inflate(R.menu.user_profile_not_adoption_menu, menu);
+
+            }
+        }
 
         return true;
     }

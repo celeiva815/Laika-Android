@@ -102,11 +102,32 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
 
     }
 
-    public void deleteVetVisit(VetVisit vetVisit) {
+    public void deleteVetVisit(final VetVisit vetVisit) {
 
-        mVetVisitAdapter.remove(vetVisit);
-        vetVisit.remove();
-        refresh();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+
+        dialog.setMessage("¿Estás seguro de eliminar esta ficha médica?");
+        dialog.setPositiveButton(R.string.accept_dialog, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                mVetVisitAdapter.remove(vetVisit);
+                vetVisit.remove();
+                refresh();
+
+            }
+        });
+
+        dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override
