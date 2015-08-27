@@ -33,7 +33,7 @@ public class EditDogOnClickListener implements OnClickListener {
 
 		mDog.save();
 
-		mActivity.requestCreateOrUpdateDog(mDog, "Haz editado la información de " + mDog.mName,
+		mActivity.requestCreateOrUpdateDog(mDog, "Haz editado la información de ",
 				RequestManager.METHOD_PUT);
 	}
 
