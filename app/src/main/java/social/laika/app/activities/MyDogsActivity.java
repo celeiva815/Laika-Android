@@ -241,10 +241,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 return true;
 
-            case R.id.delete_settings:
-
-                return true;
-
         }
 
         return super.onOptionsItemSelected(item);

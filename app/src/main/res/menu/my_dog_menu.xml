@@ -45,11 +45,5 @@
         android:title="Agregar Responsable"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/delete_settings"
-        android:orderInCategory="101"
-        android:title="Eliminar Perro"
-        app:showAsAction="never" />
-
 
 </menu>
