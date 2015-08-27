@@ -27,7 +27,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-light"
                 android:text="Título"
                 android:textColor="@color/light_black_font"
                 android:textSize="@dimen/laika_small_text" />
@@ -54,7 +53,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/title_create_story_edittext"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-light"
                 android:text="Historia"
                 android:textColor="@color/light_black_font"
                 android:textSize="@dimen/laika_small_text" />

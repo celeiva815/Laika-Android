@@ -324,7 +324,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/note32" />
+                    android:src="@drawable/laika_photo_red" />
 
                 <ProgressBar
                     android:id="@+id/download_image_progressbar"
