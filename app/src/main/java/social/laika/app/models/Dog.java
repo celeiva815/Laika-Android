@@ -214,7 +214,7 @@ public class Dog extends Model {
             jsonObject.put(COLUMN_PERSONALITY, this.mPersonality);
             jsonObject.put(COLUMN_IS_STERILIZED, this.mIsSterilized);
             jsonObject.put(COLUMN_IS_TRAINED, this.mIsTrained);
-            jsonObject.put(COLUMN_CHIP_CODE, "");
+            jsonObject.put(COLUMN_CHIP_CODE, Do.isNullOrEmpty(this.mChipCode) ? "" : this.mChipCode);
             jsonObject.put(COLUMN_STATUS, this.mStatus);
 
         } catch (JSONException e) {
