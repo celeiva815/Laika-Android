@@ -25,6 +25,7 @@ public class Event extends Model {
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_URL_EVENT = "url_event";
     public final static String COLUMN_CITY_ID = "city_id";
+    public final static String COLUMN_ADDRESS = "address";
     public final static String COLUMN_START_DATE = "start_date";
     public final static String COLUMN_FINISH_DATE = "finish_date";
     public final static String COLUMN_START_TIME = "start_time";
@@ -56,6 +57,9 @@ public class Event extends Model {
 
     @Column(name = COLUMN_CITY_ID)
     public int mCityId;
+
+    @Column(name = COLUMN_ADDRESS)
+    public String mAddress;
 
     @Column(name = COLUMN_START_DATE)
     public String mStartDate;
@@ -95,24 +99,19 @@ public class Event extends Model {
 
     public Event(JSONObject jsonObject) {
 
-        try {
-
-            this.mEventId = jsonObject.getInt(API_ID);
-            this.mName = jsonObject.getString(COLUMN_NAME);
-            this.mSponsorId = jsonObject.getInt(COLUMN_SPONSOR_ID);
-            this.mSponsorName = jsonObject.getString(COLUMN_SPONSOR_NAME);
-            this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
-            this.mUrlEvent = jsonObject.getString(COLUMN_URL_EVENT);
-            this.mCityId = jsonObject.getInt(COLUMN_CITY_ID);
-            this.mStartDate = jsonObject.getString(COLUMN_START_DATE);
-            this.mFinishDate = jsonObject.getString(COLUMN_FINISH_DATE);
-            this.mStartTime = jsonObject.getString(COLUMN_START_TIME);
-            this.mFinishTime = jsonObject.getString(COLUMN_FINISH_TIME);
-            this.mIsPaid = jsonObject.getBoolean(COLUMN_IS_PAID);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        this.mEventId = jsonObject.optInt(API_ID);
+        this.mName = jsonObject.optString(COLUMN_NAME);
+        this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
+        this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);
+        this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
+        this.mUrlEvent = jsonObject.optString(COLUMN_URL_EVENT);
+        this.mCityId = jsonObject.optInt(COLUMN_CITY_ID, 1);
+        this.mAddress = jsonObject.optString(COLUMN_ADDRESS);
+        this.mStartDate = jsonObject.optString(COLUMN_START_DATE);
+        this.mFinishDate = jsonObject.optString(COLUMN_FINISH_DATE);
+        this.mStartTime = jsonObject.optString(COLUMN_START_TIME);
+        this.mFinishTime = jsonObject.optString(COLUMN_FINISH_TIME);
+        this.mIsPaid = jsonObject.optBoolean(COLUMN_IS_PAID);
 
     }
 
@@ -141,6 +140,7 @@ public class Event extends Model {
         this.mUrlImage = event.mUrlImage;
         this.mUrlEvent = event.mUrlEvent;
         this.mCityId = event.mCityId;
+        this.mAddress = event.mAddress;
         this.mStartDate = event.mStartDate;
         this.mFinishDate = event.mFinishDate;
         this.mStartTime = event.mStartTime;

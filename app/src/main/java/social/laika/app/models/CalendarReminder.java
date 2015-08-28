@@ -47,9 +47,10 @@ public class CalendarReminder extends ModelSync implements Alertable {
     public final static String LOCAL_ID = "local_id";
     public final static String USER_ID = "user";
 
+    public final static String API_CALENDAR_REMINDER = "calendar_reminder";
     public final static String API_USER_ID = "user_id";
 
-    @Column(name = COLUMN_CALENDAR_REMINDER_ID, unique = true)
+    @Column(name = COLUMN_CALENDAR_REMINDER_ID)
     public int mCalendarReminderId;
 
     @Column(name = COLUMN_TYPE)
@@ -119,7 +120,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
         try {
 
             jsonObject.put(COLUMN_DOG_ID, this.mDogId);
-            jsonObject.put(COLUMN_CALENDAR_REMINDER_ID, getCalendarJsonObject());
+            jsonObject.put(API_CALENDAR_REMINDER, getCalendarJsonObject());
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="#fff"
     android:orientation="horizontal"
     android:padding="5dp"
     android:weightSum="13">

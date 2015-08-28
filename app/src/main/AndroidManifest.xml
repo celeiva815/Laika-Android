@@ -310,6 +310,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="social.laika.app.activities.StopCalendarActivity"
+            android:exported="false"
+            android:label="@string/stories_fragment_activity_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
         android:name="social.laika.app.utils.camera.CameraActivity"
         android:exported="false"
         android:label="@string/camera"

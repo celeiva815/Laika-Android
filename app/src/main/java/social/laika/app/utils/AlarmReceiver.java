@@ -12,6 +12,7 @@ import java.util.Date;
 import social.laika.app.activities.StopAlarmActivity;
 import social.laika.app.activities.StopCalendarActivity;
 import social.laika.app.models.AlarmReminder;
+import social.laika.app.models.CalendarReminder;
 
 /**
  * Created by Tito_Leiva on 18-05-15.
@@ -34,11 +35,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         int type = extras.getInt(TYPE);
         Calendar calendar = Calendar.getInstance();
+        boolean isMomentToWakeUp = false;
         calendar.setTime(new Date());
 
         switch (type) {
 
-            case Tag.TYPE_ALARM:
+            case Tag.TYPE_ALARM: {
 
                 String time = extras.getString(AlarmReminder.COLUMN_TIME);
                 int weekday = extras.getInt(WEEKDAY);
@@ -48,7 +50,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 int prevHour = calendar.get(Calendar.HOUR_OF_DAY);
                 int hour = DateFormatter.parseTimeFromString(time)[0];
 
-                boolean isMomentToWakeUp = weekday == alarmDay && (hour == alarmHour || hour == prevHour);
+                isMomentToWakeUp = weekday == alarmDay && (hour == alarmHour || hour == prevHour);
 
                 if (isMomentToWakeUp) {
 
@@ -61,19 +63,31 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
 
                 break;
+            }
+            case Tag.TYPE_CALENDAR: {
 
-            case Tag.TYPE_CALENDAR:
+                String date = extras.getString(CalendarReminder.COLUMN_DATE);
+                String time = extras.getString(CalendarReminder.COLUMN_TIME);
+                int actualDay = calendar.get(Calendar.DAY_OF_YEAR);
+                int actualHour = calendar.get(Calendar.HOUR_OF_DAY);
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+                int prevHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int alarmHour = DateFormatter.parseTimeFromString(time)[0];
+                calendar.setTime(Do.stringToDate(date, Do.DAY_FIRST));
+                int alarmDay = calendar.get(Calendar.DAY_OF_YEAR);
 
-                //TODO implementar lo mismo que se hizo en alarmas
+                isMomentToWakeUp = alarmDay == actualDay && (alarmHour == actualHour || alarmHour == prevHour);
 
-                Intent alarmIntent = new Intent(context,
-                        type == Tag.TYPE_ALARM ? StopAlarmActivity.class : StopCalendarActivity.class);
-                alarmIntent.putExtras(extras);
+                if (isMomentToWakeUp) {
 
-                alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(alarmIntent);
+                    Intent alarmIntent = new Intent(context, StopCalendarActivity.class);
+                    alarmIntent.putExtras(extras);
+                    alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(alarmIntent);
+                }
 
                 break;
+            }
         }
 
         //Release the lock
