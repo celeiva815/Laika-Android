@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.AdoptDogSuccessActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 
 /**
@@ -58,7 +59,7 @@ public class ConfirmAdoptionResponse implements Response.Listener<JSONObject>, R
             Do.showLongToast(message, mContext);
 
         } else {
-            ResponseHandler.error(error, mActivity.getApplicationContext());
+            RequestManager.error(error, mActivity.getApplicationContext());
         }
 
         mProgressDialog.dismiss();

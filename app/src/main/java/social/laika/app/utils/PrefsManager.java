@@ -24,6 +24,7 @@ public class PrefsManager {
 
     private static final String PREF_IS_SYNCING_STATUS = "is_syncing_status";
     private static final String PREF_LAST_SYNC = "last_sync";
+    private static final String PREF_NEED_SYNC = "need_sync";
     private static final String PREF_FIRST_BOOT = "firstboot";
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
     // Default value for String preferences
@@ -130,6 +131,7 @@ public class PrefsManager {
     public static void saveLastSync(Context context, Date lastSync) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putLong(PREF_LAST_SYNC, lastSync.getTime());
+        editor.putBoolean(PREF_NEED_SYNC, false);
         editor.apply();
     }
 
@@ -183,6 +185,18 @@ public class PrefsManager {
         return prefs.getBoolean(PREF_SETUP_COMPLETE, false);
     }
 
+    public static void setNeedSync(Context context, boolean needSync) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putBoolean(PREF_NEED_SYNC, needSync);
+        editor.apply();
+
+    }
+
+    public static boolean needsSync(Context context) {
+        SharedPreferences prefs = getPrefs(context);
+        return prefs.getBoolean(PREF_NEED_SYNC, true);
+
+    }
 
     /**
      * Saves the session cookie serialized in json string format in shared preferences
@@ -216,5 +230,4 @@ public class PrefsManager {
         editor.putBoolean(PREF_FIRST_BOOT, false);
         editor.apply();
     }
-
 }

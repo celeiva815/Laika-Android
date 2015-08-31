@@ -11,7 +11,11 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import social.laika.app.R;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.Owner;
 import social.laika.app.models.Personality;
@@ -26,10 +30,10 @@ import social.laika.app.utils.PrefsManager;
 /**
  * Created by Tito_Leiva on 05-02-15.
  */
-public class ResponseHandler {
+public class LoginHandler {
 
-    public static final String TAG = ResponseHandler.class.getSimpleName();
-    public final static int TYPE_SYNC = 1;
+    public static final String TAG = LoginHandler.class.getSimpleName();
+    public final static String LAST_SYNC = "last_sync";
     public final static int TYPE_ASYNC = 2;
 
     public static void error(VolleyError error, Context context) {
@@ -91,6 +95,17 @@ public class ResponseHandler {
             Do.showShortToast(message, context);
 
         }
+    }
+
+    public static void requestFirstInformation(Context context, Requestable requestable) {
+
+        String token = PrefsManager.getUserToken(context);
+        FirstInformationResponse response = new FirstInformationResponse(requestable, context);
+        Request firstRequest = RequestManager.getRequest(null, RequestManager.ADDRESS_SYNC,
+                response, response, token);
+
+        VolleyManager.getInstance(context).addToRequestQueue(firstRequest, TAG);
+
     }
 
     public static void requestFirstInformation(Context context, Activity activity, ProgressBar progressBar) {

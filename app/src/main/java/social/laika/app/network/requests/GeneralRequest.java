@@ -69,7 +69,7 @@ public class GeneralRequest extends SyncRequest {
         params.put(LAST_SYNC, mLastSync);
 
         String token = PrefsManager.getUserToken(mContext);
-        FirstInformationResponse response = new FirstInformationResponse(null);
+        FirstInformationResponse response = new FirstInformationResponse(null, mContext);
 
         Request firstRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_SYNC,
                 response, response, token);

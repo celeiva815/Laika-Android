@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.VetVisit;
+import social.laika.app.network.RequestManager;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -34,7 +35,7 @@ public class VetVisitsResponse implements Response.Listener<JSONObject>, Respons
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
 
     }
 }

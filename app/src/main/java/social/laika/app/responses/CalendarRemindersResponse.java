@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.fragments.HistoryMyDogFragment;
+import social.laika.app.network.RequestManager;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -38,7 +39,7 @@ public class CalendarRemindersResponse implements Response.Listener<JSONObject>,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
 
     }
 }

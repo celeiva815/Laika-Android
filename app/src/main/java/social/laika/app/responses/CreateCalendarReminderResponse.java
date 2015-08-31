@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.fragments.CreateAlarmReminderFragment;
+import social.laika.app.network.RequestManager;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -31,7 +32,7 @@ public class CreateCalendarReminderResponse implements Response.Listener<JSONObj
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
 
     }
 }

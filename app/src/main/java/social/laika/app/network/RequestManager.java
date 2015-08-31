@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import social.laika.app.R;
 import social.laika.app.models.Dog;
 import social.laika.app.network.requests.LaikaRequest;
 import social.laika.app.responses.ImageResponse;
@@ -193,6 +196,24 @@ public class RequestManager {
     }
 
     // ############## Utils ################ //
+
+    public static void error(VolleyError error, Context context) {
+
+        if (error != null && error.networkResponse != null) {
+            if (error.networkResponse.statusCode == 400) {
+                Toast.makeText(context, R.string.parameters_error,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                String errorStr = VolleyErrorHelper.getMessage(error,
+                        context);
+                Toast.makeText(context, errorStr, Toast.LENGTH_SHORT)
+                        .show();
+            }
+        } else {
+            Toast.makeText(context, R.string.no_internet_error,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public static JSONObject getJsonPhoto(String encodedImage, String name) {
 

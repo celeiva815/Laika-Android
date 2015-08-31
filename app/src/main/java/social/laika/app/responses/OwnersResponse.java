@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
+import social.laika.app.network.RequestManager;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -37,7 +38,7 @@ public class OwnersResponse implements Response.Listener<JSONObject>, Response.E
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
 
     }
 }

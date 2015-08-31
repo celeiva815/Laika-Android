@@ -77,7 +77,7 @@ public class CreateCalendarReminderFragment extends Fragment implements OnDateSe
 
         mTime = getTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
         mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH),calendar.get(Calendar.YEAR)-2000);
+                calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 
         mTimeButton.setText(mTime);
         mDateButton.setText(mDate);

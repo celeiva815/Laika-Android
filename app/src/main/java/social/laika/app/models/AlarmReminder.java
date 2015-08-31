@@ -133,7 +133,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.mDogId = mDogId;
     }
 
-    public AlarmReminder(JSONObject jsonObject, Context context) {
+    public AlarmReminder(JSONObject jsonObject) {
 
         this.mAlarmReminderId = jsonObject.optInt(COLUMN_ALARM_REMINDER_ID);
         this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
@@ -148,7 +148,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.mHasSaturday = jsonObject.optBoolean(COLUMN_HAS_SATURDAY);
         this.mHasSunday = jsonObject.optBoolean(COLUMN_HAS_SUNDAY);
         this.mTime = jsonObject.optString(COLUMN_TIME);
-        this.mOwnerId = jsonObject.optInt(API_USER_ID, PrefsManager.getUserId(context));
+        this.mOwnerId = jsonObject.optInt(API_USER_ID);
         this.mDogId = jsonObject.optInt(COLUMN_DOG_ID);
         this.mStatus = Tag.STATUS_NOT_ACTIVATED;
         this.mNeedsSync = Tag.FLAG_READED;
@@ -600,6 +600,14 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
     public int checkStatusAlarm(Context context) {
 
+        mStatus = isActivated(context) ? Tag.STATUS_ACTIVATED : Tag.STATUS_NOT_ACTIVATED;
+        this.save();
+
+        return mStatus;
+    }
+
+    public boolean isActivated(Context context) {
+
         boolean isActivated = true;
 
         if (mHasMonday) {
@@ -630,10 +638,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
             isActivated &= checkAlarmUp(context, Calendar.SUNDAY);
         }
 
-        mStatus = isActivated ? Tag.STATUS_ACTIVATED : Tag.STATUS_NOT_ACTIVATED;
-        this.save();
-
-        return mStatus;
+        return isActivated;
     }
 
     private void setAlarm(Context context, int weekday, int hour, int minutes) {
@@ -737,7 +742,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
     public static AlarmReminder saveReminder(JSONObject jsonReminder, Context context) {
 
-        AlarmReminder reminder = new AlarmReminder(jsonReminder, context);
+        AlarmReminder reminder = new AlarmReminder(jsonReminder);
         createOrUpdate(reminder, context);
 
         return reminder;
@@ -761,12 +766,41 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
 
         } else {
-            AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
-            oldReminder.cancelAlarm(context);
 
-            oldReminder.update(reminder);
-            oldReminder.setAlarm(context);
+            AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
+
+            if (oldReminder.isNotEmpty()) {
+
+                if (oldReminder.isActivated(context)) {
+                    oldReminder.cancelAlarm(context);
+                }
+
+                oldReminder.update(reminder);
+
+                if (oldReminder.mStatus == Tag.STATUS_ACTIVATED) {
+                    oldReminder.setAlarm(context);
+                }
+
+            } else {
+
+                if (oldReminder.mAlarmReminderId > 0)
+                    oldReminder.remove();
+
+                else {
+                    oldReminder.delete();
+                }
+            }
         }
+    }
+
+    private boolean isNotEmpty() {
+
+        boolean hasTime = Do.isNullOrEmpty(mTime);
+        boolean hasDog = mDogId > 0;
+        boolean hasWeekDay = mHasMonday || mHasTuesday || mHasWednesday || mHasThursday ||
+                mHasFriday || mHasSaturday || mHasSunday;
+
+        return hasDog && hasTime && hasWeekDay;
     }
 
     public static boolean isSaved(AlarmReminder reminder) {

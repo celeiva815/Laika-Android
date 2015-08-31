@@ -12,6 +12,7 @@ import social.laika.app.activities.AdoptDogFormActivity;
 import social.laika.app.activities.AdoptDogUserFormActivity;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.Owner;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 
 /**
@@ -75,7 +76,7 @@ public class AdoptDogUserFormResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         mActivity.mProgressDialog.dismiss();
-        ResponseHandler.error(error, mActivity);
+        RequestManager.error(error, mActivity);
 
     }
 

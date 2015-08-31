@@ -34,7 +34,6 @@ import social.laika.app.utils.Tag;
 @Table(name = Photo.TABLE_PHOTOS)
 public class Photo extends Model {
 
-
     public static int ID = 0;
 
     public final static String TABLE_PHOTOS = "photos";
@@ -58,6 +57,7 @@ public class Photo extends Model {
     public static final String API_CONTENT = "content";
     public static final String API_FILE_NAME = "file_name";
     public static final String API_USER = "user";
+    public static final String API_IS_PROFILE = "is_profile";
 
     @Column(name = COLUMN_PHOTO_ID, unique = true)
     public int mPhotoId;

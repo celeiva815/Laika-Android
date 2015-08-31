@@ -28,6 +28,7 @@ import java.io.IOException;
 import social.laika.app.R;
 import social.laika.app.fragments.NavigationDrawerFragment;
 import social.laika.app.fragments.PlaceHolderFragment;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
@@ -47,6 +48,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
 import social.laika.app.network.requests.TokenRequest;
 import social.laika.app.network.sync.SyncUtils;
+import social.laika.app.responses.LoginHandler;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
@@ -56,7 +58,8 @@ import social.laika.app.utils.Tag;
  * Created by Tito_Leiva on 10-02-15.
  */
 public class BaseActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        Requestable {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -65,6 +68,7 @@ public class BaseActivity extends ActionBarActivity
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle;
     protected PlaceHolderFragment mFragment;
+    protected ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +114,21 @@ public class BaseActivity extends ActionBarActivity
     @Override
     protected void onResume() {
         super.onResume();
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(PrefsManager.GCM_REGISTRATION_COMPLETE));
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        Context context = getApplicationContext();
+        if (PrefsManager.needsSync(context)) {
+            syncFirstInformation(getApplicationContext());
+
+        }
     }
 
     @Override
@@ -120,7 +136,6 @@ public class BaseActivity extends ActionBarActivity
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -159,7 +174,12 @@ public class BaseActivity extends ActionBarActivity
 
                 break;
 
-            case 4: // Cerrar Sesión
+            case 4: //Sincronizar aplicación
+
+                syncFirstInformation(getApplicationContext());
+                break;
+
+            case 5: // Cerrar Sesión
 
                 clearDataBase();
 
@@ -212,6 +232,13 @@ public class BaseActivity extends ActionBarActivity
         Story.deleteAll();
         Personality.deleteAll();
 
+    }
+
+    private void syncFirstInformation(Context context) {
+
+        mProgressDialog = ProgressDialog.show(BaseActivity.this, "Espere un momento",
+                "Estamos sincronizando tu aplicación con la información de tus perritos");
+        LoginHandler.requestFirstInformation(context, this);
     }
 
     private void openPostulatedDogs() {
@@ -284,6 +311,23 @@ public class BaseActivity extends ActionBarActivity
         TokenRequest tokenRequest = new TokenRequest(token, this, false);
 
         tokenRequest.request();
+
+    }
+
+    @Override
+    public void request() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+        mProgressDialog.dismiss();
+        Do.showShortToast("Laika ha sido sincronizada con éxito", this);
+    }
+
+    @Override
+    public void onFailure() {
 
     }
 }

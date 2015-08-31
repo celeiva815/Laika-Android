@@ -9,12 +9,10 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.activities.CreateVetVisitActivity;
-import social.laika.app.activities.EditUserActivity;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Owner;
 import social.laika.app.models.VetVisit;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.PrefsManager;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -47,7 +45,7 @@ public class CreateVetVisitResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mActivity);
+        RequestManager.error(error, mActivity);
         mProgressDialog.dismiss();
         mActivity.enableViews(true);
     }

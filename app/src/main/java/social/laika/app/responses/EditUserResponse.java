@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.EditUserActivity;
 import social.laika.app.models.Owner;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
@@ -45,7 +46,7 @@ public class EditUserResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mActivity);
+        RequestManager.error(error, mActivity);
         mProgressDialog.dismiss();
         mActivity.enableViews(true);
     }

@@ -26,11 +26,11 @@ public class ImageUploadResponse implements Response.ErrorListener,
         Response.Listener<JSONObject> {
 
     public static final String API_URL = "url";
+    public static final String API_IS_PROFILE = "is_profile";
     public static final String API_TIME = "time";
     public static final String API_DATE = "date";
 
     public Dog mDog;
-    public Story mStory;
     public Context mContext;
     public ImageView mImageView;
     public ProgressBar mProgressBar;
@@ -48,6 +48,12 @@ public class ImageUploadResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
+
+        if (response.has(API_IS_PROFILE) && response.optBoolean(API_IS_PROFILE)) {
+
+            mDog.mUrlImage = photo.mUrlMedium;
+
+        }
         mActivity.succeedUpload();
         cancelProgress();
 
@@ -56,8 +62,9 @@ public class ImageUploadResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
         cancelProgress();
+        mActivity.failedUpload();
 
     }
 
@@ -87,6 +94,4 @@ public class ImageUploadResponse implements Response.ErrorListener,
         }
 
     }
-
-
 }

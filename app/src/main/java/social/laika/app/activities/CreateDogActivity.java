@@ -3,7 +3,9 @@ package social.laika.app.activities;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -21,6 +23,7 @@ import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.soundcloud.android.crop.Crop;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,9 +33,11 @@ import social.laika.app.adapters.BreedAdapter;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
 import social.laika.app.interfaces.Photographable;
+import social.laika.app.interfaces.Requestable;
 import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.listeners.NewDogOnClickListener;
 import social.laika.app.listeners.ChangeDogBreedsOnItemSelectedListener;
+import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Breed;
 import social.laika.app.models.Personality;
@@ -43,11 +48,12 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateDogResponse;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 public class CreateDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener,
-                                                                    Photographable{
+        Photographable, Requestable {
 
     public static final String TAG = CreateDogActivity.class.getSimpleName();
     public static final String KEY_DOG_ID = "dog_id";
@@ -68,12 +74,13 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public RadioGroup mChipRadioGroup;
     public ProgressBar mProgressBar;
     public ProgressBar mImageProgressBar;
+    public ProgressDialog mProgressDialog;
+    public Photographer mPhotographer;
     public ImageView mPictureImageView;
     public int mGender;
     public boolean mSterilized;
     public boolean mChip;
     public String mChipCode;
-    public String mCurrentPhotoPath;
 
     public String mDate;
     public boolean mIsSizeSelected = true;
@@ -121,6 +128,38 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if (requestCode == Photographer.SQUARE_CAMERA_REQUEST_CODE &&
+                resultCode == RESULT_OK) {
+
+            if (result != null) {
+
+                cropPhoto(result.getData());
+
+            } else if (mPhotographer.mSourceImage != null) {
+
+                cropPhoto(mPhotographer.mSourceImage);
+
+            } else {
+                Do.showLongToast(R.string.generic_networking_error, getApplicationContext());
+            }
+
+            super.onActivityResult(requestCode, resultCode, result);
+
+        }
+
+        if (requestCode == Crop.REQUEST_PICK
+                && resultCode == RESULT_OK) {
+
+            cropPhoto(result.getData());
+
+        } else if (requestCode == Crop.REQUEST_CROP) {
+            mPhotographer.handleCrop(resultCode, result, this, mPictureImageView);
+
+        }
+    }
+
     public void setActivityView() {
 
         mNameEditText = (EditText) findViewById(R.id.name_new_dog_register_edittext);
@@ -136,6 +175,8 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mPictureImageView = (ImageView) findViewById(R.id.picture_create_dog_imageview);
         mProgressBar = (ProgressBar) findViewById(R.id.new_dog_progressbar);
         mImageProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
+        mPhotographer = new Photographer();
+        mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
         ImageView sizeHelper = (ImageView) findViewById(R.id.size_helper);
         ImageView birthHelper = (ImageView) findViewById(R.id.birth_helper);
         ImageView personalityHelper = (ImageView) findViewById(R.id.personality_helper);
@@ -148,7 +189,10 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
                 R.layout.ai_simple_textview_for_adapter, R.id.simple_textview, getPersonalityList());
         ChangeDogBreedsOnItemSelectedListener breedListener = new ChangeDogBreedsOnItemSelectedListener(this);
         NewDogOnClickListener addListener = new NewDogOnClickListener(this);
+        PhotographerListener listener = new PhotographerListener(mPhotographer, this);
 
+        mPictureImageView.setOnClickListener(listener);
+        mPictureImageView.setOnLongClickListener(listener);
         sizeHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.size_helper, CreateDogActivity.this));
         birthHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.birth_helper, CreateDogActivity.this));
         personalityHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.personality_helper, CreateDogActivity.this));
@@ -182,15 +226,6 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             mChipCode = mChipEditText.getText().toString();
         }
 
-        mPictureImageView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                takePhoto();
-            }
-        });
-
         mAddButton.setOnClickListener(addListener);
 
         mGender = Tag.GENDER_FEMALE;
@@ -200,10 +235,9 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public void requestCreateOrUpdateDog(Dog dog, String message, int method) {
 
         enableViews(false);
-        JSONObject jsonObject = dog.getJsonObject();
-
+        JSONObject jsonParams = dog.getJsonObject();
         CreateDogResponse response = new CreateDogResponse(this, message);
-        Request loginRequest = RequestManager.defaultRequest(method, jsonObject,
+        Request loginRequest = RequestManager.defaultRequest(method, jsonParams,
                 RequestManager.ADDRESS_DOGS, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
@@ -317,33 +351,52 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
         if (enabled) {
             mAddButton.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
 
         } else {
             mAddButton.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    @Override
+    public void takePhoto() {
+
+        mPhotographer.takePicture(this);
 
     }
 
-    public void postPicture(String name, String image) {
+    @Override
+    public void pickPhoto() {
+
+        mPhotographer.pickImage(this);
+    }
+
+    @Override
+    public void cropPhoto(Uri source) {
+
+        mPhotographer.beginCrop(source, this);
+    }
+
+    @Override
+    public void uploadPhoto() {
+
+        mProgressDialog = ProgressDialog.show(CreateDogActivity.this, "Espere un momento",
+                "Estamos subiendo la foto de perfil de " + mDog.mName + "...");
 
         Context context = getApplicationContext();
-
         String token = PrefsManager.getUserToken(context);
-
         JSONObject jsonObject = new JSONObject();
+
         try {
             jsonObject.put(Dog.COLUMN_DOG_ID, mDog.mDogId);
-            jsonObject.put(Photo.API_PHOTO, Photo.getJsonPhoto(name, image));
+            jsonObject.put(Photo.API_PHOTO, mPhotographer.getJsonPhoto(context));
+            jsonObject.put(Photo.API_IS_PROFILE, true);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         ImageUploadResponse response = new ImageUploadResponse(mDog, this, context);
-
         Request imageRequest = RequestManager.postRequest(jsonObject,
                 RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);
 
@@ -351,34 +404,62 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     }
 
-
-    @Override
-    public void takePhoto() {
-
-    }
-
-    @Override
-    public void pickPhoto() {
-
-    }
-
-    @Override
-    public void cropPhoto(Uri source) {
-
-    }
-
-    @Override
-    public void uploadPhoto() {
-
-    }
-
     @Override
     public void succeedUpload() {
+
+        mProgressDialog.dismiss();
+        onBackPressed();
 
     }
 
     @Override
     public void failedUpload() {
+
+        mProgressDialog.dismiss();
+        enableViews(true);
+
+    }
+
+    @Override
+    public void request() {
+
+        String name = mNameEditText.getText().toString();
+        String birth = mBirthButton.getText().toString();
+        int breed = (int) mBreedSpinner.getSelectedItemId();
+        int personality = (int) mPersonalitySpinner.getSelectedItemId();
+        boolean sterilized = mSterilized;
+        String chipCode = mChipEditText.getText().toString();
+        int gender = mGender;
+        int status = Tag.DOG_OWNED;
+        int userId = PrefsManager.getUserId(this);
+
+        mDog = new Dog(name, birth, breed, gender, personality, sterilized,
+                false, chipCode, status, userId);
+
+        mProgressDialog = ProgressDialog.show(CreateDogActivity.this, "Espere un momento",
+                "Estamos creando el perfil de " + name + "...");
+
+        requestCreateOrUpdateDog(mDog, Do.getRString(this, R.string.congrats_new_dog_added),
+                RequestManager.METHOD_POST);
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+        if (mPhotographer.hasPhotoChanged()) {
+
+            uploadPhoto();
+
+        }
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void onFailure() {
+
+        mProgressDialog.dismiss();
+        enableViews(true);
 
     }
 }

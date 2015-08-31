@@ -14,31 +14,17 @@ import android.view.View.OnClickListener;
 
 public class NewDogOnClickListener implements OnClickListener {
 
-	CreateDogActivity mActivity;
-	
-	public NewDogOnClickListener(CreateDogActivity mActivity) {
-		
-		this.mActivity = mActivity;
-	}
+    CreateDogActivity mActivity;
 
-	@Override
-	public void onClick(View v) {
-		
-		String name = mActivity.mNameEditText.getText().toString();
-	    String birth = mActivity.mBirthButton.getText().toString();
-		int breed = (int) mActivity.mBreedSpinner.getSelectedItemId();
-        int personality = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
-        boolean sterilized = mActivity.mSterilized;
-        String chipCode = mActivity.mChipEditText.getText().toString();
-        int gender = mActivity.mGender;
-        int status = Tag.DOG_OWNED;
-        int userId = PrefsManager.getUserId(v.getContext());
-		
-		Dog newDog = new Dog(name, birth, breed, gender, personality, sterilized,
-                false, chipCode, status, userId);
+    public NewDogOnClickListener(CreateDogActivity mActivity) {
 
-		mActivity.requestCreateOrUpdateDog(newDog, Do.getRString(v.getContext(), R.string.congrats_new_dog_added),
-				RequestManager.METHOD_POST);
+        this.mActivity = mActivity;
+    }
 
-	}
+    @Override
+    public void onClick(View v) {
+
+        mActivity.request();
+
+    }
 }

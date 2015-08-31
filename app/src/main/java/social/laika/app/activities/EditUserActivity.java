@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -47,8 +46,7 @@ import social.laika.app.models.Photo;
 import social.laika.app.models.Region;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.EditUserResponse;
-import social.laika.app.responses.ResponseHandler;
+import social.laika.app.responses.LoginHandler;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
@@ -504,7 +502,7 @@ public class EditUserActivity extends ActionBarActivity
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, this);
+        RequestManager.error(error, this);
         mProgressDialog.dismiss();
         enableViews(true);
     }

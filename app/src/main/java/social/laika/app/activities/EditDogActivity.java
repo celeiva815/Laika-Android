@@ -7,6 +7,7 @@ import social.laika.app.R;
 import social.laika.app.adapters.BreedAdapter;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
+import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.EditDogOnClickListener;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Breed;

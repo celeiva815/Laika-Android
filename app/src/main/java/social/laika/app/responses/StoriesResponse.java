@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.StoriesActivity;
 import social.laika.app.models.Story;
+import social.laika.app.network.RequestManager;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -32,7 +33,7 @@ public class StoriesResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         stopRefreshing();
-        ResponseHandler.error(error, mActivity);
+        RequestManager.error(error, mActivity);
 
     }
 

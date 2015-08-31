@@ -24,6 +24,7 @@ import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 
 /**
  * Created by Tito_Leiva on 30-07-15.
@@ -172,7 +173,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
             case GCM_ADDED_AS_OWNER:
                 int dog_id = jsonData.getInt(Dog.COLUMN_DOG_ID);
                 /* Hard Dog Synchronization */
-                syncDogHard(dog_id);
+//                syncDogHard(dog_id); ISSUE hay un timeout con una respuesta 404, hay que revisar, por ahora solo dejaré un sync en la UI.
+                PrefsManager.setNeedSync(getApplicationContext(), true);
+
                 break;
             case GCM_PHOTO_UPDATE:
                 JSONObject photo = new JSONObject(jsonData.getString(Photo.TABLE_PHOTOS));

@@ -60,7 +60,7 @@ public class DogRequest extends SyncRequest {
         requestQueue.add(request);
 
         /* Waiting and saving the response */
-        JSONObject response = future.get(20, TimeUnit.SECONDS);
+        JSONObject response = future.get(50, TimeUnit.SECONDS);
         Dog.saveDogs(response, Tag.DOG_OWNED);
         AlarmReminder.saveReminders(response, mContext);
         VetVisit.saveVetVisits(response);

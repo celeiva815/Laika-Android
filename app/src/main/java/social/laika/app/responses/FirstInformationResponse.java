@@ -27,6 +27,7 @@ import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -48,8 +49,9 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         this.mProgressBar = progressBar;
     }
 
-    public FirstInformationResponse(Requestable mRequestable) {
+    public FirstInformationResponse(Requestable mRequestable, Context context) {
         this.mRequestable = mRequestable;
+        this.mContext = context;
     }
 
     @Override
@@ -70,6 +72,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
 
         //sync postulaciones
         UserAdoptDog.saveUserAdoptDogs(response);
+        PrefsManager.saveLastSync(mContext, new Date());
 
         if (mRequestable != null) {
 
@@ -82,17 +85,17 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
             mProgressBar.setVisibility(View.GONE);
         }
 
-        PrefsManager.saveLastSync(mContext, new Date());
-        Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
-        Do.showLongToast("Bienvenido " + PrefsManager.getUserName(mContext) +
-                ", ¿Cómo están tus perritos?", mContext);
-
+        if (mActivity != null) {
+            Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
+            Do.showLongToast("Bienvenido " + PrefsManager.getUserName(mContext) +
+                    ", ¿Cómo están tus perritos?", mContext);
+        }
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        ResponseHandler.error(error, mContext);
+        RequestManager.error(error, mContext);
 
         if (mProgressBar != null) {
 

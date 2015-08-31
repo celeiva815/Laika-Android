@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.CreateDogActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
+import social.laika.app.network.RequestManager;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -32,19 +33,18 @@ public class CreateDogResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Context context = mActivity.getApplicationContext();
-        Dog dog = Dog.saveDog(response, Tag.DOG_OWNED);
+        mActivity.mDog = Dog.saveDog(response, Tag.DOG_OWNED);
         Owner owner = PrefsManager.getLoggedOwner(context);
-        owner.createOwnerDog(context, dog);
-
-        Do.showShortToast(mMessage + dog.mName, context);
-        mActivity.onBackPressed();
+        owner.createOwnerDog(context, mActivity.mDog);
+        Do.showShortToast(mMessage + mActivity.mDog.mName, context);
+        mActivity.onSuccess();
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
         mActivity.enableViews(true);
-        ResponseHandler.error(error, mActivity);
-        Do.showShortToast("Hubo un error", mActivity);
+        RequestManager.error(error, mActivity);
+        mActivity.onFailure();
     }
 }
