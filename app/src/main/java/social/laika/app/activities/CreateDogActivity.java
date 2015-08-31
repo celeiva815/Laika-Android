@@ -348,14 +348,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mSterilizedRadioGroup.setEnabled(enabled);
         mChipRadioGroup.setEnabled(enabled);
         mProgressBar.setEnabled(!enabled);
-
-        if (enabled) {
-            mAddButton.setVisibility(View.VISIBLE);
-
-        } else {
-            mAddButton.setVisibility(View.GONE);
-
-        }
+        mAddButton.setEnabled(enabled);
     }
 
     @Override
@@ -379,9 +372,6 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
     @Override
     public void uploadPhoto() {
-
-        mProgressDialog = ProgressDialog.show(CreateDogActivity.this, "Espere un momento",
-                "Estamos subiendo la foto de perfil de " + mDog.mName + "...");
 
         Context context = getApplicationContext();
         String token = PrefsManager.getUserToken(context);
@@ -416,12 +406,16 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public void failedUpload() {
 
         mProgressDialog.dismiss();
-        enableViews(true);
+        Do.showLongToast("¡Lo sentimos!, Hemos actualizado el perfil de " + mDog.mName + ", pero " +
+                "no se ha podido subir la foto. Inténtalo más tarde", this);
+        onBackPressed();
 
     }
 
     @Override
     public void request() {
+
+        showProgressDialog();
 
         String name = mNameEditText.getText().toString();
         String birth = mBirthButton.getText().toString();
@@ -436,9 +430,6 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mDog = new Dog(name, birth, breed, gender, personality, sterilized,
                 false, chipCode, status, userId);
 
-        mProgressDialog = ProgressDialog.show(CreateDogActivity.this, "Espere un momento",
-                "Estamos creando el perfil de " + name + "...");
-
         requestCreateOrUpdateDog(mDog, Do.getRString(this, R.string.congrats_new_dog_added),
                 RequestManager.METHOD_POST);
 
@@ -451,8 +442,13 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
             uploadPhoto();
 
+        } else {
+
+            mProgressDialog.dismiss();
+            onBackPressed();
+
         }
-        mProgressDialog.dismiss();
+
     }
 
     @Override
@@ -461,5 +457,12 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mProgressDialog.dismiss();
         enableViews(true);
 
+    }
+
+    public void showProgressDialog() {
+
+        String title = "Espere un momento";
+        String message = "Estamos creando el perfil de " + mNameEditText.getText().toString();
+        mProgressDialog = ProgressDialog.show(CreateDogActivity.this, title, message);
     }
 }

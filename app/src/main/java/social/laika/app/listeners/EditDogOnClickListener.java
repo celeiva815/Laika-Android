@@ -11,18 +11,20 @@ import social.laika.app.utils.Tag;
 public class EditDogOnClickListener implements OnClickListener {
 
     Dog mDog;
-	EditDogActivity mActivity;
+    EditDogActivity mActivity;
 
-	public EditDogOnClickListener(EditDogActivity mActivity, Dog mDog) {
-		
-		this.mActivity = mActivity;
+    public EditDogOnClickListener(EditDogActivity mActivity, Dog mDog) {
+
+        this.mActivity = mActivity;
         this.mDog = mDog;
-	}
+    }
 
-	@Override
-	public void onClick(View v) {
-		
-		mDog.mName = mActivity.mNameEditText.getText().toString();
+    @Override
+    public void onClick(View v) {
+
+        mActivity.showProgressDialog();
+
+        mDog.mName = mActivity.mNameEditText.getText().toString();
         mDog.mBirth = mActivity.mBirthButton.getText().toString();
         mDog.mBreedId = (int) mActivity.mBreedSpinner.getSelectedItemId();
         mDog.mPersonality = (int) mActivity.mPersonalitySpinner.getSelectedItemId();
@@ -31,10 +33,10 @@ public class EditDogOnClickListener implements OnClickListener {
         mDog.mGender = mActivity.mGender;
         mDog.mStatus = Tag.DOG_OWNED;
 
-		mDog.save();
+        mDog.save();
 
-		mActivity.requestCreateOrUpdateDog(mDog, "Haz editado la información de ",
-				RequestManager.METHOD_PUT);
-	}
+        mActivity.requestCreateOrUpdateDog(mDog, "Haz editado la información de ",
+                RequestManager.METHOD_PUT);
+    }
 
 }

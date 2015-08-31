@@ -1,5 +1,7 @@
 package social.laika.app.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
@@ -83,5 +85,13 @@ public class EditDogActivity extends CreateDogActivity {
         int dogId = intent.getIntExtra(KEY_DOG_ID, 0);
 
         mDog = Dog.getSingleDog(dogId);
+    }
+
+    @Override
+    public void showProgressDialog() {
+
+        String title = "Espere un momento";
+        String message = "Estamos editando el perfil de " + mNameEditText.getText().toString();
+        mProgressDialog = ProgressDialog.show(EditDogActivity.this, title, message);
     }
 }
