@@ -246,10 +246,12 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
 
             Do.showLongToast("La foto no pudo ser adjuntada", context);
             e.printStackTrace();
+            mProgressDialog.dismiss();
         } catch (NullPointerException e) {
 
             Do.showLongToast("Debes adjuntar una foto antes de enviar la historia", context);
             e.printStackTrace();
+            mProgressDialog.dismiss();
         }
 
     }

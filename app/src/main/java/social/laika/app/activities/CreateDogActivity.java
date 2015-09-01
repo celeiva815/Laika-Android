@@ -46,6 +46,7 @@ import social.laika.app.models.Size;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateDogResponse;
+import social.laika.app.responses.DogProfileResponse;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
@@ -386,7 +387,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             e.printStackTrace();
         }
 
-        ImageUploadResponse response = new ImageUploadResponse(mDog, this, context);
+        DogProfileResponse response = new DogProfileResponse(mDog, this, context);
         Request imageRequest = RequestManager.postRequest(jsonObject,
                 RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);
 

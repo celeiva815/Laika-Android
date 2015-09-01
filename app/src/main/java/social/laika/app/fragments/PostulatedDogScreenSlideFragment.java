@@ -53,7 +53,9 @@ public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragmen
             case Tag.POSTULATION_REFUSED:
 
                 mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
-                        R.string.delete_owner));
+                        R.string.delete_postulation));
+
+                //TODO hacer un request para eliminar la postulación definitivamente
 
                 break;
 

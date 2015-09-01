@@ -15,14 +15,13 @@ import org.json.JSONObject;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
-import social.laika.app.models.Story;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
  */
-public class ImageUploadResponse implements Response.ErrorListener,
+public class DogProfileResponse implements Response.ErrorListener,
         Response.Listener<JSONObject> {
 
     public static final String API_URL = "url";
@@ -32,12 +31,9 @@ public class ImageUploadResponse implements Response.ErrorListener,
 
     public Dog mDog;
     public Context mContext;
-    public ImageView mImageView;
-    public ProgressBar mProgressBar;
-    public ProgressDialog mProgressDialog;
     public Photographable mActivity;
 
-    public ImageUploadResponse(Dog dog, Photographable mActivity, Context mContext) {
+    public DogProfileResponse(Dog dog, Photographable mActivity, Context mContext) {
 
         this.mDog = dog;
         this.mContext = mContext;
@@ -48,14 +44,9 @@ public class ImageUploadResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
-
-        if (response.has(API_IS_PROFILE) && response.optBoolean(API_IS_PROFILE)) {
-
-            mDog.mUrlImage = photo.mUrlMedium;
-            mDog.save();
-        }
+        mDog.mUrlImage = photo.mUrlLarge;
+        mDog.save();
         mActivity.succeedUpload();
-        cancelProgress();
 
     }
 
@@ -63,35 +54,7 @@ public class ImageUploadResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         RequestManager.error(error, mContext);
-        cancelProgress();
         mActivity.failedUpload();
-
-    }
-
-    public void requestImage(String imageUrl) {
-
-        ImageResponse imageResponse = new ImageResponse(mImageView, mProgressBar);
-        Request imageRequest = RequestManager.imageRequest(imageUrl, mImageView,
-                imageResponse, imageResponse);
-
-        VolleyManager.getInstance(mContext).addToRequestQueue(imageRequest);
-
-    }
-
-
-    public void cancelProgress() {
-
-        if (mProgressBar != null) {
-
-            mProgressBar.setVisibility(View.GONE);
-
-        }
-
-        if (mProgressDialog != null) {
-
-            mProgressDialog.dismiss();
-
-        }
 
     }
 }

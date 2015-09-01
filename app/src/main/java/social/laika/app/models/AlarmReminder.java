@@ -570,31 +570,31 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.save();
 
         if (mHasMonday) {
-            cancelAlarm(context, Calendar.MONDAY, hour, minutes);
+            cancelAlarm(context, Calendar.MONDAY);
         }
 
         if (mHasTuesday) {
-            cancelAlarm(context, Calendar.TUESDAY, hour, minutes);
+            cancelAlarm(context, Calendar.TUESDAY);
         }
 
         if (mHasWednesday) {
-            cancelAlarm(context, Calendar.WEDNESDAY, hour, minutes);
+            cancelAlarm(context, Calendar.WEDNESDAY);
         }
 
         if (mHasThursday) {
-            cancelAlarm(context, Calendar.THURSDAY, hour, minutes);
+            cancelAlarm(context, Calendar.THURSDAY);
         }
 
         if (mHasFriday) {
-            cancelAlarm(context, Calendar.FRIDAY, hour, minutes);
+            cancelAlarm(context, Calendar.FRIDAY);
         }
 
         if (mHasSaturday) {
-            cancelAlarm(context, Calendar.SATURDAY, hour, minutes);
+            cancelAlarm(context, Calendar.SATURDAY);
         }
 
         if (mHasSunday) {
-            cancelAlarm(context, Calendar.SUNDAY, hour, minutes);
+            cancelAlarm(context, Calendar.SUNDAY);
         }
     }
 
@@ -658,7 +658,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
     }
 
-    private void cancelAlarm(Context context, int weekday, int hour, int minutes) {
+    private void cancelAlarm(Context context, int weekday) {
 
         Intent intent = getAlarmIntent(context, weekday);
         int requestCode = getAlarmRequestCode(weekday);

@@ -71,10 +71,17 @@ public class DateFormatter {
 
     public static int[] parseTimeFromString(String time) {
 
-        int hour = Integer.parseInt(time.substring(0, 2));
-        int minute = Integer.parseInt(time.substring(3, 5));
+        try {
 
-        return new int[]{hour, minute};
+            int hour = Integer.parseInt(time.substring(0, 2));
+            int minute = Integer.parseInt(time.substring(3, 5));
+
+            return new int[]{hour, minute};
+
+        } catch(StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return new int[]{0,0};
+        }
 
     }
 

@@ -132,18 +132,11 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        requestDogImage();
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
         refresh();
+        requestDogImage();
 
     }
 

@@ -437,8 +437,14 @@ public class Dog extends Model {
             return dog;
 
         } else {
+
             Dog oldDog = getSingleDog(dog.mDogId);
-            oldDog.update(dog);
+
+            if (!(dog.mStatus == Tag.DOG_FOUNDATION && oldDog.mStatus != Tag.DOG_FOUNDATION)) {
+
+                oldDog.update(dog);
+            }
+
             return oldDog;
         }
     }

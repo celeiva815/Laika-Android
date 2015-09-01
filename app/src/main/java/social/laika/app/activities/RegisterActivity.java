@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import social.laika.app.R;
+import social.laika.app.models.Owner;
 import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RegisterResponse;
@@ -42,6 +44,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     public EditText mFullNameEditText;
     public EditText mEmailEditText;
     public EditText mPasswordEditText;
+    public EditText mPhoneEditText;
     public Button mBirthDateButton;
     public Button mRegisterButton;
     public ProgressBar mRegisterProgressBar;
@@ -63,6 +66,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mEmailEditText = (EditText) findViewById(R.id.email_register_edittext);
         mPasswordEditText = (EditText) findViewById(R.id.password_register_edittext);
         mBirthDateButton = (Button) findViewById(R.id.birthdate_register_button);
+        mPhoneEditText = (EditText) findViewById(R.id.phone_register_edittext);
         mRegisterButton = (Button) findViewById(R.id.submit_register_button);
         mRegisterProgressBar = (ProgressBar) findViewById(R.id.register_progressbar);
 
@@ -133,7 +137,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         final String name = mFullNameEditText.getText().toString();
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
-        final String birth = mDate;
+        final String phone = mPhoneEditText.getText().toString();
+
 
         if (TextUtils.isEmpty(name)) {
             mFullNameEditText.setError(getString(R.string.field_not_empty_error));
@@ -153,20 +158,32 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mRegisterProgressBar.setVisibility(View.VISIBLE);
         enableViews(false);
 
-        Map<String, String> params = new HashMap<String, String>(2);
-        //params.put(API_FULL_NAME, name);
-        params.put(API_EMAIL, email);
-        params.put(API_PASSWORD, password);
-        params.put(API_PASSWORD_CONFIRMATION, password);
+        JSONObject jsonParams = new JSONObject();
 
-        JSONObject jsonParams = RequestManager.getJsonParams(params);
-        RegisterResponse response = new RegisterResponse(this);
+        try {
 
-        Request registerRequest = RequestManager.postRequest(jsonParams,
-                RequestManager.ADDRESS_REGISTER, response, response, null);
+            jsonParams.putOpt(Owner.COLUMN_FIRST_NAME, getFirstName(name));
+            jsonParams.putOpt(Owner.COLUMN_LAST_NAME, getLastName(name));
+            jsonParams.putOpt(Owner.COLUMN_SECOND_LAST_NAME, getSecondLastName(name));
+            jsonParams.putOpt(Owner.COLUMN_BIRTH_DATE, mDate);
+            jsonParams.putOpt(Owner.COLUMN_GENDER, mGender);
+            jsonParams.putOpt(Owner.COLUMN_PHONE, phone);
+            jsonParams.putOpt(API_EMAIL, email);
+            jsonParams.putOpt(API_PASSWORD, password);
+            jsonParams.putOpt(API_PASSWORD_CONFIRMATION, password);
 
-        VolleyManager.getInstance(getApplicationContext())
-                .addToRequestQueue(registerRequest, TAG);
+            RegisterResponse response = new RegisterResponse(this);
+
+            Request registerRequest = RequestManager.postRequest(jsonParams,
+                    RequestManager.ADDRESS_REGISTER, response, response, null);
+
+            VolleyManager.getInstance(getApplicationContext())
+                    .addToRequestQueue(registerRequest, TAG);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Do.showShortToast("Hubo un error en el registro", this);
+        }
     }
 
     public void setHumanGenderRadioButtonClicked(View view) {
@@ -195,5 +212,61 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mDate = Do.getToStringDate(day, month, year);
         mBirthDateButton.setText(mDate);
 
+    }
+
+    private String getFirstName(String fullName) {
+
+        String[] names = fullName.split(" ");
+
+        if (names.length >= 4) {
+
+            return names[0] + " " + names[1];
+
+        } else if (names.length > 1) {
+
+            return names[0];
+
+        } else {
+
+            String firstName = fullName;
+
+            if (fullName.contains(" ")) {
+                firstName = fullName.substring(0, fullName.indexOf(" "));
+            }
+
+            return firstName;
+        }
+    }
+
+    private String getLastName(String fullName) {
+
+        String[] names = fullName.split(" ");
+
+        if (names.length >= 4) {
+
+            return names[2];
+
+        } else if (names.length > 1) {
+
+            return names[1];
+
+        } else {
+
+            return "";
+        }
+    }
+
+    private String getSecondLastName(String fullName) {
+
+        String[] names = fullName.split(" ");
+
+        if (names.length >= 3) {
+
+            return names[names.length - 1];
+
+        } else {
+
+            return "";
+        }
     }
 }
