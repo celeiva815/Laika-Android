@@ -13,7 +13,7 @@ import social.laika.app.models.Dog;
 import social.laika.app.network.RequestManager;
 import social.laika.app.responses.ImageResponse;
 
-public class HealthDogActivity extends BaseActivity {
+public class HealthDogActivity extends MainActivity {
 	
 	private int mIdLayout;
 	private Dog mDog;

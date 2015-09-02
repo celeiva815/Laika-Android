@@ -2,7 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="0dp"
-    android:background="@drawable/lk_my_dog_background"
     android:orientation="vertical"
     android:paddingTop="100dp" >
 

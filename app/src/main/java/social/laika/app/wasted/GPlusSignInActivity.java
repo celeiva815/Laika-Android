@@ -46,9 +46,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import social.laika.app.R;
-import social.laika.app.activities.BaseActivity;
+import social.laika.app.activities.MainActivity;
 
-public class GPlusSignInActivity extends BaseActivity implements OnClickListener,
+public class GPlusSignInActivity extends MainActivity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener,
         ResultCallback<LoadPeopleResult> {
 
@@ -80,7 +80,7 @@ public class GPlusSignInActivity extends BaseActivity implements OnClickListener
 	    private TextView txtName, txtEmail;
 	    private LinearLayout llProfileLayout;
 	 
-	    protected void onStart() {
+	    public void onStart() {
 	    	
 	    	//XXX probablemente haya que reescribir completo el m�todo onCreate por el tema de la conexi�n.
 	    	createFragmentView(mIdLayout);
@@ -90,7 +90,7 @@ public class GPlusSignInActivity extends BaseActivity implements OnClickListener
 	        mGoogleApiClient.connect();
 	    }
 	    
-	    protected void onStop() {
+	    public void onStop() {
 	        super.onStop();
 	        if (mGoogleApiClient.isConnected()) {
 	            mGoogleApiClient.disconnect();

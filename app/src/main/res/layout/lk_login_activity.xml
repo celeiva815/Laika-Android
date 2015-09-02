@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               xmlns:fb="http://schemas.android.com/tools"
               xmlns:facebook="http://schemas.android.com/apk/res-auto"
-              android:background="@drawable/login_background"
+              android:background="@drawable/tutorial_6"
               android:orientation="vertical"
               android:weightSum="10">
 

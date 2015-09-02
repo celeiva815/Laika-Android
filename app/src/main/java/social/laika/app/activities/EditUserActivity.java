@@ -355,10 +355,10 @@ public class EditUserActivity extends ActionBarActivity
         String birthDate = mBirthDateButton.getText().toString();
         int gender = mGender;
         String phone = mPhoneEditText.getText().toString();
-        int locationId = mCity.mCityId;
+        int cityId = mCity.mCityId;
 
         Owner owner = new Owner(ownerId, ownerName, firstName, lastName, secondLastName, rut, birthDate,
-                gender, mOwner.mEmail, phone, locationId);
+                gender, mOwner.mEmail, phone, cityId);
 
         JSONObject jsonParams = owner.getJsonObject();
 

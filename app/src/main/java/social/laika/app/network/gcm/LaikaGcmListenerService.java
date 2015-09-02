@@ -25,6 +25,7 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
+import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 30-07-15.
@@ -135,6 +136,11 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 int status = jsonData.getInt(UserAdoptDog.COLUMN_STATUS);
                 /* Soft UserAdoptDog Synchronization */
                 syncUserAdoptDogSoft(userAdoptDogID, status);
+
+                if (status == Tag.POSTULATION_ADOPTED) {
+                    performFullSyncHard();
+                }
+
                 break;
             case GCM_ALERT_REMINDER:
                 Log.e(TAG, "GCM_ALERT_REMINDER not implemented");
@@ -174,7 +180,8 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 int dog_id = jsonData.getInt(Dog.COLUMN_DOG_ID);
                 /* Hard Dog Synchronization */
 //                syncDogHard(dog_id); ISSUE hay un timeout con una respuesta 404, hay que revisar, por ahora solo dejaré un sync en la UI.
-                PrefsManager.setNeedSync(getApplicationContext(), true);
+
+                performFullSyncHard();
 
                 break;
             case GCM_PHOTO_UPDATE:
@@ -272,6 +279,19 @@ public class LaikaGcmListenerService extends GcmListenerService {
             /* Login the error */
             Log.e(TAG, "Attempting to delete photo @" + photoID + ", but no photo was found.");
         }
+    }
+
+    public void performFullSyncHard() {
+
+        if (MainActivity.isActive) {
+
+            Intent intent = new Intent(MainActivity.GCM_NOTIFICATION);
+            getApplicationContext().sendBroadcast(intent);
+
+        } else {
+            PrefsManager.setNeedSync(getApplicationContext(), true);
+        }
+
     }
 
 

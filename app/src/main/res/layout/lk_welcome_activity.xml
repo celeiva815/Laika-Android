@@ -23,8 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:contentDescription="main_logo"
-            android:src="@drawable/logo_laika" />
+            android:contentDescription="main_logo"/>
 
         <TextView
             android:id="@+id/g_plus_sign_in_textview"
@@ -34,32 +33,7 @@
             android:text="@string/g_plus_log_in"
             android:textColor="#FFF" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/events_main_imageview"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/fb_logo" />
-
-            <ImageView
-                android:id="@+id/gplus_sign_in_imageview"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/gplus_logo" />
-
-            <ImageView
-                android:id="@+id/news_main_imageview"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tw_logo" />
-
         </LinearLayout>
-    </LinearLayout>
 
     <!-- Para poder ingresar sin tener que loguearte -->
 

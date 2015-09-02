@@ -137,7 +137,7 @@ public class TutorialFragment extends Fragment {
             case TUTORIAL_INFORMATION:
                 title = Do.getRString(context, R.string.title_information_tutorial);
                 detail = Do.getRString(context, R.string.detail_information_tutorial);
-                backgroundId = R.drawable.lk_give_in_adoption_background;
+                backgroundId = R.drawable.tutorial_4;
                 break;
 
             case TUTORIAL_FOUNDATIONS:

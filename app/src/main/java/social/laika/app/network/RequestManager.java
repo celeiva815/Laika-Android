@@ -51,7 +51,7 @@ public class RequestManager {
     public static final String ADDRESS_ALERT_REMINDERS = "alert_reminders/";
     public static final String ADDRESS_ADD_DOG_OWNER = "add_dog_owner/";
     public static final String ADDRESS_CALENDAR_REMINDERS = "calendar_reminders/";
-    public static final String ADDRESS_DOG = "mDog/";
+    public static final String ADDRESS_DOG = "dog/";
     public static final String ADDRESS_DOGS = "dogs/";
     public static final String ADDRESS_CANCEL_POSTULATION = "cancel_postulation/";
     public static final String ADDRESS_CONFIRM_POSTULATION = "confirm_postulation/";

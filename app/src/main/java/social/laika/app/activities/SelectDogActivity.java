@@ -4,7 +4,7 @@ import android.view.View;
 
 import social.laika.app.R;
 
-public class SelectDogActivity extends BaseActivity {
+public class SelectDogActivity extends MainActivity {
 
 	private int mIdLayout = R.layout.ai_base_activity;
 	

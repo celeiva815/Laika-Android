@@ -42,14 +42,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="social.laika.app.activities.MainActivity"
-            android:label="@string/main_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="social.laika.app.activities.LoginActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="portrait" >
@@ -69,6 +61,14 @@
             android:name=".wasted.GPlusSignInActivity"
             android:exported="false"
             android:label="@string/log_in_activity_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="social.laika.app.activities.MainActivity"
+            android:label="@string/main_activity_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

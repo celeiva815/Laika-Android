@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.soundcloud.android.crop.Crop;
@@ -383,16 +384,25 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             jsonObject.put(Photo.API_PHOTO, mPhotographer.getJsonPhoto(context));
             jsonObject.put(Photo.API_IS_PROFILE, true);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         DogProfileResponse response = new DogProfileResponse(mDog, this, context);
         Request imageRequest = RequestManager.postRequest(jsonObject,
                 RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);
 
+        imageRequest.setRetryPolicy(new DefaultRetryPolicy(
+                50000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         VolleyManager.getInstance(context).addToRequestQueue(imageRequest, TAG);
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+            failedUpload();
+        } catch (OutOfMemoryError e) {
+            Do.showShortToast("La foto es muy grande para ser subida. Intenta con una más pequeña",
+                    this);
+            failedUpload();
+        }
     }
 
     @Override
@@ -400,6 +410,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
 
         mProgressDialog.dismiss();
         onBackPressed();
+        Do.showLongToast(Do.getRString(this, R.string.congrats_new_dog_added) + mDog.mName, this);
 
     }
 

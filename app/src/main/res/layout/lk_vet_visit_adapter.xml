@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
-    android:weightSum="13">
+                android:weightSum="13"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/date_vet_visits_textview"
@@ -42,11 +45,6 @@
         android:id="@+id/reason_vet_visits_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/vet_name_vet_visits_textview"
-        android:layout_alignStart="@+id/vet_name_vet_visits_textview"
-        android:layout_below="@+id/vet_name_vet_visits_textview"
-        android:layout_toLeftOf="@+id/imageView14"
-        android:layout_toStartOf="@+id/imageView14"
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:maxLines="100"
@@ -54,12 +52,16 @@
         android:text="El perrito tenia una cosa en su patita que no lo dejaba caminar absolutamente nada. Era una lata andar con el perro por ahi. El perrito no se quedaba quieto en ningun momento"
         android:textColor="@color/light_black_font"
         android:textSize="@dimen/laika_min_text"
-        android:layout_centerVertical="true"/>
+        android:layout_below="@+id/vet_name_vet_visits_textview"
+        android:layout_alignLeft="@+id/vet_name_vet_visits_textview"
+        android:layout_alignStart="@+id/vet_name_vet_visits_textview"
+        android:layout_toLeftOf="@+id/imageView14"
+        android:layout_toStartOf="@+id/imageView14"/>
 
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="false"

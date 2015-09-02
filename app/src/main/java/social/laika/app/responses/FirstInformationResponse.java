@@ -98,7 +98,6 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         RequestManager.error(error, mContext);
 
         if (mProgressBar != null) {
-
             mProgressBar.setVisibility(View.GONE);
         }
 
@@ -112,7 +111,10 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
             LoginManager.getInstance().logOut();
         }
 
-        mRequestable.onFailure();
+        if (mRequestable != null) {
+            mRequestable.onFailure();
+            return;
+        }
 
     }
 }
