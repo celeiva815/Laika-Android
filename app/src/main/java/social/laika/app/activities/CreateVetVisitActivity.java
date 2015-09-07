@@ -188,10 +188,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
             mReasonEditText.setText(mVetVisit.mReason);
             mDetailEditText.setText(mVetVisit.mDetail);
             mTreatmentEditText.setText(mVetVisit.mTreatment);
-
-            RequestManager.getImage(mVetVisit.mLargeUrl, null, mVetImageView,
-                    getApplicationContext());
-
+            mCreateButton.setText("Guardar Ficha");
         }
     }
 
@@ -222,8 +219,8 @@ public class CreateVetVisitActivity extends ActionBarActivity
             super.onBackPressed();
             return true;
         }
-        return super.onOptionsItemSelected(item);
 
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -253,7 +250,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
 
             cropPhoto(result.getData());
 
-        }  else if (requestCode == Crop.REQUEST_CROP) {
+        } else if (requestCode == Crop.REQUEST_CROP) {
             mPhotographer.handleCrop(resultCode, result, this, mVetImageView);
 
         }
@@ -304,7 +301,6 @@ public class CreateVetVisitActivity extends ActionBarActivity
         mTreatmentEditText.setEnabled(enable);
         mDateButton.setEnabled(enable);
         mCreateButton.setEnabled(enable);
-
     }
 
 
@@ -364,6 +360,5 @@ public class CreateVetVisitActivity extends ActionBarActivity
 
         mDate = Do.getToStringDate(day, month, year);
         mDateButton.setText(mDate);
-
     }
 }
