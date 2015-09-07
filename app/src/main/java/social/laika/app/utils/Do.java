@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -373,5 +374,11 @@ public class Do {
             }
         });
         v.startAnimation(anim_out);
+    }
+
+    public static LayoutInflater getLayoutInflater(Context context) {
+
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
 }

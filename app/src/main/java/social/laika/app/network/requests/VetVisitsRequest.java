@@ -108,7 +108,7 @@ public class VetVisitsRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(20, TimeUnit.SECONDS);
+        return future.get(30, TimeUnit.SECONDS);
 
     }
 
@@ -130,7 +130,7 @@ public class VetVisitsRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(20, TimeUnit.SECONDS);
+        return future.get(30, TimeUnit.SECONDS);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class VetVisitsRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(10, TimeUnit.SECONDS);
+        return future.get(30, TimeUnit.SECONDS);
     }
 
 
@@ -171,7 +171,7 @@ public class VetVisitsRequest extends SyncRequest {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
 
-        return future.get(10, TimeUnit.SECONDS);
+        return future.get(30, TimeUnit.SECONDS);
 
     }
 }

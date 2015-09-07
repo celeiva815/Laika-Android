@@ -55,7 +55,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public static final String REMINDERS = "Recordatorios";
     public static final String OWNERS = "Dueños";
     public static final String ALBUM = "Album";
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     public static final String[] CONTENT = new String[]{HISTORY, REMINDERS, OWNERS, ALBUM};
     public static final String[] OPTIONS = new String[]{"Editar", "Agregar",
             "Crear Ficha", "Tomar Foto"};
@@ -75,10 +74,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public DogProfileFragment mDogProfileFragment;
     public HistoryMyDogFragment mHistoryFragment;
     public VetVisitsFragment mVetVisitsFragment;
-    public RemindersFragment mRemindersFragment;
-    public OwnersFragment mOwnerFragment;
     public AlbumMyDogFragment mAlbumFragment;
-    public String mCurrentPhotoPath;
     public ViewPager mPager;
     public PagerAdapter mPagerAdapter;
     public CustomPagerSlidingTabStrip mIndicator;
@@ -86,11 +82,9 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public int mPosition;
     public boolean mChanged;
 
-    ContentResolver mResolver;
     ContentObserver mAlarmObserver;
     ContentObserver mVetVisitObserver;
     ContentObserver mCalendarObserver;
-    ContentObserver mPhotoObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,37 +257,6 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         }
 
         mPager.setCurrentItem(getPagerPosition(HISTORY), true);
-
-    }
-
-    public void setReminderFragment(AlarmReminder alarmReminder) {
-
-        mRemindersFragment = RemindersFragment.newInstance(mDog.mDogId,
-                alarmReminder.mAlarmReminderId, RemindersFragment.KEY_ALARM);
-
-        mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
-    }
-
-    public void setReminderFragment(CalendarReminder calendarReminder) {
-
-        mRemindersFragment = RemindersFragment.newInstance(mDog.mDogId,
-                calendarReminder.mCalendarReminderId, RemindersFragment.KEY_CALENDAR);
-
-        mPager.setCurrentItem(getPagerPosition(REMINDERS), true);
-    }
-
-    public void setHealthFragment() {
-
-
-    }
-
-    public void setOwnerFragment(Dog mDog) {
-
-
-    }
-
-    public void setAlbumFragment(Dog mDog) {
-
 
     }
 

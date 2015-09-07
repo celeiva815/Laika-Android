@@ -49,6 +49,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     public ImageView mDogImageView;
     public TextView mNameTextView;
     public TextView mBirthDateTextView;
+    public TextView mGenderTextView;
     public TextView mSizeTextView;
     public TextView mBreedTextView;
     public TextView mPersonalityTextView;
@@ -96,6 +97,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
         mDogImageView = (ImageView) view.findViewById(R.id.dog_history_imageview);
         mNameTextView = (TextView) view.findViewById(R.id.name_dog_profile_textview);
+        mGenderTextView = (TextView) view.findViewById(R.id.gender_dog_profile_textview);
         mBirthDateTextView = (TextView) view.findViewById(R.id.birth_date_dog_profile_textview);
         mSizeTextView = (TextView) view.findViewById(R.id.size_dog_profile_textview);
         mBreedTextView = (TextView) view.findViewById(R.id.breed_dog_profile_textview);
@@ -147,6 +149,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mSizeTextView.setText(mDog.getSize().mName);
         mBreedTextView.setText(mDog.getBreed().mName);
         mPersonalityTextView.setText(mDog.getPersonality().mName);
+        mGenderTextView.setText(mDog.getGender(context));
         mSterilizedTextView.setText(Do.getRString(context,
                 mDog.mIsSterilized ? R.string.is_sterilized : R.string.is_not_sterilized));
 

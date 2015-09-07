@@ -188,56 +188,6 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     }
 
-    private List<History> getAlarmHistories(Context context, List<AlarmReminder> alarms) {
-
-        mHistories = new ArrayList<>();
-        List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
-
-        if (calendars.size() > 0) {
-
-            for (CalendarReminder c : calendars) {
-
-                mHistories.add(c.toHistory(context));
-            }
-        }
-
-        if (alarms.size() > 0) {
-
-            for (AlarmReminder a : alarms) {
-
-                mHistories.add(a.toHistory(context));
-            }
-        }
-
-        return mHistories;
-
-    }
-
-    private List<History> getCalendarHistories(Context context, List<CalendarReminder> calendars) {
-
-        mHistories = new ArrayList<>();
-        List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
-
-        if (calendars.size() > 0) {
-
-            for (CalendarReminder c : calendars) {
-
-                mHistories.add(c.toHistory(context));
-            }
-        }
-
-        if (alarms.size() > 0) {
-
-            for (AlarmReminder a : alarms) {
-
-                mHistories.add(a.toHistory(context));
-            }
-        }
-
-        return mHistories;
-
-    }
-
     public void editReminder(History history) {
 
         Context context = getActivity().getApplicationContext();
@@ -282,14 +232,17 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
                     case Tag.TYPE_ALARM:
 
                         AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
+
                         reminder.cancelAlarm(context);
                         reminder.remove();
-
                         break;
 
                     case Tag.TYPE_CALENDAR:
 
+                        CalendarReminder calendarReminder = CalendarReminder.getSingleReminder(history.mReminderId);
 
+                        calendarReminder.cancelAlarm(context);
+                        calendarReminder.remove();
                         break;
 
                 }
@@ -356,7 +309,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
         if (status == Tag.STATUS_ACTIVATED) {
 
-         return new CharSequence[]{"Desactivar", "Editar", "Eliminar"};
+            return new CharSequence[]{"Desactivar", "Editar", "Eliminar"};
 
         } else if (status == Tag.STATUS_NOT_ACTIVATED) {
 

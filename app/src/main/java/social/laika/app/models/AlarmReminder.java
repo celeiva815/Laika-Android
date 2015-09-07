@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
@@ -154,8 +155,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.mNeedsSync = Tag.FLAG_READED;
     }
 
-    public AlarmReminder() {
-    }
+    public AlarmReminder() { }
 
     public JSONObject getJsonObject() {
 
@@ -171,7 +171,6 @@ public class AlarmReminder extends ModelSync implements Alertable {
         }
 
         return jsonObject;
-
     }
 
     public JSONObject getAlarmJsonObject() {
@@ -201,7 +200,6 @@ public class AlarmReminder extends ModelSync implements Alertable {
         }
 
         return jsonObject;
-
     }
 
     private void update(AlarmReminder alarmReminder) {
@@ -224,7 +222,6 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.mNeedsSync = alarmReminder.mNeedsSync;
 
         this.save();
-
     }
 
     @Override
@@ -501,14 +498,14 @@ public class AlarmReminder extends ModelSync implements Alertable {
             if (countDays == 1) {
 
                 date += Do.getRString(context, R.string.all_the_date) + " ";
-                date += Do.getRString(context, R.string.friday_date);
+                date += Do.getRString(context, R.string.sunday_date);
 
                 return date;
 
             } else {
 
                 date += Do.getRString(context, R.string.and_date) + " ";
-                date += Do.getRString(context, R.string.friday_date);
+                date += Do.getRString(context, R.string.sundays_date);
 
                 return date;
             }
@@ -519,7 +516,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
     public History toHistory(Context context) {
 
-        return new History(mAlarmReminderId, mCategory, mType, mTitle, mDetail, toDate(context),
+        return new History(getId(), mCategory, mType, mTitle, mDetail, toDate(context),
                 mTime, this);
     }
 
@@ -764,7 +761,6 @@ public class AlarmReminder extends ModelSync implements Alertable {
             reminder.save();
             reminder.setAlarm(context);
 
-
         } else {
 
             AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
@@ -832,6 +828,11 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
         String condition = AlarmReminder.COLUMN_ALARM_REMINDER_ID + DB.EQUALS + reminderId;
         return new Select().from(AlarmReminder.class).where(condition).executeSingle();
+    }
+
+    public static AlarmReminder getSingleReminder(long reminderId) {
+
+        return Model.load(AlarmReminder.class, reminderId);
     }
 
     public static void deleteAll(Context context) {

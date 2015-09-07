@@ -89,6 +89,16 @@ public class VetVisitActivity extends ActionBarActivity
         Do.hideKeyboard(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mVetVisit != null) {
+
+            setValues();
+        }
+    }
+
     public void setActivityView() {
 
         final Calendar calendar = Calendar.getInstance();

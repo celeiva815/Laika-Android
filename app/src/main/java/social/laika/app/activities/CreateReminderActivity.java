@@ -54,8 +54,8 @@ public class CreateReminderActivity extends ActionBarActivity {
         int dogId = getIntent().getExtras().getInt(KEY_DOG);
         mDog = Dog.getSingleDog(dogId);
 
-        int alarmReminderId = getIntent().getExtras().getInt(KEY_ALARM_ID, 0);
-        int calendarReminderId = getIntent().getExtras().getInt(KEY_CALENDAR_ID, 0);
+        long alarmReminderId = getIntent().getExtras().getLong(KEY_ALARM_ID, 0);
+        long calendarReminderId = getIntent().getExtras().getLong(KEY_CALENDAR_ID, 0);
 
         if (alarmReminderId > 0) {
 

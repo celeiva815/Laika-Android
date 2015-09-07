@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
@@ -227,7 +228,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
     @Override
     public History toHistory(Context context) {
 
-        return new History(mCalendarReminderId, mCategory, mType, mTitle, mDetail, mDate, mTime, this);
+        return new History(getId(), mCategory, mType, mTitle, mDetail, mDate, mTime, this);
     }
 
     @Override
@@ -390,6 +391,11 @@ public class CalendarReminder extends ModelSync implements Alertable {
 
         String condition = CalendarReminder.COLUMN_CALENDAR_REMINDER_ID + DB.EQUALS + reminderId;
         return new Select().from(CalendarReminder.class).where(condition).executeSingle();
+    }
+
+    public static CalendarReminder getSingleReminder(long reminderId) {
+
+        return Model.load(CalendarReminder.class, reminderId);
     }
 
     public static void deleteAll(Context context) {

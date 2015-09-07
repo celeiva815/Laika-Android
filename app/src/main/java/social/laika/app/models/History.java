@@ -10,7 +10,7 @@ import social.laika.app.utils.Tag;
  */
 public class History {
 
-    public int mReminderId;
+    public long mReminderId;
     public int mCategory;
     public int mType;
     public String mTitle;
@@ -19,7 +19,7 @@ public class History {
     public String mTime;
     public Alertable mReminder;
 
-    public History(int mReminderId, int mCategory, int mType, String mTitle, String mDetail,
+    public History(long mReminderId, int mCategory, int mType, String mTitle, String mDetail,
                    String mDate, String mTime, Alertable mReminder) {
 
         this.mReminderId = mReminderId;
