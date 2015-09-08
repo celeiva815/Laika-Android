@@ -21,7 +21,7 @@ import social.laika.app.R;
 import social.laika.app.adapters.PublicationsAdapter;
 import social.laika.app.listeners.PublicationsRefreshListener;
 import social.laika.app.models.Publication;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.PublicationsResponse;
 import social.laika.app.utils.PrefsManager;
@@ -140,7 +140,7 @@ public class PublicationsActivity extends ActionBarActivity {
 
         PublicationsResponse response = new PublicationsResponse(this);
 
-        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_PUBLICATIONS,
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_PUBLICATIONS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import social.laika.app.R;
 import social.laika.app.activities.PhotosFragmentActivity;
 import social.laika.app.models.Photo;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 public class PhotoScreenSlideFragment extends Fragment {
 	
@@ -58,7 +58,7 @@ public class PhotoScreenSlideFragment extends Fragment {
         mOwnerTextView.setText(mPhoto.mOwnerName);
         mDateTextView.setText(mPhoto.mDate);
 
-        RequestManager.getImage(mPhoto.mUrlLarge, mProgressBar, mMainImageView, view.getContext());
+        Api.getImage(mPhoto.mUrlLarge, mProgressBar, mMainImageView, view.getContext());
 
         return view;
     }

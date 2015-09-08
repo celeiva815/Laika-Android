@@ -4,10 +4,9 @@ import social.laika.app.R;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AddOwnerResponse;
-import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
@@ -118,10 +117,10 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
 
         JSONObject jsonObject = new JSONObject(params);
         AddOwnerResponse response = new AddOwnerResponse(mDog, mEmail, mContext, this);
-        String address = RequestManager.ADDRESS_ADD_DOG_OWNER;
+        String address = Api.ADDRESS_ADD_DOG_OWNER;
         String token = PrefsManager.getUserToken(mContext);
 
-        Request request = RequestManager.postRequest(jsonObject,address,response,response,token);
+        Request request = Api.postRequest(jsonObject, address, response, response, token);
         VolleyManager.getInstance(mContext).addToRequestQueue(request, TAG);
 
         String message = "Hemos enviado una invitación al correo " + mEmail;

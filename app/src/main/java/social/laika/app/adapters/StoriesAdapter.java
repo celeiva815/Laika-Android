@@ -13,7 +13,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.models.Story;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
@@ -58,7 +58,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
 
         if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.getImage(story.mUrlImage, mProgressBar, mMainImageView, context);
+            Api.getImage(story.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.PostulatedDogsFragmentActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
 
@@ -48,7 +48,7 @@ public class RevokeAdoptionResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mActivity.getApplicationContext());
+        Api.error(error, mActivity.getApplicationContext());
         mProgressDialog.dismiss();
 
     }

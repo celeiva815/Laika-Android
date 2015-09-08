@@ -14,7 +14,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Tip;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 public class TipsAdapter extends ArrayAdapter<Tip> {
@@ -56,7 +56,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
         if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.getImage(tip.mUrlImage, mProgressBar, mMainImageView, context);
+            Api.getImage(tip.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

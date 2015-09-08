@@ -14,7 +14,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Event;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
@@ -68,7 +68,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
         if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.getImage(event.mUrlImage, mProgressBar, mMainImageView, context);
+            Api.getImage(event.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

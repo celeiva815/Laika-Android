@@ -21,7 +21,7 @@ import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.activities.PostulatedDogsFragmentActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RevokeAdoptionResponse;
 import social.laika.app.utils.PrefsManager;
@@ -150,8 +150,8 @@ public class RevokeAdoptionDialogOnClickListener implements OnClickListener {
         RevokeAdoptionResponse response = new RevokeAdoptionResponse(mActivity,
                 mProgressDialog, mDog, mUserAdoptDog);
 
-        Request postulationRequest = RequestManager.postRequest(jsonObject,
-                RequestManager.ADDRESS_CANCEL_POSTULATION, response, response,
+        Request postulationRequest = Api.postRequest(jsonObject,
+                Api.ADDRESS_CANCEL_POSTULATION, response, response,
                 PrefsManager.getUserToken(mActivity.getApplicationContext()));
 
         VolleyManager.getInstance(mActivity.getApplicationContext())

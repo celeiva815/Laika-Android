@@ -1,12 +1,7 @@
 package social.laika.app.responses;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
@@ -15,8 +10,7 @@ import org.json.JSONObject;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
-import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -53,7 +47,7 @@ public class DogProfileResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mContext);
+        Api.error(error, mContext);
         mActivity.failedUpload();
 
     }

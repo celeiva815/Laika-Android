@@ -23,14 +23,12 @@ import social.laika.app.R;
 import social.laika.app.activities.CreateVetVisitActivity;
 import social.laika.app.adapters.VetVisitAdapter;
 import social.laika.app.interfaces.Refreshable;
-import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.VetVisitsResponse;
 import social.laika.app.utils.PrefsManager;
-import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
@@ -174,7 +172,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
         VetVisitsResponse response = new VetVisitsResponse(this, context);
-        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_VET_VISITS,
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_VET_VISITS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);

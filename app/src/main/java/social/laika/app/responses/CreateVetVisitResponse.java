@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.CreateVetVisitActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 /**
@@ -45,7 +45,7 @@ public class CreateVetVisitResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mProgressDialog.dismiss();
         mActivity.enableViews(true);
     }

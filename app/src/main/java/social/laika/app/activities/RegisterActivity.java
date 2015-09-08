@@ -18,12 +18,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.models.Owner;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RegisterResponse;
 import social.laika.app.utils.Do;
@@ -70,6 +68,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mRegisterButton = (Button) findViewById(R.id.submit_register_button);
         mRegisterProgressBar = (ProgressBar) findViewById(R.id.register_progressbar);
 
+        mGender = Tag.GENDER_FEMALE;
         mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH),
                 calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         mBirthDateButton.setText(mDate);
@@ -174,8 +173,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
             RegisterResponse response = new RegisterResponse(this);
 
-            Request registerRequest = RequestManager.postRequest(jsonParams,
-                    RequestManager.ADDRESS_REGISTER, response, response, null);
+            Request registerRequest = Api.postRequest(jsonParams,
+                    Api.ADDRESS_REGISTER, response, response, null);
 
             VolleyManager.getInstance(getApplicationContext())
                     .addToRequestQueue(registerRequest, TAG);

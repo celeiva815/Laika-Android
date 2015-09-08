@@ -19,7 +19,7 @@ import java.util.concurrent.TimeoutException;
 
 import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -96,12 +96,12 @@ public class PhotosRequest extends SyncRequest {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDogId));
 
-        String address = RequestManager.ADDRESS_UPLOAD_DOG_PHOTOS;
+        String address = Api.ADDRESS_UPLOAD_DOG_PHOTOS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.getRequest(params, address, future, errorListener, token);
+        Request request = Api.getRequest(params, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -116,12 +116,12 @@ public class PhotosRequest extends SyncRequest {
 
         JSONObject jsonObject = mPhoto.getJsonObject();
 
-        String address = RequestManager.ADDRESS_UPLOAD_DOG_PHOTOS;
+        String address = Api.ADDRESS_UPLOAD_DOG_PHOTOS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+        Request request = Api.postRequest(jsonObject, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -135,12 +135,12 @@ public class PhotosRequest extends SyncRequest {
 
         JSONObject jsonObject = mPhoto.getJsonObject();
 
-        String address = RequestManager.ADDRESS_UPLOAD_DOG_PHOTOS;
+        String address = Api.ADDRESS_UPLOAD_DOG_PHOTOS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+        Request request = Api.putRequest(jsonObject, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);
@@ -157,12 +157,12 @@ public class PhotosRequest extends SyncRequest {
 
         jsonObject.put(Photo.COLUMN_PHOTO_ID, mPhoto.mPhotoId);
 
-        String address = RequestManager.ADDRESS_UPLOAD_DOG_PHOTOS;
+        String address = Api.ADDRESS_UPLOAD_DOG_PHOTOS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.deleteRequest(jsonObject, address, future, errorListener, token);
+        Request request = Api.deleteRequest(jsonObject, address, future, errorListener, token);
 
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(request);

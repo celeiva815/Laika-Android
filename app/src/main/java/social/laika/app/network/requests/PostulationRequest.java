@@ -6,9 +6,8 @@ import android.os.Bundle;
 import com.android.volley.Request;
 
 import social.laika.app.activities.PostulatedDogsFragmentActivity;
-import social.laika.app.fragments.PostulatedDogScreenSlideFragment;
 import social.laika.app.interfaces.Requestable;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaGcmListenerService;
 import social.laika.app.responses.PostulatedDogsResponse;
@@ -38,8 +37,8 @@ public class PostulationRequest implements Requestable {
     public void request() {
 
         PostulatedDogsResponse response = new PostulatedDogsResponse(this);
-        Request adoptDogRequest = RequestManager.getRequest(null,
-                RequestManager.ADDRESS_USER_POSTULATIONS, response, response,
+        Request adoptDogRequest = Api.getRequest(null,
+                Api.ADDRESS_USER_POSTULATIONS, response, response,
                 PrefsManager.getUserToken(mContext));
 
         VolleyManager.getInstance(mContext)

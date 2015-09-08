@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.camera.CameraActivity;
 
 /**
@@ -184,7 +184,7 @@ public class Photographer {
 
             String encodedImage = encodeImage(bitmap);
             String fileName = getImageName(context);
-            jsonPhoto = RequestManager.getJsonPhoto(encodedImage, fileName);
+            jsonPhoto = Api.getJsonPhoto(encodedImage, fileName);
 
         } catch (IOException e) {
             e.printStackTrace();

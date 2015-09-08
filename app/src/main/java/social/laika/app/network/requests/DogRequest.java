@@ -11,8 +11,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -22,7 +20,7 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Photo;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -47,13 +45,13 @@ public class DogRequest extends SyncRequest {
     public void download() throws InterruptedException, ExecutionException, TimeoutException {
 
         /* Building the url */
-        String address = RequestManager.ADDRESS_DOGS + Integer.toString(mDogId);
+        String address = Api.ADDRESS_DOGS + Integer.toString(mDogId);
         String token = PrefsManager.getUserToken(mContext);
 
         /* Preparing the request */
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        Request request = RequestManager.getRequest(null, address, future, errorListener, token);
+        Request request = Api.getRequest(null, address, future, errorListener, token);
 
         /* Making the request */
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);

@@ -1,7 +1,6 @@
 package social.laika.app.activities;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -28,8 +27,6 @@ import social.laika.app.R;
 import social.laika.app.fragments.AlbumMyDogFragment;
 import social.laika.app.fragments.DogProfileFragment;
 import social.laika.app.fragments.HistoryMyDogFragment;
-import social.laika.app.fragments.OwnersFragment;
-import social.laika.app.fragments.RemindersFragment;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.AddOwnerDogOnClickListener;
@@ -37,7 +34,7 @@ import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.observers.AlarmReminderObserver;
 import social.laika.app.network.observers.CalendarReminderObserver;
@@ -337,7 +334,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
             response.mProgressDialog = ProgressDialog.show(MyDogsActivity.this, "Espera un momento",
                     "Estamos subiendo la foto");
 
-            Request request = RequestManager.postImage(mDog.mDogId, jsonPhoto, context,
+            Request request = Api.postImage(mDog.mDogId, jsonPhoto, context,
                     response, response);
 
             VolleyManager.getInstance(context).addToRequestQueue(request);

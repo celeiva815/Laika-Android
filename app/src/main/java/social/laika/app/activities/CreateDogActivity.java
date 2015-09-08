@@ -44,11 +44,10 @@ import social.laika.app.models.Breed;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Photo;
 import social.laika.app.models.Size;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateDogResponse;
 import social.laika.app.responses.DogProfileResponse;
-import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
@@ -239,8 +238,8 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         enableViews(false);
         JSONObject jsonParams = dog.getJsonObject();
         CreateDogResponse response = new CreateDogResponse(this, message);
-        Request loginRequest = RequestManager.defaultRequest(method, jsonParams,
-                RequestManager.ADDRESS_DOGS, response, response,
+        Request loginRequest = Api.defaultRequest(method, jsonParams,
+                Api.ADDRESS_DOGS, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())
@@ -385,8 +384,8 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             jsonObject.put(Photo.API_IS_PROFILE, true);
 
         DogProfileResponse response = new DogProfileResponse(mDog, this, context);
-        Request imageRequest = RequestManager.postRequest(jsonObject,
-                RequestManager.ADDRESS_USER_DOG_PHOTOS, response, response, token);
+        Request imageRequest = Api.postRequest(jsonObject,
+                Api.ADDRESS_USER_DOG_PHOTOS, response, response, token);
 
         imageRequest.setRetryPolicy(new DefaultRetryPolicy(
                 50000,
@@ -443,7 +442,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
                 false, chipCode, status, userId);
 
         requestCreateOrUpdateDog(mDog, Do.getRString(this, R.string.congrats_new_dog_added),
-                RequestManager.METHOD_POST);
+                Api.METHOD_POST);
 
     }
 

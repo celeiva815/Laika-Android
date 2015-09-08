@@ -18,7 +18,7 @@ import com.android.volley.Request;
 import social.laika.app.R;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Do;
@@ -165,7 +165,7 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
 
         mProgressBar.setVisibility(View.VISIBLE);
         ImageResponse response = new ImageResponse(this, imageView, mProgressBar);
-        Request imageRequest = RequestManager.imageRequest(mDog.mUrlImage, imageView, response,
+        Request imageRequest = Api.imageRequest(mDog.mUrlImage, imageView, response,
                 response);
 
         VolleyManager.getInstance(getApplicationContext())

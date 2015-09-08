@@ -3,7 +3,6 @@ package social.laika.app.network.requests;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeoutException;
 
 import social.laika.app.models.VetVisit;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -96,12 +95,12 @@ public class VetVisitsRequest extends SyncRequest {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDogId));
 
-        String address = RequestManager.ADDRESS_VET_VISITS;
+        String address = Api.ADDRESS_VET_VISITS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.getRequest(params, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.getRequest(params, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -118,12 +117,12 @@ public class VetVisitsRequest extends SyncRequest {
 
         JSONObject jsonObject = mVetVisit.getJsonObject();
 
-        String address = RequestManager.ADDRESS_VET_VISITS;
+        String address = Api.ADDRESS_VET_VISITS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.postRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -139,12 +138,12 @@ public class VetVisitsRequest extends SyncRequest {
 
         JSONObject jsonObject = mVetVisit.getJsonObject();
 
-        String address = RequestManager.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
+        String address = Api.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.putRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -159,12 +158,12 @@ public class VetVisitsRequest extends SyncRequest {
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
             TimeoutException {
 
-        String address = RequestManager.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
+        String address = Api.ADDRESS_VET_VISITS + mVetVisit.mVetVisitId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
             SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.deleteRequest(null, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.deleteRequest(null, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 

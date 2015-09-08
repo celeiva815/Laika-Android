@@ -21,7 +21,7 @@ import social.laika.app.R;
 import social.laika.app.adapters.TipsAdapter;
 import social.laika.app.listeners.TipsRefreshListener;
 import social.laika.app.models.Tip;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.TipsResponse;
 import social.laika.app.utils.PrefsManager;
@@ -137,7 +137,7 @@ public class TipsActivity extends ActionBarActivity {
 
         TipsResponse response = new TipsResponse(this);
 
-        Request tipsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_TIPS,
+        Request tipsRequest = Api.getRequest(params, Api.ADDRESS_TIPS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)

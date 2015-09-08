@@ -18,7 +18,7 @@ import java.util.Calendar;
 import social.laika.app.R;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Tag;
@@ -152,7 +152,7 @@ public class StopCalendarActivity extends Activity {
     public void requestDogImage() {
 
         ImageResponse response = new ImageResponse(this, mDogImageView, mProgressBar);
-        Request imageRequest = RequestManager.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM), mDogImageView, response, response);
+        Request imageRequest = Api.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM), mDogImageView, response, response);
         VolleyManager.getInstance(getApplicationContext()).addToRequestQueue(imageRequest, TAG);
 
     }

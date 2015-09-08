@@ -1,7 +1,5 @@
 package social.laika.app.activities;
 
-import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -26,7 +24,7 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.listeners.ToActivityOnCLickListener;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LoginResponse;
 import social.laika.app.utils.Do;
@@ -148,10 +146,10 @@ public class LoginActivity extends ActionBarActivity {
         params.put(API_EMAIL, email);
         params.put(API_PASSWORD, password);
 
-        JSONObject jsonParams = RequestManager.getJsonParams(params);
+        JSONObject jsonParams = Api.getJsonParams(params);
         LoginResponse response = new LoginResponse(this);
 
-        Request loginRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
+        Request loginRequest = Api.postRequest(jsonParams, Api.ADDRESS_LOGIN,
                 response, response, PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())

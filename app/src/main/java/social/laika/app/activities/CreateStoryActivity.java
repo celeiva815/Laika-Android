@@ -28,7 +28,7 @@ import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Photo;
 import social.laika.app.utils.Photographer;
 import social.laika.app.models.Story;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateStoryResponse;
 import social.laika.app.utils.Do;
@@ -231,7 +231,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
 
             CreateStoryResponse response = new CreateStoryResponse(this);
 
-            Request storyRequest = RequestManager.postRequest(params, RequestManager.ADDRESS_STORIES,
+            Request storyRequest = Api.postRequest(params, Api.ADDRESS_STORIES,
                     response, response, PrefsManager.getUserToken(context));
 
             storyRequest.setRetryPolicy(new DefaultRetryPolicy(

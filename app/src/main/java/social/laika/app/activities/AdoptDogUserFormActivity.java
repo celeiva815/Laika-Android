@@ -39,7 +39,7 @@ import social.laika.app.models.Owner;
 import social.laika.app.models.Region;
 import social.laika.app.models.indexes.FreeTime;
 import social.laika.app.models.indexes.Space;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
@@ -264,8 +264,8 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
         JSONObject jsonParams = adoptDogForm.getJsonObject();
         AdoptDogUserFormResponse response = new AdoptDogUserFormResponse(this, mNext);
 
-        Request adoptDogRequest = RequestManager.postRequest(jsonParams,
-                RequestManager.ADDRESS_UPLOAD_ADOPTION_FORM, response, response,
+        Request adoptDogRequest = Api.postRequest(jsonParams,
+                Api.ADDRESS_UPLOAD_ADOPTION_FORM, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())

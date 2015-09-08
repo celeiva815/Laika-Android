@@ -14,7 +14,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Publication;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 public class PublicationsAdapter extends ArrayAdapter<Publication> {
@@ -64,7 +64,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
         if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-            RequestManager.getImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
+            Api.getImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
 
         } else {
 

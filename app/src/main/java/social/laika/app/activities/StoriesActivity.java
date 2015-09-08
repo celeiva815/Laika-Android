@@ -22,7 +22,7 @@ import social.laika.app.R;
 import social.laika.app.adapters.StoriesAdapter;
 import social.laika.app.listeners.StoriesRefreshListener;
 import social.laika.app.models.Story;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.StoriesResponse;
 import social.laika.app.utils.Do;
@@ -148,7 +148,7 @@ public class StoriesActivity extends ActionBarActivity {
 
         StoriesResponse response = new StoriesResponse(this);
 
-        Request storiesRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_STORIES,
+        Request storiesRequest = Api.getRequest(params, Api.ADDRESS_STORIES,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)

@@ -3,7 +3,7 @@ package social.laika.app.listeners;
 import social.laika.app.R;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ConfirmAdoptionResponse;
 import social.laika.app.utils.Do;
@@ -121,8 +121,8 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
         ConfirmAdoptionResponse response = new ConfirmAdoptionResponse(mActivity,
                 mProgressDialog, mDog, getDogBitmap());
 
-        Request postulationRequest = RequestManager.postRequest(jsonObject,
-                RequestManager.ADDRESS_CONFIRM_POSTULATION, response, response,
+        Request postulationRequest = Api.postRequest(jsonObject,
+                Api.ADDRESS_CONFIRM_POSTULATION, response, response,
                 PrefsManager.getUserToken(mActivity.getApplicationContext()));
 
         VolleyManager.getInstance(mActivity.getApplicationContext())

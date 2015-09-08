@@ -25,7 +25,7 @@ import social.laika.app.adapters.SizeAdapter;
 import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Size;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.DogForAdoptionResponse;
 import social.laika.app.utils.Do;
@@ -145,8 +145,8 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         params.put(API_DOG_PERSONALITY, Integer.toString(dogPersonality));
         params.put(API_LIMIT, Integer.toString(10));
 
-        Request adoptDogRequest = RequestManager.getRequest(params,
-                RequestManager.ADDRESS_GET_MATCHING_DOGS, response, response,
+        Request adoptDogRequest = Api.getRequest(params,
+                Api.ADDRESS_GET_MATCHING_DOGS, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeoutException;
 
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -94,11 +94,11 @@ public class CalendarRemindersRequest extends SyncRequest {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDogId));
 
-            String address = RequestManager.ADDRESS_CALENDAR_REMINDERS;
+            String address = Api.ADDRESS_CALENDAR_REMINDERS;
         String token = PrefsManager.getUserToken(mContext);
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.getRequest(params, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.getRequest(params, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -115,12 +115,12 @@ public class CalendarRemindersRequest extends SyncRequest {
 
         JSONObject jsonObject = mCalendarReminder.getJsonObject();
 
-            String address = RequestManager.ADDRESS_CALENDAR_REMINDERS;
+            String address = Api.ADDRESS_CALENDAR_REMINDERS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.postRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -136,12 +136,12 @@ public class CalendarRemindersRequest extends SyncRequest {
 
         JSONObject jsonObject = mCalendarReminder.getJsonObject();
 
-            String address = RequestManager.ADDRESS_CALENDAR_REMINDERS + mCalendarReminder.mCalendarReminderId;
+            String address = Api.ADDRESS_CALENDAR_REMINDERS + mCalendarReminder.mCalendarReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.putRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -156,12 +156,12 @@ public class CalendarRemindersRequest extends SyncRequest {
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
             TimeoutException {
 
-            String address = RequestManager.ADDRESS_CALENDAR_REMINDERS + mCalendarReminder.mCalendarReminderId;
+            String address = Api.ADDRESS_CALENDAR_REMINDERS + mCalendarReminder.mCalendarReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.deleteRequest(null, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.deleteRequest(null, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 

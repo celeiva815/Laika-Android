@@ -1,10 +1,7 @@
 package social.laika.app.network.requests;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import com.android.volley.Request;
 
 import org.json.JSONObject;
 
@@ -12,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import social.laika.app.interfaces.Requestable;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
@@ -34,7 +31,7 @@ public class TokenRequest implements Requestable {
         mToken = token;
         mContext = context;
         mSubscribe = subscribe;
-        mAddress = subscribe ? RequestManager.ADDRESS_SUBSCRIBE : RequestManager.ADDRESS_UNSUBSCRIBE;
+        mAddress = subscribe ? Api.ADDRESS_SUBSCRIBE : Api.ADDRESS_UNSUBSCRIBE;
 
     }
 
@@ -48,7 +45,7 @@ public class TokenRequest implements Requestable {
 
         JSONObject jsonParams = new JSONObject(params);
         String token = PrefsManager.getUserToken(mContext);
-        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonParams, mAddress,
+        LaikaRequest request = (LaikaRequest) Api.postRequest(jsonParams, mAddress,
                 response, response, token);
 
         request.setDeviceId(mContext);

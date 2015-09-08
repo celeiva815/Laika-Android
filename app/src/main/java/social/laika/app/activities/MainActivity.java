@@ -43,7 +43,7 @@ import social.laika.app.models.Story;
 import social.laika.app.models.Tip;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
 import social.laika.app.network.requests.TokenRequest;
@@ -316,8 +316,8 @@ public class MainActivity extends ActionBarActivity
                 "Estamos actualizando el estado de tus postulaciones...");
 
         PostulatedDogsResponse response = new PostulatedDogsResponse(this, dialog);
-        Request adoptDogRequest = RequestManager.getRequest(null,
-                RequestManager.ADDRESS_USER_POSTULATIONS, response, response,
+        Request adoptDogRequest = Api.getRequest(null,
+                Api.ADDRESS_USER_POSTULATIONS, response, response,
                 PrefsManager.getUserToken(getApplicationContext()));
 
         VolleyManager.getInstance(getApplicationContext())

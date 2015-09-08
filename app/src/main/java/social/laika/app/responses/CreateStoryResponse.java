@@ -8,7 +8,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.activities.CreateStoryActivity;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 /**
@@ -36,7 +36,7 @@ public class CreateStoryResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mActivity.saveStory();
         Do.showShortToast("Hubo un error al subir tu historia, pero la hemos guardado!", mActivity);
 

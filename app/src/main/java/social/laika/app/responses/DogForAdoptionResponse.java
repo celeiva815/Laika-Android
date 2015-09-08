@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.AdoptDogFormActivity;
 import social.laika.app.activities.AdoptDogsFragmentActivity;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
 
@@ -41,7 +41,7 @@ public class DogForAdoptionResponse implements Response.Listener<JSONObject>, Re
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mContext);
+        Api.error(error, mContext);
         mActivity.mProgressDialog.dismiss();
 
     }

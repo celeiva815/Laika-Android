@@ -18,12 +18,9 @@ import com.android.volley.Request;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -35,7 +32,7 @@ import social.laika.app.R;
 import social.laika.app.activities.RegisterActivity;
 import social.laika.app.activities.TutorialActivity;
 import social.laika.app.listeners.ToActivityOnCLickListener;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.FacebookLoginResponse;
 import social.laika.app.responses.LoginResponse;
@@ -254,10 +251,10 @@ public class TutorialFragment extends Fragment {
         params.put(API_EMAIL, email);
         params.put(API_PASSWORD, password);
 
-        JSONObject jsonParams = RequestManager.getJsonParams(params);
+        JSONObject jsonParams = Api.getJsonParams(params);
         LoginResponse response = new LoginResponse(this);
 
-        Request loginRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_LOGIN,
+        Request loginRequest = Api.postRequest(jsonParams, Api.ADDRESS_LOGIN,
                 response, response, PrefsManager.getUserToken(view.getContext()));
 
         VolleyManager.getInstance(view.getContext())
@@ -290,8 +287,8 @@ public class TutorialFragment extends Fragment {
             params.put(API_TOKEN, token);
 
             FacebookLoginResponse response = new FacebookLoginResponse(mFragment);
-            JSONObject jsonParams = RequestManager.getJsonParams(params);
-            Request loginRequest = RequestManager.postRequest(jsonParams, RequestManager.ADDRESS_FB_LOGIN,
+            JSONObject jsonParams = Api.getJsonParams(params);
+            Request loginRequest = Api.postRequest(jsonParams, Api.ADDRESS_FB_LOGIN,
                     response, response, "");
 
             /* Executing the request */

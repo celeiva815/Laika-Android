@@ -37,12 +37,12 @@ import social.laika.app.utils.PrefsManager;
  * Improved by Tito_Leiva on 05-02-15.
  *
  */
-public class RequestManager {
+public class Api {
 
-    public static final String TAG = RequestManager.class.getSimpleName();
+    public static final String TAG = Api.class.getSimpleName();
 
-    public static final String BASE_URL = "http://fundaciones.laika.social/";
-//    public static final String BASE_URL = "http://test.laika.social/";
+//    public static final String BASE_URL = "http://fundaciones.laika.social/";
+    public static final String BASE_URL = "http://test.laika.social/";
 //    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
@@ -99,7 +99,7 @@ public class RequestManager {
 
     public static String apiRelativeUrl;
 
-    public RequestManager() {
+    public Api() {
 
         this.apiRelativeUrl = API_URL;
     }
@@ -109,7 +109,7 @@ public class RequestManager {
                                      Response.ErrorListener errorListener, final String token) {
 
         String url = addParamsToURL(getURL(address), params);
-        Log.d(RequestManager.TAG, url);
+        Log.d(Api.TAG, url);
 
         return new LaikaRequest(METHOD_GET, url, null, listener, errorListener, token);
     }
@@ -139,7 +139,7 @@ public class RequestManager {
                                       Response.Listener<JSONObject> listener,
                                       Response.ErrorListener errorListener, final String token) {
         String url = getURL(address);
-        Log.d(RequestManager.TAG, address);
+        Log.d(Api.TAG, address);
 
         return new LaikaRequest(method, url, jsonParams, listener, errorListener, token);
     }

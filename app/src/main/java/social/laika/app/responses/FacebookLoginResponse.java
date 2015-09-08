@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.fragments.TutorialFragment;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by cnmartinez on 8/4/15.
@@ -34,7 +34,7 @@ public class FacebookLoginResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
         Log.d("Tutorial", "Error :c " + error.getMessage());
 
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mLoginProgressBar.setVisibility(View.GONE);
 
         enableViews();

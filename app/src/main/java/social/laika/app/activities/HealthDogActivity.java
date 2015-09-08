@@ -10,7 +10,7 @@ import social.laika.app.R;
 import social.laika.app.listeners.ToMapHairOnClickListener;
 import social.laika.app.listeners.ToMapOnClickListener;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.ImageResponse;
 
 public class HealthDogActivity extends MainActivity {
@@ -45,7 +45,7 @@ public class HealthDogActivity extends MainActivity {
 	     barberButton.setOnClickListener(mapHairListener);
 
 		 ImageResponse response = new ImageResponse(this, profileImageView);
-		 RequestManager.imageRequest(mDog.mUrlImage, profileImageView, response, response);
+		 Api.imageRequest(mDog.mUrlImage, profileImageView, response, response);
 
 	 }
 

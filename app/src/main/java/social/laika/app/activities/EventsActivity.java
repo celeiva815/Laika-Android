@@ -21,7 +21,7 @@ import social.laika.app.R;
 import social.laika.app.adapters.EventsAdapter;
 import social.laika.app.listeners.EventsRefreshListener;
 import social.laika.app.models.Event;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.EventsResponse;
 import social.laika.app.utils.PrefsManager;
@@ -145,7 +145,7 @@ public class EventsActivity extends ActionBarActivity {
 
         EventsResponse response = new EventsResponse(this);
 
-        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_EVENTS,
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_EVENTS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context)

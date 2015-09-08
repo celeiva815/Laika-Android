@@ -1,6 +1,5 @@
 package social.laika.app.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -12,35 +11,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
 import social.laika.app.R;
 import social.laika.app.fragments.TutorialFragment;
-import social.laika.app.network.RequestManager;
-import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.FacebookLoginResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
-import com.android.volley.Request;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
 import com.newrelic.agent.android.NewRelic;
 import com.viewpagerindicator.CirclePageIndicator;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class TutorialActivity extends ActionBarActivity {

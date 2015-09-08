@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.fragments.TutorialFragment;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -45,7 +45,7 @@ public class LoginResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mLoginProgressBar.setVisibility(View.GONE);
 
         if (LoginManager.getInstance() != null) {

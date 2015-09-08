@@ -27,7 +27,7 @@ import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -95,7 +95,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mContext);
+        Api.error(error, mContext);
 
         if (mProgressBar != null) {
             mProgressBar.setVisibility(View.GONE);

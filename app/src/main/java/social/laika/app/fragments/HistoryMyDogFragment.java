@@ -29,7 +29,7 @@ import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.History;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RemindersResponse;
 import social.laika.app.utils.PrefsManager;
@@ -271,7 +271,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
         RemindersResponse response = new RemindersResponse(this, mDog, context);
-        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_ALERT_REMINDERS,
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_ALERT_REMINDERS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);

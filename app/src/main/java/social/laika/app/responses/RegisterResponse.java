@@ -9,7 +9,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.activities.RegisterActivity;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -35,7 +35,7 @@ public class RegisterResponse implements Response.ErrorListener,
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mProgressBar.setVisibility(View.GONE);
         mActivity.enableViews(true);
     }

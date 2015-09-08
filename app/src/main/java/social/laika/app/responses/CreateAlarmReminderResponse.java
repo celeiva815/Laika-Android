@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by Tito_Leiva on 07-05-15.
@@ -47,7 +47,7 @@ public class CreateAlarmReminderResponse implements Response.Listener<JSONObject
     public void onErrorResponse(VolleyError error) {
 
         Log.e(TAG, "Can't create the alarm");
-        RequestManager.error(error, mContext);
+        Api.error(error, mContext);
         mRequestable.onFailure();
 
     }

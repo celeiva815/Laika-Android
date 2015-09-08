@@ -23,7 +23,7 @@ import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.City;
 import social.laika.app.models.Owner;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
@@ -151,7 +151,7 @@ public class UserProfileActivity extends ActionBarActivity {
 
         setTitle("Mi Perfil");
 
-        RequestManager.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+        Api.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
                 getApplicationContext());
     }
 

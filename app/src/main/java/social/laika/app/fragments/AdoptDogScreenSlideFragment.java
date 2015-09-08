@@ -19,7 +19,7 @@ import social.laika.app.R;
 import social.laika.app.activities.AdoptDogsFragmentActivity;
 import social.laika.app.listeners.ConfirmAdoptionDialogOnClickListener;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Do;
@@ -170,7 +170,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
         mProgressBar.setVisibility(View.VISIBLE);
         ImageResponse response = new ImageResponse(getActivity(), imageView, mProgressBar);
-        Request imageRequest = RequestManager.imageRequest(mDog.mUrlImage, imageView, response,
+        Request imageRequest = Api.imageRequest(mDog.mUrlImage, imageView, response,
                 response);
 
         VolleyManager.getInstance(getActivity().getApplicationContext())

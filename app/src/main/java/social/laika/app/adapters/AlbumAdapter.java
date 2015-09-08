@@ -15,7 +15,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.models.Photo;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Do;
@@ -75,7 +75,7 @@ public class AlbumAdapter extends BaseAdapter {
                 Do.isNullOrEmpty(photo.mUriLocal)) {
 
             ImageResponse response = new ImageResponse(mImageView, photo, mContext);
-            Request request = RequestManager.imageRequest(photo.mUrlThumbnail, mImageView, response,
+            Request request = Api.imageRequest(photo.mUrlThumbnail, mImageView, response,
                     response);
 
             VolleyManager.getInstance(mContext).addToRequestQueue(request);

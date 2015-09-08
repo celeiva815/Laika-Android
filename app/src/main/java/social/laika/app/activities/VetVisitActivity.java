@@ -3,43 +3,24 @@ package social.laika.app.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.activeandroid.Model;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
-import com.soundcloud.android.crop.Crop;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Calendar;
 
 import social.laika.app.R;
-import social.laika.app.interfaces.Photographable;
-import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Photo;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.CreateVetVisitResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
-import social.laika.app.utils.PrefsManager;
-import social.laika.app.utils.Tag;
 
 public class VetVisitActivity extends ActionBarActivity
         implements DatePickerDialog.OnDateSetListener {

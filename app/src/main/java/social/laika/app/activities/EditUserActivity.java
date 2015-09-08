@@ -44,9 +44,8 @@ import social.laika.app.models.Country;
 import social.laika.app.models.Owner;
 import social.laika.app.models.Photo;
 import social.laika.app.models.Region;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.LoginHandler;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
@@ -220,7 +219,7 @@ public class EditUserActivity extends ActionBarActivity
 
         }
 
-        RequestManager.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
+        Api.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
                 getApplicationContext());
     }
 
@@ -375,8 +374,8 @@ public class EditUserActivity extends ActionBarActivity
 
         String token = PrefsManager.getUserToken(getApplicationContext());
 
-        Request registerRequest = RequestManager.putRequest(jsonParams,
-                RequestManager.ADDRESS_USER, this, this, token);
+        Request registerRequest = Api.putRequest(jsonParams,
+                Api.ADDRESS_USER, this, this, token);
 
         registerRequest.setRetryPolicy(new DefaultRetryPolicy(
                 50000,
@@ -502,7 +501,7 @@ public class EditUserActivity extends ActionBarActivity
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        RequestManager.error(error, this);
+        Api.error(error, this);
         mProgressDialog.dismiss();
         enableViews(true);
     }

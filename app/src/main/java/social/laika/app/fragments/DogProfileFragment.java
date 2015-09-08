@@ -21,12 +21,11 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.OwnerMyDogAdapter;
-import social.laika.app.adapters.OwnersAdapter;
 import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.responses.OwnersResponse;
@@ -170,7 +169,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
         OwnersResponse response = new OwnersResponse(this, mDog, context);
-        Request eventsRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_OWNER_DOGS,
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_OWNER_DOGS,
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);
@@ -181,7 +180,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
         mProgressBar.setVisibility(View.VISIBLE);
         ImageResponse response = new ImageResponse(mDogImageView, mProgressBar);
-        Request request = RequestManager.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM_S),
+        Request request = Api.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM_S),
                 mDogImageView, response, response);
 
         VolleyManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);

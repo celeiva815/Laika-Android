@@ -14,7 +14,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Tag;
@@ -45,7 +45,7 @@ public class DogsAdapter extends ArrayAdapter<Dog> {
             case R.layout.lk_dog_user_profile_row:
                 ImageView dogImageView = (ImageView) view.findViewById(R.id.dog_user_profile_imageview);
                 ImageResponse response = new ImageResponse(dogImageView, null);
-                Request request = RequestManager.imageRequest(dog.getImage(Tag.IMAGE_THUMB),
+                Request request = Api.imageRequest(dog.getImage(Tag.IMAGE_THUMB),
                         dogImageView, response, response);
                 VolleyManager.getInstance(context).addToRequestQueue(request);
 

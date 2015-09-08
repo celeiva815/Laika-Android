@@ -15,12 +15,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.activities.CreateVetVisitActivity;
 import social.laika.app.activities.VetVisitActivity;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 
 public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
@@ -74,7 +73,7 @@ public class VetVisitAdapter extends ArrayAdapter<VetVisit> {
 
         if (!Do.isNullOrEmpty(vetVisit.mSmallUrl) && mMainImageView.getDrawable() == null) {
 
-            RequestManager.getImage(vetVisit.mSmallUrl, mProgressBar, mMainImageView, context);
+            Api.getImage(vetVisit.mSmallUrl, mProgressBar, mMainImageView, context);
 
         } else {
 

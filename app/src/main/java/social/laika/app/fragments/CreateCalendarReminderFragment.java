@@ -17,10 +17,9 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 import social.laika.app.R;
-import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -49,14 +48,14 @@ public class CreateCalendarReminderFragment extends Fragment implements OnDateSe
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
-        this.mRequestMethod = RequestManager.METHOD_POST;
+        this.mRequestMethod = Api.METHOD_POST;
     }
 
     public CreateCalendarReminderFragment(Dog mDog, CalendarReminder mCalendarReminder) {
 
         this.mDog = mDog;
         this.mCalendarReminder = mCalendarReminder;
-        this.mRequestMethod = RequestManager.METHOD_PATCH;
+        this.mRequestMethod = Api.METHOD_PATCH;
     }
 
     @Override

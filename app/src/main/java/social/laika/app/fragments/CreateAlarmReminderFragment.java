@@ -21,7 +21,7 @@ import social.laika.app.R;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateAlarmReminderResponse;
 import social.laika.app.utils.Do;
@@ -70,14 +70,14 @@ public class CreateAlarmReminderFragment extends Fragment implements
 
         this.mDog = mDog;
         this.mReminderCategory = mReminderCategory;
-        this.mRequestMethod = RequestManager.METHOD_POST;
+        this.mRequestMethod = Api.METHOD_POST;
     }
 
     public CreateAlarmReminderFragment(Dog mDog, AlarmReminder alarmReminder) {
 
         this.mDog = mDog;
         this.mAlarmReminder = alarmReminder;
-        this.mRequestMethod = RequestManager.METHOD_PATCH;
+        this.mRequestMethod = Api.METHOD_PATCH;
 
     }
 
@@ -381,8 +381,8 @@ public class CreateAlarmReminderFragment extends Fragment implements
         JSONObject jsonParams = mAlarmReminder.getJsonObject();
         CreateAlarmReminderResponse response = new CreateAlarmReminderResponse(context, mDog, this);
 
-        Request createRequest = RequestManager.defaultRequest(mRequestMethod, jsonParams,
-                RequestManager.ADDRESS_ALERT_REMINDERS, response, response,
+        Request createRequest = Api.defaultRequest(mRequestMethod, jsonParams,
+                Api.ADDRESS_ALERT_REMINDERS, response, response,
                 PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(createRequest, TAG);

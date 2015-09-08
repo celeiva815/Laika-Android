@@ -3,7 +3,6 @@ package social.laika.app.network.requests;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeoutException;
 
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.responses.SimpleResponse;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -95,11 +94,11 @@ public class AlarmRemindersRequest extends SyncRequest {
         Map<String, String> params = new HashMap<>();
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDogId));
 
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS;
+        String address = Api.ADDRESS_ALERT_REMINDERS;
         String token = PrefsManager.getUserToken(mContext);
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.getRequest(params, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.getRequest(params, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -116,12 +115,12 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         JSONObject jsonObject = mAlarmReminder.getJsonObject();
 
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS;
+        String address = Api.ADDRESS_ALERT_REMINDERS;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.postRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.postRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -137,12 +136,12 @@ public class AlarmRemindersRequest extends SyncRequest {
 
         JSONObject jsonObject = mAlarmReminder.getJsonObject();
 
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
+        String address = Api.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.putRequest(jsonObject, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.putRequest(jsonObject, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 
@@ -157,12 +156,12 @@ public class AlarmRemindersRequest extends SyncRequest {
     protected JSONObject delete() throws JSONException, InterruptedException, ExecutionException,
             TimeoutException {
 
-        String address = RequestManager.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
+        String address = Api.ADDRESS_ALERT_REMINDERS + mAlarmReminder.mAlarmReminderId;
         String token = PrefsManager.getUserToken(mContext);
 
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
         SimpleResponse errorListener = new SimpleResponse();
-        LaikaRequest request = (LaikaRequest) RequestManager.deleteRequest(null, address, future, errorListener, token);
+        LaikaRequest request = (LaikaRequest) Api.deleteRequest(null, address, future, errorListener, token);
 
         request.setDeviceId(mContext);
 

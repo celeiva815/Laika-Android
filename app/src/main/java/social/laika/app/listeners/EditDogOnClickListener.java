@@ -5,7 +5,7 @@ import android.view.View.OnClickListener;
 
 import social.laika.app.activities.EditDogActivity;
 import social.laika.app.models.Dog;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Tag;
 
 public class EditDogOnClickListener implements OnClickListener {
@@ -36,7 +36,7 @@ public class EditDogOnClickListener implements OnClickListener {
         mDog.save();
 
         mActivity.requestCreateOrUpdateDog(mDog, "Haz editado la información de ",
-                RequestManager.METHOD_PUT);
+                Api.METHOD_PUT);
     }
 
 }

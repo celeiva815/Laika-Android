@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.FirstInformationResponse;
 import social.laika.app.utils.PrefsManager;
@@ -71,7 +71,7 @@ public class GeneralRequest extends SyncRequest {
         String token = PrefsManager.getUserToken(mContext);
         FirstInformationResponse response = new FirstInformationResponse(null, mContext);
 
-        Request firstRequest = RequestManager.getRequest(params, RequestManager.ADDRESS_SYNC,
+        Request firstRequest = Api.getRequest(params, Api.ADDRESS_SYNC,
                 response, response, token);
 
         VolleyManager.getInstance(mContext).addToRequestQueue(firstRequest, TAG);

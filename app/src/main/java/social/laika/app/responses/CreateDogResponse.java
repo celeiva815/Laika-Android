@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.CreateDogActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -44,7 +44,7 @@ public class CreateDogResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         mActivity.enableViews(true);
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
         mActivity.onFailure();
     }
 }

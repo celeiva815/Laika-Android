@@ -33,7 +33,7 @@ import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
 import social.laika.app.models.VetVisit;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateVetVisitResponse;
 import social.laika.app.utils.Do;
@@ -343,8 +343,8 @@ public class CreateVetVisitActivity extends ActionBarActivity
         CreateVetVisitResponse response = new CreateVetVisitResponse(this);
         String token = PrefsManager.getUserToken(getApplicationContext());
 
-        Request registerRequest = RequestManager.postRequest(jsonParams,
-                RequestManager.ADDRESS_VET_VISITS, response, response, token);
+        Request registerRequest = Api.postRequest(jsonParams,
+                Api.ADDRESS_VET_VISITS, response, response, token);
 
         registerRequest.setRetryPolicy(new DefaultRetryPolicy(
                 50000,

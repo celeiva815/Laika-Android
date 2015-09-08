@@ -21,7 +21,7 @@ import social.laika.app.activities.PhotosFragmentActivity;
 import social.laika.app.adapters.AlbumAdapter;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Photo;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.DogPhotosResponse;
 import social.laika.app.utils.Photographer;
@@ -133,13 +133,13 @@ public class AlbumMyDogFragment extends Fragment {
 
         Context context = getActivity().getApplicationContext();
         Map<String,String> params = new HashMap<>();
-        String address = RequestManager.ADDRESS_USER_DOG_PHOTOS;
+        String address = Api.ADDRESS_USER_DOG_PHOTOS;
         DogPhotosResponse response = new DogPhotosResponse(mDog, this);
         String token = PrefsManager.getUserToken(context);
 
         params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
 
-        Request request = RequestManager.getRequest(params, address, response, response, token);
+        Request request = Api.getRequest(params, address, response, response, token);
 
         VolleyManager.getInstance(context).addToRequestQueue(request);
 

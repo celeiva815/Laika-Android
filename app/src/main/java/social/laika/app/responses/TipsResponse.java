@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import social.laika.app.activities.TipsActivity;
 import social.laika.app.models.Tip;
-import social.laika.app.network.RequestManager;
+import social.laika.app.network.Api;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -33,7 +33,7 @@ public class TipsResponse implements Response.ErrorListener,
     public void onErrorResponse(VolleyError error) {
 
         stopRefreshing();
-        RequestManager.error(error, mActivity);
+        Api.error(error, mActivity);
 
     }
 
