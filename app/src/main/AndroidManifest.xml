@@ -363,12 +363,12 @@
             </intent-filter>
         </service>
 
-        <!-- SyncAdapter -->
-
         <service
             android:name="social.laika.app.network.gcm.LaikaRegistrationIntentService"
             android:exported="false">
         </service>
+
+        <!-- SyncAdapter -->
 
         <service android:name=".network.sync.SyncService"
             android:exported="true">
@@ -384,7 +384,7 @@
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <meta-data android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                android:resource 8="@xml/authenticator" />
         </service>
 
         <provider
