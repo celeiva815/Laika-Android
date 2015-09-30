@@ -27,6 +27,7 @@ public class Publication extends Model {
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_URL_PUBLICATION = "url_publication" ;
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public final static String COLUMN_URL_LOCAL = "url_local";
     public final static String COLUMN_IS_PAID = "is_paid";
     public final static String COLUMN_IS_FAVORITE = "is_favorite";
 
@@ -58,6 +59,9 @@ public class Publication extends Model {
 
     @Column(name = COLUMN_URL_PUBLICATION)
     public String mUrlPublication;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUriLocal;
 
     @Column(name = COLUMN_IS_PAID)
     public boolean mIsPaid;
@@ -207,4 +211,8 @@ public class Publication extends Model {
         new Delete().from(Publication.class).where(condition).execute();
     }
 
+    public void setUriLocal(String uriLocal) {
+        mUriLocal = uriLocal;
+        save();
+    }
 }

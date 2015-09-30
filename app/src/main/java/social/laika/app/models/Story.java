@@ -27,6 +27,7 @@ public class Story extends Model {
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_TIME = "time";
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public final static String COLUMN_URL_LOCAL = "url_local";
     public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     public final static String API_STORIES = "stories";
@@ -57,6 +58,9 @@ public class Story extends Model {
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUriLocal;
 
     @Column(name = COLUMN_IS_FAVORITE)
     public boolean mIsFavorite;
@@ -220,6 +224,11 @@ public class Story extends Model {
 
         return jsonObject;
 
+    }
+
+    public void setUriLocal(String uriLocal) {
+        mUriLocal = uriLocal;
+        save();
     }
 }
 

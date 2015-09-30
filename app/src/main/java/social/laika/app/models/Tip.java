@@ -26,6 +26,7 @@ public class Tip extends Model {
     public static final String COLUMN_BODY = "body";
     public static final String COLUMN_URL_IMAGE = "url_image";
     public static final String COLUMN_URL_TIP = "url_tip";
+    public final static String COLUMN_URL_LOCAL = "url_local";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_IS_PAID = "is_paid";
     public static final String COLUMN_IS_FAVORITE = "is_favorite";
@@ -55,6 +56,9 @@ public class Tip extends Model {
 
     @Column(name = COLUMN_URL_TIP)
     public String mUrlTip;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUriLocal;
 
     @Column(name = COLUMN_TYPE)
     public int mType;
@@ -118,6 +122,7 @@ public class Tip extends Model {
     public void setIsFavorite(boolean isFavorite) {
 
         mIsFavorite = isFavorite;
+        save();
     }
 
     public static List<Tip> getTips() {
@@ -177,5 +182,10 @@ public class Tip extends Model {
 
     public static void deleteAll() {
 
+    }
+
+    public void setUriLocal(String uriLocal) {
+        mUriLocal = uriLocal;
+        save();
     }
 }

@@ -18,7 +18,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import social.laika.app.network.Api;
 import social.laika.app.utils.camera.CameraActivity;
@@ -173,6 +175,15 @@ public class Photographer {
 
     }
 
+    public String getImageName(Context context, String sufix) {
+
+        String imageName = getImageName(context);
+
+        imageName += sufix;
+
+        return imageName;
+    }
+
     public JSONObject getJsonPhoto(Context context) {
 
         JSONObject jsonPhoto = new JSONObject();
@@ -248,6 +259,36 @@ public class Photographer {
 
         return mSourceImage;
 
+    }
+
+    public String getLocalUri(Bitmap bitmap, Context context, String folder) {
+
+        OutputStream fOut = null;
+        Uri outputFileUri;
+
+        try {
+
+            File root = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + folder + File.separator);
+            root.mkdirs();
+
+            String filename = getImageName(context, folder);
+            File sdImageMainDirectory = new File(root, filename);
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+            fOut = new FileOutputStream(sdImageMainDirectory);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+
+            return outputFileUri.toString();
+
+        } catch (Exception e) {
+
+            Do.showShortToast("No se pudo guardar la foto", context);
+        }
+
+        return null;
     }
 
 

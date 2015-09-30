@@ -1,6 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import social.laika.app.R;
 import social.laika.app.models.Story;
 import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
 
@@ -59,6 +61,9 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
 
             Api.getImage(story.mUrlImage, mProgressBar, mMainImageView, context);
+            Photographer photographer = new Photographer();
+            story.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
+                    view.getContext(), "stories").toString());
 
         } else {
 
@@ -82,7 +87,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
 
     public void setFavorite(Story story, boolean isFavorite) {
 
-        story.setIsFavorite(true);
+        story.setIsFavorite(isFavorite);
         int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
         mFavoriteImageView.setImageResource(resource);
 

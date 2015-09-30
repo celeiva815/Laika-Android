@@ -24,6 +24,7 @@ public class Event extends Model {
     public final static String COLUMN_SPONSOR_NAME = "sponsor_name";
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_URL_EVENT = "url_event";
+    public final static String COLUMN_URL_LOCAL = "url_local";
     public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_ADDRESS = "address";
     public final static String COLUMN_START_DATE = "start_date";
@@ -54,6 +55,9 @@ public class Event extends Model {
 
     @Column(name = COLUMN_URL_EVENT)
     public String mUrlEvent;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUriLocal;
 
     @Column(name = COLUMN_CITY_ID)
     public int mCityId;
@@ -210,5 +214,10 @@ public class Event extends Model {
 
     public static void deleteAll() {
 
+    }
+
+    public void setUriLocal(String uriLocal) {
+        mUriLocal = uriLocal;
+        save();
     }
 }

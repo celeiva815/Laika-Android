@@ -58,14 +58,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".wasted.GPlusSignInActivity"
-            android:exported="false"
-            android:label="@string/log_in_activity_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="social.laika.app.activities.MainActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="portrait" >
@@ -196,15 +188,6 @@
             android:name="social.laika.app.activities.MyDogsActivity"
             android:exported="false"
             android:label="@string/my_dog_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="social.laika.app.activities.HealthDogActivity"
-            android:exported="false"
-            android:label="@string/my_dog_health_activity_name"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -384,7 +367,7 @@
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <meta-data android:name="android.accounts.AccountAuthenticator"
-                android:resource 8="@xml/authenticator" />
+                android:resource="@xml/authenticator" />
         </service>
 
         <provider

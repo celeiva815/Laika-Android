@@ -242,28 +242,9 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void setActivityView(View view) {
-
-        ImageView adoptImageView = (ImageView) view.findViewById(R.id.gender_new_dog_register_textview);
-        ImageView myDogImageView = (ImageView) view.findViewById(R.id.my_dog_main_imageview);
-        ImageView newsImageView = (ImageView) view.findViewById(R.id.news_main_imageview);
-        ImageView tipsImageView = (ImageView) view.findViewById(R.id.tips_main_imageview);
-        ImageView eventsImageView = (ImageView) view.findViewById(R.id.events_main_imageview);
-        ImageView storiesImageView = (ImageView) view.findViewById(R.id.stories_main_imageview);
-
-        myDogImageView.setOnClickListener(new ToMyDogOnCLickListener());
-        adoptImageView.setOnClickListener(new ToAdoptActivityOnClickListener());
-        newsImageView.setOnClickListener(new ToActivityOnCLickListener(PublicationsActivity.class));
-        tipsImageView.setOnClickListener(new ToActivityOnCLickListener(TipsActivity.class));
-        eventsImageView.setOnClickListener(new ToActivityOnCLickListener(EventsActivity.class));
-        storiesImageView.setOnClickListener(new ToActivityOnCLickListener(StoriesActivity.class));
-
-    }
-
     public void createFragmentView(int layoutId) {
 
-        //FIXME agregar la clase hija
-        mFragment = new PlaceHolderFragment(layoutId, this);
+        mFragment = new PlaceHolderFragment(layoutId);
         getFragmentManager().beginTransaction().add(R.id.container, mFragment).commit();
     }
 

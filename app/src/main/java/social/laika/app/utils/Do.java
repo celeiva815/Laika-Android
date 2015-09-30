@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -29,6 +31,9 @@ import com.activeandroid.Model;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -313,7 +318,7 @@ public class Do {
         }
         catch (Exception e) { }
 
-        return null;
+        return "";
     }
 
     public static void ableView(View view, boolean enabled) {

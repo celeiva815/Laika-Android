@@ -1,6 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.Event;
 import social.laika.app.network.Api;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
 
@@ -69,6 +71,10 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
 
             Api.getImage(event.mUrlImage, mProgressBar, mMainImageView, context);
+
+            Photographer photographer = new Photographer();
+            event.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
+                    view.getContext(), "events").toString());
 
         } else {
 
