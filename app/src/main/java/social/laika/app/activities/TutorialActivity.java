@@ -143,6 +143,14 @@ public class TutorialActivity extends ActionBarActivity {
 
     }
 
+    public Fragment getCurrentFragment() {
+
+        int current = mPager.getCurrentItem();
+
+        return ((ScreenSlidePagerAdapter) mPagerAdapter).getItem(current);
+
+    }
+
     /**
      * A simple pager adapter that represents 3 ScreenSlidePageFragment objects, in
      * sequence.

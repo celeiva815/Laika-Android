@@ -35,7 +35,8 @@
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/laika_logo"
-        android:theme="@style/LaikaTheme" >
+        android:theme="@style/LaikaTheme"
+        android:label="@string/app_name">
         <activity
             android:name=".wasted.WelcomeActivity"
             android:label="@string/app_name"

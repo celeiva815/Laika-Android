@@ -1,6 +1,5 @@
-package social.laika.app.models;
+package social.laika.app.models.publications;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
@@ -14,29 +13,23 @@ import java.util.List;
 import social.laika.app.utils.DB;
 
 @Table(name = Story.TABLE_NAME)
-public class Story extends Model {
+public class Story extends BasePublication {
 
     public static int ID = 1;
 
     public final static String TABLE_NAME = "stories";
-    public final static String COLUMN_STORY_ID = "story_id";
     public final static String COLUMN_OWNER_NAME = "owner_name";
     public final static String COLUMN_USER_ID = "user_id";
     public final static String COLUMN_TITLE = "title";
     public final static String COLUMN_BODY = "body";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_TIME = "time";
-    public final static String COLUMN_URL_IMAGE = "url_image";
-    public final static String COLUMN_URL_LOCAL = "url_local";
-    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
+    public final static String API_STORY_ID = "story_id";
     public final static String API_STORIES = "stories";
     public final static String API_ID = "id";
     public final static String API_LAST_STORY_ID = "last_story_id";
     public final static String API_LIMIT = "limit";
-
-    @Column(name = COLUMN_STORY_ID)
-    public int mStoryId;
 
     @Column(name = COLUMN_TITLE)
     public String mTitle;
@@ -56,22 +49,12 @@ public class Story extends Model {
     @Column(name = COLUMN_BODY)
     public String mBody;
 
-    @Column(name = COLUMN_URL_IMAGE)
-    public String mUrlImage;
-
-    @Column(name = COLUMN_URL_LOCAL)
-    public String mUriLocal;
-
-    @Column(name = COLUMN_IS_FAVORITE)
-    public boolean mIsFavorite;
-
-
     public Story() {
     }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,
                  String mTime, String mBody, String mUrlImage) {
-        this.mStoryId = mStoryId;
+        this.mServerId = mStoryId;
         this.mTitle = mTitle;
         this.mUserId = mUserId;
         this.mOwnerName = mOwnerName;
@@ -92,7 +75,7 @@ public class Story extends Model {
 
     public Story(JSONObject jsonObject) {
 
-        this.mStoryId = jsonObject.optInt(COLUMN_STORY_ID);
+        this.mServerId = jsonObject.optInt(API_STORY_ID);
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
         this.mUserId = jsonObject.optInt(COLUMN_USER_ID);
         this.mOwnerName = jsonObject.optString(COLUMN_OWNER_NAME);
@@ -113,7 +96,7 @@ public class Story extends Model {
 
     public void update(Story story) {
 
-        this.mStoryId = story.mStoryId;
+        this.mServerId = story.mServerId;
         this.mTitle = story.mTitle;
         this.mUserId = story.mUserId;
         this.mOwnerName = story.mOwnerName;
@@ -127,17 +110,11 @@ public class Story extends Model {
 
     }
 
-    public void setIsFavorite(boolean isFavorite) {
-
-        mIsFavorite = isFavorite;
-        this.save();
-    }
-
     // DataBase Methods
 
     public static List<Story> getStories() {
 
-        String order = COLUMN_STORY_ID + DB.DESC;
+        String order = COLUMN_SERVER_ID + DB.DESC;
         return new Select().from(Story.class).orderBy(order).execute();
 
     }
@@ -179,7 +156,7 @@ public class Story extends Model {
 
     public static Story getSingleStory(Story story) {
 
-        String condition = COLUMN_STORY_ID + DB.EQUALS + story.mStoryId;
+        String condition = COLUMN_SERVER_ID + DB.EQUALS + story.mServerId;
 
         return new Select().from(Story.class).where(condition).executeSingle();
 
@@ -187,7 +164,7 @@ public class Story extends Model {
 
     public static Story getSingleStory(int storyId) {
 
-        String condition = COLUMN_STORY_ID + DB.EQUALS + storyId;
+        String condition = COLUMN_SERVER_ID + DB.EQUALS + storyId;
 
         return new Select().from(Story.class).where(condition).executeSingle();
 
@@ -195,7 +172,7 @@ public class Story extends Model {
 
     public static boolean isSaved(Story story) {
 
-        String condition = COLUMN_STORY_ID + DB.EQUALS + story.mStoryId;
+        String condition = COLUMN_SERVER_ID + DB.EQUALS + story.mServerId;
 
         return new Select().from(Story.class).where(condition).exists();
 
@@ -224,11 +201,6 @@ public class Story extends Model {
 
         return jsonObject;
 
-    }
-
-    public void setUriLocal(String uriLocal) {
-        mUriLocal = uriLocal;
-        save();
     }
 }
 

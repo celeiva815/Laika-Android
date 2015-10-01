@@ -27,7 +27,7 @@ import social.laika.app.listeners.CreateStoryOnClickListener;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Photo;
 import social.laika.app.utils.Photographer;
-import social.laika.app.models.Story;
+import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateStoryResponse;

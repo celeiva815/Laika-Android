@@ -62,7 +62,7 @@ public class StoriesRefreshListener implements AbsListView.OnScrollListener,
             mSwipeLayout.setRefreshing(true);
 
             int size = mActivity.mStories.size();
-            int lastStoryId = mActivity.mStories.get(size - 1).mStoryId;
+            int lastStoryId = mActivity.mStories.get(size - 1).mServerId;
             mActivity.requestStories(lastStoryId, Tag.LIMIT, mActivity);
 
         }

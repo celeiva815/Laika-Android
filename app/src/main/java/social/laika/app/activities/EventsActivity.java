@@ -20,7 +20,7 @@ import java.util.Map;
 import social.laika.app.R;
 import social.laika.app.adapters.EventsAdapter;
 import social.laika.app.listeners.EventsRefreshListener;
-import social.laika.app.models.Event;
+import social.laika.app.models.publications.Event;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.EventsResponse;

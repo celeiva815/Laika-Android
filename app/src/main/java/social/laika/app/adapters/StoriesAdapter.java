@@ -1,7 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +10,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
+import java.io.File;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.models.Story;
+import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.PublicationImageResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
 
@@ -58,12 +62,28 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         mDateTextView.setText(story.mDate);
         mBodyTextView.setText(story.mBody);
 
-        if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
+        if (!Do.isNullOrEmpty(story.mUriLocal)) {
 
-            Api.getImage(story.mUrlImage, mProgressBar, mMainImageView, context);
-            Photographer photographer = new Photographer();
-            story.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
-                    view.getContext(), "stories").toString());
+            File file = new File(Uri.parse(story.mUriLocal).getPath());
+
+            if (file.exists()) {
+                mMainImageView.setImageURI(Uri.parse(story.mUriLocal));
+
+            } else if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+                PublicationImageResponse response = new PublicationImageResponse(context,
+                        mMainImageView, story, Story.TABLE_NAME);
+                Request request = Api.imageRequest(story.mUrlImage, mMainImageView, response,
+                        response);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+        } else if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+            PublicationImageResponse response = new PublicationImageResponse(context,
+                    mMainImageView, story, Story.TABLE_NAME);
+            Request request = Api.imageRequest(story.mUrlImage, mMainImageView, response,
+                    response);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
 
         } else {
 

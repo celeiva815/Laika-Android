@@ -21,7 +21,7 @@ import java.util.Map;
 import social.laika.app.R;
 import social.laika.app.adapters.StoriesAdapter;
 import social.laika.app.listeners.StoriesRefreshListener;
-import social.laika.app.models.Story;
+import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.StoriesResponse;

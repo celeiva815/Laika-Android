@@ -1,7 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
+import java.io.File;
 import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
-import social.laika.app.models.Publication;
+import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.PublicationImageResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
 
 public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
@@ -62,15 +66,32 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mSponsorTextView.setText(publication.getSponsor());
         mDateTextView.setText(publication.mDate);
         mBodyTextView.setText(publication.mBody);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication.mUrlPublication));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication.mUrl));
 
-        if (!Do.isNullOrEmpty(publication.mUrlImage)) {
+        if (!Do.isNullOrEmpty(publication.mUriLocal)) {
 
-            Api.getImage(publication.mUrlImage, mProgressBar, mMainImageView, context);
+            File file = new File(Uri.parse(publication.mUriLocal).getPath());
 
-            Photographer photographer = new Photographer();
-            publication.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
-                    view.getContext(), "publications").toString());
+            if (file.exists()) {
+                mMainImageView.setImageURI(Uri.parse(publication.mUriLocal));
+
+            } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
+
+                PublicationImageResponse response = new PublicationImageResponse(context,
+                        mMainImageView, publication, Publication.TABLE_NAME);
+                Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
+                        response);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+
+
+            }
+        } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
+
+            PublicationImageResponse response = new PublicationImageResponse(context,
+                    mMainImageView, publication, Publication.TABLE_NAME);
+            Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
+                    response);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
 
 
         } else {

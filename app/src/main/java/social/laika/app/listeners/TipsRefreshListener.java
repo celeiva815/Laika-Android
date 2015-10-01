@@ -62,7 +62,7 @@ public class TipsRefreshListener implements AbsListView.OnScrollListener,
             mSwipeLayout.setRefreshing(true);
 
             int size = mActivity.mTips.size();
-            int lastTipId = mActivity.mTips.get(size - 1).mTipId;
+            int lastTipId = mActivity.mTips.get(size - 1).mServerId;
             mActivity.requestTips(lastTipId, Tag.LIMIT, mActivity);
 
         }

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import social.laika.app.R;
-import social.laika.app.models.Story;
+import social.laika.app.models.publications.Story;
 
 public class StoriesScreenSlideFragment extends Fragment {
 	

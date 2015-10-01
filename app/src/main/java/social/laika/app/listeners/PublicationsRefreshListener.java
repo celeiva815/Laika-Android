@@ -62,7 +62,7 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
             mSwipeLayout.setRefreshing(true);
 
             int size = mActivity.mPublications.size();
-            int lastPublicationId = mActivity.mPublications.get(size - 1).mPublicationId;
+            int lastPublicationId = mActivity.mPublications.get(size - 1).mServerId;
             mActivity.requestPublications(lastPublicationId, Tag.LIMIT, mActivity);
 
         }

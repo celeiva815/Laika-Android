@@ -1,6 +1,5 @@
-package social.laika.app.models;
+package social.laika.app.models.publications;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
@@ -15,29 +14,22 @@ import java.util.List;
 import social.laika.app.utils.DB;
 
 @Table(name = Publication.TABLE_NAME)
-public class Publication extends Model {
+public class Publication extends BasePublication {
 
 	public final static String TABLE_NAME = "publications";
-    public final static String COLUMN_PUBLICATION_ID = "publication_id";
     public final static String COLUMN_SPONSOR_ID = "sponsor_id";
     public final static String COLUMN_SPONSOR_NAME = "sponsor_name";
     public final static String COLUMN_TITLE = "title";
     public final static String COLUMN_BODY = "body";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_TIME = "time";
-    public final static String COLUMN_URL_IMAGE = "url_image";
-    public final static String COLUMN_URL_LOCAL = "url_local";
-    public final static String COLUMN_IS_PAID = "is_paid";
-    public final static String COLUMN_IS_FAVORITE = "is_favorite";
 
+    public final static String API_PUBLICATION_ID = "publication_id";
     public final static String API_PUBLICATIONS = "publications";
     public final static String API_URL_PUBLICATION = "url_publication" ;
     public final static String API_LAST_PUBLICATION_ID = "last_publication_id";
     public final static String API_LIMIT = "limit";
 
-
-    @Column(name = COLUMN_PUBLICATION_ID)
-    public int mPublicationId;
 
     @Column(name = COLUMN_SPONSOR_ID)
     public int mSponsorId;
@@ -54,37 +46,21 @@ public class Publication extends Model {
 	@Column(name = COLUMN_BODY)
 	public String mBody;
 
-	@Column(name = COLUMN_URL_IMAGE)
-	public String mUrlImage;
 
-    @Column(name = API_URL_PUBLICATION)
-    public String mUrlPublication;
-
-    @Column(name = COLUMN_URL_LOCAL)
-    public String mUriLocal;
-
-    @Column(name = COLUMN_IS_PAID)
-    public boolean mIsPaid;
-
-    @Column(name = COLUMN_IS_FAVORITE)
-    public boolean mIsFavorite;
-
-
-
-	public Publication(){ }
+	public Publication() { }
 
     public Publication(int mPublicationId, int mSponsorId, String mSponsor, String mTitle,
                        String mDate, String mBody, String mUrlImage, String mUrlPublication,
                        boolean mIsPaid, boolean mIsFavorite) {
 
-        this.mPublicationId = mPublicationId;
+        this.mServerId = mPublicationId;
         this.mSponsorId = mSponsorId;
         this.mSponsor = mSponsor;
         this.mTitle = mTitle;
         this.mDate = mDate;
         this.mBody = mBody;
         this.mUrlImage = mUrlImage;
-        this.mUrlPublication = mUrlPublication;
+        this.mUrl = mUrlPublication;
         this.mIsPaid = mIsPaid;
         this.mIsFavorite = mIsFavorite;
     }
@@ -93,14 +69,14 @@ public class Publication extends Model {
 
         try {
 
-            this.mPublicationId = jsonObject.getInt(COLUMN_PUBLICATION_ID);
+            this.mServerId = jsonObject.getInt(API_PUBLICATION_ID);
             this.mSponsorId = jsonObject.getInt(COLUMN_SPONSOR_ID);
             this.mSponsor = jsonObject.getString(COLUMN_SPONSOR_NAME);
             this.mTitle = jsonObject.getString(COLUMN_TITLE);
             this.mDate = jsonObject.getString(COLUMN_DATE);
             this.mBody = jsonObject.getString(COLUMN_BODY);
             this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
-            this.mUrlPublication = jsonObject.getString(API_URL_PUBLICATION);
+            this.mUrl = jsonObject.getString(API_URL_PUBLICATION);
             this.mIsPaid = jsonObject.getBoolean(COLUMN_IS_PAID);
             this.mIsFavorite = false;
 
@@ -117,22 +93,16 @@ public class Publication extends Model {
 
     }
 
-    public void setIsFavorite(boolean isFavorite) {
-
-        mIsFavorite = isFavorite;
-        this.save();
-    }
-
     public void update(Publication publication) {
 
-        this.mPublicationId = publication.mPublicationId;
+        this.mServerId = publication.mServerId;
         this.mSponsorId = publication.mSponsorId;
         this.mSponsor = publication.mSponsor;
         this.mTitle = publication.mTitle;
         this.mDate = publication.mDate;
         this.mBody = publication.mBody;
         this.mUrlImage = publication.mUrlImage;
-        this.mUrlPublication = publication.mUrlPublication;
+        this.mUrl = publication.mUrl;
         this.mIsPaid = publication.mIsPaid;
         this.mIsFavorite = publication.mIsFavorite;
 
@@ -176,7 +146,7 @@ public class Publication extends Model {
 
     public static Publication getSinglePublication(Publication publication) {
 
-        String condition = COLUMN_PUBLICATION_ID + DB.EQUALS + publication.mPublicationId;
+        String condition = COLUMN_SERVER_ID + DB.EQUALS + publication.mServerId;
 
         return new Select().from(Publication.class).where(condition).executeSingle();
 
@@ -184,7 +154,7 @@ public class Publication extends Model {
 
     public static boolean isSaved(Publication publication) {
 
-        String condition = COLUMN_PUBLICATION_ID + DB.EQUALS + publication.mPublicationId;
+        String condition = COLUMN_SERVER_ID + DB.EQUALS + publication.mServerId;
 
         return new Select().from(Publication.class).where(condition).exists();
 
@@ -193,7 +163,7 @@ public class Publication extends Model {
 
     public static List<Publication> getPublications() {
 
-        String order = COLUMN_PUBLICATION_ID + DB.DESC;
+        String order = COLUMN_SERVER_ID + DB.DESC;
         return new Select().from(Publication.class).orderBy(order).execute();
 
     }
@@ -209,10 +179,5 @@ public class Publication extends Model {
 
         String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.FALSE;
         new Delete().from(Publication.class).where(condition).execute();
-    }
-
-    public void setUriLocal(String uriLocal) {
-        mUriLocal = uriLocal;
-        save();
     }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 import social.laika.app.R;
 import social.laika.app.adapters.TipsAdapter;
 import social.laika.app.listeners.TipsRefreshListener;
-import social.laika.app.models.Tip;
+import social.laika.app.models.publications.Tip;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.TipsResponse;

@@ -17,7 +17,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.fragments.StoriesScreenSlideFragment;
-import social.laika.app.models.Story;
+import social.laika.app.models.publications.Story;
 
 public class StoriesFragmentActivity extends ActionBarActivity{
     

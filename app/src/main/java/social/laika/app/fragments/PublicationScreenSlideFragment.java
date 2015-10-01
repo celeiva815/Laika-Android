@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import social.laika.app.R;
 import social.laika.app.activities.WebActivity;
-import social.laika.app.models.Publication;
+import social.laika.app.models.publications.Publication;
 
 public class PublicationScreenSlideFragment extends Fragment {
 	
@@ -46,7 +46,7 @@ public class PublicationScreenSlideFragment extends Fragment {
 
         Context context = v.getContext();
         Intent intent = new Intent(context, WebActivity.class);
-        intent.putExtra(WebActivity.URL, publication.mUrlPublication);
+        intent.putExtra(WebActivity.URL, publication.mUrl);
         context.startActivity(intent);
 
             }

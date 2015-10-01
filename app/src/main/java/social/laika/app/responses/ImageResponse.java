@@ -24,6 +24,11 @@ public class ImageResponse implements Response.ErrorListener,
     public ProgressBar mProgressBar;
     public Photo mPhoto;
 
+    public ImageResponse(Context context, ImageView mImageView) {
+        this.mImageView = mImageView;
+        this.mContext = context;
+    }
+
     public ImageResponse(Activity mActivity, ImageView mImageView) {
         this.mActivity = mActivity;
         this.mImageView = mImageView;

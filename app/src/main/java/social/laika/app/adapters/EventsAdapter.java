@@ -1,7 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
+import java.io.File;
 import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
-import social.laika.app.models.Event;
+import social.laika.app.models.publications.Event;
 import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.PublicationImageResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
 
@@ -68,13 +72,29 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         mDateTextView.setSelected(true);
         mTimeTextView.setText(event.getTime());
 
-        if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
+        if (!Do.isNullOrEmpty(event.mUriLocal)) {
 
-            Api.getImage(event.mUrlImage, mProgressBar, mMainImageView, context);
+            File file = new File(Uri.parse(event.mUriLocal).getPath());
 
-            Photographer photographer = new Photographer();
-            event.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
-                    view.getContext(), "events").toString());
+            if (file.exists()) {
+                mMainImageView.setImageURI(Uri.parse(event.mUriLocal));
+
+            } else if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+                PublicationImageResponse response = new PublicationImageResponse(context,
+                        mMainImageView, event, Event.TABLE_NAME);
+                Request request = Api.imageRequest(event.mUrlImage, mMainImageView, response,
+                        response);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+
+            }
+        } else if (!Do.isNullOrEmpty(event.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+            PublicationImageResponse response = new PublicationImageResponse(context,
+                    mMainImageView, event, Event.TABLE_NAME);
+            Request request = Api.imageRequest(event.mUrlImage, mMainImageView, response,
+                    response);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
 
         } else {
 

@@ -6,7 +6,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import social.laika.app.activities.EventsActivity;
-import social.laika.app.models.Event;
+import social.laika.app.models.publications.Event;
 import social.laika.app.network.Api;
 
 /**

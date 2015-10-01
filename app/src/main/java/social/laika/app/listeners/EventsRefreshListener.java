@@ -62,7 +62,7 @@ public class EventsRefreshListener implements AbsListView.OnScrollListener,
             mSwipeLayout.setRefreshing(true);
 
             int size = mActivity.mEvents.size();
-            int lastEventId = mActivity.mEvents.get(size - 1).mEventId;
+            int lastEventId = mActivity.mEvents.get(size - 1).mServerId;
             mActivity.requestEvents(lastEventId, Tag.LIMIT, mActivity);
 
         }

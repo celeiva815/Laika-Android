@@ -1,7 +1,7 @@
 package social.laika.app.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,18 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+
+import java.io.File;
 import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
-import social.laika.app.models.Tip;
+import social.laika.app.models.publications.Tip;
 import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.PublicationImageResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Photographer;
 
 public class TipsAdapter extends ArrayAdapter<Tip> {
 
@@ -50,19 +54,35 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mMainImageView = (ImageView) view.findViewById(R.id.main_tip_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_tip_imageview);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrlTip));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrl));
 
         mSponsorTextView.setText(tip.mSponsorName);
         mTitleTextView.setText(tip.mTitle);
         mBodyTextView.setText(tip.mBody);
 
-        if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
+        if (!Do.isNullOrEmpty(tip.mUriLocal)) {
 
-            Api.getImage(tip.mUrlImage, mProgressBar, mMainImageView, context);
+            File file = new File(Uri.parse(tip.mUriLocal).getPath());
 
-            Photographer photographer = new Photographer();
-            tip.setUriLocal(photographer.getLocalUri(((BitmapDrawable) mMainImageView.getDrawable()).getBitmap(),
-                    view.getContext(), "tips").toString());
+            if (file.exists()) {
+                mMainImageView.setImageURI(Uri.parse(tip.mUriLocal));
+
+            } else if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+                PublicationImageResponse response = new PublicationImageResponse(context,
+                        mMainImageView, tip, Tip.TABLE_NAME);
+                Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
+                        response);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+
+        } else if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
+
+            PublicationImageResponse response = new PublicationImageResponse(context,
+                    mMainImageView, tip, Tip.TABLE_NAME);
+            Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
+                    response);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
 
         } else {
 

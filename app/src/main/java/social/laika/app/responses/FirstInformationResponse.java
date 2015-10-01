@@ -16,6 +16,8 @@ import java.util.Date;
 
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.activities.MainActivity;
+import social.laika.app.activities.TutorialActivity;
+import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Breed;
@@ -101,8 +103,9 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
             mProgressBar.setVisibility(View.GONE);
         }
 
-        if (mActivity instanceof LoginActivity) {
-            ((LoginActivity) mActivity).enableViews(true);
+        if (mActivity instanceof TutorialActivity) {
+            TutorialFragment fragment = (TutorialFragment) ((TutorialActivity) mActivity).getCurrentFragment();
+            fragment.enableViews(true);
             PrefsManager.clearPrefs(mContext);
 
         }
