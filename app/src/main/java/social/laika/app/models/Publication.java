@@ -25,13 +25,13 @@ public class Publication extends Model {
     public final static String COLUMN_BODY = "body";
     public final static String COLUMN_DATE = "date";
     public final static String COLUMN_TIME = "time";
-    public final static String COLUMN_URL_PUBLICATION = "url_publication" ;
     public final static String COLUMN_URL_IMAGE = "url_image";
     public final static String COLUMN_URL_LOCAL = "url_local";
     public final static String COLUMN_IS_PAID = "is_paid";
     public final static String COLUMN_IS_FAVORITE = "is_favorite";
 
     public final static String API_PUBLICATIONS = "publications";
+    public final static String API_URL_PUBLICATION = "url_publication" ;
     public final static String API_LAST_PUBLICATION_ID = "last_publication_id";
     public final static String API_LIMIT = "limit";
 
@@ -57,7 +57,7 @@ public class Publication extends Model {
 	@Column(name = COLUMN_URL_IMAGE)
 	public String mUrlImage;
 
-    @Column(name = COLUMN_URL_PUBLICATION)
+    @Column(name = API_URL_PUBLICATION)
     public String mUrlPublication;
 
     @Column(name = COLUMN_URL_LOCAL)
@@ -100,7 +100,7 @@ public class Publication extends Model {
             this.mDate = jsonObject.getString(COLUMN_DATE);
             this.mBody = jsonObject.getString(COLUMN_BODY);
             this.mUrlImage = jsonObject.getString(COLUMN_URL_IMAGE);
-            this.mUrlPublication = jsonObject.getString(COLUMN_URL_PUBLICATION);
+            this.mUrlPublication = jsonObject.getString(API_URL_PUBLICATION);
             this.mIsPaid = jsonObject.getBoolean(COLUMN_IS_PAID);
             this.mIsFavorite = false;
 

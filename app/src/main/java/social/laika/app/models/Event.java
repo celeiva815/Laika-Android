@@ -23,7 +23,6 @@ public class Event extends Model {
     public final static String COLUMN_SPONSOR_ID = "sponsor_id";
     public final static String COLUMN_SPONSOR_NAME = "sponsor_name";
     public final static String COLUMN_URL_IMAGE = "url_image";
-    public final static String COLUMN_URL_EVENT = "url_event";
     public final static String COLUMN_URL_LOCAL = "url_local";
     public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_ADDRESS = "address";
@@ -34,6 +33,7 @@ public class Event extends Model {
     public final static String COLUMN_IS_PAID = "is_paid";
 
     public final static String API_EVENTS = "events";
+    public final static String API_URL_EVENT = "url_event";
     public final static String API_ID = "id";
     public final static String API_LAST_EVENT_ID = "last_event_id";
     public final static String API_LIMIT = "limit";
@@ -53,7 +53,7 @@ public class Event extends Model {
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
 
-    @Column(name = COLUMN_URL_EVENT)
+    @Column(name = API_URL_EVENT)
     public String mUrlEvent;
 
     @Column(name = COLUMN_URL_LOCAL)
@@ -108,7 +108,7 @@ public class Event extends Model {
         this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
         this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
-        this.mUrlEvent = jsonObject.optString(COLUMN_URL_EVENT);
+        this.mUrlEvent = jsonObject.optString(API_URL_EVENT);
         this.mCityId = jsonObject.optInt(COLUMN_CITY_ID, 1);
         this.mAddress = jsonObject.optString(COLUMN_ADDRESS);
         this.mStartDate = jsonObject.optString(COLUMN_START_DATE);

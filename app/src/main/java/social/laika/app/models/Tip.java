@@ -25,13 +25,13 @@ public class Tip extends Model {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_BODY = "body";
     public static final String COLUMN_URL_IMAGE = "url_image";
-    public static final String COLUMN_URL_TIP = "url_tip";
     public final static String COLUMN_URL_LOCAL = "url_local";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_IS_PAID = "is_paid";
     public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     public final static String API_TIPS = "tips";
+    public static final String API_URL_TIP = "url_tip";
     public final static String API_ID = "id";
     public final static String API_LAST_TIP_ID = "last_tip_id";
     public final static String API_LIMIT = "limit";
@@ -54,7 +54,7 @@ public class Tip extends Model {
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
 
-    @Column(name = COLUMN_URL_TIP)
+    @Column(name = API_URL_TIP)
     public String mUrlTip;
 
     @Column(name = COLUMN_URL_LOCAL)
@@ -95,7 +95,7 @@ public class Tip extends Model {
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
         this.mBody = jsonObject.optString(COLUMN_BODY);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
-        this.mUrlTip = jsonObject.optString(COLUMN_URL_TIP);
+        this.mUrlTip = jsonObject.optString(API_URL_TIP);
         this.mType = jsonObject.optInt(COLUMN_TYPE);
         this.mIsPaid = jsonObject.optBoolean(COLUMN_IS_PAID);
         this.mIsFavorite = false;
