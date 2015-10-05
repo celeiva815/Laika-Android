@@ -29,6 +29,8 @@ public class LocalImageSaverResponse extends ImageResponse {
         this.mType = mType;
     }
 
+
+
     @Override
     public void onResponse(Bitmap response) {
 

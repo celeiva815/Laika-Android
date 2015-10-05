@@ -185,30 +185,26 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
             } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
 
+                mProgressBar.setVisibility(View.VISIBLE);
                 LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         imageView, mDog, Dog.TABLE_DOG);
                 Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
                         response);
 
+                response.setProgressBar(mProgressBar);
                 VolleyManager.getInstance(context).addToRequestQueue(request);
             }
         } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
 
+            mProgressBar.setVisibility(View.VISIBLE);
             LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     imageView, mDog, Dog.TABLE_DOG);
             Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
                     response);
 
+            response.setProgressBar(mProgressBar);
             VolleyManager.getInstance(context).addToRequestQueue(request);
         }
-
-        mProgressBar.setVisibility(View.VISIBLE);
-        ImageResponse response = new ImageResponse(getActivity(), imageView, mProgressBar);
-        Request imageRequest = Api.imageRequest(mDog.mUrlImage, imageView, response,
-                response);
-
-        VolleyManager.getInstance(getActivity().getApplicationContext())
-                .addToRequestQueue(imageRequest, TAG);
 
     }
 

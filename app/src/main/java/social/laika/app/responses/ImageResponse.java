@@ -74,4 +74,8 @@ public class ImageResponse implements Response.ErrorListener,
             mProgressBar.setVisibility(View.GONE);
         }
     }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        mProgressBar = progressBar;
+    }
 }
