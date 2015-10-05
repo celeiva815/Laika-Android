@@ -23,10 +23,8 @@ import social.laika.app.R;
 import social.laika.app.activities.AdoptDogsFragmentActivity;
 import social.laika.app.listeners.ConfirmAdoptionDialogOnClickListener;
 import social.laika.app.models.Dog;
-import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.ImageResponse;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 
@@ -37,7 +35,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
     public Dog mDog;
     public Activity mActivity;
-    public ImageView mPictureImageView;
+    public ImageView mMainImageView;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
     public SlidingUpPanelLayout mSlidingUpPanelLayout;
@@ -69,7 +67,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
         mSlidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
-        mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
+        mMainImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mCompatibilityTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
         mNameTextView = (TextView) view.findViewById(R.id.name_adopt_dog_screen_slide_textview);
@@ -102,7 +100,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
             mDetailsTextView.setText(mDog.mDetail);
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
-                mDog, mActivity, mProgressDialog, mPictureImageView);
+                mDog, mActivity, mProgressDialog, mMainImageView);
         mPostulateButton.setOnClickListener(listener);
 
         setUserAdoptDog();
@@ -155,13 +153,8 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (mDog.mDogImage == null) {
-            requestDogImage(mPictureImageView);
-
-        } else {
-            mPictureImageView.setImageBitmap(mDog.mDogImage);
-
-        }
+        mDog.requestDogImage(getActivity().getApplicationContext(), mMainImageView,
+                mProgressBar);
     }
 
     @Override
@@ -169,42 +162,6 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         super.onResume();
 
         mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-
-    }
-
-    public void requestDogImage(ImageView imageView) {
-
-        Context context = getActivity().getApplicationContext();
-
-        if (!Do.isNullOrEmpty(mDog.mUrlLocal)) {
-
-            File file = new File(Uri.parse(mDog.mUrlLocal).getPath());
-
-            if (file.exists()) {
-                imageView.setImageURI(Uri.parse(mDog.mUrlLocal));
-
-            } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
-
-                mProgressBar.setVisibility(View.VISIBLE);
-                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
-                        imageView, mDog, Dog.TABLE_DOG);
-                Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
-                        response);
-
-                response.setProgressBar(mProgressBar);
-                VolleyManager.getInstance(context).addToRequestQueue(request);
-            }
-        } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
-
-            mProgressBar.setVisibility(View.VISIBLE);
-            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
-                    imageView, mDog, Dog.TABLE_DOG);
-            Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
-                    response);
-
-            response.setProgressBar(mProgressBar);
-            VolleyManager.getInstance(context).addToRequestQueue(request);
-        }
 
     }
 

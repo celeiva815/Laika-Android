@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +20,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.android.volley.Request;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +28,9 @@ import org.json.JSONObject;
 
 import social.laika.app.R;
 import social.laika.app.interfaces.Picturable;
+import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
@@ -289,6 +296,39 @@ public class Dog extends Model implements Picturable {
 
         } else {
             return Integer.toString(age) + " años";
+        }
+    }
+
+    public void requestDogImage(Context context, ImageView imageView, ProgressBar progressBar) {
+
+        if (!Do.isNullOrEmpty(mUrlLocal)) {
+
+            File file = new File(Uri.parse(mUrlLocal).getPath());
+
+            if (file.exists()) {
+                imageView.setImageURI(Uri.parse(mUrlLocal));
+
+            } else if (!Do.isNullOrEmpty(mUrlImage)) {
+
+                progressBar.setVisibility(View.VISIBLE);
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                        imageView, this,  Dog.TABLE_DOG);
+                Request request = Api.imageRequest(mUrlImage, imageView, response,
+                        response);
+
+                response.setProgressBar(progressBar);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+        } else if (!Do.isNullOrEmpty(mUrlImage)) {
+
+            progressBar.setVisibility(View.VISIBLE);
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                    imageView, this, Dog.TABLE_DOG);
+            Request request = Api.imageRequest(mUrlImage, imageView, response,
+                    response);
+
+            response.setProgressBar(progressBar);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
         }
     }
 
