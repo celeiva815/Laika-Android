@@ -2,6 +2,8 @@ package social.laika.app.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,22 +17,26 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.io.File;
+
 import social.laika.app.R;
 import social.laika.app.activities.AdoptDogsFragmentActivity;
 import social.laika.app.listeners.ConfirmAdoptionDialogOnClickListener;
 import social.laika.app.models.Dog;
+import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 
 public class AdoptDogScreenSlideFragment extends Fragment {
 
     public static final String TAG = AdoptDogScreenSlideFragment.class.getSimpleName();
 
-	private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
-	public Dog mDog;
-	public Activity mActivity;
+    private int mIdLayout = R.layout.lk_adopt_dog_screen_slide_fragment;
+    public Dog mDog;
+    public Activity mActivity;
     public ImageView mPictureImageView;
     public ProgressDialog mProgressDialog;
     public ProgressBar mProgressBar;
@@ -51,18 +57,18 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     public ImageView mArrowImageView;
     public Button mPostulateButton;
 
-	public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
+    public AdoptDogScreenSlideFragment(Dog mDog, Activity activity) {
 
-		this.mDog = mDog;
-		this.mActivity = activity;
-	}
+        this.mDog = mDog;
+        this.mActivity = activity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(mIdLayout, container, false);
 
-        mSlidingUpPanelLayout  = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+        mSlidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         mPictureImageView = (ImageView) view.findViewById(R.id.picture_adopt_dog_screen_slide_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mCompatibilityTextView = (TextView) view.findViewById(R.id.match_adopt_dog_screen_slide_textview);
@@ -167,6 +173,34 @@ public class AdoptDogScreenSlideFragment extends Fragment {
     }
 
     public void requestDogImage(ImageView imageView) {
+
+        Context context = getActivity().getApplicationContext();
+
+        if (!Do.isNullOrEmpty(mDog.mUrlLocal)) {
+
+            File file = new File(Uri.parse(mDog.mUrlLocal).getPath());
+
+            if (file.exists()) {
+                imageView.setImageURI(Uri.parse(mDog.mUrlLocal));
+
+            } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
+
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                        imageView, mDog, Dog.TABLE_DOG);
+                Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
+                        response);
+
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+        } else if (!Do.isNullOrEmpty(mDog.mUrlImage)) {
+
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                    imageView, mDog, Dog.TABLE_DOG);
+            Request request = Api.imageRequest(mDog.mUrlImage, imageView, response,
+                    response);
+
+            VolleyManager.getInstance(context).addToRequestQueue(request);
+        }
 
         mProgressBar.setVisibility(View.VISIBLE);
         ImageResponse response = new ImageResponse(getActivity(), imageView, mProgressBar);

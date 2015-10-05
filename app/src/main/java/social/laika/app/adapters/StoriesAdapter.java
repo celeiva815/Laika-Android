@@ -19,7 +19,7 @@ import social.laika.app.R;
 import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.PublicationImageResponse;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
@@ -71,7 +71,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
 
             } else if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-                PublicationImageResponse response = new PublicationImageResponse(context,
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         mMainImageView, story, Story.TABLE_NAME);
                 Request request = Api.imageRequest(story.mUrlImage, mMainImageView, response,
                         response);
@@ -79,7 +79,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
             }
         } else if (!Do.isNullOrEmpty(story.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            PublicationImageResponse response = new PublicationImageResponse(context,
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     mMainImageView, story, Story.TABLE_NAME);
             Request request = Api.imageRequest(story.mUrlImage, mMainImageView, response,
                     response);

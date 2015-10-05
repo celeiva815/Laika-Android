@@ -19,11 +19,12 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import social.laika.app.interfaces.Picturable;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 
-public abstract class BasePublication extends Model {
+public abstract class BasePublication extends Model implements Picturable {
 
     public final static String COLUMN_SERVER_ID = "server_id" ;
     public final static String COLUMN_URL = "url" ;
@@ -58,6 +59,7 @@ public abstract class BasePublication extends Model {
         this.save();
     }
 
+    @Override
     public void setUriLocal(Bitmap bitmap, Context context, String folder) {
 
         OutputStream fOut = null;

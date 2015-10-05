@@ -2,7 +2,12 @@ package social.laika.app.models;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,13 +23,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import social.laika.app.R;
+import social.laika.app.interfaces.Picturable;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 import social.laika.app.utils.Tag;
 
 
 @Table(name = Dog.TABLE_DOG)
-public class Dog extends Model {
+public class Dog extends Model implements Picturable {
 
     public static int ID = 1;
 
@@ -42,6 +49,7 @@ public class Dog extends Model {
     public final static String COLUMN_COMPATIBILITY = "compatibility";
     public final static String COLUMN_IS_TRAINED = "is_trained";
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public final static String COLUMN_URL_LOCAL = "url_local";
     public final static String COLUMN_OWNER_ID = "owner_id";
     public final static String COLUMN_FOUNDATION_ID = "foundation_id";
     public final static String COLUMN_FOUNDATION_NAME = "foundation_name";
@@ -93,6 +101,9 @@ public class Dog extends Model {
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUrlLocal;
 
     @Column(name = COLUMN_DETAILS)
     public String mDetail;
@@ -404,6 +415,12 @@ public class Dog extends Model {
 
     }
 
+    public void setUrlLocal(String urlLocal) {
+
+        mUrlLocal = urlLocal;
+        save();
+    }
+
     //DataBase
 
     public static void saveDogs(JSONObject jsonObject, int status) {
@@ -512,4 +529,37 @@ public class Dog extends Model {
 
     }
 
+    @Override
+    public void setUriLocal(Bitmap bitmap, Context context, String folder) {
+
+        OutputStream fOut = null;
+        Uri outputFileUri;
+
+        try {
+            File root = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + folder + File.separator);
+            root.mkdirs();
+
+            String filename = new Photographer().getImageName(context, folder + mDogId);
+
+            File sdImageMainDirectory = new File(root, filename);
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+            fOut = new FileOutputStream(sdImageMainDirectory);
+            mUrlLocal = outputFileUri.toString();
+
+            this.save();
+
+        } catch (Exception e) {
+
+            Do.showShortToast("No se pudo guardar la foto", context);
+        }
+
+        try {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+
+        } catch (Exception e) {
+        }
+    }
 }

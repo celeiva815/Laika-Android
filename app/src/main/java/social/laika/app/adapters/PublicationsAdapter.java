@@ -20,7 +20,7 @@ import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.PublicationImageResponse;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 
 public class PublicationsAdapter extends ArrayAdapter<Publication> {
@@ -77,7 +77,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
             } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-                PublicationImageResponse response = new PublicationImageResponse(context,
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         mMainImageView, publication, Publication.TABLE_NAME);
                 Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
                         response);
@@ -87,7 +87,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             }
         } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-            PublicationImageResponse response = new PublicationImageResponse(context,
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     mMainImageView, publication, Publication.TABLE_NAME);
             Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
                     response);

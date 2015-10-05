@@ -20,7 +20,7 @@ import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.publications.Tip;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.PublicationImageResponse;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 
 public class TipsAdapter extends ArrayAdapter<Tip> {
@@ -69,7 +69,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
             } else if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-                PublicationImageResponse response = new PublicationImageResponse(context,
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         mMainImageView, tip, Tip.TABLE_NAME);
                 Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
                         response);
@@ -78,7 +78,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
         } else if (!Do.isNullOrEmpty(tip.mUrlImage) && mMainImageView.getDrawable() == null) {
 
-            PublicationImageResponse response = new PublicationImageResponse(context,
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     mMainImageView, tip, Tip.TABLE_NAME);
             Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
                     response);

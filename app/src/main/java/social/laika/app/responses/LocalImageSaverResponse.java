@@ -5,25 +5,26 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import social.laika.app.interfaces.Picturable;
 import social.laika.app.models.publications.BasePublication;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
  */
-public class PublicationImageResponse extends ImageResponse {
+public class LocalImageSaverResponse extends ImageResponse {
 
     public Context mContext;
     public Activity mActivity;
     public ImageView mImageView;
-    public BasePublication mPublication;
+    public Picturable mPicturable;
     public String mType;
 
-    public PublicationImageResponse(Context context, ImageView mImageView, BasePublication mPublication,
-                                    String mType) {
+    public LocalImageSaverResponse(Context context, ImageView mImageView, Picturable mPicturable,
+                                   String mType) {
         super(context, mImageView);
 
         this.mImageView = mImageView;
-        this.mPublication = mPublication;
+        this.mPicturable= mPicturable;
         this.mContext = context;
         this.mType = mType;
     }
@@ -33,8 +34,8 @@ public class PublicationImageResponse extends ImageResponse {
 
         super.onResponse(response);
 
-        if (mPublication != null) {
-            mPublication.setUriLocal(response, mContext, mType);
+        if (mPicturable != null) {
+            mPicturable.setUriLocal(response, mContext, mType);
         }
     }
 }
