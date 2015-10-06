@@ -26,6 +26,68 @@ public class PublicationsActivity extends BasePublicationsActivity {
 
     public List<Publication> mPublications;
 
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getIntent().hasExtra(KEY_FAVORITE)) {
+            mIsFavorite = getIntent().getExtras().getBoolean(KEY_FAVORITE, false);
+        }
+
+        viewSettings();
+        setContentView(mIdLayout);
+        setActivityView();
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+
+        @Override
+    public void onStart() {
+
+            if (mPublicationsListView.getCount() == 0) {
+
+                mEmptyLinearLayout.setVisibility(View.VISIBLE);
+                requestPublications(Tag.NONE, Tag.LIMIT, getApplicationContext());
+            }
+
+            super.onStart();
+    }
+
+    public void setActivityView() {
+
+        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
+        mPublicationsListView = (ListView) findViewById(R.id.main_listview);
+        mPublicationsAdapter = new PublicationsAdapter(this, R.layout.lk_events_adapter,
+                mPublications);
+
+        mPublicationsListView.setAdapter(mPublicationsAdapter);
+        mPublicationsListView.setItemsCanFocus(true);
+        mPublicationsListView.setEmptyView(mEmptyLinearLayout);
+
+        if (!mIsFavorite) {
+
+            mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+            PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
+
+            mPublicationsListView.setOnScrollListener(refreshListener);
+            onCreateSwipeRefresh(mSwipeLayout, refreshListener);
+        }
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(MainActivity.class))
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
 
     @Override
     public void requestPublications(int lastPublicationId, int limit, Context context) {

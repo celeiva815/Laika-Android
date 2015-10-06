@@ -2,6 +2,9 @@ package social.laika.app.adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +31,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
     public static final String TAG = PublicationsAdapter.class.getSimpleName();
 
     private int mIdLayout = R.layout.lk_publication_adapter;
-    private Context context;
+    private Context mContext;
     private List<Publication> mPublications;
 
     public ImageView mFavoriteImageView;
@@ -38,20 +41,21 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
     public TextView mBodyTextView;
     public ImageView mMainImageView;
     public ProgressBar mProgressBar;
+    private ImageView mShareImageView;
 
     public PublicationsAdapter(Context context, int resource, List<Publication> objects) {
         super(context, resource, objects);
 
-        this.context = context;
+        this.mContext = context;
         this.mPublications = objects;
     }
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
-        Publication publication = mPublications.get(position);
+        final Publication publication = mPublications.get(position);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(mIdLayout, parent, false);
 
         mTitleTextView = (TextView) view.findViewById(R.id.title_news_textview);
@@ -61,6 +65,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mMainImageView = (ImageView) view.findViewById(R.id.main_news_imageview);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_publication_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
+        mShareImageView = (ImageView) view.findViewById(R.id.share_news_imageview);
 
         mTitleTextView.setText(publication.mTitle);
         mSponsorTextView.setText(publication.getSponsor());
@@ -93,6 +98,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
                     response);
             VolleyManager.getInstance(context).addToRequestQueue(request);
 
+            Api.getImage(publication.mUrlImage, mProgressBar, mMainImageView, mContext);
 
         } else {
 
@@ -108,6 +114,23 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
                 Publication publication = mPublications.get(position);
                 setFavorite(publication, !publication.mIsFavorite);
+            }
+        });
+
+        mShareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Resources res = mContext.getResources();
+                String shareStr = publication.mTitle + "\n\n" + publication.mBody +
+                        "\n\n Ver más en: " + publication.mUrlPublication;
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareStr);
+                shareIntent.setType("text/plain");
+                //shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent.createChooser()
+                mContext.startActivity(Intent.createChooser(shareIntent, res.getString(R.string
+                        .share_string)));
             }
         });
 

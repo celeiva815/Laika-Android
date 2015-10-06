@@ -113,7 +113,5 @@ public class EventsActivity extends BasePublicationsActivity {
     @Override
     public List getFavoritePublications() {
         return Event.getFavoriteEvents();
-    }
-
-
+   }
 }
