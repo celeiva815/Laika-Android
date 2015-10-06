@@ -47,6 +47,5 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
     compile 'com.newrelic.agent.android:android-agent:5.2.1'
-    compile 'com.newrelic.agent.android:class-rewriter:5.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }
