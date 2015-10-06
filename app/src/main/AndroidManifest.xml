@@ -384,7 +384,7 @@
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <meta-data android:name="android.accounts.AccountAuthenticator"
-                android:resource 8="@xml/authenticator" />
+                android:resource="@xml/authenticator" />
         </service>
 
         <provider
