@@ -137,7 +137,8 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         super.onResume();
 
         refresh();
-        requestDogImage();
+        mDog.requestDogImage(getActivity().getApplicationContext(), mDogImageView,
+                mProgressBar, Tag.IMAGE_MEDIUM);
 
     }
 

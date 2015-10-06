@@ -299,7 +299,8 @@ public class Dog extends Model implements Picturable {
         }
     }
 
-    public void requestDogImage(Context context, ImageView imageView, ProgressBar progressBar) {
+    public void requestDogImage(Context context, ImageView imageView, ProgressBar progressBar,
+                                String size)  {
 
         if (!Do.isNullOrEmpty(mUrlLocal)) {
 
@@ -313,7 +314,7 @@ public class Dog extends Model implements Picturable {
                 progressBar.setVisibility(View.VISIBLE);
                 LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         imageView, this,  Dog.TABLE_DOG);
-                Request request = Api.imageRequest(mUrlImage, imageView, response,
+                Request request = Api.imageRequest(getImage(size), imageView, response,
                         response);
 
                 response.setProgressBar(progressBar);
@@ -324,7 +325,7 @@ public class Dog extends Model implements Picturable {
             progressBar.setVisibility(View.VISIBLE);
             LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     imageView, this, Dog.TABLE_DOG);
-            Request request = Api.imageRequest(mUrlImage, imageView, response,
+            Request request = Api.imageRequest(getImage(size), imageView, response,
                     response);
 
             response.setProgressBar(progressBar);

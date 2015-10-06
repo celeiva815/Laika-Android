@@ -27,6 +27,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Tag;
 
 public class AdoptDogScreenSlideFragment extends Fragment {
 
@@ -154,7 +155,7 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mDog.requestDogImage(getActivity().getApplicationContext(), mMainImageView,
-                mProgressBar);
+                mProgressBar, Tag.IMAGE_LARGE);
     }
 
     @Override
