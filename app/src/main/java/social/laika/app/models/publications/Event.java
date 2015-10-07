@@ -181,6 +181,12 @@ public class Event extends BasePublication {
 
     }
 
+    public static List<Event> getFavoriteEvents() {
+
+        String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.TRUE;
+        return new Select().from(Publication.class).where(condition).execute();
+    }
+
     public static Event getSingleEvent(Event event) {
 
         String condition = COLUMN_SERVER_ID + DB.EQUALS + event.mServerId;

@@ -117,5 +117,4 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         return view;
 
     }
-
 }
