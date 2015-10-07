@@ -104,7 +104,7 @@ public class Story extends BasePublication {
         this.mTime = story.mTime;
         this.mBody = story.mBody;
         this.mUrlImage = story.mUrlImage;
-        this.mIsFavorite = story.mIsFavorite;
+        this.mIsFavorite = mIsFavorite || story.mIsFavorite;
 
         this.save();
 
@@ -194,13 +194,19 @@ public class Story extends BasePublication {
             jsonObject.put(COLUMN_TIME, mTime);
 
 
-        }  catch (JSONException e) {
+        } catch (JSONException e) {
 
             e.printStackTrace();
         }
 
         return jsonObject;
 
+    }
+
+    public static List<Story> getFavoriteStories() {
+
+        String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.TRUE;
+        return new Select().from(Story.class).where(condition).execute();
     }
 }
 
