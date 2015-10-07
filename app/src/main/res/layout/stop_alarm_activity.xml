@@ -123,10 +123,11 @@
             android:layout_weight="1.5"
             android:background="@drawable/laika_button"
             android:drawableLeft="@drawable/laika_accept_white"
-            android:paddingLeft="30dp"
-            android:drawablePadding="-15dp"
-            android:textSize="@dimen/laika_biggest_text"
-            android:textColor="@color/laika_dark_white"/>
+            android:paddingLeft="10dp"
+            android:textSize="@dimen/laika_big_text"
+            android:textColor="@color/laika_dark_white"
+            android:gravity="center"
+            android:drawablePadding="-10dp"/>
 
         <Button
             android:layout_width="0dp"
@@ -135,12 +136,13 @@
             android:id="@+id/cancel_stop_alarm_button"
             android:layout_weight="1.5"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/laika_biggest_text"
+            android:textSize="@dimen/laika_big_text"
             android:textColor="@color/laika_dark_white"
             android:background="@drawable/laika_button"
             android:drawableLeft="@drawable/laika_cancel_white"
-            android:paddingLeft="30dp"
-            android:drawablePadding="-15dp"/>
+            android:paddingLeft="10dp"
+            android:drawablePadding="-10dp"
+            android:gravity="center"/>
     </LinearLayout>
 
 </LinearLayout>

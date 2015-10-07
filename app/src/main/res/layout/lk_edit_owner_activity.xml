@@ -40,7 +40,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_medium_text" />
 
         <TextView
             android:id="@+id/textView21"
@@ -64,12 +64,12 @@
                 android:id="@+id/human_male_edit_user_radiobutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_male"
                 android:textColor="@color/light_black_font"
-                android:textSize="20sp"
+                android:textSize="@dimen/laika_medium_text"
                 android:checked="false" />
 
             <RadioButton
@@ -81,7 +81,8 @@
                 android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_female"
                 android:textColor="@color/light_black_font"
-                android:textSize="20sp" />
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_marginLeft="10dp"/>
         </RadioGroup>
 
         <TextView
@@ -105,7 +106,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text"
+            android:textSize="@dimen/laika_medium_text"
             android:inputType="phone" />
 
         <TextView
@@ -133,7 +134,7 @@
             android:paddingTop="10dp"
             android:text="@string/example_date_reminder"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_biggest_text" />
+            android:textSize="@dimen/laika_medium_text" />
 
         <TextView
             android:id="@+id/region_edit_user_textview"
