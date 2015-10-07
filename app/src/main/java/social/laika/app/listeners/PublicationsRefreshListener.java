@@ -3,10 +3,13 @@ package social.laika.app.listeners;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import social.laika.app.activities.BasePublicationsActivity;
 import social.laika.app.activities.PublicationsActivity;
 import social.laika.app.adapters.PublicationsAdapter;
+import social.laika.app.models.publications.BasePublication;
 import social.laika.app.utils.Tag;
 
 /**
@@ -17,15 +20,15 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
 
     public static final String TAG = PublicationsRefreshListener.class.getSimpleName();
 
-    private PublicationsActivity mActivity;
+    private BasePublicationsActivity mActivity;
     private SwipeRefreshLayout mSwipeLayout;
     private ListView mListView;
-    private PublicationsAdapter mAdapter;
+    private ArrayAdapter mAdapter;
     private int mLastVisibleItem;
     private int mCurrentVisibleItem;
     private int mCurrentScrollState;
 
-    public PublicationsRefreshListener(PublicationsActivity mActivity) {
+    public PublicationsRefreshListener(BasePublicationsActivity mActivity) {
 
         this.mActivity = mActivity;
         this.mSwipeLayout = mActivity.mSwipeLayout;
@@ -57,12 +60,12 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
     private void isScrollCompleted(Context context) {
         if (this.mCurrentVisibleItem >= mLastVisibleItem &&
                 this.mCurrentScrollState == SCROLL_STATE_IDLE
-                && !mSwipeLayout.isRefreshing()) {
+                && !mSwipeLayout.isRefreshing() && !mActivity.mIsFavorite) {
 
             mSwipeLayout.setRefreshing(true);
 
-            int size = mActivity.mPublications.size();
-            int lastPublicationId = mActivity.mPublications.get(size - 1).mServerId;
+            int size = mAdapter.getCount();
+            int lastPublicationId = ((BasePublication) mAdapter.getItem(size - 1)).mServerId;
             mActivity.requestPublications(lastPublicationId, Tag.LIMIT, mActivity);
 
         }

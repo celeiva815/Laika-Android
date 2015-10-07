@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="social.laika.app.ActivityMain">
+
+    <item
+        android:id="@+id/favorite_publications"
+        android:orderInCategory="99"
+        app:showAsAction="always"
+        android:title="Ver Favoritos" />
+
+</menu>
