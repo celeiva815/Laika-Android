@@ -104,7 +104,7 @@ public class Publication extends BasePublication {
         this.mUrlImage = publication.mUrlImage;
         this.mUrl = publication.mUrl;
         this.mIsPaid = publication.mIsPaid;
-        this.mIsFavorite = publication.mIsFavorite;
+        this.mIsFavorite = mIsFavorite || publication.mIsFavorite;
 
         this.save();
     }

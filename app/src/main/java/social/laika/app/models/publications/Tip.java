@@ -79,7 +79,6 @@ public class Tip extends BasePublication {
 
     }
 
-
     public void update(Tip tip) {
 
         this.mServerId = tip.mServerId;
@@ -91,7 +90,7 @@ public class Tip extends BasePublication {
         this.mUrl = tip.mUrl;
         this.mType = tip.mType;
         this.mIsPaid = tip.mIsPaid;
-        this.mIsFavorite = tip.mIsFavorite;
+        this.mIsFavorite = mIsFavorite || tip.mIsFavorite;
 
         this.save();
     }
@@ -153,5 +152,11 @@ public class Tip extends BasePublication {
 
     public static void deleteAll() {
 
+    }
+
+    public static List<Tip> getFavoriteTips() {
+
+        String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.TRUE;
+        return new Select().from(Tip.class).where(condition).execute();
     }
 }

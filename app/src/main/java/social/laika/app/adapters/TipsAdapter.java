@@ -109,6 +109,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         tip.setIsFavorite(isFavorite);
         int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
         mFavoriteImageView.setImageResource(resource);
+        notifyDataSetChanged();
 
     }
 }
