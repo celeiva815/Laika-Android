@@ -12,12 +12,20 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -35,7 +43,6 @@ dependencies {
     compile 'com.squareup.okio:okio:1.1.0'
     compile 'com.sothree.slidinguppanel:library:3.0.0'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
-    compile 'com.splunk.mint:mint:4.0.7'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
