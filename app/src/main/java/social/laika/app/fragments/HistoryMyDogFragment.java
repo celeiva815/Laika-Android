@@ -92,45 +92,24 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final Context context = view.getContext();
-                final int pos = position;
-                final History history = mHistories.get(pos);
+                final History history = mHistories.get(position);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                final int alarmStatus = history.mReminder.checkStatusAlarm(context);
 
                 dialog.setTitle(R.string.choose_an_option);
-                dialog.setItems(getItems(alarmStatus),
+                dialog.setItems(getItems(),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 switch (which) {
-
                                     case 0: // editar alarma
-
-                                        if (alarmStatus == Tag.STATUS_ACTIVATED) {
-                                            history.mReminder.cancelAlarm(context);
-
-                                        } else if (alarmStatus == Tag.STATUS_NOT_ACTIVATED) {
-                                            history.mReminder.setAlarm(context);
-                                        }
-
-                                        break;
-
-                                    case 1: // editar alarma
-
                                         editReminder(history);
                                         break;
-
-                                    case 2: // eliminar alarma
-
+                                    case 1: // eliminar alarma
                                         deleteReminder(history);
-
                                         break;
-
                                 }
-
                             }
                         });
-
                 dialog.show();
             }
         });
@@ -305,18 +284,8 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         return Uri.parse(uri.toString());
     }
 
-    public CharSequence[] getItems(int status) {
-
-        if (status == Tag.STATUS_ACTIVATED) {
-
-            return new CharSequence[]{"Desactivar", "Editar", "Eliminar"};
-
-        } else if (status == Tag.STATUS_NOT_ACTIVATED) {
-
-            return new CharSequence[]{"Activar", "Editar", "Eliminar"};
-        }
-
-        return null;
+    public CharSequence[] getItems() {
+        return new CharSequence[]{"Editar", "Eliminar"};
     }
 
 }

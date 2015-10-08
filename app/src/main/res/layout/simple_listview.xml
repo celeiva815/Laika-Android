@@ -15,4 +15,5 @@
         android:layout_gravity="center_horizontal"
         android:divider="@color/laika_lighter_red"
         android:dividerHeight="1dp"/>
+
 </LinearLayout>
