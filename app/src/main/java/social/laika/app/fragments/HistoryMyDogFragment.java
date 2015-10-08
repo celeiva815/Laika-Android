@@ -17,6 +17,9 @@ import android.widget.ListView;
 import com.android.volley.Request;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,6 +186,8 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
                 mHistories.add(a.toHistory(context));
             }
         }
+
+        Collections.sort(mHistories, Collections.reverseOrder());
 
         return mHistories;
 

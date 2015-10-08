@@ -2,6 +2,9 @@ package social.laika.app.interfaces;
 
 import android.content.Context;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import social.laika.app.models.History;
 
 /**
@@ -13,5 +16,5 @@ public interface Alertable {
     void setAlarm(Context context);
     void cancelAlarm(Context context);
     int checkStatusAlarm(Context context);
-
+    Date createdAt();
 }

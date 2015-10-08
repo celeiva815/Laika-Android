@@ -5,6 +5,11 @@ import android.util.Log;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import social.laika.app.utils.DateFormatter;
 import social.laika.app.utils.Tag;
 
 /**
@@ -13,10 +18,17 @@ import social.laika.app.utils.Tag;
 public class ModelSync extends Model {
 
     public final static String COLUMN_NEEDS_SYNC = "needs_sync";
+    public final static String COLUMN_CREATED_AT = "created_at";
 
     @Column(name = COLUMN_NEEDS_SYNC)
     public int mNeedsSync;
 
+    @Column(name = COLUMN_CREATED_AT)
+    public String mCreatedAt;
+
+    public ModelSync() {
+        mCreatedAt = DateFormatter.apiStringFromDate(Calendar.getInstance().getTime());
+    }
 
     public void create() {
 

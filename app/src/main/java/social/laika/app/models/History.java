@@ -1,6 +1,9 @@
 package social.laika.app.models;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+
+import java.util.Date;
 
 import social.laika.app.interfaces.Alertable;
 import social.laika.app.utils.Tag;
@@ -8,7 +11,7 @@ import social.laika.app.utils.Tag;
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class History {
+public class History implements Comparable<History> {
 
     public long mReminderId;
     public int mCategory;
@@ -41,5 +44,8 @@ public class History {
     }
 
 
-
+    @Override
+    public int compareTo(@NonNull History another) {
+        return mReminder.createdAt().compareTo(another.mReminder.createdAt());
+    }
 }

@@ -12,12 +12,14 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.text.ParseException;
 import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 
 import social.laika.app.R;
@@ -116,7 +118,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
                          boolean mHasWednesday, boolean mHasThursday, boolean mHasFriday,
                          boolean mHasSaturday, boolean mHasSunday, String mTime, int mOwnerId,
                          int mDogId) {
-
+        this();
         this.mType = mType;
         this.mCategory = mCategory;
         this.mTitle = mTitle;
@@ -135,7 +137,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
     }
 
     public AlarmReminder(JSONObject jsonObject) {
-
+        this();
         this.mAlarmReminderId = jsonObject.optInt(COLUMN_ALARM_REMINDER_ID);
         this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
         this.mCategory = jsonObject.optInt(COLUMN_CATEGORY, Tag.CATEGORY_FOOD);
@@ -601,6 +603,18 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.save();
 
         return mStatus;
+    }
+
+    @Override
+    public Date createdAt() {
+        Date date;
+        try {
+            date = DateFormatter.dateFromString(mCreatedAt);
+        } catch (ParseException e) {
+            date = Calendar.getInstance().getTime();
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public boolean isActivated(Context context) {

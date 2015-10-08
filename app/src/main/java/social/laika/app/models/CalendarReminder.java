@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.activeandroid.Model;
@@ -16,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,7 @@ import social.laika.app.R;
 import social.laika.app.interfaces.Alertable;
 import social.laika.app.utils.AlarmReceiver;
 import social.laika.app.utils.DB;
+import social.laika.app.utils.DateFormatter;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -264,8 +267,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
         }
 
         mAlarmManager.cancel(pendingIntent);
-
-
+        pendingIntent.cancel();
     }
 
     @Override
@@ -289,6 +291,18 @@ public class CalendarReminder extends ModelSync implements Alertable {
 
     }
 
+    @Override
+    public Date createdAt() {
+        Date date;
+        try {
+            date = DateFormatter.dateFromString(mCreatedAt);
+        } catch (ParseException e) {
+            date = Calendar.getInstance().getTime();
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     private Intent getAlarmIntent(Context context) {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
@@ -308,7 +322,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
 
     }
 
-    private Calendar getAlarmCalendar() {
+    public Calendar getAlarmCalendar() {
 
         Calendar calendar = Calendar.getInstance();
 
