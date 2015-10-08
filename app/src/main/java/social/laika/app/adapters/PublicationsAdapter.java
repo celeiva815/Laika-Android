@@ -124,6 +124,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
                 R.drawable.laika_favorite_white;
 
         mFavoriteImageView.setImageResource(resource);
+        notifyDataSetChanged();
 
     }
 
