@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="90dp"
     android:background="@android:color/transparent"
-    android:weightSum="4">
+    android:weightSum="5"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+    >
 
     <ImageView
-        android:layout_width="0dp"
+        android:layout_width="72dp"
         android:layout_height="match_parent"
         android:id="@+id/category_history_my_dog_imageview"
         android:layout_weight="1"
         android:src="@drawable/lk_food_logo"
-        android:padding="15dp"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"/>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="3"
-        android:padding="10dp">
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_toRightOf="@+id/category_history_my_dog_imageview"
+        android:layout_toLeftOf="@+id/activate_history_my_dog_switch"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,4 +62,18 @@
             android:textSize="@dimen/date_history_my_dog"
             android:singleLine="false" />
     </LinearLayout>
-</LinearLayout>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activate_history_my_dog_switch"
+        android:textOff="Activar"
+        android:textOn="Desactivar"
+        android:layout_weight="0.5"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:focusable="false"/>
+
+</RelativeLayout>

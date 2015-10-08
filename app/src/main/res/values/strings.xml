@@ -229,6 +229,8 @@
     <string name="days_date">días</string>
     <string name="weekdays_date">días de semana</string>
     <string name="weekend_date">fines de semana</string>
+    <string name="reminder_activated">Recordatorio activado</string>
+    <string name="reminder_desactivated">Recordatorio desactivado</string>
 
     <!-- OwnersMyDog-->
     <string name="my_dog_owners_activity_name">Responsables</string>
