@@ -163,28 +163,20 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
 
     private List<History> getHistories(Context context) {
 
-        if (mHistories == null)
+        if (mHistories == null) {
             mHistories = new ArrayList<>();
-        else
+        } else {
             mHistories.clear();
+        }
 
         List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
         List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
 
-        if (calendars.size() > 0) {
-
-            for (CalendarReminder c : calendars) {
-
-                mHistories.add(c.toHistory(context));
-            }
+        for (CalendarReminder c : calendars) {
+            mHistories.add(c.toHistory(context));
         }
-
-        if (alarms.size() > 0) {
-
-            for (AlarmReminder a : alarms) {
-
-                mHistories.add(a.toHistory(context));
-            }
+        for (AlarmReminder a : alarms) {
+            mHistories.add(a.toHistory(context));
         }
 
         Collections.sort(mHistories, Collections.reverseOrder());
