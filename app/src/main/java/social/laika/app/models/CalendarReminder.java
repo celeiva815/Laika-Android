@@ -242,7 +242,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
         int requestCode = getAlarmRequestCode();
         Calendar calendar = getAlarmCalendar();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, requestCode, intent, 0);
+                context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (mAlarmManager == null) {
             mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -281,7 +281,6 @@ public class CalendarReminder extends ModelSync implements Alertable {
             Log.i("ID:" + mCalendarReminderId + " Date:" + getDate(context), "Cool!! Alarm is already active");
 
         } else {
-
             Log.wtf("ID:" + mCalendarReminderId + " Date:" + getDate(context), "WTF!! Alarm is not active");
         }
 

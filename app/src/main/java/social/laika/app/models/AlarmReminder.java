@@ -661,7 +661,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         int requestCode = getAlarmRequestCode(weekday);
         Calendar calendar = getAlarmCalendar(weekday, hour, minutes);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, requestCode, intent, 0);
+                context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (sAlarmManager == null) {
             sAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -684,6 +684,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         }
 
         sAlarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
     }
 
     private boolean checkAlarmUp(Context context, int weekday) {
