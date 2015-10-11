@@ -34,6 +34,9 @@ import social.laika.app.utils.Tag;
 @Table(name = AlarmReminder.TABLE_ALARM_REMINDER)
 public class AlarmReminder extends ModelSync implements Alertable {
 
+    private final static long ONE_WEEK_MILLIS = Do.WEEK * Do.HOURS * Do.MINUTES * Do.SECONDS *
+            Do.MILLIS;
+
     public final static int ID_NOT_SET = 0;
 
     public final static String TABLE_ALARM_REMINDER = "alarm_reminder";
@@ -111,7 +114,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
     @Column(name = COLUMN_DOG_ID)
     public int mDogId;
 
-    public static AlarmManager mAlarmManager;
+    private static AlarmManager sAlarmManager;
 
     public AlarmReminder(int mType, int mCategory, String mTitle,
                          String mDetail, int mStatus, boolean mHasMonday, boolean mHasTuesday,
@@ -660,12 +663,12 @@ public class AlarmReminder extends ModelSync implements Alertable {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, requestCode, intent, 0);
 
-        if (mAlarmManager == null) {
-            mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (sAlarmManager == null) {
+            sAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                Do.WEEK * Do.HOURS * Do.MINUTES * Do.SECONDS * Do.MILLIS, pendingIntent);
+        sAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                ONE_WEEK_MILLIS, pendingIntent);
 
     }
 
@@ -676,11 +679,11 @@ public class AlarmReminder extends ModelSync implements Alertable {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (mAlarmManager == null) {
-            mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (sAlarmManager == null) {
+            sAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        mAlarmManager.cancel(pendingIntent);
+        sAlarmManager.cancel(pendingIntent);
     }
 
     private boolean checkAlarmUp(Context context, int weekday) {
