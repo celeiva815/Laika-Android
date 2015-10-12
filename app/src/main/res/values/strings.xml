@@ -348,11 +348,12 @@
     <string name="edit_my_profile">Editar mi perfil</string>
     <string name="view_my_profile">Ver mi perfil</string>
     <string name="delete_owner">Eliminar responsable</string>
+    <string name="transfer_ownership">Transferir perro</string>
     <string name="leave_dog">Dejar de ser responsable</string>
     <string name="call_owner">Llamar a</string>
     <string name="send_email">Enviar correo</string>
     <string name="do_you_want">¿Quieres que</string>
-    <string name="leave_responsible_of">deje de ser responsable de</string>
+    <string name="new_responsible_of">sea el principal responsable de</string>
     <string name="leave_responsible_question">¿Quieres dejar de ser responsable de</string>
     <string name="question_mark">\?</string>
     <string name="publications_searching_results">Desliza hacia abajo para ver si hay nuevas publicaciones</string>

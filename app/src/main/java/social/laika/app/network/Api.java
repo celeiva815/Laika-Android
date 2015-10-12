@@ -63,9 +63,11 @@ public class Api {
     public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
     public static final String ADDRESS_PUBLICATIONS = "publications/";
     public static final String ADDRESS_REGISTER = "sign_up/";
+    public static final String ADDRESS_REMOVE_DOG_OWNER = "remove_dog_owner/";
     public static final String ADDRESS_STORIES = "stories/";
     public static final String ADDRESS_SYNC = "sync/";
     public static final String ADDRESS_SUBSCRIBE = "subscribe/";
+    public static final String ADDRESS_TRANSFER_OWNERSHIP = "transfer_ownership/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UNSUBSCRIBE = "unsubscribe/";
     public static final String ADDRESS_UPLOAD_ADOPTION_FORM = "upload_adoption_form/";

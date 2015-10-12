@@ -566,7 +566,7 @@ public class Dog extends Model implements Picturable {
     public static void deleteDog(Dog dog) {
 
         String condition = COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
-        new Delete().from(Dog.class).where(condition).execute();
+        new Delete().from(Dog.class).where(condition).executeSingle();
 
     }
 

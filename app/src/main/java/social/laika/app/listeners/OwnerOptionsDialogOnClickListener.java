@@ -1,6 +1,7 @@
 package social.laika.app.listeners;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,28 +10,39 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import social.laika.app.R;
 import social.laika.app.activities.EditUserActivity;
 import social.laika.app.activities.UserProfileActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
+import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.LeaveDogResponse;
+import social.laika.app.responses.TransferOwnershipResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
 public class OwnerOptionsDialogOnClickListener implements OnClickListener {
 
-	private int mIdLayout = R.layout.ai_simple_textview_for_dialog;
-	private final Dog mDog;
+    private static final String TAG = OwnerOptionsDialogOnClickListener.class.getSimpleName();
+    private int mIdLayout = R.layout.ai_simple_textview_for_dialog;
+    private final Dog mDog;
     private final Owner mOwner;
+    private ProgressDialog mProgressDialog;
 
-	public OwnerOptionsDialogOnClickListener(Dog mDog, Owner mOwner) {
+    public OwnerOptionsDialogOnClickListener(Dog mDog, Owner mOwner) {
 
-		this.mDog = mDog;
-		this.mOwner = mOwner;
-	}
+        this.mDog = mDog;
+        this.mOwner = mOwner;
+    }
 
-	@Override
-	public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
 
         final Context context = v.getContext();
 
@@ -79,9 +91,9 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
                                         sendEmail(context);
                                         break;
 
-                                    case 3: // eliminar dueño
+                                    case 3: // transferir dueño
 
-                                        deleteOwner(context);
+                                        transferOwnership(context);
                                         break;
 
                                 }
@@ -133,9 +145,9 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
                         }
                     }
                 });
-		
-		dialog.show();
-	}
+
+        dialog.show();
+    }
 
     public CharSequence[] getOptions(Context context) {
 
@@ -214,9 +226,9 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{mOwner.mEmail});
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{mOwner.mEmail});
         i.putExtra(Intent.EXTRA_SUBJECT, "");
-        i.putExtra(Intent.EXTRA_TEXT   , "");
+        i.putExtra(Intent.EXTRA_TEXT, "");
         try {
             context.startActivity(Intent.createChooser(i, Do.getRString(context, R.string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -224,14 +236,14 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
         }
     }
 
-    public void deleteOwner(final Context context) {
+    public void transferOwnership(final Context context) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         String message = Do.getRString(context, R.string.do_you_want) + " " + mOwner.mFirstName
-                + " " + Do.getRString(context, R.string.leave_responsible_of) + " " + mDog.mName +
+                + " " + Do.getRString(context, R.string.new_responsible_of) + " " + mDog.mName +
                 Do.getRString(context, R.string.question_mark);
 
-        dialog.setTitle(R.string.delete_owner);
+        dialog.setTitle(R.string.transfer_ownership);
         dialog.setMessage(message);
         dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
             @Override
@@ -245,7 +257,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showShortToast("Por implementar", context);
+                requestTransferDog(context);
                 dialog.dismiss();
             }
         });
@@ -273,12 +285,62 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showShortToast("Por implementar", context);
+                requestLeaveDog(context);
                 dialog.dismiss();
             }
         });
 
         dialog.show();
 
+    }
+
+    public void requestLeaveDog(Context context) {
+
+        mProgressDialog = ProgressDialog.show(context, "Espere un momento", "Estamos actualizando" +
+                " la información de tus perros");
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Dog.COLUMN_DOG_ID, mDog.mDogId);
+            jsonObject.put(Owner.API_USER_ID, mOwner.mOwnerId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+       LeaveDogResponse response = new LeaveDogResponse(context, mDog, mOwner,
+                mProgressDialog);
+
+        Request postulationRequest = Api.postRequest(jsonObject,
+                Api.ADDRESS_REMOVE_DOG_OWNER, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(postulationRequest, TAG);
+    }
+
+    public void requestTransferDog(Context context) {
+
+        mProgressDialog = ProgressDialog.show(context, "Espere un momento", "Estamos transfieriendo" +
+                " la responsabilidad del perro al nuevo dueño");
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Dog.COLUMN_DOG_ID, mDog.mDogId);
+            jsonObject.put(Owner.API_USER_ID, mOwner.mOwnerId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TransferOwnershipResponse response = new TransferOwnershipResponse(context, mDog, mOwner,
+                mProgressDialog);
+
+        Request postulationRequest = Api.postRequest(jsonObject,
+                Api.ADDRESS_TRANSFER_OWNERSHIP, response, response,
+                PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context)
+                .addToRequestQueue(postulationRequest, TAG);
     }
 }

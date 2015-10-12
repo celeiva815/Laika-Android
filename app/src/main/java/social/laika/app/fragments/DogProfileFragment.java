@@ -61,14 +61,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
     public Dialog mDialog;
 
 
-    public DogProfileFragment(Dog mDog) {
-        this.mDog = mDog;
-        this.mTag = Long.toString(mDog.getId());
-    }
-
-    public DogProfileFragment() {
-
-    }
+    public DogProfileFragment() {}
 
     public static final DogProfileFragment newInstance(int dogId) {
         DogProfileFragment f = new DogProfileFragment();
@@ -85,7 +78,6 @@ public class DogProfileFragment extends Fragment implements Refreshable {
         mDog = Dog.getSingleDog(dogId);
 
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

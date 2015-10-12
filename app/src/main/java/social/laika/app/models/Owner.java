@@ -294,4 +294,14 @@ public class Owner extends Model {
 
         return years >= 18;
     }
+
+    public void deleteDogInformation(Context context, Dog dog) {
+
+        AlarmReminder.deleteAll(context, dog);
+        CalendarReminder.deleteAll(context, dog);
+        Photo.deleteAll(dog);
+        OwnerDog.deleteOwnerDog(dog);
+        Dog.deleteDog(dog);
+
+    }
 }

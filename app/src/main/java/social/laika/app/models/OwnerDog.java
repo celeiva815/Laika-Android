@@ -75,9 +75,6 @@ public class OwnerDog extends Model {
                 e.printStackTrace();
             }
         }
-
-
-
     }
 
 
@@ -114,7 +111,12 @@ public class OwnerDog extends Model {
         new Delete().from(OwnerDog.class).execute();
     }
 
+    public static void deleteOwnerDog(Dog dog) {
 
+        String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
+        new Delete().from(OwnerDog.class).where(condition).execute();
+
+    }
 }
 
 

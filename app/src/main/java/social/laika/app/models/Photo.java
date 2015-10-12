@@ -443,7 +443,13 @@ public class Photo extends Model {
 
     public static void deleteAll() {
 
-        new Delete().from(UserAdoptDog.class).execute();
+        new Delete().from(Photo.class).execute();
+    }
+
+    public static void deleteAll(Dog dog) {
+
+        String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dog.mDogId;
+        new Delete().from(Photo.class).where(condition).execute();
     }
 }
 
