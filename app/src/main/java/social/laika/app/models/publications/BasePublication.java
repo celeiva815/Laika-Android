@@ -20,11 +20,12 @@ import java.io.OutputStream;
 import java.util.List;
 
 import social.laika.app.interfaces.Picturable;
+import social.laika.app.interfaces.Shareable;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 
-public abstract class BasePublication extends Model implements Picturable {
+public abstract class BasePublication extends Model implements Picturable, Shareable {
 
     public final static String COLUMN_SERVER_ID = "server_id" ;
     public final static String COLUMN_URL = "url" ;

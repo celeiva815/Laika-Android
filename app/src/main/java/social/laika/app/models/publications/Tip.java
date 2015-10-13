@@ -1,5 +1,7 @@
 package social.laika.app.models.publications;
 
+import android.net.MailTo;
+
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
@@ -158,5 +160,25 @@ public class Tip extends BasePublication {
 
         String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.TRUE;
         return new Select().from(Tip.class).where(condition).execute();
+    }
+
+    @Override
+    public String getFacebookContentTitle() {
+        return mTitle;
+    }
+
+    @Override
+    public String getFacebookContentDescription() {
+        return mBody;
+    }
+
+    @Override
+    public String getUrl() {
+        return mUrl;
+    }
+
+    @Override
+    public String getOtherShareText() {
+        return mTitle + "\n\n" + mBody + "\n\n" + mUrl;
     }
 }

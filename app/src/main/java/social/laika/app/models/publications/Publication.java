@@ -180,4 +180,24 @@ public class Publication extends BasePublication {
         String condition = COLUMN_IS_FAVORITE + DB.EQUALS + DB.FALSE;
         new Delete().from(Publication.class).where(condition).execute();
     }
+
+    @Override
+    public String getFacebookContentTitle() {
+        return mTitle;
+    }
+
+    @Override
+    public String getFacebookContentDescription() {
+        return mBody;
+    }
+
+    @Override
+    public String getUrl() {
+        return mUrl;
+    }
+
+    @Override
+    public String getOtherShareText() {
+        return mTitle + "\n\n" + mBody + "\n\n Ver más en: " + mUrl;
+    }
 }

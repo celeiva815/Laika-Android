@@ -1,9 +1,15 @@
 package social.laika.app.activities;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 
@@ -13,6 +19,7 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.PublicationsAdapter;
+import social.laika.app.listeners.PublicationsRefreshListener;
 import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
@@ -113,7 +120,7 @@ public class PublicationsActivity extends BasePublicationsActivity {
     @Override
     public ArrayAdapter getAdapter() {
 
-        return new PublicationsAdapter(getApplicationContext(), R.layout.lk_events_adapter,
+        return new PublicationsAdapter(this, R.layout.lk_events_adapter,
                 mPublications);
     }
 

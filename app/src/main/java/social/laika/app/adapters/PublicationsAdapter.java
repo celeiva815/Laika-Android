@@ -1,5 +1,6 @@
 package social.laika.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.ShareHelper;
 
 public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
@@ -82,21 +84,21 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
 
             } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                LocalImageSaverResponse response = new LocalImageSaverResponse(mContext,
                         mMainImageView, publication, Publication.TABLE_NAME);
                 Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
                         response);
-                VolleyManager.getInstance(context).addToRequestQueue(request);
+                VolleyManager.getInstance(mContext).addToRequestQueue(request);
 
 
             }
         } else if (!Do.isNullOrEmpty(publication.mUrlImage)) {
 
-            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+            LocalImageSaverResponse response = new LocalImageSaverResponse(mContext,
                     mMainImageView, publication, Publication.TABLE_NAME);
             Request request = Api.imageRequest(publication.mUrlImage, mMainImageView, response,
                     response);
-            VolleyManager.getInstance(context).addToRequestQueue(request);
+            VolleyManager.getInstance(mContext).addToRequestQueue(request);
 
             Api.getImage(publication.mUrlImage, mProgressBar, mMainImageView, mContext);
 
@@ -120,17 +122,8 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mShareImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Resources res = mContext.getResources();
-                String shareStr = publication.mTitle + "\n\n" + publication.mBody +
-                        "\n\n Ver más en: " + publication.mUrlPublication;
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareStr);
-                shareIntent.setType("text/plain");
-                //shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Intent.createChooser()
-                mContext.startActivity(Intent.createChooser(shareIntent, res.getString(R.string
-                        .share_string)));
+                ShareHelper helper = new ShareHelper((Activity) mContext, publication);
+                helper.share();
             }
         });
 

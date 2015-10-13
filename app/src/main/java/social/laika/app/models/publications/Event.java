@@ -206,4 +206,24 @@ public class Event extends BasePublication {
     public static void deleteAll() {
 
     }
+
+    @Override
+    public String getFacebookContentTitle() {
+        return mName;
+    }
+
+    @Override
+    public String getFacebookContentDescription() {
+        return mSponsorName;
+    }
+
+    @Override
+    public String getUrl() {
+        return mUrl;
+    }
+
+    @Override
+    public String getOtherShareText() {
+        return mName + "\n\n" + mSponsorName + "\n\n" + mUrl;
+    }
 }
