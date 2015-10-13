@@ -48,7 +48,7 @@ public class TipsActivity extends BasePublicationsActivity {
 
     @Override
     public ArrayAdapter getAdapter() {
-        return new TipsAdapter(getApplicationContext(), R.layout.lk_tips_adapter,
+        return new TipsAdapter(this, R.layout.lk_tips_adapter,
                 mTips);
     }
 

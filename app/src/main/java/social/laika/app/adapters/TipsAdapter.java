@@ -1,5 +1,6 @@
 package social.laika.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.ShareHelper;
 
 public class TipsAdapter extends ArrayAdapter<Tip> {
 
@@ -33,6 +35,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
     public TextView mBodyTextView;
     public ImageView mMainImageView;
     public ImageView mFavoriteImageView;
+    private ImageView mShareImageView;
     public ProgressBar mProgressBar;
 
     public TipsAdapter(Context context, int resource, List<Tip> objects) {
@@ -54,6 +57,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mMainImageView = (ImageView) view.findViewById(R.id.main_tip_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_tip_imageview);
+        mShareImageView = (ImageView) view.findViewById(R.id.share_tip_imageview);
         mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrl));
 
         mSponsorTextView.setText(tip.mSponsorName);
@@ -97,6 +101,14 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
             public void onClick(View v) {
 
                 setFavorite(tip, !tip.mIsFavorite);
+            }
+        });
+
+        mShareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareHelper helper = new ShareHelper((Activity) context, tip);
+                helper.share();
             }
         });
 

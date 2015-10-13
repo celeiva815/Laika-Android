@@ -1,5 +1,6 @@
 package social.laika.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.ShareHelper;
 
 public class StoriesAdapter extends ArrayAdapter<Story> {
 
@@ -33,6 +35,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
     public TextView mBodyTextView;
     public ImageView mMainImageView;
     public ImageView mFavoriteImageView;
+    private ImageView mShareImageView;
     public ProgressBar mProgressBar;
 
     public StoriesAdapter(Context context, int resource, List<Story> objects) {
@@ -98,6 +101,14 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
             public void onClick(View v) {
 
                 setFavorite(story, !story.mIsFavorite);
+            }
+        });
+
+        mShareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareHelper helper = new ShareHelper((Activity) context, story);
+                helper.share();
             }
         });
 
