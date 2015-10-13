@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import social.laika.app.activities.WebActivity;
+import social.laika.app.models.publications.BasePublication;
+import social.laika.app.models.publications.PublicationNotificator;
 import social.laika.app.utils.Do;
 
 /**
@@ -12,9 +14,12 @@ import social.laika.app.utils.Do;
  */
 public class WebLinkOnClickListener implements View.OnClickListener {
 
+    public BasePublication mPublication;
     public String mUrl;
 
-    public WebLinkOnClickListener(String mUrl) {
+    public WebLinkOnClickListener(BasePublication mPublication, String mUrl) {
+
+        this.mPublication = mPublication;
         this.mUrl = mUrl;
     }
 
@@ -32,5 +37,8 @@ public class WebLinkOnClickListener implements View.OnClickListener {
         } else {
 
         }
+
+        PublicationNotificator notificator = mPublication.getNotificator();
+        notificator.addClick();
     }
 }

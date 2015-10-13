@@ -18,6 +18,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.publications.Publication;
+import social.laika.app.models.publications.PublicationNotificator;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
@@ -66,7 +67,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mSponsorTextView.setText(publication.getSponsor());
         mDateTextView.setText(publication.mDate);
         mBodyTextView.setText(publication.mBody);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication.mUrl));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication, publication.mUrl));
 
         if (!Do.isNullOrEmpty(publication.mUriLocal)) {
 
@@ -111,7 +112,8 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             }
         });
 
-        //setFavorite(publication, publication.mIsFavorite);
+        PublicationNotificator notificator = publication.getNotificator();
+        notificator.addView();
 
         return view;
 
@@ -126,6 +128,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
 
+        PublicationNotificator notificator = publication.getNotificator();
+        notificator.setFavorite(isFavorite);
     }
-
 }

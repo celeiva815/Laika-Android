@@ -65,6 +65,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static final int CODE_OWNER_READ = SyncUtils.CODE_OWNER_READ;
     private static final int CODE_OWNER_UPDATE = SyncUtils.CODE_OWNER_UPDATE;
     private static final int CODE_OWNER_DELETE = SyncUtils.CODE_OWNER_DELETE;
+    private static final int CODE_NOTIFICATOR = 400;
 
 
     /**
@@ -143,16 +144,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         switch (code) {
 
-            case CODE_GENERAL:
-
-                break;
-            case CODE_LOCATIONS:
-
-                break;
-            case CODE_BREEDS:
-
-                break;
-            case CODE_POSTULATIONS:
+            case CODE_NOTIFICATOR:
 
                 break;
             case CODE_MY_DOG:
@@ -214,21 +206,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 }
 
                 break;
-            case CODE_OWNER:
 
-                break;
-            case CODE_OWNER_CREATE:
-
-                break;
-            case CODE_OWNER_READ:
-
-                break;
-            case CODE_OWNER_UPDATE:
-
-                break;
-            case CODE_OWNER_DELETE:
-
-                break;
             case CODE_PHOTO_REFRESH:
 
                 request = new PhotosRequest(context, dogId);

@@ -26,6 +26,7 @@ public class Publication extends BasePublication {
 
     public final static String API_PUBLICATION_ID = "publication_id";
     public final static String API_PUBLICATIONS = "publications";
+    public final static String API_PUBLICATION = "publication";
     public final static String API_URL_PUBLICATION = "url_publication" ;
     public final static String API_LAST_PUBLICATION_ID = "last_publication_id";
     public final static String API_LIMIT = "limit";
@@ -83,6 +84,11 @@ public class Publication extends BasePublication {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getModel() {
+        return API_PUBLICATION;
     }
 
 

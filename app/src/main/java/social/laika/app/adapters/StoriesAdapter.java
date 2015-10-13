@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.List;
 
 import social.laika.app.R;
+import social.laika.app.models.publications.PublicationNotificator;
 import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
@@ -101,8 +102,10 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
             }
         });
 
-        return view;
+        PublicationNotificator notificator = story.getNotificator();
+        notificator.addView();
 
+        return view;
     }
 
     public void setFavorite(Story story, boolean isFavorite) {
@@ -111,6 +114,9 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
+
+        PublicationNotificator notificator = story.getNotificator();
+        notificator.setFavorite(isFavorite);
 
     }
 }

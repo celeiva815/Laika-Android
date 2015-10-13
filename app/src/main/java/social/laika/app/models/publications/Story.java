@@ -26,6 +26,7 @@ public class Story extends BasePublication {
     public final static String COLUMN_TIME = "time";
 
     public final static String API_STORY_ID = "story_id";
+    public final static String API_STORY = "story";
     public final static String API_STORIES = "stories";
     public final static String API_ID = "id";
     public final static String API_LAST_STORY_ID = "last_story_id";
@@ -50,6 +51,11 @@ public class Story extends BasePublication {
     public String mBody;
 
     public Story() {
+    }
+
+    @Override
+    public String getModel() {
+        return API_STORY;
     }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,

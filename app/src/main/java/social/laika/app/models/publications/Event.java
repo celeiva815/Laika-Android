@@ -28,6 +28,7 @@ public class Event extends BasePublication {
     public final static String COLUMN_FINISH_TIME = "finish_time";
 
     public final static String API_EVENTS = "events";
+    public final static String API_EVENT = "event";
     public final static String API_EVENT_ID = "event_id";
     public final static String API_URL_EVENT = "url_event";
     public final static String API_ID = "id";
@@ -104,6 +105,10 @@ public class Event extends BasePublication {
 
     }
 
+    @Override
+    public String getModel() {
+        return API_EVENT;
+    }
 
     public String getDate() {
 

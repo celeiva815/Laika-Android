@@ -7,20 +7,12 @@ import android.os.Environment;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import social.laika.app.interfaces.Picturable;
-import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 
@@ -32,6 +24,7 @@ public abstract class BasePublication extends Model implements Picturable {
     public final static String COLUMN_URL_IMAGE_LOCAL = "url_image_local";
     public final static String COLUMN_IS_PAID = "is_paid";
     public final static String COLUMN_IS_FAVORITE = "is_favorite";
+    public final static String COLUMN_NOTIFICATOR_ID = "notificator_id";
 
     @Column(name = COLUMN_SERVER_ID)
     public int mServerId;
@@ -50,6 +43,9 @@ public abstract class BasePublication extends Model implements Picturable {
 
     @Column(name = COLUMN_IS_FAVORITE)
     public boolean mIsFavorite;
+
+    @Column(name = COLUMN_NOTIFICATOR_ID)
+    public long mNotificatorId;
 
 	public BasePublication(){ }
 
@@ -91,6 +87,28 @@ public abstract class BasePublication extends Model implements Picturable {
 
         } catch (Exception e) {
         }
-
     }
+
+    private void setNotificatorId(long notificatorId) {
+        mNotificatorId = notificatorId;
+        save();
+    }
+
+    public PublicationNotificator getNotificator() {
+
+        if (mNotificatorId < 1) {
+
+            PublicationNotificator notificator = new PublicationNotificator(getModel(), mServerId);
+
+            notificator.save();
+            setNotificatorId(notificator.getId());
+
+            return notificator;
+
+        } else {
+            return PublicationNotificator.getSingle(mNotificatorId);
+        }
+    }
+
+    public abstract String getModel();
 }

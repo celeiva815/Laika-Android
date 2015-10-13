@@ -18,6 +18,7 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
 import social.laika.app.models.publications.Event;
+import social.laika.app.models.publications.PublicationNotificator;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
@@ -109,10 +110,13 @@ public class EventsAdapter extends ArrayAdapter<Event> {
             mAnnounceTextView.setVisibility(View.INVISIBLE);
         }
 
+        PublicationNotificator notificator = event.getNotificator();
+        notificator.addView();
+
         final int pos = position;
         view.setClickable(true);
         view.setFocusable(true);
-        view.setOnClickListener(new WebLinkOnClickListener(event.mUrlEvent));
+        view.setOnClickListener(new WebLinkOnClickListener(event, event.mUrlEvent));
 
         return view;
 

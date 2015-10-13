@@ -17,6 +17,7 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
+import social.laika.app.models.publications.PublicationNotificator;
 import social.laika.app.models.publications.Tip;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
@@ -54,7 +55,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mMainImageView = (ImageView) view.findViewById(R.id.main_tip_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_tip_imageview);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrl));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip, tip.mUrl));
 
         mSponsorTextView.setText(tip.mSponsorName);
         mTitleTextView.setText(tip.mTitle);
@@ -111,5 +112,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
 
+        PublicationNotificator notificator = tip.getNotificator();
+        notificator.setFavorite(isFavorite);
     }
 }

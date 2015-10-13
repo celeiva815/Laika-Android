@@ -26,6 +26,7 @@ public class Tip extends BasePublication {
 
     public static final String API_TIP_ID = "tip_id";
     public final static String API_TIPS = "tips";
+    public final static String API_TIP = "tip";
     public static final String API_URL_TIP = "url_tip";
     public final static String API_ID = "id";
     public final static String API_LAST_TIP_ID = "last_tip_id";
@@ -48,6 +49,11 @@ public class Tip extends BasePublication {
 
 
     public Tip() {
+    }
+
+    @Override
+    public String getModel() {
+        return API_TIP;
     }
 
     public Tip(int mTipId, int mSponsorId, String mSponsorName, String mTitle, String mBody,
