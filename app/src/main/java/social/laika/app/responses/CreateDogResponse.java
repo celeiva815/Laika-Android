@@ -36,7 +36,7 @@ public class CreateDogResponse implements Response.ErrorListener,
         mActivity.mDog = Dog.saveDog(response, Tag.DOG_OWNED);
         Owner owner = PrefsManager.getLoggedOwner(context);
         owner.createOwnerDog(context, mActivity.mDog);
-        Do.showShortToast(mMessage + mActivity.mDog.mName, context);
+        Do.showShortToast(mMessage + mActivity.mDog.mName + ".", context);
         mActivity.onSuccess();
     }
 

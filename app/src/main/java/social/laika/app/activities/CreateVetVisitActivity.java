@@ -168,7 +168,7 @@ public class CreateVetVisitActivity extends ActionBarActivity
                             treatment, doctor, name);
 
                     vetVisit.create();
-                    Do.showLongToast("Enhorabuena! Has creado una nueva ficha médica", getApplicationContext());
+                    Do.showLongToast("¡Felicidades! Has creado una nueva ficha médica", getApplicationContext());
 
                 }
 

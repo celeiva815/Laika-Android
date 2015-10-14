@@ -349,7 +349,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     @Override
     public void succeedUpload() {
 
-        Do.showShortToast("la foto ha sido subida correctamente", getApplicationContext());
+        Do.showShortToast("la foto se ha subido correctamente", getApplicationContext());
         mAlbumFragment.refreshPhotos();
 
     }

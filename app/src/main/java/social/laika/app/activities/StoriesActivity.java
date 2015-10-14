@@ -48,7 +48,7 @@ public class StoriesActivity extends BasePublicationsActivity {
 
     @Override
     public ArrayAdapter getAdapter() {
-        return new StoriesAdapter(getApplicationContext(), R.layout.lk_stories_adapter,
+        return new StoriesAdapter(this, R.layout.lk_stories_adapter,
                 mStories);
     }
 

@@ -87,16 +87,6 @@ public class PublicationsActivity extends BasePublicationsActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        return true;
-    }
-
-    @Override
     public void requestPublications(int lastPublicationId, int limit, Context context) {
 
         Map<String, String> params = new HashMap<>();

@@ -58,6 +58,7 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         mBodyTextView = (TextView) view.findViewById(R.id.body_stories_textview);
         mMainImageView = (ImageView) view.findViewById(R.id.main_stories_imageview);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_stories_imageview);
+        mShareImageView = (ImageView) view.findViewById(R.id.share_stories_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
 
         mTitleTextView.setText(story.mTitle);

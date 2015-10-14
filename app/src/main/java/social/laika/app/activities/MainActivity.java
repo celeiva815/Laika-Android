@@ -190,17 +190,7 @@ public class MainActivity extends ActionBarActivity
 
                 break;
 
-            case 2: // Favoritos
-
-                Do.showShortToast("Por implementar", this);
-
-//                intent = new Intent(context, PublicationsActivity.class);
-//                intent.putExtra(PublicationsActivity.KEY_FAVORITE, true);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-                break;
-
-            case 3: // Mi perfil
+            case 2: // Mi perfil
 
                 intent = new Intent(context, UserProfileActivity.class);
                 intent.putExtra(UserProfileActivity.KEY_OWNER_ID, PrefsManager.getUserId(context));
@@ -210,12 +200,12 @@ public class MainActivity extends ActionBarActivity
 
                 break;
 
-            case 4: //Sincronizar aplicación
+            case 3: //Sincronizar aplicación
 
                 syncFirstInformation(getApplicationContext());
                 break;
 
-            case 5: // Cerrar Sesión
+            case 4: // Cerrar Sesión
 
                 clearDataBase();
 

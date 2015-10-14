@@ -46,7 +46,7 @@ public class AdoptDogUserFormResponse implements Response.ErrorListener,
 
         if (adoptDogForm.hasId()) {
 
-            Do.showLongToast("¡Enhorabuena! Tu información de adopción fue actualizada", context);
+            Do.showLongToast("¡Felici! Tu información de adopción fue actualizada", context);
 
             switch (mNext) {
 

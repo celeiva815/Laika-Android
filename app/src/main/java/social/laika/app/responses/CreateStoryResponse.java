@@ -27,7 +27,7 @@ public class CreateStoryResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Context context = mActivity.getApplicationContext();
-        Do.showLongToast("¡Gracias por compartir tu historia! Pronto estará disponible en Laika",
+        Do.showLongToast("¡Gracias por compartir tu historia! Pronto estará disponible en Laika.",
                 context);
 
         mActivity.onBackPressed();
@@ -38,7 +38,7 @@ public class CreateStoryResponse implements Response.ErrorListener,
 
         Api.error(error, mActivity);
         mActivity.saveStory();
-        Do.showShortToast("Hubo un error al subir tu historia, pero la hemos guardado!", mActivity);
+        Do.showShortToast("Hubo un error al subir tu historia, pero la hemos guardado.", mActivity);
 
     }
 

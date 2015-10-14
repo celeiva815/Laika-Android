@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="social.laika.app.activities.AdoptDogSuccessActivity">
 
+
     <item
         android:id="@+id/save_story"
         android:orderInCategory="99"

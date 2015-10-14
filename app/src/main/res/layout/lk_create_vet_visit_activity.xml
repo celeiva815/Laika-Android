@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|left"
             android:layout_marginBottom="5dp"
-            android:text="¿Cual es el nombre de la veterinaria?"
+            android:text="¿Cuál es el nombre de la veterinaria?"
             android:textColor="@color/laika_red"
             android:textSize="@dimen/laika_min_text" />
 
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="¿Cual fue el motivo de la consulta?"
+            android:text="¿Cuál fue el motivo de la consulta?"
             android:textColor="@color/laika_red"
             android:textSize="@dimen/laika_min_text"
             android:layout_gravity="left" />

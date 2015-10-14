@@ -133,7 +133,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public void requestDogsForAdoption() {
 
         mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this, "Espere un momento...",
-                "Estamos buscando perritos para ti");
+                "Estamos buscando perritos para ti.");
 
         Map<String,String> params = new HashMap<>();
         DogForAdoptionResponse response = new DogForAdoptionResponse(this);
