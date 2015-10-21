@@ -140,7 +140,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
     }
 
     public AlarmReminder(JSONObject jsonObject) {
-        this();
+
         this.mAlarmReminderId = jsonObject.optInt(COLUMN_ALARM_REMINDER_ID);
         this.mType = jsonObject.optInt(COLUMN_TYPE, Tag.TYPE_ALARM);
         this.mCategory = jsonObject.optInt(COLUMN_CATEGORY, Tag.CATEGORY_FOOD);
@@ -160,7 +160,8 @@ public class AlarmReminder extends ModelSync implements Alertable {
         this.mNeedsSync = Tag.FLAG_READED;
     }
 
-    public AlarmReminder() { }
+    public AlarmReminder() {
+    }
 
     public JSONObject getJsonObject() {
 
@@ -519,9 +520,9 @@ public class AlarmReminder extends ModelSync implements Alertable {
         return date;
     }
 
-    public History toHistory(Context context) {
+    public Reminder toHistory(Context context) {
 
-        return new History(getId(), mCategory, mType, mTitle, mDetail, toDate(context),
+        return new Reminder(getId(), mCategory, mType, mTitle, mDetail, toDate(context),
                 mTime, this);
     }
 
@@ -781,6 +782,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
         } else {
 
+            //Esto es para evitar las alarmas fantasmas
             AlarmReminder oldReminder = getSingleReminder(reminder.mAlarmReminderId);
 
             if (oldReminder.isNotEmpty()) {
@@ -797,12 +799,9 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
             } else {
 
-                if (oldReminder.mAlarmReminderId > 0)
-                    oldReminder.remove();
-
-                else {
-                    oldReminder.delete();
-                }
+                oldReminder.mAlarmReminderId = 0;
+                oldReminder.mNeedsSync = Tag.FLAG_CREATED;
+                oldReminder.remove();
             }
         }
     }
@@ -828,6 +827,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
         condition += DB.AND + AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(AlarmReminder.class).where(condition).execute();
+//        return new Select().from(AlarmReminder.class).execute();
     }
 
     public static List<AlarmReminder> getAllReminders() {

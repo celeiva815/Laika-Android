@@ -7,7 +7,7 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-import social.laika.app.fragments.HistoryMyDogFragment;
+import social.laika.app.fragments.RemindersFragment;
 import social.laika.app.network.Api;
 
 /**
@@ -15,14 +15,14 @@ import social.laika.app.network.Api;
  */
 public class CalendarRemindersResponse implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    public HistoryMyDogFragment mFragment;
+    public RemindersFragment mFragment;
     public Context mContext;
 
     public CalendarRemindersResponse(Context mContext) {
         this.mContext = mContext;
     }
 
-    public CalendarRemindersResponse(HistoryMyDogFragment mFragment) {
+    public CalendarRemindersResponse(RemindersFragment mFragment) {
         this.mFragment = mFragment;
         this.mContext = mFragment.getActivity().getApplicationContext();
 

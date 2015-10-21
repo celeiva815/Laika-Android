@@ -3,15 +3,12 @@ package social.laika.app.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.util.Date;
-
 import social.laika.app.interfaces.Alertable;
-import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class History implements Comparable<History> {
+public class Reminder implements Comparable<Reminder> {
 
     public long mReminderId;
     public int mCategory;
@@ -22,8 +19,8 @@ public class History implements Comparable<History> {
     public String mTime;
     public Alertable mReminder;
 
-    public History(long mReminderId, int mCategory, int mType, String mTitle, String mDetail,
-                   String mDate, String mTime, Alertable mReminder) {
+    public Reminder(long mReminderId, int mCategory, int mType, String mTitle, String mDetail,
+                    String mDate, String mTime, Alertable mReminder) {
 
         this.mReminderId = mReminderId;
         this.mCategory = mCategory;
@@ -45,7 +42,7 @@ public class History implements Comparable<History> {
 
 
     @Override
-    public int compareTo(@NonNull History another) {
+    public int compareTo(@NonNull Reminder another) {
         return mReminder.createdAt().compareTo(another.mReminder.createdAt());
     }
 }

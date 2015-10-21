@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import social.laika.app.R;
 import social.laika.app.fragments.AlbumMyDogFragment;
 import social.laika.app.fragments.DogProfileFragment;
-import social.laika.app.fragments.HistoryMyDogFragment;
+import social.laika.app.fragments.RemindersFragment;
 import social.laika.app.fragments.VetVisitsFragment;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.AddOwnerDogOnClickListener;
@@ -69,7 +69,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public Menu mMenu;
     public Dog mDog;
     public DogProfileFragment mDogProfileFragment;
-    public HistoryMyDogFragment mHistoryFragment;
+    public RemindersFragment mHistoryFragment;
     public VetVisitsFragment mVetVisitsFragment;
     public AlbumMyDogFragment mAlbumFragment;
     public ViewPager mPager;
@@ -386,7 +386,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                 case 1:
 
                     if (mHistoryFragment == null) {
-                        mHistoryFragment = HistoryMyDogFragment.newInstance(dogId);
+                        mHistoryFragment = RemindersFragment.newInstance(dogId);
 
                     }
 

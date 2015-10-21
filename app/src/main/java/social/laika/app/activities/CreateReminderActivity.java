@@ -27,7 +27,7 @@ public class CreateReminderActivity extends ActionBarActivity {
     public static final String KEY_ALARM_ID = "alarm_id";
     public static final String KEY_CALENDAR_ID = "calendar_id";
 
-    private int mIdLayout = R.layout.lk_reminders_my_dog_fragment;
+    private int mIdLayout = R.layout.lk_create_reminders_my_dog_fragment;
     public Dog mDog;
     public Fragment mFragment;
     public AlarmReminder mAlarmReminder;
@@ -240,8 +240,6 @@ public class CreateReminderActivity extends ActionBarActivity {
 
         public int category;
         public int type;
-        AlarmReminder mAlarmReminder;
-        CalendarReminder mCalendarReminder;
 
         public ReminderCategoryOnClickListener(int category, int type) {
             this.category = category;
@@ -253,10 +251,12 @@ public class CreateReminderActivity extends ActionBarActivity {
 
             if (mAlarmReminder != null) {
 
+                mAlarmReminder.mCategory = category;
                 getAlarmReminderFragment(mAlarmReminder);
 
             } else if (mCalendarReminder != null) {
 
+                mCalendarReminder.mCategory = category;
                 getCalendarReminderFragment(mCalendarReminder);
 
             } else {

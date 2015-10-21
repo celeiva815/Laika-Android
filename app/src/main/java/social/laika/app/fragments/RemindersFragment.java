@@ -1,52 +1,64 @@
 package social.laika.app.fragments;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import social.laika.app.R;
+import social.laika.app.activities.CreateReminderActivity;
+import social.laika.app.adapters.RemindersAdapter;
+import social.laika.app.interfaces.Refreshable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.utils.Do;
+import social.laika.app.models.Reminder;
+import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.RemindersResponse;
+import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 /**
  * Created by Tito_Leiva on 09-03-15.
  */
-public class RemindersFragment extends Fragment {
+public class RemindersFragment extends Fragment implements Refreshable {
 
     public static final String KEY_DOG = "mDog";
-    public static final String KEY_ALARM = "alarm";
-    public static final String KEY_CALENDAR = "calendar";
+    public static final String TAG = RemindersFragment.class.getSimpleName();
 
-    private int mIdLayout = R.layout.lk_reminders_my_dog_fragment;
+    public String mTag;
+    private int mIdLayout = R.layout.simple_listview;
     public Dog mDog;
-    public Fragment mFragment;
-    public AlarmReminder mAlarmReminder;
-    public CalendarReminder mCalendarReminder;
+    public ListView mRemindersListView;
+    public TextView mEmptyTextView;
+    private List<Reminder> mReminders;
+    public RemindersAdapter mRemindersAdapter;
 
-    public ImageView mFoodImageView;
-    public ImageView mPooImageView;
-    public ImageView mWalkImageView;
-    public ImageView mMedicineImageView;
-    public ImageView mHygieneImageView;
-    public ImageView mVetImageView;
-    public ImageView mVaccineImageView;
-    public LinearLayout mAlarmLayout;
-    public LinearLayout mCalendarLayout;
 
     public RemindersFragment() {
+
     }
 
-    public static final RemindersFragment newInstance(int dogId)
-    {
+    public static final RemindersFragment newInstance(int dogId) {
         RemindersFragment f = new RemindersFragment();
         Bundle bdl = new Bundle(1);
         bdl.putInt(KEY_DOG, dogId);
@@ -54,37 +66,16 @@ public class RemindersFragment extends Fragment {
         return f;
     }
 
-    public static final RemindersFragment newInstance(int dogId, int reminderId, String key)
-    {
-        RemindersFragment f = new RemindersFragment();
-        Bundle bundle = new Bundle(1);
-        bundle.putInt(KEY_DOG, dogId);
-        bundle.putInt(key, reminderId);
-
-        f.setArguments(bundle);
-        return f;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         int dogId = getArguments().getInt(KEY_DOG);
         mDog = Dog.getSingleDog(dogId);
-
-        int alarmReminderId = getArguments().getInt(KEY_ALARM, 0);
-        int calendarReminderId = getArguments().getInt(KEY_CALENDAR, 0);
-
-        if (alarmReminderId > 0) {
-
-            mAlarmReminder = AlarmReminder.getSingleReminder(alarmReminderId);
-
-        } else if (calendarReminderId > 0) {
-
-            mCalendarReminder = CalendarReminder.getSingleReminder(calendarReminderId);
-        }
+        checkAlarmsUp(getActivity().getApplicationContext());
 
         super.onCreate(savedInstanceState);
-    }
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,209 +83,209 @@ public class RemindersFragment extends Fragment {
 
         View view = inflater.inflate(mIdLayout, container, false);
 
-        RelativeLayout foodLayout = (RelativeLayout) view.findViewById(R.id.food_reminders_my_dog_layout);
-        RelativeLayout pooLayout = (RelativeLayout) view.findViewById(R.id.poo_reminders_my_dog_layout);
-        RelativeLayout walkLayout = (RelativeLayout) view.findViewById(R.id.walk_reminders_my_dog_layout);
-        RelativeLayout medicineLayout = (RelativeLayout) view.findViewById(R.id.medicine_reminders_my_dog_layout);
-        RelativeLayout hygieneLayout = (RelativeLayout) view.findViewById(R.id.hygiene_reminders_my_dog_layout);
-        RelativeLayout vetLayout = (RelativeLayout) view.findViewById(R.id.vet_reminders_my_dog_layout);
-        RelativeLayout vaccineLayout = (RelativeLayout) view.findViewById(R.id.vaccine_reminders_my_dog_layout);
+        mRemindersListView = (ListView) view.findViewById(R.id.simple_listview);
+        mEmptyTextView = (TextView) view.findViewById(R.id.empty_view);
+        mRemindersAdapter = new RemindersAdapter(view.getContext(), R.layout.lk_history_my_dog_row,
+                getHistories(view.getContext()));
 
-        mAlarmLayout = (LinearLayout) view.findViewById(R.id.alarms_reminders_layout);
-        mCalendarLayout = (LinearLayout) view.findViewById(R.id.calendar_reminders_layout);
-        mFoodImageView = (ImageView) view.findViewById(R.id.food_reminders_my_dog_imageview);
-        mPooImageView = (ImageView) view.findViewById(R.id.poo_reminders_my_dog_imageview);
-        mWalkImageView = (ImageView) view.findViewById(R.id.walk_reminders_my_dog_imageview);
-        mMedicineImageView = (ImageView) view.findViewById(R.id.medicine_reminders_my_dog_imageview);
-        mHygieneImageView = (ImageView) view.findViewById(R.id.hygiene_reminders_my_dog_imageview);
-        mVetImageView = (ImageView) view.findViewById(R.id.vet_reminders_my_dog_imageview);
-        mVaccineImageView = (ImageView) view.findViewById(R.id.vaccine_reminders_my_dog_imageview);
+        mEmptyTextView.setText("Agrega todos los recordatorios para el cuidado de " + mDog.mName);
+        mRemindersListView.setAdapter(mRemindersAdapter);
+        mRemindersListView.setEmptyView(mEmptyTextView);
 
-        foodLayout.setOnClickListener(new View.OnClickListener() {
+        mRemindersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_FOOD);
-                setCheckedImage(true, false, false, false, false, false, false);
-            }
-        });
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        pooLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_POO);
-                setCheckedImage(false, true, false, false, false, false, false);
-            }
-        });
+                final Context context = view.getContext();
+                final Reminder reminder = mReminders.get(position);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-        walkLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_WALK);
-                setCheckedImage(false, false, true, false, false, false, false);
-            }
-        });
+                dialog.setTitle(R.string.choose_an_option);
+                dialog.setItems(getItems(),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-        medicineLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_MEDICINE);
-                setCheckedImage(false, false, false, true, false, false, false);
-            }
-        });
-
-        hygieneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_HYGIENE);
-                setCheckedImage(false, false, false, false, true, false, false);
-            }
-        });
-
-        vetLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_VET);
-                setCheckedImage(false, false, false, false, false, true, false);
-            }
-        });
-
-        vaccineLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_VACCINE);
-                setCheckedImage(false, false, false, false, false, false, true);
+                                switch (which) {
+                                    case 0: // editar alarma
+                                        editReminder(reminder);
+                                        break;
+                                    case 1: // eliminar alarma
+                                        deleteReminder(reminder);
+                                        break;
+                                }
+                            }
+                        });
+                dialog.show();
             }
         });
 
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (mRemindersListView.getCount() == 0) {
+
+            // requestReminders();
+
+        }
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        if (mAlarmReminder != null) {
-
-            getAlarmReminderFragment(mAlarmReminder);
-        }
-
-        if (mCalendarReminder != null) {
-
-            getCalendarReminderFragment(mCalendarReminder);
-        }
-    }
-
-    public void openAlarmReminder(int reminderCategory) {
-
-        if (mFragment != null) {
-            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
-        }
-
-        mFragment = new CreateAlarmReminderFragment(mDog, reminderCategory);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        refresh();
 
     }
 
-    public void openAlarmReminder(AlarmReminder alarmReminder) {
+    private List<Reminder> getHistories(Context context) {
 
-        if (mFragment != null) {
-            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
+        if (mReminders == null) {
+            mReminders = new ArrayList<>();
+        } else {
+            mReminders.clear();
         }
 
-        mFragment = new CreateAlarmReminderFragment(mDog, alarmReminder);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        List<CalendarReminder> calendars = CalendarReminder.getDogReminders(mDog.mDogId);
+        List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
 
-    }
-
-    public void openCalendarReminder(int reminderCategory) {
-
-        if (mFragment != null) {
-            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
+        for (CalendarReminder c : calendars) {
+            mReminders.add(c.toHistory(context));
+        }
+        for (AlarmReminder a : alarms) {
+            mReminders.add(a.toHistory(context));
         }
 
-        mFragment = new CreateCalendarReminderFragment(mDog, reminderCategory);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        Collections.sort(mReminders, Collections.reverseOrder());
+
+        return mReminders;
 
     }
 
-    public void openCalendarReminder(CalendarReminder calendarReminder) {
+    public void editReminder(Reminder reminder) {
 
-        if (mFragment != null) {
-            getActivity().getSupportFragmentManager().beginTransaction().detach(mFragment).commit();
-        }
+        Context context = getActivity().getApplicationContext();
+        Intent intent = new Intent(context, CreateReminderActivity.class);
 
-        mFragment = new CreateCalendarReminderFragment(mDog, calendarReminder);
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_reminder_my_dog_framelayout, mFragment).commit();
+        switch (reminder.mType) {
 
-    }
+            case Tag.TYPE_ALARM:
 
-    public void setCheckedImage(boolean food, boolean poo, boolean walk, boolean medicine,
-                                boolean hygiene, boolean vet, boolean vaccine) {
+                intent.putExtra(CreateReminderActivity.KEY_ALARM_ID, reminder.mReminderId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
-        mFoodImageView.setImageDrawable(getResources().getDrawable(food? R.drawable.laika_food_grey
-                : R.drawable.laika_food_grey_light));
-        mPooImageView.setImageDrawable(getResources().getDrawable(poo? R.drawable.laika_poop_grey
-                : R.drawable.laika_poop_grey_light));
-        mWalkImageView.setImageDrawable(getResources().getDrawable(walk?
-                R.drawable.laika_walk_grey : R.drawable.laika_walk_grey_light));
-        mMedicineImageView.setImageDrawable(getResources().getDrawable(medicine?
-                R.drawable.laika_pill_grey : R.drawable.laika_pill_grey_light ));
-        mHygieneImageView.setImageDrawable(getResources().getDrawable(hygiene?
-                R.drawable.laika_hygiene_grey : R.drawable.laika_hygiene_grey_light ));
-        mVetImageView.setImageDrawable(getResources().getDrawable(vet?
-                R.drawable.laika_vetalarm_grey : R.drawable.laika_vetalarm_grey_light));
-        mVaccineImageView.setImageDrawable(getResources().getDrawable(vaccine?
-                R.drawable.laika_vaccine_grey : R.drawable.laika_vaccine_grey_light));
 
-    }
-
-    public void getAlarmReminderFragment(AlarmReminder alarmReminder) {
-
-        switch (alarmReminder.mCategory) {
-
-            case Tag.CATEGORY_FOOD:
-                setCheckedImage(true, false, false, false, false, false, false);
                 break;
 
-            case Tag.CATEGORY_POO:
-                setCheckedImage(false, true, false, false, false, false, false);
+            case Tag.TYPE_CALENDAR:
+
+                intent.putExtra(CreateReminderActivity.KEY_CALENDAR_ID, reminder.mReminderId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
                 break;
 
-            case Tag.CATEGORY_WALK:
-                setCheckedImage(false, false, true, false, false, false, false);
-                break;
-
-            case Tag.CATEGORY_MEDICINE:
-                setCheckedImage(false, false, false, true, false, false, false);
-                break;
         }
-
-        Do.hideView(mCalendarLayout);
-        openAlarmReminder(alarmReminder);
     }
 
-    public void getCalendarReminderFragment(CalendarReminder calendarReminder) {
+    public void deleteReminder(final Reminder history) {
 
-        switch (calendarReminder.mCategory) {
+        final Context context = getActivity().getApplicationContext();
 
-            case Tag.CATEGORY_VET:
-                setCheckedImage(false, false, false, false, false, true, false);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
-            case Tag.CATEGORY_HYGIENE:
-                setCheckedImage(false, false, false, false, true, false, false);
+        dialog.setMessage("¿Estás seguro de eliminar este recordatorio?");
+        dialog.setPositiveButton(R.string.accept_dialog, new DialogInterface.OnClickListener() {
 
-            case Tag.CATEGORY_VACCINE:
-                setCheckedImage(false, false, false, false, false, false, true);
-        }
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        Do.hideView(mAlarmLayout);
-        openCalendarReminder(calendarReminder);
+                switch (history.mType) {
+
+                    case Tag.TYPE_ALARM:
+
+                        AlarmReminder reminder = AlarmReminder.getSingleReminder(history.mReminderId);
+
+                        reminder.cancelAlarm(context);
+                        reminder.remove();
+                        break;
+
+                    case Tag.TYPE_CALENDAR:
+
+                        CalendarReminder calendarReminder = CalendarReminder.getSingleReminder(history.mReminderId);
+
+                        calendarReminder.cancelAlarm(context);
+                        calendarReminder.remove();
+                        break;
+
+                }
+
+                mRemindersAdapter.remove(history);
+                refresh();
+
+            }
+        });
+
+        dialog.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
+
+    public void requestReminders() {
+
+        Context context = getActivity().getApplicationContext();
+        Map<String, String> params = new HashMap<>();
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+
+        RemindersResponse response = new RemindersResponse(this, mDog, context);
+        Request eventsRequest = Api.getRequest(params, Api.ADDRESS_ALERT_REMINDERS,
+                response, response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);
+    }
+
+    @Override
+    public void refresh() {
+
+        getHistories(getActivity().getApplicationContext());
+        mRemindersAdapter.notifyDataSetChanged();
+    }
+
+    public void checkAlarmsUp(Context context) {
+
+        List<AlarmReminder> alarms = AlarmReminder.getDogReminders(mDog.mDogId);
+
+        for (AlarmReminder alarm : alarms) {
+
+            Log.i(alarm.mTitle, "CHECKING EVERY WEEKDAY");
+            alarm.checkStatusAlarm(context);
+
+        }
+    }
+
+    public Uri createUri() {
+
+        StringBuilder uri = new StringBuilder();
+        uri.append("content://");
+        uri.append(getActivity().getPackageName());
+        uri.append("/");
+        return Uri.parse(uri.toString());
+    }
+
+    public CharSequence[] getItems() {
+        return new CharSequence[]{"Editar", "Eliminar"};
+    }
+
 }

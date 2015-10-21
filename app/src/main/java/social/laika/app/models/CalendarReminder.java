@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.activeandroid.Model;
@@ -229,9 +228,9 @@ public class CalendarReminder extends ModelSync implements Alertable {
     }
 
     @Override
-    public History toHistory(Context context) {
+    public Reminder toHistory(Context context) {
 
-        return new History(getId(), mCategory, mType, mTitle, mDetail, mDate, mTime, this);
+        return new Reminder(getId(), mCategory, mType, mTitle, mDetail, mDate, mTime, this);
     }
 
     @Override
@@ -392,7 +391,7 @@ public class CalendarReminder extends ModelSync implements Alertable {
     public static List<CalendarReminder> getDogReminders(int dogId) {
 
         String condition = CalendarReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
-        condition += DB.AND + AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
+        condition += DB.AND + CalendarReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(CalendarReminder.class).where(condition).execute();
     }
 
