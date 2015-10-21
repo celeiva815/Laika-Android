@@ -195,6 +195,7 @@ public class Dog extends Model implements Picturable {
     public void update(Dog dog) {
 
         this.mDogId = dog.mDogId;
+        this.mOwnerId = dog.mOwnerId;
         this.mName = dog.mName;
         this.mBirth = dog.mBirth;
         this.mBreedId = dog.mBreedId;

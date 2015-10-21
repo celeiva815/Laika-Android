@@ -107,7 +107,7 @@ public class Event extends BasePublication {
 
     public String getDate() {
 
-        if (Do.isNullOrEmpty(mFinishDate)) {
+        if (Do.isNullOrEmpty(mFinishDate) || mStartDate.equals(mFinishDate)) {
             return mStartDate;
 
         } else {

@@ -115,7 +115,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/accept_dialog"
+            android:text="Lo Haré"
             android:id="@+id/accept_stop_alarm_button"
             android:layout_below="@+id/linearLayout5"
             android:layout_alignParentLeft="true"
@@ -132,7 +132,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/cancel_dialog"
+            android:text="No lo haré"
             android:id="@+id/cancel_stop_alarm_button"
             android:layout_weight="1.5"
             android:layout_gravity="center_vertical"

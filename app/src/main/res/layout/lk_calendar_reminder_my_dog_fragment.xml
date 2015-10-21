@@ -31,7 +31,9 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_small_text"
+            android:maxLines="1"
+            android:maxLength="30"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -53,7 +55,10 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_small_text"
+            android:maxLines="2"
+            android:maxLength="60"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/textView16"
@@ -89,7 +94,7 @@
                 android:paddingTop="10dp"
                 android:text="@string/example_date_reminder"
                 android:textColor="@color/light_black_font"
-                android:textSize="@dimen/alarm_reminder_my_dog" />
+                android:textSize="@dimen/laika_big_text" />
 
             <Button
                 android:id="@+id/time_alarm_remind_my_dog_button"
@@ -108,14 +113,14 @@
                 android:paddingTop="10dp"
                 android:text="@string/example_time_reminder"
                 android:textColor="@color/light_black_font"
-                android:textSize="@dimen/alarm_reminder_my_dog" />
+                android:textSize="@dimen/laika_big_text" />
         </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/save_calendar_remind_my_dog_button"

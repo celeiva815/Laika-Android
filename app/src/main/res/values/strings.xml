@@ -24,6 +24,7 @@
     <string name="not_valid_email_error">Este no es correo electrónico válido</string>
     <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
     <string name="field_not_empty_error">Debes completar esta información</string>
+    <string name="equal_password_field">Las contraseñas deben ser iguales</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
     <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
     <string name="must_select_reason">You must select a reason</string>
@@ -273,7 +274,7 @@
     <string name="save_reminder">Guardar</string>
     <string name="time_reminder">Hora</string>
     <string name="example_time_reminder">12:00 pm</string>
-    <string name="example_date_reminder">11-03-15</string>
+    <string name="example_date_reminder">11-03-2015</string>
 
     <!-- MyDogProfileActivity -->
     <string name="birth_my_dog_profile">13&#8211;02&#8211;2003</string>

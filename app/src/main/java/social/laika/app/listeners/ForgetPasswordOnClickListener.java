@@ -77,7 +77,6 @@ public class ForgetPasswordOnClickListener implements OnClickListener,
 
                     mEmail = email;
                     request();
-                    Do.showShortToast("Por implementar", mContext);
 
                 } else {
 
@@ -110,24 +109,26 @@ public class ForgetPasswordOnClickListener implements OnClickListener,
         params.put(Owner.COLUMN_EMAIL, mEmail);
 
         JSONObject jsonObject = new JSONObject(params);
-        String address = Api.ADDRESS_ADD_DOG_OWNER;
+        String address = Api.ADDRESS_SEND_RECOVER_PASS;
         String token = PrefsManager.getUserToken(mContext);
 
         Request request = Api.postRequest(jsonObject, address, this, this, token);
         VolleyManager.getInstance(mContext).addToRequestQueue(request, TAG);
-
-        String message = "Te hemos enviado un correo con las instrucciones para que recuperes tu contraseña";
-        Do.showShortToast(message, mContext);
 
     }
 
     @Override
     public void onResponse(JSONObject response) {
 
+        Do.showLongToast("Se ha enviado un correo a " + mEmail + " con las intrucciones para " +
+                "que recuperes tu contraseña", mContext);
+
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
+
+        Api.error(error, mContext);
 
     }
 }

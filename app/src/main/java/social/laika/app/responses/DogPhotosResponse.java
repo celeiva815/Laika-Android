@@ -33,8 +33,8 @@ public class DogPhotosResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
-        Photo.saveDogPhotos(response, mContext, mDog);
-        mFragment.onResume();
+        Photo photo = Photo.saveDogPhotos(response, mContext, mDog);
+        mFragment.addPhoto(photo);
 
     }
 

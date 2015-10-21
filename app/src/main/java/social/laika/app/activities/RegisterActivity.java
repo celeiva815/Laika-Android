@@ -43,6 +43,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     public EditText mLastNameEditText;
     public EditText mEmailEditText;
     public EditText mPasswordEditText;
+    public EditText mRepeatPasswordEditText;
     public EditText mPhoneEditText;
     public Button mBirthDateButton;
     public Button mRegisterButton;
@@ -65,6 +66,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mLastNameEditText = (EditText) findViewById(R.id.surname_register_edittext);
         mEmailEditText = (EditText) findViewById(R.id.email_register_edittext);
         mPasswordEditText = (EditText) findViewById(R.id.password_register_edittext);
+        mRepeatPasswordEditText = (EditText) findViewById(R.id.repeat_password_register_edittext);
         mBirthDateButton = (Button) findViewById(R.id.birthdate_register_button);
         mPhoneEditText = (EditText) findViewById(R.id.phone_register_edittext);
         mRegisterButton = (Button) findViewById(R.id.submit_register_button);
@@ -120,6 +122,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mLastNameEditText.setEnabled(enable);
         mEmailEditText.setEnabled(enable);
         mPasswordEditText.setEnabled(enable);
+        mRepeatPasswordEditText.setEnabled(enable);
         mBirthDateButton.setEnabled(enable);
         mRegisterButton.setEnabled(enable);
 
@@ -140,6 +143,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         final String lastname = mLastNameEditText.getText().toString();
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
+        final String repeatPassword = mRepeatPasswordEditText.getText().toString();
         final String phone = mPhoneEditText.getText().toString();
 
 
@@ -163,6 +167,17 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
             return;
         }
 
+        if (TextUtils.isEmpty(repeatPassword)) {
+            mPasswordEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+        }
+
+        if (!password.equals(repeatPassword)) {
+            mPasswordEditText.setError(getString(R.string.equal_password_field));
+            mRepeatPasswordEditText.setError(getString(R.string.equal_password_field));
+            return;
+        }
+
         mRegisterProgressBar.setVisibility(View.VISIBLE);
         enableViews(false);
 
@@ -178,7 +193,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
             jsonParams.putOpt(Owner.COLUMN_PHONE, phone);
             jsonParams.putOpt(API_EMAIL, email);
             jsonParams.putOpt(API_PASSWORD, password);
-            jsonParams.putOpt(API_PASSWORD_CONFIRMATION, password);
+            jsonParams.putOpt(API_PASSWORD_CONFIRMATION, repeatPassword);
 
             RegisterResponse response = new RegisterResponse(this);
 

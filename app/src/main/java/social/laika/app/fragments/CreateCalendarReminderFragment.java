@@ -167,7 +167,7 @@ public class CreateCalendarReminderFragment extends Fragment implements OnDateSe
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
 
-        mDate = Do.getToStringDate(day,month,year-2000);
+        mDate = Do.getToStringDate(day,month,year);
         mDateButton.setText(mDate);
 
     }

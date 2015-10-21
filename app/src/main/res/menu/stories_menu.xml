@@ -4,15 +4,14 @@
     tools:context="social.laika.app.ActivityMain">
 
     <item
-        android:id="@+id/favorite_publications"
-        android:orderInCategory="99"
-        app:showAsAction="always"
-        android:title="Ver Favoritos" />
-
-    <item
         android:id="@+id/create_story"
         android:title="Envía tu Historia"
+        android:orderInCategory="99"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/favorite_publications"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        android:title="Ver Favoritos" />
 
 </menu>

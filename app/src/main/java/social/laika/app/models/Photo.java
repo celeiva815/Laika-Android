@@ -262,18 +262,25 @@ public class Photo extends Model {
         return bitmap;
     }
 
-    public static void saveDogPhotos(JSONObject jsonObject, Context context, Dog dog) {
+    public static Photo saveDogPhotos(JSONObject jsonObject, Context context, Dog dog) {
 
         try {
             JSONArray jsonPhotos = jsonObject.getJSONArray(TABLE_PHOTOS);
+            Photo photo;
 
             for (int i = 0; i < jsonPhotos.length(); i++) {
-                saveDogPhoto(jsonPhotos.getJSONObject(i), context, dog);
+                photo = saveDogPhoto(jsonPhotos.getJSONObject(i), context, dog);
 
+                if (jsonPhotos.length() == 1) {
+                    return photo;
+                }
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return new Photo();
 
     }
 

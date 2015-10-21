@@ -359,7 +359,7 @@ public class MainActivity extends ActionBarActivity
 
         Log.i("new_relic", "TOKEN");
         NewRelic.withApplicationToken(
-                "AA602cfb22c1752b158a0b1d7465547e124ea262e4"
+                "AA012760242cc465209e0b156e36370869c1706bbc"
         ).start(this.getApplication());
     }
 }

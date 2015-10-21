@@ -158,4 +158,11 @@ public class AlbumMyDogFragment extends Fragment {
         mAlbumAdapter.notifyDataSetChanged();
 
     }
+
+    public void addPhoto(Photo photo){
+
+        mPhotos.add(photo);
+        mAlbumAdapter.notifyDataSetChanged();
+
+    }
 }

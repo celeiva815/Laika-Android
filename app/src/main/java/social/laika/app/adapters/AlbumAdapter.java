@@ -80,7 +80,7 @@ public class AlbumAdapter extends BaseAdapter {
 
             VolleyManager.getInstance(mContext).addToRequestQueue(request);
 
-        } else {
+        } else if (!Do.isNullOrEmpty(photo.mUriLocal)){
 
             mImageView.setImageURI(Uri.parse(photo.mUriLocal));
         }
