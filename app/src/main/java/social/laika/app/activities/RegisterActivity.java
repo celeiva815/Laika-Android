@@ -39,7 +39,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     public static final String API_BIRTHDATE = "birth_date";
 
     // Ui views
-    public EditText mFullNameEditText;
+    public EditText mFirstNameEditText;
+    public EditText mLastNameEditText;
     public EditText mEmailEditText;
     public EditText mPasswordEditText;
     public EditText mPhoneEditText;
@@ -60,7 +61,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), false);
 
-        mFullNameEditText = (EditText) findViewById(R.id.name_register_edittext);
+        mFirstNameEditText = (EditText) findViewById(R.id.name_register_edittext);
+        mLastNameEditText = (EditText) findViewById(R.id.surname_register_edittext);
         mEmailEditText = (EditText) findViewById(R.id.email_register_edittext);
         mPasswordEditText = (EditText) findViewById(R.id.password_register_edittext);
         mBirthDateButton = (Button) findViewById(R.id.birthdate_register_button);
@@ -114,7 +116,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
     public void enableViews(boolean enable) {
 
-        mFullNameEditText.setEnabled(enable);
+        mFirstNameEditText.setEnabled(enable);
+        mLastNameEditText.setEnabled(enable);
         mEmailEditText.setEnabled(enable);
         mPasswordEditText.setEnabled(enable);
         mBirthDateButton.setEnabled(enable);
@@ -133,14 +136,20 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
     public void register(View view) {
 
-        final String name = mFullNameEditText.getText().toString();
+        final String name = mFirstNameEditText.getText().toString();
+        final String lastname = mLastNameEditText.getText().toString();
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
         final String phone = mPhoneEditText.getText().toString();
 
 
         if (TextUtils.isEmpty(name)) {
-            mFullNameEditText.setError(getString(R.string.field_not_empty_error));
+            mFirstNameEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+        }
+
+        if (TextUtils.isEmpty(name)) {
+            mLastNameEditText.setError(getString(R.string.field_not_empty_error));
             return;
         }
 
@@ -161,9 +170,9 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
         try {
 
-            jsonParams.putOpt(Owner.COLUMN_FIRST_NAME, getFirstName(name));
-            jsonParams.putOpt(Owner.COLUMN_LAST_NAME, getLastName(name));
-            jsonParams.putOpt(Owner.COLUMN_SECOND_LAST_NAME, getSecondLastName(name));
+            jsonParams.putOpt(Owner.COLUMN_FIRST_NAME, name);
+            jsonParams.putOpt(Owner.COLUMN_LAST_NAME, lastname);
+            jsonParams.putOpt(Owner.COLUMN_SECOND_LAST_NAME, getSecondLastName(lastname));
             jsonParams.putOpt(Owner.COLUMN_BIRTH_DATE, mDate);
             jsonParams.putOpt(Owner.COLUMN_GENDER, mGender);
             jsonParams.putOpt(Owner.COLUMN_PHONE, phone);
@@ -213,53 +222,11 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
     }
 
-    private String getFirstName(String fullName) {
+    private String getSecondLastName(String lastname) {
 
-        String[] names = fullName.split(" ");
+        String[] names = lastname.split(" ");
 
-        if (names.length >= 4) {
-
-            return names[0] + " " + names[1];
-
-        } else if (names.length > 1) {
-
-            return names[0];
-
-        } else {
-
-            String firstName = fullName;
-
-            if (fullName.contains(" ")) {
-                firstName = fullName.substring(0, fullName.indexOf(" "));
-            }
-
-            return firstName;
-        }
-    }
-
-    private String getLastName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length >= 4) {
-
-            return names[2];
-
-        } else if (names.length > 1) {
-
-            return names[1];
-
-        } else {
-
-            return "";
-        }
-    }
-
-    private String getSecondLastName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length >= 3) {
+        if (names.length >= 2) {
 
             return names[names.length - 1];
 

@@ -60,6 +60,6 @@ public class TokenRequest implements Requestable {
 
     @Override
     public void onFailure() {
-        Log.e(TAG, "Can't register the token");
+        Log.e(TAG, mSubscribe ? "Can't subscribe the token" : "Can't unsubscribe the token" );
     }
 }

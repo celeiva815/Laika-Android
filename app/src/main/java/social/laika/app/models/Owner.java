@@ -105,7 +105,7 @@ public class Owner extends Model {
         this.mCityId = mCityId;
     }
 
-    public Owner(JSONObject jsonObject) {
+    public  Owner(JSONObject jsonObject) {
 
         if (jsonObject.has(API_ID)) {
             this.mOwnerId = jsonObject.optInt(API_ID);
@@ -130,6 +130,11 @@ public class Owner extends Model {
     public String getFullName() {
 
         return mFirstName + " " + mLastName + " " + mSecondLastName;
+    }
+
+    public String getLastName() {
+
+        return mLastName + " " + mSecondLastName;
     }
 
     public void addDog(Dog dog, int role) {
@@ -293,5 +298,13 @@ public class Owner extends Model {
         int years = nowCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
 
         return years >= 18;
+    }
+
+    public boolean hasCity() {
+        return mCityId > 0;
+    }
+
+    public boolean hasPhone() {
+        return !Do.isNullOrEmpty(mPhone);
     }
 }

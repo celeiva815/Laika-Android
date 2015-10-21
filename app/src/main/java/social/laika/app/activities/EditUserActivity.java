@@ -64,7 +64,8 @@ public class EditUserActivity extends ActionBarActivity
     public static final String API_FULL_NAME = "full_name";
     public static final String API_BIRTHDATE = "birth_date";
 
-    public EditText mFullNameEditText;
+    public EditText mFirstNameEditText;
+    public EditText mLastNameEditText;
     public RadioGroup mGenderRadioGroup;
     public EditText mPhoneEditText;
     public Button mBirthDateButton;
@@ -112,7 +113,8 @@ public class EditUserActivity extends ActionBarActivity
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), false);
 
-        mFullNameEditText = (EditText) findViewById(R.id.name_edit_user_edittext);
+        mFirstNameEditText = (EditText) findViewById(R.id.name_edit_user_edittext);
+        mLastNameEditText = (EditText) findViewById(R.id.surname_edit_user_edittext);
         mGenderRadioGroup = (RadioGroup) findViewById(R.id.gender_edit_user_radiogroup);
         mPhoneEditText = (EditText) findViewById(R.id.phone_edit_user_edittext);
         mBirthDateButton = (Button) findViewById(R.id.birthdate_edit_user_button);
@@ -188,7 +190,8 @@ public class EditUserActivity extends ActionBarActivity
 
     private void setValues() {
 
-        mFullNameEditText.setText(mOwner.getFullName());
+        mFirstNameEditText.setText(mOwner.mFirstName);
+        mLastNameEditText.setText(mOwner.getLastName());
 
         if (!Do.isNullOrEmpty(mOwner.mBirthDate)) {
             mBirthDateButton.setText(mOwner.mBirthDate);
@@ -325,7 +328,7 @@ public class EditUserActivity extends ActionBarActivity
 
     public void enableViews(boolean enable) {
 
-        mFullNameEditText.setEnabled(enable);
+        mFirstNameEditText.setEnabled(enable);
         mBirthDateButton.setEnabled(enable);
         mUpdateButton.setEnabled(enable);
 
@@ -334,10 +337,16 @@ public class EditUserActivity extends ActionBarActivity
 
     public void requestUpdateUser() {
 
-        final String name = mFullNameEditText.getText().toString();
+        final String firstname = mFirstNameEditText.getText().toString();
+        final String lastname = mLastNameEditText.getText().toString();
 
-        if (TextUtils.isEmpty(name)) {
-            mFullNameEditText.setError(getString(R.string.field_not_empty_error));
+        if (TextUtils.isEmpty(firstname)) {
+            mFirstNameEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+        }
+
+        if (TextUtils.isEmpty(lastname)) {
+            mLastNameEditText.setError(getString(R.string.field_not_empty_error));
             return;
         }
 
@@ -346,9 +355,7 @@ public class EditUserActivity extends ActionBarActivity
                 "Estamos actualizando su perfil...");
 
         int ownerId = PrefsManager.getUserId(getApplicationContext());
-        String ownerName = mFullNameEditText.getText().toString();
-        String firstName = getFirstName(ownerName);
-        String lastName = getLastName(ownerName);
+        String ownerName = mFirstNameEditText.getText().toString();
         String secondLastName = getSecondLastName(ownerName);
         String rut = "";
         String birthDate = mBirthDateButton.getText().toString();
@@ -356,7 +363,7 @@ public class EditUserActivity extends ActionBarActivity
         String phone = mPhoneEditText.getText().toString();
         int cityId = mCity.mCityId;
 
-        Owner owner = new Owner(ownerId, ownerName, firstName, lastName, secondLastName, rut, birthDate,
+        Owner owner = new Owner(ownerId, ownerName, firstname, lastname, secondLastName, rut, birthDate,
                 gender, mOwner.mEmail, phone, cityId);
 
         JSONObject jsonParams = owner.getJsonObject();
@@ -386,53 +393,11 @@ public class EditUserActivity extends ActionBarActivity
                 .addToRequestQueue(registerRequest, TAG);
     }
 
-    private String getFirstName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length == 4) {
-
-            return names[0] + names[1];
-
-        } else if (names.length > 1) {
-
-            return names[0];
-
-        } else {
-
-            String firstName = mFullNameEditText.getText().toString();
-
-            if (fullName.contains(" ")) {
-                firstName = fullName.substring(0, fullName.indexOf(" "));
-            }
-
-            return firstName;
-        }
-    }
-
-    private String getLastName(String fullName) {
-
-        String[] names = fullName.split(" ");
-
-        if (names.length == 4) {
-
-            return names[2];
-
-        } else if (names.length > 1) {
-
-            return names[1];
-
-        } else {
-
-            return "";
-        }
-    }
-
     private String getSecondLastName(String fullName) {
 
         String[] names = fullName.split(" ");
 
-        if (names.length >= 3) {
+        if (names.length >= 2) {
 
             return names[names.length - 1];
 

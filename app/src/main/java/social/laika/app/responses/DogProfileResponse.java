@@ -38,6 +38,7 @@ public class DogProfileResponse implements Response.ErrorListener,
     public void onResponse(JSONObject response) {
 
         Photo photo = Photo.saveDogPhoto(response, mContext, mDog);
+        mDog.mUrlLocal = "";
         mDog.mUrlImage = photo.mUrlLarge;
         mDog.save();
         mActivity.succeedUpload();

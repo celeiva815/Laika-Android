@@ -94,4 +94,11 @@ public abstract class BasePublication extends Model implements Picturable, Share
         }
 
     }
+
+    public String getImage(String size) {
+
+        String url = mUrlImage.replaceAll("original", size);
+        return url;
+
+    }
 }

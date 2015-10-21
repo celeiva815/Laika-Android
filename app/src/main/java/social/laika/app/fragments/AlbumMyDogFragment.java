@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -39,6 +40,7 @@ public class AlbumMyDogFragment extends Fragment {
     public List<Photo> mPhotos;
     public GridView mGridView;
     public AlbumAdapter mAlbumAdapter;
+    public TextView mEmptyTextView;
     private Photographer mPhotographer;
 
 
@@ -94,8 +96,13 @@ public class AlbumMyDogFragment extends Fragment {
         View view = inflater.inflate(mIdLayout, container, false);
 
         mGridView= (GridView) view.findViewById(R.id.album_my_dog_gridview);
+        mEmptyTextView = (TextView) view.findViewById(R.id.empty_view);
         mAlbumAdapter = new AlbumAdapter(view.getContext(), mPhotos);
+
+        mEmptyTextView.setText("Sube fotos de " + mDog.mName + " para que todos los responsables " +
+                        "puedan verlas");
         mGridView.setAdapter(mAlbumAdapter);
+        mGridView.setEmptyView(mEmptyTextView);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

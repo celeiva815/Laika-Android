@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -43,6 +44,7 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
     public Dog mDog;
     public ProgressBar mProgressBar;
     public ListView mVetVisitListView;
+    public TextView mEmptyTextView;
     public List<VetVisit> mVetVisits;
     public VetVisitAdapter mVetVisitAdapter;
 
@@ -75,10 +77,14 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
         View view = inflater.inflate(mIdLayout, container, false);
 
         mVetVisitListView = (ListView) view.findViewById(R.id.simple_listview);
+        mEmptyTextView = (TextView) view.findViewById(R.id.empty_view);
         mVetVisitAdapter = new VetVisitAdapter(view.getContext(), R.layout.lk_vet_visit_adapter,
                 getVetVisit(), mDog, this);
 
+        mEmptyTextView.setText("Agrega fichas médicas para que siempre tengas la información de " +
+                "salud de " + mDog.mName);
         mVetVisitListView.setAdapter(mVetVisitAdapter);
+        mVetVisitListView.setEmptyView(mEmptyTextView);
         mVetVisitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

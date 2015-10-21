@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -50,6 +52,7 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
     private int mIdLayout = R.layout.simple_listview;
     public Dog mDog;
     public ListView mHistoryListView;
+    public TextView mEmptyTextView;
     private List<History> mHistories;
     public HistoryMyDogAdapter mHistoryAdapter;
 
@@ -84,10 +87,13 @@ public class HistoryMyDogFragment extends Fragment implements Refreshable {
         View view = inflater.inflate(mIdLayout, container, false);
 
         mHistoryListView = (ListView) view.findViewById(R.id.simple_listview);
+        mEmptyTextView = (TextView) view.findViewById(R.id.empty_view);
         mHistoryAdapter = new HistoryMyDogAdapter(view.getContext(), R.layout.lk_history_my_dog_row,
                 getHistories(view.getContext()));
 
+        mEmptyTextView.setText("Agrega todos los recordatorios para el cuidado de " + mDog.mName);
         mHistoryListView.setAdapter(mHistoryAdapter);
+        mHistoryListView.setEmptyView(mEmptyTextView);
 
         mHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

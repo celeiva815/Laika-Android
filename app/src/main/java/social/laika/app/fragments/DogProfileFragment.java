@@ -181,7 +181,7 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
         mProgressBar.setVisibility(View.VISIBLE);
         ImageResponse response = new ImageResponse(mDogImageView, mProgressBar);
-        Request request = Api.imageRequest(mDog.getImage(Tag.IMAGE_MEDIUM_S),
+        Request request = Api.imageRequest(mDog.getImage(Tag.IMAGE_SMALL),
                 mDogImageView, response, response);
 
         VolleyManager.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request);

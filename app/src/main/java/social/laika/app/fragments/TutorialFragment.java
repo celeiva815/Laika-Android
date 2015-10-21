@@ -31,6 +31,7 @@ import java.util.Map;
 import social.laika.app.R;
 import social.laika.app.activities.RegisterActivity;
 import social.laika.app.activities.TutorialActivity;
+import social.laika.app.listeners.ForgetPasswordOnClickListener;
 import social.laika.app.listeners.ToActivityOnCLickListener;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
@@ -64,6 +65,7 @@ public class TutorialFragment extends Fragment {
     public EditText mPasswordEditText;
     public Button mLoginButton;
     public Button mRegisterButton;
+    public Button mForgotButton;
     public ProgressBar mLoginProgressBar;
 
     // the fragment initialization parameters
@@ -134,7 +136,7 @@ public class TutorialFragment extends Fragment {
             case TUTORIAL_INFORMATION:
                 title = Do.getRString(context, R.string.title_information_tutorial);
                 detail = Do.getRString(context, R.string.detail_information_tutorial);
-                backgroundId = R.drawable.tutorial_4;
+                backgroundId = R.drawable.laika_tutorial_foundations;
                 break;
 
             case TUTORIAL_FOUNDATIONS:
@@ -183,6 +185,7 @@ public class TutorialFragment extends Fragment {
         mPasswordEditText = (EditText) view.findViewById(R.id.password_login_edittext);
         mLoginButton = (Button) view.findViewById(R.id.login_button);
         mRegisterButton = (Button) view.findViewById(R.id.register_login_button);
+        mForgotButton = (Button) view.findViewById(R.id.forgot_password_button);
         mLoginProgressBar = (ProgressBar) view.findViewById(R.id.login_progressbar);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +199,7 @@ public class TutorialFragment extends Fragment {
         });
 
         mRegisterButton.setOnClickListener(new ToActivityOnCLickListener(RegisterActivity.class));
+        mForgotButton.setOnClickListener(new ForgetPasswordOnClickListener());
 
         /* [Start] Facebook Login configuration */
         Log.d(TAG, getActivity().getClass().getName());

@@ -377,6 +377,8 @@ public class CalendarReminder extends ModelSync implements Alertable {
             oldReminder.cancelAlarm(context);
             oldReminder.update(reminder);
             oldReminder.setAlarm(context);
+            oldReminder.refresh();
+
         }
     }
 

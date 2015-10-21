@@ -328,6 +328,7 @@ public class MainActivity extends ActionBarActivity
 
     private void unsubscribeToken() {
 
+        //FIXME hay que asegurarse de que se corte bien la sesión para que no lleguen notificaciones anteriores.
         String token = PrefsManager.getGCMToken(this);
         TokenRequest tokenRequest = new TokenRequest(token, this, false);
 

@@ -478,6 +478,12 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
             switch (mPosition) {
 
+                case 0:
+                    if (mDogProfileFragment != null) {
+                        mDogProfileFragment.refresh();
+                    }
+
+
                 case 1:
 
                     if (mHistoryFragment != null) {

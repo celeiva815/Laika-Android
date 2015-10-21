@@ -150,6 +150,31 @@ public class CreateVetVisitActivity extends ActionBarActivity
                 String treatment = mTreatmentEditText.getText().toString();
                 String date = mDateButton.getText().toString();
 
+                if (TextUtils.isEmpty(name)) {
+                    mNameEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(doctor)) {
+                    mDoctorEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(reason)) {
+                    mReasonEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(detail)) {
+                    mDetailEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(treatment)) {
+                    mTreatmentEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
                 if (mVetVisit != null) {
 
                     mVetVisit.mVetName = name;

@@ -809,7 +809,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
 
     private boolean isNotEmpty() {
 
-        boolean hasTime = Do.isNullOrEmpty(mTime);
+        boolean hasTime = !Do.isNullOrEmpty(mTime);
         boolean hasDog = mDogId > 0;
         boolean hasWeekDay = mHasMonday || mHasTuesday || mHasWednesday || mHasThursday ||
                 mHasFriday || mHasSaturday || mHasSunday;

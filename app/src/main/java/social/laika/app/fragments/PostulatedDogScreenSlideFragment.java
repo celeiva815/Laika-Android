@@ -55,7 +55,6 @@ public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragmen
                 mPostulateButton.setText(Do.getRString(mActivity.getApplicationContext(),
                         R.string.delete_postulation));
 
-                //TODO hacer un request para eliminar la postulación definitivamente
 
                 break;
 
@@ -67,8 +66,6 @@ public class PostulatedDogScreenSlideFragment extends AdoptDogScreenSlideFragmen
                 break;
 
         }
-
-
     }
 
     public String getStatus(int status, Context context) {

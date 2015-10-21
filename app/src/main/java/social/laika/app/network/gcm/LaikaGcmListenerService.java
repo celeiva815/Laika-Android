@@ -63,7 +63,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         try {
             synchronize(data);
         } catch (JSONException e) {
-            Log.e(TAG, "JSOException while parsing the data.");
+            Log.e(TAG, "JSONException while parsing the data.");
         } catch (NullPointerException e) {
             Log.e(TAG, "NullPointerException while parsing the data.");
         }
@@ -156,8 +156,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 deleteAlarmReminder(reminderId);
                 break;
             case GCM_CALENDAR_REMINDER_UPDATE:
-                Log.e(TAG, "GCM_CALENDAR_REMINDER_UPDATE not implemented");
-                JSONObject calendarReminder = jsonData.getJSONObject(CalendarReminder.TABLE_CALENDAR_REMINDERS);
+                JSONObject calendarReminder = new JSONObject(jsonData.getString(CalendarReminder.API_CALENDAR_REMINDER));
                 /* Update Operation */
                 CalendarReminder.saveReminder(calendarReminder, getApplicationContext());
                 break;

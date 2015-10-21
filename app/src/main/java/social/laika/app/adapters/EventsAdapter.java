@@ -22,6 +22,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Tag;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
 
@@ -83,7 +84,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
                 LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         mMainImageView, event, Event.TABLE_NAME);
-                Request request = Api.imageRequest(event.mUrlImage, mMainImageView, response,
+                Request request = Api.imageRequest(event.getImage(Tag.IMAGE_SMALL), mMainImageView, response,
                         response);
                 VolleyManager.getInstance(context).addToRequestQueue(request);
 
@@ -92,7 +93,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
             LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     mMainImageView, event, Event.TABLE_NAME);
-            Request request = Api.imageRequest(event.mUrlImage, mMainImageView, response,
+            Request request = Api.imageRequest(event.getImage(Tag.IMAGE_SMALL), mMainImageView, response,
                     response);
             VolleyManager.getInstance(context).addToRequestQueue(request);
 

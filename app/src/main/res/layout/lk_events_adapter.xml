@@ -87,7 +87,8 @@
         android:layout_toRightOf="@+id/imageView"
         android:text="@string/place_events"
         android:textColor="@color/light_black_font"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_toLeftOf="@+id/imageView14"/>
 
     <TextView
         android:id="@+id/time_events_textview"
@@ -99,7 +100,8 @@
         android:layout_marginTop="3dp"
         android:text="@string/time_events"
         android:textColor="@color/light_black_font"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_toLeftOf="@+id/imageView14"/>
 
     <TextView
         android:id="@+id/date_events_textview"
@@ -117,7 +119,8 @@
         android:singleLine="true"
         android:text="@string/date_events"
         android:textColor="@color/light_black_font"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_toLeftOf="@+id/imageView14"/>
 
     <ImageView
         android:id="@+id/imageView"

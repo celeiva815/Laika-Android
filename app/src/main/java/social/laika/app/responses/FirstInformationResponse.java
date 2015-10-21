@@ -21,6 +21,7 @@ import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Breed;
+import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.City;
@@ -68,6 +69,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         //sync mis perros
         Dog.saveDogs(response, Tag.DOG_OWNED);
         AlarmReminder.saveReminders(response, mContext);
+        CalendarReminder.saveReminders(response, mContext);
         VetVisit.saveVetVisits(response);
         Photo.saveDogPhotos(response, mContext);
         OwnerDog.saveOwnerDogs(response, mContext);

@@ -24,6 +24,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.ShareHelper;
+import social.laika.app.utils.Tag;
 
 public class TipsAdapter extends ArrayAdapter<Tip> {
 
@@ -75,7 +76,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
                 LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                         mMainImageView, tip, Tip.TABLE_NAME);
-                Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
+                Request request = Api.imageRequest(tip.getImage(Tag.IMAGE_LARGE), mMainImageView, response,
                         response);
                 VolleyManager.getInstance(context).addToRequestQueue(request);
             }
@@ -84,7 +85,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
 
             LocalImageSaverResponse response = new LocalImageSaverResponse(context,
                     mMainImageView, tip, Tip.TABLE_NAME);
-            Request request = Api.imageRequest(tip.mUrlImage, mMainImageView, response,
+            Request request = Api.imageRequest(tip.getImage(Tag.IMAGE_LARGE), mMainImageView, response,
                     response);
             VolleyManager.getInstance(context).addToRequestQueue(request);
 

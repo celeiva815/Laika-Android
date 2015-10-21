@@ -29,18 +29,41 @@
             android:textColor="@color/laika_red"
             android:textSize="@dimen/laika_min_text" />
 
-        <EditText
-            android:id="@+id/name_register_edittext"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/laikatheme_edit_text_holo_light"
-            android:hint="@string/name_and_surname"
-            android:minHeight="30dp"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/name_register_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/laikatheme_edit_text_holo_light"
+                android:hint="@string/name_hint"
+                android:minHeight="30dp"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"/>
+
+            <EditText
+                android:id="@+id/surname_register_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/laikatheme_edit_text_holo_light"
+                android:hint="@string/surname_hint"
+                android:minHeight="30dp"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView20"
@@ -64,7 +87,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_medium_text" />
 
         <TextView
             android:id="@+id/textView21"
@@ -88,7 +111,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_medium_text" />
 
         <TextView
             android:id="@+id/textView29"
@@ -112,7 +135,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text" />
+            android:textSize="@dimen/laika_medium_text" />
 
         <TextView
             android:id="@+id/gender_question_textview"
@@ -141,7 +164,7 @@
                 android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_male"
                 android:textColor="@color/light_black_font"
-                android:textSize="20sp"
+                android:textSize="@dimen/laika_medium_text"
                 android:checked="false" />
 
             <RadioButton
@@ -153,7 +176,8 @@
                 android:onClick="setHumanGenderRadioButtonClicked"
                 android:text="@string/gender_human_female"
                 android:textColor="@color/light_black_font"
-                android:textSize="20sp" />
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_marginLeft="10dp"/>
         </RadioGroup>
 
         <TextView
@@ -177,7 +201,7 @@
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_small_text"
+            android:textSize="@dimen/laika_medium_text"
             android:inputType="phone"/>
 
         <TextView
@@ -205,7 +229,7 @@
             android:paddingTop="10dp"
             android:text="@string/example_date_reminder"
             android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_biggest_text" />
+            android:textSize="@dimen/laika_medium_text" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

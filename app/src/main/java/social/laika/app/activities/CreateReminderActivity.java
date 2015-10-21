@@ -95,62 +95,19 @@ public class CreateReminderActivity extends ActionBarActivity {
         mVetImageView = (ImageView) findViewById(R.id.vet_reminders_my_dog_imageview);
         mVaccineImageView = (ImageView) findViewById(R.id.vaccine_reminders_my_dog_imageview);
 
-        foodLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_FOOD);
-                setCheckedImage(true, false, false, false, false, false, false);
-            }
-        });
+        foodLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_FOOD, Tag.TYPE_ALARM));
 
-        pooLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_POO);
-                setCheckedImage(false, true, false, false, false, false, false);
-            }
-        });
+        pooLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_POO, Tag.TYPE_ALARM));
 
-        walkLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_WALK);
-                setCheckedImage(false, false, true, false, false, false, false);
-            }
-        });
+        walkLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_WALK, Tag.TYPE_ALARM));
 
-        medicineLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAlarmReminder(Tag.CATEGORY_MEDICINE);
-                setCheckedImage(false, false, false, true, false, false, false);
-            }
-        });
+        medicineLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_MEDICINE, Tag.TYPE_ALARM));
 
-        hygieneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_HYGIENE);
-                setCheckedImage(false, false, false, false, true, false, false);
-            }
-        });
+        hygieneLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_HYGIENE, Tag.TYPE_CALENDAR));
 
-        vetLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_VET);
-                setCheckedImage(false, false, false, false, false, true, false);
-            }
-        });
+        vetLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_VET, Tag.TYPE_CALENDAR));
 
-        vaccineLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarReminder(Tag.CATEGORY_VACCINE);
-                setCheckedImage(false, false, false, false, false, false, true);
-            }
-        });
-
+        vaccineLayout.setOnClickListener(new ReminderCategoryOnClickListener(Tag.CATEGORY_VACCINE, Tag.TYPE_CALENDAR));
     }
 
     @Override
@@ -178,7 +135,7 @@ public class CreateReminderActivity extends ActionBarActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         if (!this.getClass().equals(MainActivity.class))
-            getMenuInflater().inflate(R.menu.create_story_menu, menu);
+            getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
     }
@@ -246,66 +203,79 @@ public class CreateReminderActivity extends ActionBarActivity {
 
     }
 
-    public void setCheckedImage(boolean food, boolean poo, boolean walk, boolean medicine,
-                                boolean hygiene, boolean vet, boolean vaccine) {
+    public void setCheckedImage(int category) {
 
-        mFoodImageView.setImageDrawable(getResources().getDrawable(food ? R.drawable.laika_food_grey
+        mFoodImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_FOOD ? R.drawable.laika_food_grey
                 : R.drawable.laika_food_grey_light));
-        mPooImageView.setImageDrawable(getResources().getDrawable(poo? R.drawable.laika_poop_grey
+        mPooImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_POO ? R.drawable.laika_poop_grey
                 : R.drawable.laika_poop_grey_light));
-        mWalkImageView.setImageDrawable(getResources().getDrawable(walk?
+        mWalkImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_WALK ?
                 R.drawable.laika_walk_grey : R.drawable.laika_walk_grey_light));
-        mMedicineImageView.setImageDrawable(getResources().getDrawable(medicine?
-                R.drawable.laika_pill_grey : R.drawable.laika_pill_grey_light ));
-        mHygieneImageView.setImageDrawable(getResources().getDrawable(hygiene?
-                R.drawable.laika_hygiene_grey : R.drawable.laika_hygiene_grey_light ));
-        mVetImageView.setImageDrawable(getResources().getDrawable(vet?
+        mMedicineImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_MEDICINE ?
+                R.drawable.laika_pill_grey : R.drawable.laika_pill_grey_light));
+        mHygieneImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_HYGIENE ?
+                R.drawable.laika_hygiene_grey : R.drawable.laika_hygiene_grey_light));
+        mVetImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_VET ?
                 R.drawable.laika_vetalarm_grey : R.drawable.laika_vetalarm_grey_light));
-        mVaccineImageView.setImageDrawable(getResources().getDrawable(vaccine?
+        mVaccineImageView.setImageDrawable(getResources().getDrawable(category == Tag.CATEGORY_VACCINE ?
                 R.drawable.laika_vaccine_grey : R.drawable.laika_vaccine_grey_light));
 
     }
 
     public void getAlarmReminderFragment(AlarmReminder alarmReminder) {
 
-        switch (alarmReminder.mCategory) {
-
-            case Tag.CATEGORY_FOOD:
-                setCheckedImage(true, false, false, false, false, false, false);
-                break;
-
-            case Tag.CATEGORY_POO:
-                setCheckedImage(false, true, false, false, false, false, false);
-                break;
-
-            case Tag.CATEGORY_WALK:
-                setCheckedImage(false, false, true, false, false, false, false);
-                break;
-
-            case Tag.CATEGORY_MEDICINE:
-                setCheckedImage(false, false, false, true, false, false, false);
-                break;
-        }
-
+        setCheckedImage(alarmReminder.mCategory);
         Do.hideView(mCalendarLayout);
         openAlarmReminder(alarmReminder);
     }
 
     public void getCalendarReminderFragment(CalendarReminder calendarReminder) {
 
-        switch (calendarReminder.mCategory) {
-
-            case Tag.CATEGORY_VET:
-                setCheckedImage(false, false, false, false, false, true, false);
-
-            case Tag.CATEGORY_HYGIENE:
-                setCheckedImage(false, false, false, false, true, false, false);
-
-            case Tag.CATEGORY_VACCINE:
-                setCheckedImage(false, false, false, false, false, false, true);
-        }
-
+        setCheckedImage(calendarReminder.mCategory);
         Do.hideView(mAlarmLayout);
         openCalendarReminder(calendarReminder);
+    }
+
+    private class ReminderCategoryOnClickListener implements View.OnClickListener {
+
+        public int category;
+        public int type;
+        AlarmReminder mAlarmReminder;
+        CalendarReminder mCalendarReminder;
+
+        public ReminderCategoryOnClickListener(int category, int type) {
+            this.category = category;
+            this.type = type;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            if (mAlarmReminder != null) {
+
+                getAlarmReminderFragment(mAlarmReminder);
+
+            } else if (mCalendarReminder != null) {
+
+                getCalendarReminderFragment(mCalendarReminder);
+
+            } else {
+
+                switch (type) {
+
+                    case Tag.TYPE_ALARM:
+                        openAlarmReminder(category);
+
+                        break;
+
+                    case Tag.TYPE_CALENDAR:
+                        openCalendarReminder(category);
+
+                        break;
+                }
+
+                setCheckedImage(category);
+            }
+        }
     }
 }

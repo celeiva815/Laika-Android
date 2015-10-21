@@ -184,7 +184,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
     private void setValues() {
 
         Owner owner = PrefsManager.getLoggedOwner(getApplicationContext());
-        AdoptDogForm form = AdoptDogForm.getSingleDogForm();
+        AdoptDogForm form = AdoptDogForm.getUserAdoptDogForm(owner.mOwnerId);
 
         mPhoneEditText.setText(owner.mPhone);
 

@@ -23,7 +23,7 @@
     <string name="error_empty_search_query">You didn\'t enter the search field</string>
     <string name="not_valid_email_error">Este no es correo electrónico válido</string>
     <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
-    <string name="field_not_empty_error">Este campo no puede estar vacío</string>
+    <string name="field_not_empty_error">Debes completar esta información</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
     <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
     <string name="must_select_reason">You must select a reason</string>
@@ -70,7 +70,8 @@
 
     <!-- RegisterActivity -->
     <string name="name_surname_question">¿Cuál es tu nombre completo?</string>
-    <string name="name_and_surname">Nombre y Apellido</string>
+    <string name="name_hint">Nombre</string>
+    <string name="surname_hint">Apellidos</string>
     <string name="email_question">¿Cuál es tu correo electrónico?</string>
     <string name="gender_human_question">¿Cuál es tu género?</string>
     <string name="gender_human_male">Masculino</string>
@@ -308,7 +309,7 @@
     <string name="detail_ownership_tutorial">Administra y personaliza el cuidado de tu mascota con
         tu familia mediante recordatorios, fichas médicas y fotos.</string>
     <string name="title_information_tutorial">Información y Ayuda</string>
-    <string name="detail_information_tutorial">TTendrás en tus manos todas las noticias, tips y
+    <string name="detail_information_tutorial">Tendrás en tus manos todas las noticias, tips y
         eventos del mundo animal para que cuides responsablemente a tu mascota.</string>
     <string name="title_foundation_tutorial">App Colaborativa</string>
     <string name="detail_foundation_tutorial">Trabajamos con las mejores Organizaciones de Chile,

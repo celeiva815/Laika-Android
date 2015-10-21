@@ -127,7 +127,7 @@ public class Do {
     public static String getToStringDate(int day, int month, int year) {
 
         String yearText = Integer.toString(year);
-        String monthText = month < 10 ? "0"+Integer.toString(month + 1) : Integer.toString(month + 1);;
+        String monthText = month < 9 ? "0"+Integer.toString(month + 1) : Integer.toString(month + 1);;
         String dayText = day < 10 ? "0"+Integer.toString(day) : Integer.toString(day);
 
         String date = dayText + "-" + monthText + "-" + yearText;

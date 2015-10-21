@@ -54,12 +54,12 @@
                     android:id="@+id/male_new_dog_register_radiobutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="10dp"
                     android:gravity="center"
                     android:onClick="setGenderRadioButtonClicked"
                     android:text="@string/male_adopt_dog_form"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text" />
 
                 <RadioButton
                     android:id="@+id/female_new_dog_register_radiobutton"
@@ -70,7 +70,8 @@
                     android:onClick="setGenderRadioButtonClicked"
                     android:text="@string/female_adopt_dog_form"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text"
+                    android:layout_marginLeft="10dp"/>
 
             </RadioGroup>
 
@@ -157,7 +158,7 @@
                 android:paddingTop="10dp"
                 android:text="@string/example_date_reminder"
                 android:textColor="@color/light_black_font"
-                android:textSize="@dimen/alarm_reminder_my_dog" />
+                android:textSize="@dimen/laika_medium_text" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -217,7 +218,7 @@
                     android:onClick="setSterilizedRadioButton"
                     android:text="@string/yes_dialog"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text" />
 
                 <RadioButton
                     android:id="@+id/not_sterilized_new_dog_register_radiobutton"
@@ -228,7 +229,7 @@
                     android:onClick="setSterilizedRadioButton"
                     android:text="@string/no_dialog"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text" />
             </RadioGroup>
 
             <LinearLayout
@@ -272,7 +273,7 @@
                     android:onClick="setChipRadioButtonClicked"
                     android:text="@string/yes_dialog"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text" />
 
                 <RadioButton
                     android:id="@+id/not_chip_new_dog_register_radiobutton"
@@ -283,7 +284,7 @@
                     android:onClick="setChipRadioButtonClicked"
                     android:text="@string/no_dialog"
                     android:textColor="@color/light_black_font"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/laika_medium_text" />
             </RadioGroup>
 
             <EditText

@@ -603,4 +603,16 @@ public class Dog extends Model implements Picturable {
         } catch (Exception e) {
         }
     }
+
+    public void removeDog() {
+
+        UserAdoptDog adoptDog = UserAdoptDog.getSingleUserAdoptDog(this);
+
+        if (adoptDog != null) {
+            UserAdoptDog.deleteUserAdoptDog(adoptDog);
+
+        }
+
+        delete();
+    }
 }

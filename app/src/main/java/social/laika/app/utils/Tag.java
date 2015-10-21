@@ -108,7 +108,7 @@ public class Tag {
     public static final String IMAGE_ORIGINAL = "original";
     public static final String IMAGE_LARGE = "large";
     public static final String IMAGE_MEDIUM = "medium";
-    public static final String IMAGE_MEDIUM_S = "medium_s";
+    public static final String IMAGE_SMALL = "small";
     public static final String IMAGE_THUMB = "thumb";
 
 }

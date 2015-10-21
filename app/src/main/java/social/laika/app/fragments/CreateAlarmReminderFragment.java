@@ -3,6 +3,7 @@ package social.laika.app.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,10 +123,22 @@ public class CreateAlarmReminderFragment extends Fragment implements
 
                 Context context = v.getContext();
 
-                if (mMonday || mTuesday || mWednesday || mThursday || mFriday || mSaturday || mSunday) {
+                String title = mTitleEditText.getText().toString();
+                String detail = mDetailEditText.getText().toString();
 
-                    String title = mTitleEditText.getText().toString();
-                    String detail = mDetailEditText.getText().toString();
+                if (TextUtils.isEmpty(title)) {
+                    mTitleEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(detail)) {
+                    mDetailEditText.setError(getString(R.string.field_not_empty_error));
+                    return;
+                }
+
+
+
+                if (mMonday || mTuesday || mWednesday || mThursday || mFriday || mSaturday || mSunday) {
 
                     if (mAlarmReminder != null) {
 

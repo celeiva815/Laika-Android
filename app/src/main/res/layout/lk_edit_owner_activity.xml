@@ -29,18 +29,39 @@
             android:textColor="@color/laika_red"
             android:textSize="@dimen/laika_min_text" />
 
-        <EditText
-            android:id="@+id/name_edit_user_edittext"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/laikatheme_edit_text_holo_light"
-            android:hint="@string/name_and_surname"
-            android:minHeight="30dp"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="@color/light_black_font"
-            android:textSize="@dimen/laika_medium_text" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/name_edit_user_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/laikatheme_edit_text_holo_light"
+                android:hint="@string/name_hint"
+                android:minHeight="30dp"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/surname_edit_user_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/laikatheme_edit_text_holo_light"
+                android:hint="@string/surname_hint"
+                android:minHeight="30dp"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_medium_text"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView21"

@@ -8,8 +8,10 @@ import social.laika.app.activities.AdoptDogFormActivity;
 import social.laika.app.activities.AdoptDogUserFormActivity;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.Country;
+import social.laika.app.models.Owner;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 
 /**
  * Created by Tito_Leiva on 20-07-15.
@@ -33,7 +35,10 @@ public class ToAdoptActivityOnClickListener implements View.OnClickListener {
 
             Intent intent;
 
-            if (!AdoptDogForm.hasDogForm()) {
+            Owner owner = PrefsManager.getLoggedOwner(context);
+            AdoptDogForm adopt = AdoptDogForm.getUserAdoptDogForm(owner.mOwnerId);
+
+            if (adopt == null || !owner.hasCity()) {
 
                 intent = new Intent(v.getContext(), AdoptDogUserFormActivity.class);
                 intent.putExtra(KEY_NEXT_ACTIVITY, NEXT_ADOPT_DOG);
@@ -50,7 +55,5 @@ public class ToAdoptActivityOnClickListener implements View.OnClickListener {
             Do.showLongToast("¡Lo sentimos! Por ahora no puedes adoptar perritos en tu país",
                     context);
         }
-
-
     }
 }

@@ -9,6 +9,9 @@ import com.activeandroid.query.Select;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import social.laika.app.utils.DB;
+import social.laika.app.utils.Do;
+
 @Table(name = AdoptDogForm.TABLE_ADOPT_DOG_FORM)
 public class AdoptDogForm extends Model {
 
@@ -91,15 +94,37 @@ public class AdoptDogForm extends Model {
 
         this.mAdoptDogFormId = dogForm.mAdoptDogFormId;
         this.mOwnerId = dogForm.mOwnerId;
-        this.mCityId = dogForm.mCityId;
         this.mHomeType = dogForm.mHomeType;
         this.mHasPet = dogForm.mHasPet;
         this.mHasElderly = dogForm.mHasElderly;
         this.mHasKids = dogForm.mHasKids;
         this.mFreeTime = dogForm.mFreeTime;
 
-        this.save();
+        if (dogForm.hasCity()) {
+            this.mCityId = dogForm.mCityId;
 
+        } else {
+
+            Owner owner = Owner.getSingleOwner(dogForm.mOwnerId);
+
+            if (owner.hasCity()) {
+                this.mCityId = owner.mCityId;
+            }
+        }
+
+        if (dogForm.hasPhone()) {
+            this.mPhone = dogForm.mPhone;
+
+        } else {
+
+            Owner owner = Owner.getSingleOwner(dogForm.mOwnerId);
+
+            if (owner.hasPhone()) {
+                this.mPhone = owner.mPhone;
+            }
+        }
+
+        this.save();
     }
 
     public JSONObject getJsonObject() {
@@ -109,6 +134,7 @@ public class AdoptDogForm extends Model {
         try {
 
             jsonObject.put(COLUMN_CITY_ID, mCityId);
+            jsonObject.put(COLUMN_PHONE, mPhone);
             jsonObject.put(COLUMN_HOME_TYPE, mHomeType);
             jsonObject.put(COLUMN_HAS_PET, mHasPet);
             jsonObject.put(COLUMN_HAS_ELDERLY, mHasElderly);
@@ -136,6 +162,16 @@ public class AdoptDogForm extends Model {
         return mAdoptDogFormId > 0;
     }
 
+    public boolean hasCity() {
+
+        return mCityId > 0;
+    }
+
+    public boolean hasPhone() {
+
+        return !Do.isNullOrEmpty(mPhone);
+    }
+
     // Data Base
 
     public static AdoptDogForm newInstance(int ownerId, int cityId, String phone, int homeType, boolean hasPet,
@@ -158,7 +194,7 @@ public class AdoptDogForm extends Model {
 
     public static AdoptDogForm createOrUpdate(AdoptDogForm dogForm) {
 
-        AdoptDogForm oldDogForm = getSingleDogForm();
+        AdoptDogForm oldDogForm = getUserAdoptDogForm(dogForm.mOwnerId);
 
         if (oldDogForm == null) {
 
@@ -172,9 +208,10 @@ public class AdoptDogForm extends Model {
         }
     }
 
-    public static AdoptDogForm getSingleDogForm() {
+    public static AdoptDogForm getUserAdoptDogForm(int userId) {
 
-        return new Select().from(AdoptDogForm.class).executeSingle();
+        String condition = COLUMN_OWNER_ID + DB.EQUALS + userId;
+        return new Select().from(AdoptDogForm.class).where(condition).executeSingle();
 
     }
 
