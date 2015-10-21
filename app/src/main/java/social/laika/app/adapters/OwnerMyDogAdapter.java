@@ -75,7 +75,6 @@ public class OwnerMyDogAdapter extends ArrayAdapter<Owner> {
 
         view.setOnClickListener(new OwnerOptionsDialogOnClickListener(mDog, owner));
 
-
         return view;
     }
 }

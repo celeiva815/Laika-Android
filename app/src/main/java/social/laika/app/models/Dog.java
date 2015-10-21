@@ -34,6 +34,7 @@ import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
+import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 
@@ -604,14 +605,20 @@ public class Dog extends Model implements Picturable {
         }
     }
 
-    public void removeDog() {
+    public void removeDog(Context context) {
 
+        AlarmReminder.deleteAll(mDogId, context);
+        CalendarReminder.deleteAll(mDogId, context);
+        Photo.deleteAll(mDogId);
         UserAdoptDog adoptDog = UserAdoptDog.getSingleUserAdoptDog(this);
 
         if (adoptDog != null) {
             UserAdoptDog.deleteUserAdoptDog(adoptDog);
 
         }
+
+        OwnerDog ownerDog = OwnerDog.getSingleOwnerDog(mDogId, PrefsManager.getUserId(context));
+        ownerDog.delete();
 
         delete();
     }

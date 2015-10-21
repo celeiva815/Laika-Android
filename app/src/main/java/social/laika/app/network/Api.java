@@ -62,6 +62,7 @@ public class Api {
     public static final String ADDRESS_FB_LOGIN = "auth/facebook/log_in";
     public static final String ADDRESS_OWNER_DOGS = "owner_dogs/";
     public static final String ADDRESS_PUBLICATIONS = "publications/";
+    public static final String ADDRESS_REMOVE_DOG_OWNER = "remove_dog_owner/";
     public static final String ADDRESS_REGISTER = "sign_up/";
     public static final String ADDRESS_STORIES = "stories/";
     public static final String ADDRESS_SYNC = "sync/";

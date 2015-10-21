@@ -104,7 +104,8 @@ public class Photo extends Model {
     @Column(name = COLUMN_NEEDS_SYNC)
     public int mNeedsSync;
 
-    public Photo() { }
+    public Photo() {
+    }
 
 
     public Photo(int mPhotoId, int mOwnerId, String mOwnerName, int mDogId, String mUrlOriginal, String mDate,
@@ -198,7 +199,7 @@ public class Photo extends Model {
         }
 
         Log.i("Laika Sync Service", "Photo removed. Local ID: " + getId() + ". " +
-                "Server ID:" + mPhotoId  + ". Need Sync");
+                "Server ID:" + mPhotoId + ". Need Sync");
     }
 
     private void update(Photo photo) {
@@ -251,7 +252,7 @@ public class Photo extends Model {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scale = Math.min(photoW/imageMaxSize, photoH/imageMaxSize);
+        int scale = Math.min(photoW / imageMaxSize, photoH / imageMaxSize);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions = new BitmapFactory.Options();
@@ -437,13 +438,18 @@ public class Photo extends Model {
             fOut.close();
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     public static void deleteAll() {
 
         new Delete().from(UserAdoptDog.class).execute();
     }
-}
 
+    public static void deleteAll(int dogId) {
+
+        String condition = Photo.COLUMN_DOG_ID + DB.EQUALS + dogId;
+        new Delete().from(UserAdoptDog.class).where(condition).execute();
+    }
+}

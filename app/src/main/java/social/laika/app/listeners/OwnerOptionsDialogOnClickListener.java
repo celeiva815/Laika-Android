@@ -1,19 +1,31 @@
 package social.laika.app.listeners;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.activities.EditUserActivity;
 import social.laika.app.activities.UserProfileActivity;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
+import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.LeaveDogResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 
@@ -79,10 +91,10 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
                                         sendEmail(context);
                                         break;
 
-                                    case 3: // eliminar dueño
-
-                                        deleteOwner(context);
-                                        break;
+//                                    case 3: // eliminar dueño
+//
+//                                        deleteOwner(context);
+//                                        break;
 
                                 }
                             }
@@ -158,7 +170,6 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
                                 Do.getRString(context, R.string.view_profile),
                                 Do.getRString(context, R.string.call_owner) + " " + mOwner.mFirstName,
                                 Do.getRString(context, R.string.send_email),
-                                Do.getRString(context, R.string.delete_owner)
                         };
             }
 
@@ -216,7 +227,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL  , new String[]{mOwner.mEmail});
         i.putExtra(Intent.EXTRA_SUBJECT, "");
-        i.putExtra(Intent.EXTRA_TEXT   , "");
+        i.putExtra(Intent.EXTRA_TEXT, "");
         try {
             context.startActivity(Intent.createChooser(i, Do.getRString(context, R.string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -245,7 +256,7 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showShortToast("Por implementar", context);
+
                 dialog.dismiss();
             }
         });
@@ -273,12 +284,29 @@ public class OwnerOptionsDialogOnClickListener implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Do.showShortToast("Por implementar", context);
+                requestLeaveDog(context);
                 dialog.dismiss();
             }
         });
 
         dialog.show();
 
+    }
+
+
+    public void requestLeaveDog(Context context) {
+
+        ProgressDialog progressDialog = ProgressDialog.show(context, "Espere un momento", "Estamos "
+                + "actualizando tu información y la de " + mDog.mName);
+        Map<String, String> params = new HashMap<>();
+
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+
+        JSONObject jsonParams = new JSONObject(params);
+        LeaveDogResponse response = new LeaveDogResponse(mDog, context, progressDialog);
+        Request request = Api.postRequest(jsonParams, Api.ADDRESS_REMOVE_DOG_OWNER, response,
+                response, PrefsManager.getUserToken(context));
+
+        VolleyManager.getInstance(context).addToRequestQueue(request);
     }
 }
