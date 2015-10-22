@@ -33,6 +33,7 @@ public class PublicationsActivity extends BasePublicationsActivity {
 
     public List<Publication> mPublications;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -77,10 +78,11 @@ public class PublicationsActivity extends BasePublicationsActivity {
 
             mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
-            PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
+            mRefreshListener = new PublicationsRefreshListener(this);
+            //PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
 
-            mPublicationsListView.setOnScrollListener(refreshListener);
-            onCreateSwipeRefresh(mSwipeLayout, refreshListener);
+            mPublicationsListView.setOnScrollListener(mRefreshListener);
+            onCreateSwipeRefresh(mSwipeLayout, mRefreshListener);
         }
 
 

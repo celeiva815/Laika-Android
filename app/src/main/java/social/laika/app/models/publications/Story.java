@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Tag;
 
 @Table(name = Story.TABLE_NAME)
 public class Story extends BasePublication {
@@ -31,6 +32,9 @@ public class Story extends BasePublication {
     public final static String API_LAST_STORY_ID = "last_story_id";
     public final static String API_LIMIT = "limit";
 
+    @Column(name = COLUMN_SERVER_ID)
+    public int mServerId;
+
     @Column(name = COLUMN_TITLE)
     public String mTitle;
 
@@ -50,10 +54,12 @@ public class Story extends BasePublication {
     public String mBody;
 
     public Story() {
+        super();
     }
 
     public Story(int mStoryId, String mTitle, int mUserId, String mOwnerName, String mDate,
                  String mTime, String mBody, String mUrlImage) {
+        super();
         this.mServerId = mStoryId;
         this.mTitle = mTitle;
         this.mUserId = mUserId;
@@ -65,7 +71,7 @@ public class Story extends BasePublication {
     }
 
     public Story(String mTitle, String mDate, String mTime, String mBody, String mUrlImage) {
-
+        super();
         this.mTitle = mTitle;
         this.mDate = mDate;
         this.mTime = mTime;
@@ -74,7 +80,7 @@ public class Story extends BasePublication {
     }
 
     public Story(JSONObject jsonObject) {
-
+        super();
         this.mServerId = jsonObject.optInt(API_STORY_ID);
         this.mTitle = jsonObject.optString(COLUMN_TITLE);
         this.mUserId = jsonObject.optInt(COLUMN_USER_ID);
@@ -216,7 +222,8 @@ public class Story extends BasePublication {
 
     @Override
     public String getFacebookContentDescription() {
-        return mBody;
+        return mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
     }
 
     @Override
@@ -226,7 +233,13 @@ public class Story extends BasePublication {
 
     @Override
     public String getOtherShareText() {
-        return mTitle + "\n\n" + mBody + "\n\n" + mUrl;
+        return mTitle + "\n\n" + mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
+    }
+
+    @Override
+    public int getServerId() {
+        return mServerId;
     }
 }
 

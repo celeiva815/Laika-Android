@@ -145,15 +145,6 @@ public class TutorialActivity extends ActionBarActivity {
         Log.d(TAG, "Started New Relic");
         FacebookSdk.sdkInitialize(getApplicationContext());
         Log.d(TAG, "Started Facebook Service");
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .addApi(Plus.API)
-//                .addScope(Plus.SCOPE_PLUS_LOGIN)
-//                .addScope(Plus.SCOPE_PLUS_PROFILE)//Scopes.PLUS_ME)
-//                .build();
-//        Log.d(TAG, "Started Google Service");
-
     }
 
     public Fragment getCurrentFragment() {

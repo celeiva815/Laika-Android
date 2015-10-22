@@ -27,6 +27,8 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
     private int mLastVisibleItem;
     private int mCurrentVisibleItem;
     private int mCurrentScrollState;
+    private int mLastTotalItemCount;
+    private boolean mRefreshing;
 
     public PublicationsRefreshListener(BasePublicationsActivity mActivity) {
 
@@ -34,27 +36,33 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
         this.mSwipeLayout = mActivity.mSwipeLayout;
         this.mListView = mActivity.mPublicationsListView;
         this.mAdapter = mActivity.mPublicationsAdapter;
+        mRefreshing = false;
+        mLastTotalItemCount = -1;
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
 
-        int topRowVerticalPosition =
-                (mListView == null || mListView.getChildCount() == 0) ?
-                        0 : mListView.getChildAt(0).getTop();
-        mSwipeLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+        if (!mRefreshing && mLastTotalItemCount != totalItemCount &&
+                view.getLastVisiblePosition() == view.getAdapter().getCount() - 1 &&
+                view.getChildAt(view.getChildCount() - 1) != null &&
+                view.getChildAt(view.getChildCount() - 1).getBottom() <= view.getHeight()) {
 
-        this.mLastVisibleItem = totalItemCount;
-        this.mCurrentVisibleItem = firstVisibleItem + visibleItemCount;
+            // refresh
+            mSwipeLayout.setRefreshing(true);
+            int size = mAdapter.getCount();
+            int lastPublicationId = ((BasePublication) mAdapter.getItem(size - 1)).getServerId();
+            mActivity.requestPublications(lastPublicationId, Tag.LIMIT, mActivity);
 
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-        this.mCurrentScrollState = scrollState;
-        this.isScrollCompleted(view.getContext());
+            mRefreshing = true;
+            mLastTotalItemCount = totalItemCount;
+        }
     }
 
     private void isScrollCompleted(Context context) {
@@ -65,10 +73,14 @@ public class PublicationsRefreshListener implements AbsListView.OnScrollListener
             mSwipeLayout.setRefreshing(true);
 
             int size = mAdapter.getCount();
-            int lastPublicationId = ((BasePublication) mAdapter.getItem(size - 1)).mServerId;
+            int lastPublicationId = ((BasePublication) mAdapter.getItem(size - 1)).getServerId();
             mActivity.requestPublications(lastPublicationId, Tag.LIMIT, mActivity);
 
         }
+    }
+
+    public void shouldLoadMore(boolean loadMore) {
+        mRefreshing = loadMore;
     }
 
     @Override

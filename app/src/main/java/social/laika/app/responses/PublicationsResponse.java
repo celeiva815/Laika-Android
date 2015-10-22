@@ -27,6 +27,7 @@ public class PublicationsResponse implements Response.ErrorListener,
         stopRefreshing();
         Publication.savePublications(response);
         mActivity.refreshList();
+        mActivity.shouldLoadMore(false);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class PublicationsResponse implements Response.ErrorListener,
 
         stopRefreshing();
         Api.error(error, mActivity);
-
+        mActivity.shouldLoadMore(true);
     }
 
     private void stopRefreshing() {

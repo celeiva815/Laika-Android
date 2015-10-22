@@ -27,6 +27,7 @@ public class TipsResponse implements Response.ErrorListener,
         stopRefreshing();
         Tip.saveTips(response);
         mActivity.refreshList();
+        mActivity.shouldLoadMore(false);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class TipsResponse implements Response.ErrorListener,
 
         stopRefreshing();
         Api.error(error, mActivity);
-
+        mActivity.shouldLoadMore(true);
     }
 
     private void stopRefreshing() {

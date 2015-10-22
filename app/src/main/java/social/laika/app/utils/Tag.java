@@ -5,6 +5,8 @@ package social.laika.app.utils;
  */
 public class Tag {
 
+    public final static String LAIKA_GOOGLE_PLAY = "https://goo.gl/GyVDjp";
+
     //Model
     public final static int FLAG_READED = 0;
     public final static int FLAG_CREATED = 1;

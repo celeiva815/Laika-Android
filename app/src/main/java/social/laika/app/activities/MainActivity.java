@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.Request;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.ai_base_activity);
         startNewRelic();
         mTitle = "Laika";
@@ -96,7 +97,6 @@ public class MainActivity extends ActionBarActivity
 
         registerGCM();
         SyncUtils.createSyncAccount(getApplicationContext());
-
     }
 
     @Override
