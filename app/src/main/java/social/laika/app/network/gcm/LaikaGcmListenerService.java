@@ -14,11 +14,15 @@ import com.google.android.gms.gcm.GcmListenerService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
+import social.laika.app.models.Owner;
+import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Photo;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
@@ -44,6 +48,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
     public static final int GCM_VET_VISIT_UPDATE = 333;             /* When a vet visit is updated */
     public static final int GCM_VET_VISIT_DELETE = 334;             /* When a vet visit is deleted */
     public static final int GCM_ADDED_AS_OWNER = 340;               /* When a users add you as a dog owner */
+    public static final int GCM_REMOVED_OWNER = 341;               /* When a users add you as a dog owner */
     public static final int GCM_PHOTO_UPDATE = 353;                 /* When a photo is either created or updated */
     public static final int GCM_PHOTO_DELETE = 354;                 /* When a photo is deleted */
 
@@ -181,6 +186,48 @@ public class LaikaGcmListenerService extends GcmListenerService {
 //                syncDogHard(dog_id); ISSUE hay un timeout con una respuesta 404, hay que revisar, por ahora solo dejaré un sync en la UI.
 
                 performFullSyncHard();
+
+                break;
+            case GCM_REMOVED_OWNER:
+
+                int dogId = jsonData.getInt(Dog.COLUMN_DOG_ID);
+                int ownerId = jsonData.getInt(Owner.API_USER_ID);
+
+                if (ownerId == PrefsManager.getUserId(getApplicationContext())) {
+
+                    Dog dog = Dog.getSingleDog(dogId);
+
+                    if (dog != null) {
+                        dog.removeDog(getApplicationContext());
+                    }
+
+                } else {
+
+                    Owner owner = Owner.getSingleOwner(ownerId);
+
+                    if (owner != null) {
+
+                        List<OwnerDog> ownerDogs = OwnerDog.getOwnerDogs(owner);
+
+                        if (ownerDogs.size() == 1) {
+
+                            OwnerDog ownerDog = OwnerDog.getSingleOwnerDog(dogId, ownerId);
+                            ownerDog.delete();
+                            owner.delete();
+
+                        } else if (ownerDogs.size() > 1) {
+
+                            for (OwnerDog ownerDog : ownerDogs) {
+
+                                if (ownerDog.mDogId == dogId) {
+
+                                    ownerDog.delete();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 break;
             case GCM_PHOTO_UPDATE:

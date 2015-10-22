@@ -87,6 +87,12 @@ public class OwnerDog extends Model {
         return new Select().from(OwnerDog.class).where(condition).execute();
     }
 
+    public static List<OwnerDog> getOwnerDogs(Owner owner) {
+
+        String condition = COLUMN_OWNER_ID + DB.EQUALS + owner.mOwnerId;
+        return new Select().from(OwnerDog.class).where(condition).execute();
+    }
+
     public static void createOrUpdate(OwnerDog ownerDog) {
 
         OwnerDog oldOwnerDog = getSingleOwnerDog(ownerDog.mDogId, ownerDog.mOwnerId);
