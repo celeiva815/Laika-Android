@@ -110,7 +110,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/" +
                 R.raw.ladrido_simple);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.laika_notification)
+                .setSmallIcon(R.drawable.laika_k)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
