@@ -164,6 +164,7 @@ public class TutorialActivity extends ActionBarActivity {
 
     }
 
+
     private void printKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,

@@ -200,12 +200,7 @@ public class MainActivity extends ActionBarActivity
 
                 break;
 
-            case 3: //Sincronizar aplicación
-
-                syncFirstInformation(getApplicationContext());
-                break;
-
-            case 4: // Cerrar Sesión
+            case 3: // Cerrar Sesión
 
                 clearDataBase();
 

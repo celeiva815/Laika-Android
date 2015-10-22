@@ -13,6 +13,7 @@
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/left_menu_text_selected"
-      />
+              android:layout_marginTop="5dp"
+              android:layout_marginBottom="5dp"/>
 
 </RelativeLayout>

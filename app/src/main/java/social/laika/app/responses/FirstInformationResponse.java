@@ -106,9 +106,9 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         }
 
         if (mActivity instanceof TutorialActivity) {
+            PrefsManager.clearPrefs(mContext);
             TutorialFragment fragment = (TutorialFragment) ((TutorialActivity) mActivity).getCurrentFragment();
             fragment.enableViews(true);
-            PrefsManager.clearPrefs(mContext);
 
         }
 

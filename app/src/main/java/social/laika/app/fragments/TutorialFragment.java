@@ -223,17 +223,24 @@ public class TutorialFragment extends Fragment {
 
     public void enableViews(boolean enable) {
 
-        mEmailEditText.setEnabled(enable);
-        mPasswordEditText.setEnabled(enable);
-        mLoginButton.setEnabled(enable);
+        try {
+            mEmailEditText.setEnabled(enable);
+            mPasswordEditText.setEnabled(enable);
+            mLoginButton.setEnabled(enable);
 
-        if (enable) {
-            mLoginButton.setVisibility(View.VISIBLE);
-            mLoginProgressBar.setVisibility(View.GONE);
+            if (enable) {
+                mLoginButton.setVisibility(View.VISIBLE);
+                mLoginProgressBar.setVisibility(View.GONE);
 
-        } else {
-            mLoginButton.setVisibility(View.GONE);
-            mLoginProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                mLoginButton.setVisibility(View.GONE);
+                mLoginProgressBar.setVisibility(View.VISIBLE);
+            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+
+
         }
 
     }
