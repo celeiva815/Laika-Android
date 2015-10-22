@@ -3,109 +3,103 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingTop="5sp">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pach_news"
+        android:id="@+id/sponsor_tip_textview"
+        android:layout_gravity="right"
+        android:textSize="10sp"
+        android:textStyle="italic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="3dp"
+        android:textColor="@color/lighter_black_font" />
+
+    <RelativeLayout
+        android:id="@+id/photo_events_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@color/laika_picture_background">
+
+    <ImageView
+        android:id="@+id/main_tip_imageview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="110dp"
+        android:adjustViewBounds="false"
+        android:scaleType="centerCrop" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pach_news"
-            android:id="@+id/sponsor_tip_textview"
-            android:layout_gravity="right"
-            android:textSize="10sp"
-            android:textStyle="italic"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginRight="3dp"
-            android:textColor="@color/lighter_black_font" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleInverse"
+        android:id="@+id/download_image_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:focusableInTouchMode="false"
+        android:visibility="gone" />
+        <!--style="?android:attr/progressBarStyle" -->
 
-        <RelativeLayout
-            android:id="@+id/photo_events_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@color/laika_picture_background">
+
+</RelativeLayout>
+
+    <TextView
+        android:id="@+id/title_tip_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/title_tip_activity"
+        android:textSize="@dimen/laika_medium_text"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/light_black_font" />
+
+    <TextView
+        android:id="@+id/body_tip_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/body_tip_activity"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/light_black_font"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/laika_min_text" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp">
 
         <ImageView
-            android:id="@+id/main_tip_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:adjustViewBounds="false"
-            android:scaleType="centerCrop" />
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleInverse"
-            android:id="@+id/download_image_progressbar"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:focusableInTouchMode="false"
-            android:visibility="gone" />
-            <!--style="?android:attr/progressBarStyle" -->
+            android:id="@+id/share_tip_imageview"
+            android:src="@drawable/laika_share_grey"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/favorite_tip_imageview"
+            android:src="@drawable/laika_favorite_white"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
-        <TextView
-            android:id="@+id/title_tip_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/title_tip_activity"
-            android:textSize="@dimen/laika_medium_text"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/light_black_font" />
-
-        <TextView
-            android:id="@+id/body_tip_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/body_tip_activity"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/light_black_font"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/laika_min_text" />
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/share_tip_imageview"
-                android:src="@drawable/laika_share_grey"
-                android:adjustViewBounds="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/favorite_tip_imageview"
-                android:src="@drawable/laika_favorite_white"
-                android:adjustViewBounds="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-        </RelativeLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

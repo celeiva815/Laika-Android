@@ -32,6 +32,7 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
     public ListView mPublicationsListView;
     public ArrayAdapter mPublicationsAdapter;
     public boolean mIsFavorite = false;
+    protected PublicationsRefreshListener mRefreshListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +76,11 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
         if (!mIsFavorite) {
 
             mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-            PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
+            mRefreshListener = new PublicationsRefreshListener(this);
 
             mSwipeLayout.setEnabled(true);
-            mPublicationsListView.setOnScrollListener(refreshListener);
-            onCreateSwipeRefresh(mSwipeLayout, refreshListener);
+            mPublicationsListView.setOnScrollListener(mRefreshListener);
+            onCreateSwipeRefresh(mSwipeLayout, mRefreshListener);
 
         } else {
 
@@ -150,6 +151,10 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
             setPublications();
 
         }
+    }
+
+    public void shouldLoadMore(boolean loadMore) {
+        mRefreshListener.shouldLoadMore(loadMore);
     }
 
     public abstract ArrayAdapter getAdapter();
