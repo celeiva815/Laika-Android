@@ -28,7 +28,10 @@ import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AdoptDogForm;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
+import social.laika.app.models.City;
+import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
+import social.laika.app.models.Region;
 import social.laika.app.models.publications.Event;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
@@ -247,6 +250,9 @@ public class MainActivity extends ActionBarActivity
         Tip.deleteAll();
         Story.deleteAll();
         Personality.deleteAll();
+        City.deleteAll();
+        Region.deleteAll();
+        Country.deleteAll();
 
     }
 

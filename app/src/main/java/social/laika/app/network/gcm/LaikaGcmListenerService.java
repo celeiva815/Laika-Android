@@ -20,10 +20,13 @@ import social.laika.app.R;
 import social.laika.app.activities.MainActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
+import social.laika.app.models.City;
+import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Photo;
+import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.sync.SyncUtils;
@@ -39,6 +42,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
     public static final String TAG = LaikaGcmListenerService.class.getSimpleName();
 
     /* GCM Codes */
+    public static final int GCM_SYNC_LOCATIONS = 001;                 /* When a photo is deleted */
     public static final int GCM_POSTULATED_DOGS = 200;              /* When a postulation is updated */
     public static final int GCM_ALERT_REMINDER = 310;               /* ? */
     public static final int GCM_ALERT_REMINDER_UPDATE = 313;        /* When a alert reminder is updated */
@@ -240,6 +244,16 @@ public class LaikaGcmListenerService extends GcmListenerService {
                 /* Deletion Operation */
                 deletePhoto(photoID);
                 break;
+
+            case GCM_SYNC_LOCATIONS:
+
+                City.deleteAll();
+                Region.deleteAll();
+                Country.deleteAll();
+
+                performFullSyncHard();
+
+                break;
         }
         Log.d(TAG, "GCM synchronization completed");
     }
@@ -337,8 +351,5 @@ public class LaikaGcmListenerService extends GcmListenerService {
         } else {
             PrefsManager.setNeedSync(getApplicationContext(), true);
         }
-
     }
-
-
 }
