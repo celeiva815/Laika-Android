@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Tag;
 
 @Table(name = Tip.TABLE_NAME)
 public class Tip extends BasePublication {
@@ -33,6 +34,9 @@ public class Tip extends BasePublication {
     public final static String API_LAST_TIP_ID = "last_tip_id";
     public final static String API_LIMIT = "limit";
 
+    @Column(name = COLUMN_SERVER_ID)
+    public int mServerId;
+
     @Column(name = COLUMN_SPONSOR_ID)
     public int mSponsorId;
 
@@ -48,13 +52,13 @@ public class Tip extends BasePublication {
     @Column(name = COLUMN_TYPE)
     public int mType;
 
-
     public Tip() {
+        super();
     }
 
     public Tip(int mTipId, int mSponsorId, String mSponsorName, String mTitle, String mBody,
                String mUrlImage, String mUrlTip, int mType, boolean mIsPaid) {
-
+        super();
         this.mServerId = mTipId;
         this.mSponsorId = mSponsorId;
         this.mSponsorName = mSponsorName;
@@ -67,7 +71,7 @@ public class Tip extends BasePublication {
     }
 
     public Tip(JSONObject jsonObject) {
-
+        super();
         this.mServerId = jsonObject.optInt(API_ID);
         this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
         this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);
@@ -169,7 +173,8 @@ public class Tip extends BasePublication {
 
     @Override
     public String getFacebookContentDescription() {
-        return mBody;
+        return mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
     }
 
     @Override
@@ -179,6 +184,12 @@ public class Tip extends BasePublication {
 
     @Override
     public String getOtherShareText() {
-        return mTitle + "\n\n" + mBody + "\n\n" + mUrl;
+        return mTitle + "\n\n" + mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
+    }
+
+    @Override
+    public int getServerId() {
+        return mServerId;
     }
 }

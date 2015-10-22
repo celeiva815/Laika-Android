@@ -34,6 +34,9 @@ public class Event extends BasePublication {
     public final static String API_LAST_EVENT_ID = "last_event_id";
     public final static String API_LIMIT = "limit";
 
+    @Column(name = COLUMN_SERVER_ID)
+    public int mServerId;
+
     @Column(name = COLUMN_NAME)
     public String mName;
 
@@ -64,14 +67,15 @@ public class Event extends BasePublication {
     @Column(name = COLUMN_FINISH_TIME)
     public String mFinishTime;
 
-
     public Event() {
+        super();
     }
+
 
     public Event(int mEventId, String mName, int mSponsorId, String mSponsorName,
                  String mUrlImage, String mUrlEvent, int mCityId, String mStartDate,
                  String mFinishDate, String mStartTime, String mFinishTime, boolean mIsPaid) {
-
+        super();
         this.mServerId = mEventId;
         this.mName = mName;
         this.mSponsorId = mSponsorId;
@@ -87,7 +91,7 @@ public class Event extends BasePublication {
     }
 
     public Event(JSONObject jsonObject) {
-
+        super();
         this.mServerId = jsonObject.optInt(API_ID);
         this.mName = jsonObject.optString(COLUMN_NAME);
         this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
@@ -225,5 +229,10 @@ public class Event extends BasePublication {
     @Override
     public String getOtherShareText() {
         return mName + "\n\n" + mSponsorName + "\n\n" + mUrl;
+    }
+
+    @Override
+    public int getServerId() {
+        return mServerId;
     }
 }

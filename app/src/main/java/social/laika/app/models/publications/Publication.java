@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Tag;
 
 @Table(name = Publication.TABLE_NAME)
 public class Publication extends BasePublication {
@@ -30,6 +31,8 @@ public class Publication extends BasePublication {
     public final static String API_LAST_PUBLICATION_ID = "last_publication_id";
     public final static String API_LIMIT = "limit";
 
+    @Column(name = COLUMN_SERVER_ID)
+    public int mServerId;
 
     @Column(name = COLUMN_SPONSOR_ID)
     public int mSponsorId;
@@ -46,13 +49,15 @@ public class Publication extends BasePublication {
 	@Column(name = COLUMN_BODY)
 	public String mBody;
 
+    public Publication() {
+        super();
+    }
 
-	public Publication() { }
 
     public Publication(int mPublicationId, int mSponsorId, String mSponsor, String mTitle,
                        String mDate, String mBody, String mUrlImage, String mUrlPublication,
                        boolean mIsPaid, boolean mIsFavorite) {
-
+        super();
         this.mServerId = mPublicationId;
         this.mSponsorId = mSponsorId;
         this.mSponsor = mSponsor;
@@ -66,7 +71,7 @@ public class Publication extends BasePublication {
     }
 
     public Publication(JSONObject jsonObject) {
-
+        super();
         try {
 
             this.mServerId = jsonObject.getInt(API_PUBLICATION_ID);
@@ -188,7 +193,8 @@ public class Publication extends BasePublication {
 
     @Override
     public String getFacebookContentDescription() {
-        return mBody;
+        return mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
     }
 
     @Override
@@ -198,6 +204,12 @@ public class Publication extends BasePublication {
 
     @Override
     public String getOtherShareText() {
-        return mTitle + "\n\n" + mBody + "\n\n Ver más en: " + mUrl;
+        return mTitle + "\n\n" + mBody + "\n\nVer más en: " + mUrl  + "\n\nDescarga Laika en: " +
+                Tag.LAIKA_GOOGLE_PLAY;
+    }
+
+    @Override
+    public int getServerId() {
+        return mServerId;
     }
 }

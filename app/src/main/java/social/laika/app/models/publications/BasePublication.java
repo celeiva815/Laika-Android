@@ -34,9 +34,6 @@ public abstract class BasePublication extends Model implements Picturable, Share
     public final static String COLUMN_IS_PAID = "is_paid";
     public final static String COLUMN_IS_FAVORITE = "is_favorite";
 
-    @Column(name = COLUMN_SERVER_ID)
-    public int mServerId;
-
 	@Column(name = COLUMN_URL_IMAGE)
 	public String mUrlImage;
 
@@ -51,8 +48,6 @@ public abstract class BasePublication extends Model implements Picturable, Share
 
     @Column(name = COLUMN_IS_FAVORITE)
     public boolean mIsFavorite;
-
-	public BasePublication(){ }
 
     public void setIsFavorite(boolean isFavorite) {
 
@@ -71,7 +66,7 @@ public abstract class BasePublication extends Model implements Picturable, Share
                     + File.separator + folder + File.separator);
             root.mkdirs();
 
-            String filename = new Photographer().getImageName(context, folder + mServerId);
+            String filename = new Photographer().getImageName(context, folder + getServerId());
 
             File sdImageMainDirectory = new File(root, filename);
             outputFileUri = Uri.fromFile(sdImageMainDirectory);
@@ -101,4 +96,6 @@ public abstract class BasePublication extends Model implements Picturable, Share
         return url;
 
     }
+
+    public abstract int getServerId();
 }
