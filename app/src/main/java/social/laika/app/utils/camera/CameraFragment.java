@@ -37,7 +37,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
     public static final String CAMERA_FLASH_KEY = "flash_mode";
     public static final String PREVIEW_HEIGHT_KEY = "preview_height";
 
-    private static final int PICTURE_SIZE_MAX_WIDTH = 1280;
+    private static final int PICTURE_SIZE_MAX_WIDTH = 640;
     private static final int PREVIEW_SIZE_MAX_WIDTH = 640;
 
     private int mCameraID;

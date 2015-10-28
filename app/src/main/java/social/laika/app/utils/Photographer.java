@@ -228,8 +228,9 @@ public class Photographer {
 
     public String encodeImage(Bitmap bitmap) {
 
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 640, 640, true);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        resized.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
