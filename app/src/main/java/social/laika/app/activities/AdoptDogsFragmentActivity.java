@@ -155,10 +155,5 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
 
             return PagerAdapter.POSITION_NONE;
         }
-
-
     }
-
-
-
 }

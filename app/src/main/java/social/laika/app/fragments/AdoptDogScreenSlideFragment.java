@@ -6,11 +6,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -97,8 +100,11 @@ public class AdoptDogScreenSlideFragment extends Fragment {
         mCompatibilityTextView.setText(mDog.mCompatibility + "%");
         mFoundationTextView.setText(mDog.mFoundationName);
 
-        if (!Do.isNullOrEmpty(mDog.mDetail))
+        if (!Do.isNullOrEmpty(mDog.mDetail)) {
+
             mDetailsTextView.setText(mDog.mDetail);
+            mDetailsTextView.setMovementMethod(new ScrollingMovementMethod());
+        }
 
         ConfirmAdoptionDialogOnClickListener listener = new ConfirmAdoptionDialogOnClickListener(
                 mDog, mActivity, mProgressDialog, mMainImageView);
@@ -143,6 +149,12 @@ public class AdoptDogScreenSlideFragment extends Fragment {
                 ((AdoptDogsFragmentActivity) mActivity).setIndicatorVisibility(true);
 //                Do.ImageViewAnimatedChange(view.getContext(), mArrowImageView, R.drawable.laika_arrowup_grey);
                 mArrowImageView.setImageResource(R.drawable.laika_arrowup_grey);
+
+                if (!Do.isNullOrEmpty(mDog.mDetail)) {
+
+                    mDetailsTextView.setText(mDog.mDetail);
+                    mDetailsTextView.setMovementMethod(new ScrollingMovementMethod());
+                }
 
             }
         });
