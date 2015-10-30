@@ -407,10 +407,14 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     @Override
     public void succeedUpload() {
 
-        mProgressDialog.dismiss();
-        onBackPressed();
-        Do.showLongToast(Do.getRString(this, R.string.congrats_new_dog_added) + mDog.mName, this);
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
 
+        Do.showLongToast(Do.getRString(this, R.string.congrats_new_dog_added) + mDog.mName,
+                getApplicationContext());
+
+        finish();
     }
 
     @Override

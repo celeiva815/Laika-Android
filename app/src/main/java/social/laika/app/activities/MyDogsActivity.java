@@ -226,6 +226,12 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
                 return true;
 
+            case R.id.pick_picture_settings:
+
+                pickPhoto();
+
+                return true;
+
             case R.id.add_owner_settings:
 
                 addOwner();
@@ -298,6 +304,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
         } else if (requestCode == Crop.REQUEST_CROP) {
 
+            mPhotographer.handleCrop(resultCode, result, this, null);
             uploadPhoto();
 
         }
@@ -349,9 +356,11 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     @Override
     public void succeedUpload() {
 
-        Do.showShortToast("la foto se ha subido correctamente", getApplicationContext());
-        mAlbumFragment.refreshPhotos();
+        Do.showShortToast("La foto se ha subido correctamente", getApplicationContext());
 
+        if (mAlbumFragment != null) {
+            mAlbumFragment.refreshPhotos();
+        }
     }
 
     @Override

@@ -84,9 +84,14 @@ public class Photographer {
 
         if (resultCode == activity.RESULT_OK) {
 
-            imageView.setImageDrawable(null);
-            imageView.setImageURI(Crop.getOutput(result));
-            mImageChange = true;
+            mSourceImage = Crop.getOutput(result);
+
+            if (imageView != null) {
+
+                imageView.setImageDrawable(null);
+                imageView.setImageURI(mSourceImage);
+                mImageChange = true;
+            }
 
         } else if (resultCode == Crop.RESULT_ERROR) {
             Do.showShortToast(Crop.getError(result).getMessage(), activity.getApplicationContext());
@@ -228,9 +233,14 @@ public class Photographer {
 
     public String encodeImage(Bitmap bitmap) {
 
-        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 640, 640, true);
+        int width = bitmap.getWidth() > 640 ? 640 : bitmap.getWidth();
+        int heigth = bitmap.getHeight() > 640 ? 640 : bitmap.getHeight();
+        int size = width > heigth ? heigth : width;
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, size, size, true);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         resized.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 

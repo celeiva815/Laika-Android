@@ -39,7 +39,8 @@
                 android:gravity="center"
                 android:onClick="setGenderFormRadioButtonClicked"
                 android:text="@string/male_adopt_dog_form"
-                android:textColor="@color/light_black_font" />
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_min_text"/>
 
             <RadioButton
                 android:id="@+id/female_dog_form_radiobutton"
@@ -48,7 +49,8 @@
                 android:gravity="center"
                 android:onClick="setGenderFormRadioButtonClicked"
                 android:text="@string/female_adopt_dog_form"
-                android:textColor="@color/light_black_font" />
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_min_text"/>
 
             <RadioButton
                 android:id="@+id/both_dog_form_radiobutton"
@@ -58,7 +60,8 @@
                 android:gravity="center"
                 android:onClick="setGenderFormRadioButtonClicked"
                 android:text="@string/whatever_adopt_dog_form"
-                android:textColor="@color/light_black_font" />
+                android:textColor="@color/light_black_font"
+                android:textSize="@dimen/laika_min_text"/>
 
         </RadioGroup>
 
