@@ -12,6 +12,8 @@ import social.laika.app.utils.Do;
  */
 public class WebLinkOnClickListener implements View.OnClickListener {
 
+    //FIXME ask for a BasePublication
+
     public String mUrl;
 
     public WebLinkOnClickListener(String mUrl) {

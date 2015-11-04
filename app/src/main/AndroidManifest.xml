@@ -32,7 +32,7 @@
         android:required="true" />
 
     <application
-        android:name="com.activeandroid.app.Application"
+        android:name="social.laika.app.LaikaApplication"
         android:allowBackup="true"
         android:icon="@drawable/laika_logo_2"
         android:theme="@style/LaikaTheme"

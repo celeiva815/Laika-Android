@@ -288,16 +288,7 @@ public class Owner extends Model {
 
     public boolean isGrownUp() {
 
-        //TODO mejorar el algoritmo para que sea 18 años bien.
-        Date birthDate = Do.stringToDate(mBirthDate, Do.DAY_FIRST);
-        Calendar birthCalendar = Calendar.getInstance();
-        birthCalendar.setTime(birthDate);
-
-        Calendar nowCalendar = Calendar.getInstance();
-
-        int years = nowCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
-
-        return years >= 18;
+         return getAge() >= 18;
     }
 
     public boolean hasCity() {
@@ -306,5 +297,19 @@ public class Owner extends Model {
 
     public boolean hasPhone() {
         return !Do.isNullOrEmpty(mPhone);
+    }
+
+    public int getAge() {
+
+        //TODO mejorar el algoritmo para que sea 18 años bien.
+        Date birthDate = Do.stringToDate(mBirthDate, Do.DAY_FIRST);
+        Calendar birthCalendar = Calendar.getInstance();
+
+        birthCalendar.setTime(birthDate);
+
+        Calendar nowCalendar = Calendar.getInstance();
+        int years = nowCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+
+        return years;
     }
 }

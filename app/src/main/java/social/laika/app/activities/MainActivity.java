@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.android.volley.Request;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.newrelic.agent.android.NewRelic;
@@ -50,6 +51,7 @@ import social.laika.app.network.sync.SyncUtils;
 import social.laika.app.responses.LoginHandler;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 /**
@@ -100,6 +102,8 @@ public class MainActivity extends ActionBarActivity
 
         registerGCM();
         SyncUtils.createSyncAccount(getApplicationContext());
+        Flurry.setConfigurations(this);
+        FlurryAgent.onStartSession(this);
     }
 
     @Override
@@ -134,15 +138,25 @@ public class MainActivity extends ActionBarActivity
         isActive = true;
 
         createFragmentView(mIdLayout);
+
+        Flurry.logTimedEvent(Flurry.SESSION_TIME);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         isActive = false;
+
+        Flurry.endTimedEvent(Flurry.SESSION_TIME);
     }
 
+    @Override
+    protected void onDestroy() {
 
+        FlurryAgent.onEndSession(this);
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onResume() {

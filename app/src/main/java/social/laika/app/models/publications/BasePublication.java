@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import social.laika.app.interfaces.Picturable;
 import social.laika.app.interfaces.Shareable;
@@ -95,6 +97,15 @@ public abstract class BasePublication extends Model implements Picturable, Share
         String url = mUrlImage.replaceAll("original", size);
         return url;
 
+    }
+
+    public Map<String, String> getParams() {
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put(COLUMN_SERVER_ID, Integer.toString(getServerId()));
+
+        return params;
     }
 
     public abstract int getServerId();

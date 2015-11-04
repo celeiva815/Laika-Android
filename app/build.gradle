@@ -10,8 +10,8 @@ android {
         applicationId "social.laika.app"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.1.2"
     }
     buildTypes {
         release {
@@ -47,4 +47,5 @@ dependencies {
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
     compile 'com.newrelic.agent.android:android-agent:5.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
+    compile files('src/main/java/FlurryAnalytics-6.1.0.jar')
 }

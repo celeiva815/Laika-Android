@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.android.volley.Request;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.listeners.WebLinkOnClickListener;
@@ -26,6 +28,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.ShareHelper;
 import social.laika.app.utils.Tag;
 
@@ -125,10 +128,14 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             public void onClick(View v) {
                 ShareHelper helper = new ShareHelper((Activity) mContext, publication);
                 helper.share();
+
+                Flurry.logEvent(Flurry.NEWS_SHARE, publication.getParams());
             }
         });
 
         //setFavorite(publication, publication.mIsFavorite);
+
+        Flurry.logEvent(Flurry.NEWS_VIEW, publication.getParams());
 
         return view;
 
@@ -143,6 +150,8 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
 
+        if (isFavorite) {
+            Flurry.logEvent(Flurry.NEWS_FAVORITE, publication.getParams());
+        }
     }
-
 }

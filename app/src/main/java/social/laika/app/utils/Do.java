@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -385,5 +388,34 @@ public class Do {
 
         return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+    }
+
+
+    public static LocationManager getLocationManager(Context context) {
+
+        return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    public static boolean isProviderEnabled(Context context) {
+
+        LocationManager manager = getLocationManager(context);
+
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static String getVersionName(Context context) {
+
+        try {
+
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            String version = pInfo.versionName;
+
+            return version;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return "0.0.0";
     }
 }
