@@ -109,4 +109,6 @@ public abstract class BasePublication extends Model implements Picturable, Share
     }
 
     public abstract int getServerId();
+
+    public abstract void reportFlurryEvent();
 }

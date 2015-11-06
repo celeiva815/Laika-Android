@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import social.laika.app.activities.LoginActivity;
 import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.network.Api;
+import social.laika.app.utils.Flurry;
 
 /**
  * Created by Tito_Leiva on 13-04-15.
@@ -38,6 +39,7 @@ public class LoginResponse implements Response.ErrorListener,
     @Override
     public void onResponse(JSONObject response) {
 
+        Flurry.endTimedEvent(Flurry.LOGIN_TIME);
         LoginHandler.successLogin(mActivity, response, mLoginProgressBar);
 
     }

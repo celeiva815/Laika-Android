@@ -34,6 +34,7 @@ import social.laika.app.models.Reminder;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RemindersResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -134,6 +135,20 @@ public class RemindersFragment extends Fragment implements Refreshable {
 
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Flurry.logTimedEvent(Flurry.DOG_REMINDERS_TIME);
+    }
+
+    @Override
+    public void onStop() {
+
+        Flurry.endTimedEvent(Flurry.DOG_REMINDERS_TIME);
+        super.onStop();
     }
 
     @Override

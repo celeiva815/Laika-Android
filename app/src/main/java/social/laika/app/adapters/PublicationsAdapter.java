@@ -77,7 +77,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         mSponsorTextView.setText(publication.getSponsor());
         mDateTextView.setText(publication.mDate);
         mBodyTextView.setText(publication.mBody);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication.mUrl));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(publication));
 
         if (!Do.isNullOrEmpty(publication.mUriLocal)) {
 

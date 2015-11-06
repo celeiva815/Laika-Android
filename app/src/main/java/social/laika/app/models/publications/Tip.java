@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Tag;
 
 @Table(name = Tip.TABLE_NAME)
@@ -191,5 +192,11 @@ public class Tip extends BasePublication {
     @Override
     public int getServerId() {
         return mServerId;
+    }
+
+    @Override
+    public void reportFlurryEvent() {
+
+        Flurry.logEvent(Flurry.TIPS_CLICK);
     }
 }

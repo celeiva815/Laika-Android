@@ -25,6 +25,7 @@ import social.laika.app.models.Photo;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.DogPhotosResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 
@@ -53,14 +54,16 @@ public class AlbumMyDogFragment extends Fragment {
 
     @Override
     public void onStart() {
-
-        if (mAlbumAdapter.getCount() == 0) {
-
-            //requestPhotos();
-
-        }
         super.onStart();
 
+        Flurry.logTimedEvent(Flurry.DOG_ALBUM_TIME);
+    }
+
+    @Override
+    public void onStop() {
+
+        Flurry.endTimedEvent(Flurry.DOG_ALBUM_TIME);
+        super.onStop();
     }
 
     @Override

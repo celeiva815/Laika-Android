@@ -21,6 +21,7 @@ public class Flurry {
 
     //Time
     public static final String SESSION_TIME = "session_time";
+    public static final String MY_DOG_TIME = "my_dog_time";
     public static final String DOG_PROFILE_TIME = "dog_profile_time";
     public static final String DOG_REMINDERS_TIME = "dog_reminders_time";
     public static final String DOG_VET_VISIT_TIME = "dog_vet_visit_time";
@@ -28,7 +29,7 @@ public class Flurry {
     public static final String LOGIN_TIME = "login_time";
     public static final String FB_LOGIN_TIME = "login_time";
     public static final String NEWS_TIME = "news_time";
-    public static final String EVENTS_TIME = "events_time";
+    public static final String EVENT_TIME = "events_time";
     public static final String TIPS_TIME = "tips_time";
     public static final String STORIES_TIME = "stories_time";
 
@@ -49,6 +50,7 @@ public class Flurry {
     public static final String STORY_CLICK = "story_click";
     public static final String STORY_SHARE = "story_share";
     public static final String STORY_FAVORITE = "story_favorite";
+    public static final String ADD_OWNER = "add_owner";
 
 
     public static void logEvent(String eventId) {
@@ -91,7 +93,6 @@ public class Flurry {
 
         // configure Flurry
         FlurryAgent.setLogEnabled(false);
-        FlurryAgent.setLogEvents(true);
         FlurryAgent.setVersionName(Do.getVersionName(context));
 
         Owner owner = PrefsManager.getLoggedOwner(context);

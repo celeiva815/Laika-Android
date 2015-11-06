@@ -8,6 +8,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AddOwnerResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 import android.app.AlertDialog;
@@ -82,7 +83,9 @@ public class AddOwnerDogOnClickListener implements OnClickListener, Requestable 
                 if (!Do.isNullOrEmpty(email) && Do.isValidEmail(email)) {
 
                     mEmail = email;
+
                     request();
+                    Flurry.logEvent(Flurry.ADD_OWNER);
 
                 } else {
 

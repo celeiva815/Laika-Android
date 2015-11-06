@@ -1,6 +1,7 @@
 package social.laika.app.activities;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import social.laika.app.models.publications.Event;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.EventsResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -26,6 +28,22 @@ public class EventsActivity extends BasePublicationsActivity {
     public static final String TAG = EventsActivity.class.getSimpleName();
 
     public List<Event> mEvents;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Flurry.logTimedEvent(Flurry.EVENT_TIME);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        Flurry.endTimedEvent(Flurry.EVENT_TIME);
+
+        super.onDestroy();
+
+    }
 
 
     @Override

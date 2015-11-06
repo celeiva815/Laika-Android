@@ -38,6 +38,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.FacebookLoginResponse;
 import social.laika.app.responses.LoginResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 /**
@@ -194,6 +195,7 @@ public class TutorialFragment extends Fragment {
             public void onClick(View view) {
 
                 requestLogIn(view);
+                Flurry.logTimedEvent(Flurry.LOGIN_TIME);
 
             }
         });

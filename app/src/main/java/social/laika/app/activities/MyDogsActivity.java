@@ -41,6 +41,7 @@ import social.laika.app.network.observers.CalendarReminderObserver;
 import social.laika.app.network.observers.VetVisitObserver;
 import social.laika.app.responses.ImageUploadResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.views.CustomPagerSlidingTabStrip;
 
@@ -127,6 +128,14 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
         super.onStart();
         /* We register the content observer */
         registerContentObserver();
+        Flurry.logTimedEvent(Flurry.MY_DOG_TIME);
+    }
+
+    @Override
+    public void onStop() {
+
+        Flurry.endTimedEvent(Flurry.MY_DOG_TIME);
+        super.onStop();
     }
 
     @Override

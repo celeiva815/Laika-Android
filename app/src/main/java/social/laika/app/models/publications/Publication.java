@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import social.laika.app.utils.DB;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Tag;
 
 @Table(name = Publication.TABLE_NAME)
@@ -213,5 +214,11 @@ public class Publication extends BasePublication {
     @Override
     public int getServerId() {
         return mServerId;
+    }
+
+    @Override
+    public void reportFlurryEvent() {
+
+        Flurry.logEvent(Flurry.NEWS_CLICK);
     }
 }

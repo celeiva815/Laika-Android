@@ -12,6 +12,7 @@ import java.util.List;
 
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 
 @Table(name = Event.TABLE_NAME)
 public class Event extends BasePublication {
@@ -234,5 +235,11 @@ public class Event extends BasePublication {
     @Override
     public int getServerId() {
         return mServerId;
+    }
+
+    @Override
+    public void reportFlurryEvent() {
+
+        Flurry.logEvent(Flurry.EVENT_CLICK);
     }
 }

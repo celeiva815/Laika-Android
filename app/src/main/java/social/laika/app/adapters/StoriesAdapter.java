@@ -22,6 +22,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.ShareHelper;
 import social.laika.app.utils.Tag;
 
@@ -109,21 +110,29 @@ public class StoriesAdapter extends ArrayAdapter<Story> {
         mShareImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ShareHelper helper = new ShareHelper((Activity) context, story);
+
                 helper.share();
+                Flurry.logEvent(Flurry.STORY_SHARE);
             }
         });
 
-        return view;
+        Flurry.logEvent(Flurry.STORY_VIEW);
 
+        return view;
     }
 
     public void setFavorite(Story story, boolean isFavorite) {
 
-        story.setIsFavorite(isFavorite);
         int resource = isFavorite ? R.drawable.laika_favorite_red : R.drawable.laika_favorite_white;
+
+        story.setIsFavorite(isFavorite);
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
 
+        if (isFavorite) {
+            Flurry.logEvent(Flurry.STORY_FAVORITE);
+        }
     }
 }

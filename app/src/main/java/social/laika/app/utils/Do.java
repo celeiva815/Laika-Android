@@ -9,12 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -30,19 +27,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.activeandroid.Model;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -226,18 +215,6 @@ public class Do {
      */
     public static boolean smartCompareStrings(String string1, String string2){
         return removeToLowerSpecialCharacters(string1).contains(removeToLowerSpecialCharacters(string2));
-    }
-
-    public static Model findByCustomId(Class<? extends Model> klass,String custom_id,String id){
-        int parsedId=Integer.parseInt(id);
-        List<Model> query =  new Select().from(klass).where(custom_id+" = ?",parsedId).execute();
-        Model objectToReturn = query.size() > 0 ? query.get(0) : null;
-        return klass.cast(objectToReturn);
-    }
-
-    public static void deleteAll(Class<? extends Model> klass) {
-
-        new Delete().from(klass).execute();
     }
 
     public static void addStringToSharedPreferences(Context context, String key, String value) {

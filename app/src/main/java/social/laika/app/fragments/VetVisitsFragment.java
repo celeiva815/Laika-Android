@@ -29,6 +29,7 @@ import social.laika.app.models.VetVisit;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.VetVisitsResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 /**
@@ -68,6 +69,20 @@ public class VetVisitsFragment extends Fragment implements Refreshable {
 
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Flurry.logTimedEvent(Flurry.DOG_VET_VISIT_TIME);
+    }
+
+    @Override
+    public void onStop() {
+
+        Flurry.endTimedEvent(Flurry.DOG_VET_VISIT_TIME);
+        super.onStop();
     }
 
     @Override

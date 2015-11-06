@@ -22,6 +22,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Tag;
 
 public class EventsAdapter extends ArrayAdapter<Event> {
@@ -103,6 +104,7 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         }
 
         if (event.mIsPaid) {
+
             mAnnounceTextView.setVisibility(View.VISIBLE);
             mSponsorTextView.setTextColor(view.getContext().getResources().getColor(R.color.laika_red));
 
@@ -111,9 +113,12 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         }
 
         final int pos = position;
+
         view.setClickable(true);
         view.setFocusable(true);
-        view.setOnClickListener(new WebLinkOnClickListener(event.mUrlEvent));
+        view.setOnClickListener(new WebLinkOnClickListener(event));
+
+        Flurry.logEvent(Flurry.EVENT_VIEW, event.getParams());
 
         return view;
 

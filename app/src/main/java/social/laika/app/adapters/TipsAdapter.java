@@ -23,6 +23,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.ShareHelper;
 import social.laika.app.utils.Tag;
 
@@ -59,7 +60,7 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mProgressBar = (ProgressBar) view.findViewById(R.id.download_image_progressbar);
         mFavoriteImageView = (ImageView) view.findViewById(R.id.favorite_tip_imageview);
         mShareImageView = (ImageView) view.findViewById(R.id.share_tip_imageview);
-        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip.mUrl));
+        mMainImageView.setOnClickListener(new WebLinkOnClickListener(tip));
 
         mSponsorTextView.setText(tip.mSponsorName);
         mTitleTextView.setText(tip.mTitle);
@@ -110,8 +111,12 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
             public void onClick(View v) {
                 ShareHelper helper = new ShareHelper((Activity) context, tip);
                 helper.share();
+
+                Flurry.logEvent(Flurry.TIPS_SHARE, tip.getParams());
             }
         });
+
+        Flurry.logEvent(Flurry.TIPS_VIEW, tip.getParams());
 
         return view;
 
@@ -124,5 +129,8 @@ public class TipsAdapter extends ArrayAdapter<Tip> {
         mFavoriteImageView.setImageResource(resource);
         notifyDataSetChanged();
 
+        if (isFavorite) {
+            Flurry.logEvent(Flurry.TIPS_FAVORITE, tip.getParams());
+        }
     }
 }

@@ -24,6 +24,7 @@ import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.PublicationsResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -33,59 +34,18 @@ public class PublicationsActivity extends BasePublicationsActivity {
 
     public List<Publication> mPublications;
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-
-        if (getIntent().hasExtra(KEY_FAVORITE)) {
-            mIsFavorite = getIntent().getExtras().getBoolean(KEY_FAVORITE, false);
-        }
-
-        viewSettings();
-        setContentView(mIdLayout);
-        setActivityView();
-
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.laika_red));
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        Flurry.logTimedEvent(Flurry.NEWS_TIME);
     }
 
+    @Override
+    protected void onDestroy() {
 
-        @Override
-    public void onStart() {
-
-            if (mPublicationsListView.getCount() == 0) {
-
-                mEmptyLinearLayout.setVisibility(View.VISIBLE);
-                requestPublications(Tag.NONE, Tag.LIMIT, getApplicationContext());
-            }
-
-            super.onStart();
-    }
-
-    public void setActivityView() {
-
-        mEmptyLinearLayout = (LinearLayout) findViewById(R.id.empty_view);
-        mPublicationsListView = (ListView) findViewById(R.id.main_listview);
-        mPublicationsAdapter = new PublicationsAdapter(this, R.layout.lk_events_adapter,
-                mPublications);
-
-        mPublicationsListView.setAdapter(mPublicationsAdapter);
-        mPublicationsListView.setItemsCanFocus(true);
-        mPublicationsListView.setEmptyView(mEmptyLinearLayout);
-
-        if (!mIsFavorite) {
-
-            mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-
-            mRefreshListener = new PublicationsRefreshListener(this);
-            //PublicationsRefreshListener refreshListener = new PublicationsRefreshListener(this);
-
-            mPublicationsListView.setOnScrollListener(mRefreshListener);
-            onCreateSwipeRefresh(mSwipeLayout, mRefreshListener);
-        }
-
-
+        Flurry.endTimedEvent(Flurry.NEWS_TIME);
+        super.onDestroy();
     }
 
     @Override

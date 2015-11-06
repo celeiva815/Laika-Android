@@ -2,6 +2,7 @@ package social.laika.app.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.StoriesResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -28,6 +30,22 @@ public class StoriesActivity extends BasePublicationsActivity {
     public static final String TAG = StoriesActivity.class.getSimpleName();
     
     public List<Story> mStories;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Flurry.logTimedEvent(Flurry.STORIES_TIME);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        Flurry.endTimedEvent(Flurry.STORIES_TIME);
+
+        super.onDestroy();
+
+    }
 
     @Override
     public void requestPublications(int lastPublicationId, int limit, Context context) {

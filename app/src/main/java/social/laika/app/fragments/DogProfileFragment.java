@@ -30,6 +30,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.responses.OwnersResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -127,9 +128,16 @@ public class DogProfileFragment extends Fragment implements Refreshable {
 
     @Override
     public void onStart() {
-
         super.onStart();
 
+        Flurry.logTimedEvent(Flurry.DOG_PROFILE_TIME);
+    }
+
+    @Override
+    public void onStop() {
+
+        Flurry.endTimedEvent(Flurry.DOG_PROFILE_TIME);
+        super.onStop();
     }
 
     @Override
