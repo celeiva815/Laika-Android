@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -395,4 +396,28 @@ public class Do {
 
         return "0.0.0";
     }
+
+    public static Location getLastBestLocation(LocationManager locationManager) {
+
+        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        long GPSLocationTime = 0;
+        if (null != locationGPS) {
+            GPSLocationTime = locationGPS.getTime();
+        }
+
+        long NetLocationTime = 0;
+
+        if (null != locationNet) {
+            NetLocationTime = locationNet.getTime();
+        }
+
+        if (0 < GPSLocationTime - NetLocationTime) {
+            return locationGPS;
+        } else {
+            return locationNet;
+        }
+    }
+
 }

@@ -52,6 +52,9 @@ public class Flurry {
     public static final String STORY_FAVORITE = "story_favorite";
     public static final String ADD_OWNER = "add_owner";
 
+    //Errors and Crashes
+    public static final String EDIT_USER_ERROR = "edit_user_error";
+
 
     public static void logEvent(String eventId) {
 
@@ -96,6 +99,7 @@ public class Flurry {
         FlurryAgent.setVersionName(Do.getVersionName(context));
 
         Owner owner = PrefsManager.getLoggedOwner(context);
+
         if (owner != null) {
 
             FlurryAgent.setUserId(Integer.toString(owner.mOwnerId));
@@ -105,22 +109,13 @@ public class Flurry {
         }
 
         LocationManager manager = Do.getLocationManager(context);
+        Location lastLocation = Do.getLastBestLocation(manager);
 
-        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
-            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            FlurryAgent.setLocation((float) location.getLatitude(), (float) location.getLongitude());
-
-        } else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-
-            Location location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            FlurryAgent.setLocation((float) location.getLatitude(), (float) location.getLongitude());
-
+        if (lastLocation != null) {
+            FlurryAgent.setLocation((float) lastLocation.getLatitude(), (float) lastLocation.getLongitude());
         }
 
         // init Flurry
         FlurryAgent.init(context, FLURRY_APIKEY);
     }
-
-
 }

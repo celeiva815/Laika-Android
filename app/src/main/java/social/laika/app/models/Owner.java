@@ -1,30 +1,45 @@
 package social.laika.app.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.android.volley.Request;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import social.laika.app.R;
+import social.laika.app.interfaces.Picturable;
+import social.laika.app.network.Api;
+import social.laika.app.network.VolleyManager;
+import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 @Table(name = Owner.TABLE_NAME)
-public class Owner extends Model {
+public class Owner extends Model implements Picturable {
 
     public final static String TABLE_NAME = "owners";
     public final static String COLUMN_OWNER_ID = "owner_id";
@@ -39,6 +54,7 @@ public class Owner extends Model {
     public final static String COLUMN_EMAIL = "email";
     public final static String COLUMN_CITY_ID = "city_id";
     public final static String COLUMN_URL_IMAGE = "url_image";
+    public final static String COLUMN_URL_LOCAL = "url_local";
 
     public final static String API_OWNERS = "owners";
     public final static String API_ID = "id";
@@ -81,6 +97,9 @@ public class Owner extends Model {
 
     @Column(name = COLUMN_URL_IMAGE)
     public String mUrlImage;
+
+    @Column(name = COLUMN_URL_LOCAL)
+    public String mUrlLocal;
 
     //Not in the database
     public int mRole;
@@ -174,10 +193,14 @@ public class Owner extends Model {
         this.mEmail = owner.mEmail;
         this.mPhone = owner.mPhone;
         this.mCityId = owner.mCityId;
-        this.mUrlImage = owner.mUrlImage;
+
+        if (!mUrlImage.equals(owner.mUrlImage)) {
+            this.mUrlImage = owner.mUrlImage;
+            this.mUrlLocal = "";
+
+        }
 
         this.save();
-
     }
 
     public JSONObject getJsonObject() {
@@ -311,5 +334,80 @@ public class Owner extends Model {
         int years = nowCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
 
         return years;
+    }
+
+    @Override
+    public void setUriLocal(Bitmap bitmap, Context context, String folder) {
+
+        OutputStream fOut = null;
+        Uri outputFileUri;
+
+        try {
+            File root = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + folder + File.separator);
+            root.mkdirs();
+
+            String filename = new Photographer().getImageName(context, folder + mOwnerId);
+
+            File sdImageMainDirectory = new File(root, filename);
+            outputFileUri = Uri.fromFile(sdImageMainDirectory);
+            fOut = new FileOutputStream(sdImageMainDirectory);
+            mUrlLocal = outputFileUri.toString();
+
+            this.save();
+
+        } catch (Exception e) {
+
+            Do.showShortToast("No se pudo guardar la foto", context);
+        }
+
+        try {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public String getImage(String size) {
+
+        String url = mUrlImage.replaceAll("original", size);
+        return url;
+
+    }
+
+    public void requestUserImage(Context context, ImageView imageView, ProgressBar progressBar,
+                                String size)  {
+
+        if (!Do.isNullOrEmpty(mUrlLocal)) {
+
+            File file = new File(Uri.parse(mUrlLocal).getPath());
+
+            if (file.exists()) {
+                imageView.setImageURI(Uri.parse(mUrlLocal));
+
+            } else if (!Do.isNullOrEmpty(mUrlImage)) {
+
+                progressBar.setVisibility(View.VISIBLE);
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                        imageView, this, TABLE_NAME);
+                Request request = Api.imageRequest(getImage(size), imageView, response,
+                        response);
+
+                response.setProgressBar(progressBar);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+        } else if (!Do.isNullOrEmpty(mUrlImage)) {
+
+            progressBar.setVisibility(View.VISIBLE);
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context,
+                    imageView, this, TABLE_NAME);
+            Request request = Api.imageRequest(getImage(size), imageView, response,
+                    response);
+
+            response.setProgressBar(progressBar);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
+        }
     }
 }

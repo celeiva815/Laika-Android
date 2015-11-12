@@ -62,6 +62,11 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
 
         //sync general
         Breed.saveBreeds(response);
+
+        City.deleteAll();
+        Region.deleteAll();
+        Country.deleteAll();
+
         Country.saveCountries(response);
         Region.saveRegions(response);
         City.saveCities(response);

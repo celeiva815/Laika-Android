@@ -423,8 +423,6 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         mProgressDialog.dismiss();
         Do.showLongToast("¡Lo sentimos!, Hemos actualizado el perfil de " + mDog.mName + ", pero " +
                 "no se ha podido subir la foto. Inténtalo más tarde", this);
-        onBackPressed();
-
     }
 
     @Override

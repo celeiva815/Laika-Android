@@ -29,7 +29,8 @@ public class ToAdoptActivityOnClickListener implements View.OnClickListener {
     public void onClick(View v) {
 
         Context context = v.getContext();
-        String iso = Do.getCountryIso(context);
+//        String iso = Do.getCountryIso(context);
+        String iso = "cl";
 
         if (Country.existIso(iso)) {
 

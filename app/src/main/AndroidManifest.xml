@@ -384,7 +384,7 @@
             android:value="AndroidInit.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="5" />
+            android:value="7" />
 
         <!-- [AI] [G+] agregar la metadata de la base de datos -->
         <meta-data

@@ -1,14 +1,20 @@
 package social.laika.app.utils;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import social.laika.app.R;
+import social.laika.app.activities.MainActivity;
 import social.laika.app.activities.StopAlarmActivity;
 import social.laika.app.activities.StopCalendarActivity;
 import social.laika.app.models.AlarmReminder;
@@ -52,15 +58,18 @@ public class AlarmReceiver extends BroadcastReceiver {
                 int prevHour = calendar.get(Calendar.HOUR_OF_DAY);
                 int hour = DateFormatter.parseTimeFromString(time)[0];
 
-                isMomentToWakeUp = weekday == alarmDay && (hour == alarmHour || hour == prevHour);
+                isMomentToWakeUp = weekday == alarmDay && hour == alarmHour;
 
                 if (isMomentToWakeUp) {
+
+                    long localId = extras.getLong(StopAlarmActivity.LOCAL_ID);
+                    AlarmReminder reminder = AlarmReminder.load(AlarmReminder.class, localId);
 
                     Intent alarmIntent = new Intent(context, StopAlarmActivity.class);
 
                     alarmIntent.putExtras(extras);
                     alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(alarmIntent);
+                    sendNotification(context, alarmIntent, reminder.mTitle, reminder.mDetail);
 
                 }
 
@@ -78,14 +87,17 @@ public class AlarmReceiver extends BroadcastReceiver {
                 calendar.setTime(Do.stringToDate(date, Do.DAY_FIRST));
                 int alarmDay = calendar.get(Calendar.DAY_OF_YEAR);
 
-                isMomentToWakeUp = alarmDay == actualDay && (alarmHour == actualHour || alarmHour == prevHour);
+                isMomentToWakeUp = alarmDay == actualDay && alarmHour == actualHour;
 
                 if (isMomentToWakeUp) {
 
-                    Intent alarmIntent = new Intent(context, StopCalendarActivity.class);
-                    alarmIntent.putExtras(extras);
-                    alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(alarmIntent);
+                    long localId = extras.getLong(StopCalendarActivity.LOCAL_ID);
+                    CalendarReminder reminder = CalendarReminder.load(CalendarReminder.class, localId);
+
+                    Intent calendarIntent = new Intent(context, StopCalendarActivity.class);
+                    calendarIntent.putExtras(extras);
+                    calendarIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    sendNotification(context, calendarIntent, reminder.mTitle, reminder.mDetail);
                 }
 
                 break;
@@ -95,5 +107,27 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Release the lock
         wl.release();
 
+    }
+
+    private void sendNotification(Context context, Intent intent, String message, String title) {
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" +
+                R.raw.ladrido);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.laika_k)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(soundUri)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }

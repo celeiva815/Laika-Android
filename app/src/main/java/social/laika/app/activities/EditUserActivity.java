@@ -31,7 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.CitiesAdapter;
@@ -47,6 +49,7 @@ import social.laika.app.models.Region;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
@@ -76,7 +79,6 @@ public class EditUserActivity extends ActionBarActivity
     public String mPhoneCountry;
     public City mCity;
     public ProgressDialog mProgressDialog;
-    public ProgressBar mProgressBar;
     public Owner mOwner;
     public int mGender;
     public ImageView mProfileImageView;
@@ -90,6 +92,21 @@ public class EditUserActivity extends ActionBarActivity
         mPhoneCountry = Do.getCountryIso(getApplicationContext());
         mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
         mCity = City.getSingleLocation(mOwner.mCityId);
+
+        if (mCity == null) {
+            mCity = City.getSingleCity(1); //FIXME esto es un parche para quienes se le cae la app
+
+            Do.showLongToast("Detectamos un problema con tu localización. Te recomendamos " +
+                    "reiniciar tu sesión y actualizar tus datos.", getApplicationContext());
+
+            Map<String, String> map = new HashMap<>();
+
+            map.put(Owner.COLUMN_OWNER_ID, Integer.toString(mOwner.mOwnerId));
+            Flurry.logEvent(Flurry.EDIT_USER_ERROR, map);
+
+            PrefsManager.setNeedSync(getApplicationContext(), true);
+        }
+
         setActivityView();
         setValues();
 
@@ -123,7 +140,6 @@ public class EditUserActivity extends ActionBarActivity
         mUpdateButton = (Button) findViewById(R.id.update_edit_user_button);
         mProfileImageView = (ImageView) findViewById(R.id.profile_edit_user_imageview);
         mPhotographer = new Photographer();
-        mProgressBar = (ProgressBar) findViewById(R.id.download_image_progressbar);
 
         PhotographerListener listener = new PhotographerListener(mPhotographer, this);
 
@@ -221,9 +237,6 @@ public class EditUserActivity extends ActionBarActivity
             mRegionSpinner.setSelection(regionPosition);
 
         }
-
-        Api.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
-                getApplicationContext());
     }
 
     @Override

@@ -153,8 +153,9 @@ public class UserProfileActivity extends ActionBarActivity {
 
         setTitle("Mi Perfil");
 
-        Api.getImage(mOwner.mUrlImage, mProgressBar, mProfileImageView,
-                getApplicationContext());
+        mOwner.requestUserImage(getApplicationContext(), mProfileImageView, mProgressBar,
+                Tag.IMAGE_MEDIUM);
+
         mDogsListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
