@@ -21,7 +21,9 @@ import com.android.volley.Request;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.CitiesAdapter;
@@ -43,6 +45,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 public class AdoptDogUserFormActivity extends ActionBarActivity implements Requestable {
@@ -66,17 +69,19 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
     public boolean mKids;
     public boolean mElderly;
     public boolean mPets;
+    public boolean mCanAdopt;
     public ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(mIdLayout);
 
         Owner owner = PrefsManager.getLoggedOwner(getApplicationContext());
         mCity = City.getSingleLocation(owner.mCityId);
         mNext = getIntent().getExtras().getInt(KEY_NEXT_ACTIVITY, AdoptDogUserFormResponse.NEXT_ADOPT_DOG);
+        mCanAdopt = Country.existIso(Do.getCountryIso(getApplicationContext()));
 
+        setContentView(mIdLayout);
         setActivityView();
         setValues();
 
@@ -120,7 +125,6 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
 
     public void setActivityView() {
 
-        //View creation
         mRegionSpinner = (Spinner) findViewById(R.id.region_dog_form_spinner);
         mCitySpinner = (Spinner) findViewById(R.id.city_dog_form_spinner);
         mHomeSpinner = (Spinner) findViewById(R.id.space_dog_form_spinner);
@@ -136,6 +140,40 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
         ImageView elderlyHelper = (ImageView) findViewById(R.id.elderly_helper);
         ImageView petsHelper = (ImageView) findViewById(R.id.pets_helper);
         ImageView freeTimeHelper = (ImageView) findViewById(R.id.free_time_helper);
+
+        if (mCanAdopt) {
+
+            RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
+                    R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
+                    getRegions(getApplicationContext()));
+
+            mRegionSpinner.setAdapter(regionAdapter);
+            mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
+            mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mCity = (City) parent.getItemAtPosition(position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+        } else {
+
+            mRegionSpinner.setVisibility(View.GONE);
+            mCitySpinner.setVisibility(View.GONE);
+            findViewById(R.id.region_new_dog_register_textview).setVisibility(View.GONE);
+            findViewById(R.id.city_new_dog_register_textview).setVisibility(View.GONE);
+
+            Do.showLongToast("¡Lo sentimos! En estos momentos, las adopciones están disponible solo en Chile.",
+                    getApplicationContext());
+            Do.showLongToast("Pronto nos expandiremos a más países de Latino América.",
+                    getApplicationContext());
+        }
 
         //Adapters creation
         SpaceAdapter spaceAdapter = new SpaceAdapter(this.getApplicationContext(),
@@ -160,25 +198,11 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
         freeTimeHelper.setOnClickListener(new HelperDialogOnClickListener(R.string.time_helper, AdoptDogUserFormActivity.this));
 
         //Setting the adapters
-        mRegionSpinner.setAdapter(regionAdapter);
         mFreeTimeSpinner.setAdapter(freeTimeAdapter);
         mHomeSpinner.setAdapter(spaceAdapter);
 
         //Setting the listeners
         mSearchButton.setOnClickListener(listener);
-        mRegionSpinner.setOnItemSelectedListener(new ChangeRegionLocationsOnItemSelectedListener(mCitySpinner, mCity));
-        mCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCity = (City) parent.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void setValues() {
@@ -188,7 +212,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
 
         mPhoneEditText.setText(owner.mPhone);
 
-        if (mCity != null && mCity.mCityId > 0) {
+        if (mCanAdopt && mCity != null && mCity.mCityId > 0) {
 
             int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
                     getPosition(mCity.getRegion());
@@ -348,6 +372,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
 
         String iso = Do.getCountryIso(context);
         Country country = Country.getSingleCountry(iso);
+
         return Region.getRegions(country.mCountryId);
     }
 

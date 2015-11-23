@@ -41,8 +41,8 @@ public class Api {
 
     public static final String TAG = Api.class.getSimpleName();
 
-    public static final String BASE_URL = "http://fundaciones.laika.social/";
-//    public static final String BASE_URL = "http://test.laika.social/";
+//    public static final String BASE_URL = "http://fundaciones.laika.social/";
+    public static final String BASE_URL = "http://test.laika.social/";
 //    public static final String BASE_URL = "http://develop.laika.social/";
     public static final String TEST_BASE_URL = "api/";
     public static final String API_URL = BASE_URL + TEST_BASE_URL;
@@ -66,7 +66,7 @@ public class Api {
     public static final String ADDRESS_SEND_RECOVER_PASS = "send_recover_pass/";
     public static final String ADDRESS_REGISTER = "sign_up/";
     public static final String ADDRESS_STORIES = "stories/";
-    public static final String ADDRESS_SYNC = "sync/";
+    public static final String ADDRESS_SYNC = "sync";
     public static final String ADDRESS_SUBSCRIBE = "subscribe/";
     public static final String ADDRESS_TIPS = "tips/";
     public static final String ADDRESS_UNSUBSCRIBE = "unsubscribe/";
@@ -294,6 +294,4 @@ public class Api {
 
         return request;
     }
-
-
 }

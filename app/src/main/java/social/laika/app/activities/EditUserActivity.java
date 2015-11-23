@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.activeandroid.query.Select;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -81,6 +82,7 @@ public class EditUserActivity extends ActionBarActivity
     public ProgressDialog mProgressDialog;
     public Owner mOwner;
     public int mGender;
+    public boolean mCanAdopt;
     public ImageView mProfileImageView;
     public Photographer mPhotographer;
 
@@ -89,15 +91,13 @@ public class EditUserActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(mIdLayout);
+        mCanAdopt = Country.existIso(Do.getCountryIso(getApplicationContext()));
         mPhoneCountry = Do.getCountryIso(getApplicationContext());
         mOwner = PrefsManager.getLoggedOwner(getApplicationContext());
         mCity = City.getSingleLocation(mOwner.mCityId);
 
         if (mCity == null) {
-            mCity = City.getSingleCity(1); //FIXME esto es un parche para quienes se le cae la app
-
-            Do.showLongToast("Detectamos un problema con tu localización. Te recomendamos " +
-                    "reiniciar tu sesión y actualizar tus datos.", getApplicationContext());
+            mCity = new Select().from(City.class).executeSingle();
 
             Map<String, String> map = new HashMap<>();
 
@@ -146,7 +146,7 @@ public class EditUserActivity extends ActionBarActivity
         mProfileImageView.setOnClickListener(listener);
         mProfileImageView.setOnLongClickListener(listener);
 
-        if (Country.existIso(Do.getCountryIso(getApplicationContext()))) {
+        if (mCanAdopt) {
 
             RegionAdapter regionAdapter = new RegionAdapter(this.getApplicationContext(),
                     R.layout.ai_simple_textview_for_adapter, R.id.simple_textview,
@@ -225,7 +225,7 @@ public class EditUserActivity extends ActionBarActivity
 
         }
 
-        if (Country.existIso(Do.getCountryIso(this)) && mCity != null && mCity.mCityId > 1) {
+        if (mCanAdopt && mCity != null && mCity.mCityId > 1) {
 
             int regionPosition = ((RegionAdapter) mRegionSpinner.getAdapter()).
                     getPosition(mCity.getRegion());

@@ -247,10 +247,6 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
             case GCM_SYNC_LOCATIONS:
 
-                City.deleteAll();
-                Region.deleteAll();
-                Country.deleteAll();
-
                 performFullSyncHard();
 
                 break;

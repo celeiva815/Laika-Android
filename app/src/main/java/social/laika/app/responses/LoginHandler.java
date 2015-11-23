@@ -11,9 +11,13 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import social.laika.app.R;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AdoptDogForm;
+import social.laika.app.models.Country;
 import social.laika.app.models.Owner;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Size;
@@ -98,7 +102,11 @@ public class LoginHandler {
 
         String token = PrefsManager.getUserToken(context);
         FirstInformationResponse response = new FirstInformationResponse(requestable, context);
-        Request firstRequest = Api.getRequest(null, Api.ADDRESS_SYNC,
+        Map<String, String> params = new HashMap<>();
+
+        params.put(Country.COLUMN_ISO, Do.getCountryIso(context));
+
+        Request firstRequest = Api.getRequest(params, Api.ADDRESS_SYNC,
                 response, response, token);
 
         VolleyManager.getInstance(context).addToRequestQueue(firstRequest, TAG);
@@ -109,8 +117,11 @@ public class LoginHandler {
 
         String token = PrefsManager.getUserToken(context);
         FirstInformationResponse response = new FirstInformationResponse(activity, progressBar);
+        Map<String, String> params = new HashMap<>();
 
-        Request firstRequest = Api.getRequest(null, Api.ADDRESS_SYNC,
+        params.put(Country.COLUMN_ISO, Do.getCountryIso(context));
+
+        Request firstRequest = Api.getRequest(params, Api.ADDRESS_SYNC,
                 response, response, token);
 
         VolleyManager.getInstance(context).addToRequestQueue(firstRequest, TAG);

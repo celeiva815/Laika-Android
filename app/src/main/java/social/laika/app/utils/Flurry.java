@@ -51,9 +51,11 @@ public class Flurry {
     public static final String STORY_SHARE = "story_share";
     public static final String STORY_FAVORITE = "story_favorite";
     public static final String ADD_OWNER = "add_owner";
+    public static final String COUNTRY_ISO = "country_iso";
 
     //Errors and Crashes
     public static final String EDIT_USER_ERROR = "edit_user_error";
+
 
 
     public static void logEvent(String eventId) {

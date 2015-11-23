@@ -34,9 +34,7 @@ public class PrefsManager {
     public static final String GCM_REGISTRATION_COMPLETE = "registrationComplete";
     public static final String GCM_TOKEN = "GCMToken";
 
-    private PrefsManager() {
-
-    }
+    private PrefsManager() { }
 
     /**
      * Return application Shared Preferences
