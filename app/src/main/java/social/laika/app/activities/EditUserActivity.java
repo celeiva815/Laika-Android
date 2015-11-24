@@ -374,7 +374,7 @@ public class EditUserActivity extends ActionBarActivity
         String birthDate = mBirthDateButton.getText().toString();
         int gender = mGender;
         String phone = mPhoneEditText.getText().toString();
-        int cityId = mCity.mCityId;
+        int cityId = mCanAdopt ? mCity.mCityId : 0;
 
         Owner owner = new Owner(ownerId, ownerName, firstname, lastname, secondLastName, rut, birthDate,
                 gender, mOwner.mEmail, phone, cityId);

@@ -29,6 +29,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.DogForAdoptionResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -89,6 +90,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         super.onStart();
 
         Do.hideKeyboard(this);
+        Flurry.logTimedEvent(Flurry.ADOPTION_TIME);
     }
 
     public void setActivityView() {
@@ -124,6 +126,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 requestDogsForAdoption();
+                Flurry.logEvent(Flurry.ADOPTION_SEARCH);
 
             }
         });
@@ -200,4 +203,10 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+
+        Flurry.endTimedEvent(Flurry.ADOPTION_TIME);
+        super.onDestroy();
+    }
 }

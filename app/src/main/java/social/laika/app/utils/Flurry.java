@@ -21,6 +21,7 @@ public class Flurry {
 
     //Time
     public static final String SESSION_TIME = "session_time";
+    public static final String ADOPTION_TIME = "adoption_time";
     public static final String MY_DOG_TIME = "my_dog_time";
     public static final String DOG_PROFILE_TIME = "dog_profile_time";
     public static final String DOG_REMINDERS_TIME = "dog_reminders_time";
@@ -34,6 +35,11 @@ public class Flurry {
     public static final String STORIES_TIME = "stories_time";
 
     //Events
+    public static final String ADOPTION_USER_FORM = "adoption_user_form";
+    public static final String ADOPTION_SEARCH = "adoption_search";
+    public static final String ADOPTION_DOG_VIEW = "adoption_dog_view";
+    public static final String ADOPTION_DOG_POSTULATION = "adoption_dog_postulation";
+    public static final String ADOPTION_DOG_REVOCATION = "adoption_dog_revocation";
     public static final String NEWS_VIEW = "news_view";
     public static final String NEWS_CLICK = "news_click";
     public static final String NEWS_SHARE = "news_share";
@@ -55,8 +61,6 @@ public class Flurry {
 
     //Errors and Crashes
     public static final String EDIT_USER_ERROR = "edit_user_error";
-
-
 
     public static void logEvent(String eventId) {
 

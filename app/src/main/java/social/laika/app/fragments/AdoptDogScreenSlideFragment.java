@@ -21,6 +21,8 @@ import com.android.volley.Request;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.activities.AdoptDogsFragmentActivity;
@@ -30,6 +32,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Tag;
 
 public class AdoptDogScreenSlideFragment extends Fragment {
@@ -168,6 +171,16 @@ public class AdoptDogScreenSlideFragment extends Fragment {
 
         mDog.requestDogImage(getActivity().getApplicationContext(), mMainImageView,
                 mProgressBar, Tag.IMAGE_LARGE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put(Dog.COLUMN_DOG_ID, Integer.toString(mDog.mDogId));
+        Flurry.logEvent(Flurry.ADOPTION_DOG_VIEW, params);
     }
 
     @Override

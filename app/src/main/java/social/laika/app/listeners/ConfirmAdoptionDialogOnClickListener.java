@@ -7,6 +7,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ConfirmAdoptionResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 import android.app.Activity;
@@ -64,6 +65,7 @@ public class ConfirmAdoptionDialogOnClickListener implements OnClickListener {
                             "Enviando notificación de postulación");
 
                     requestPostulation();
+                    Flurry.logEvent(Flurry.ADOPTION_DOG_POSTULATION);
                     dialog.dismiss();
                 }
             });

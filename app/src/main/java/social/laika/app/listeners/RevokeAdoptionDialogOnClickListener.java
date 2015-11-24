@@ -24,6 +24,7 @@ import social.laika.app.models.UserAdoptDog;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RevokeAdoptionResponse;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
@@ -121,6 +122,7 @@ public class RevokeAdoptionDialogOnClickListener implements OnClickListener {
                         "Enviando la cancelación de la postulación");
 
                 requestRevokePostulation();
+                Flurry.logEvent(Flurry.ADOPTION_DOG_REVOCATION);
                 dialog.dismiss();
             }
         });

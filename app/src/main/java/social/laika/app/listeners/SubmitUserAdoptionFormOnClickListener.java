@@ -3,6 +3,7 @@ package social.laika.app.listeners;
 import social.laika.app.R;
 import social.laika.app.activities.AdoptDogUserFormActivity;
 import social.laika.app.models.AdoptDogForm;
+import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 
 import android.app.AlertDialog;
@@ -51,6 +52,7 @@ public class SubmitUserAdoptionFormOnClickListener implements OnClickListener {
                         homeType, hasPet, hasElderly,hasKids,freeTime);
 
                 mActivity.requestAdoptionDogForm(adoptDogForm);
+                Flurry.logEvent(Flurry.ADOPTION_USER_FORM);
 
             }
         });
