@@ -21,11 +21,10 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.adapters.DogsAdapter;
+import social.laika.app.models.City;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
-import social.laika.app.models.City;
 import social.laika.app.models.Owner;
-import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
@@ -59,8 +58,7 @@ public class UserProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mOwnerId = getIntent().getExtras().getInt(KEY_OWNER_ID,
-                PrefsManager.getUserId(getApplicationContext()));
+        mOwnerId = getIntent().getExtras().getInt(KEY_OWNER_ID, PrefsManager.getUserId(getApplicationContext()));
 
         setInformation();
         setContentView(mIdLayout);
@@ -153,8 +151,7 @@ public class UserProfileActivity extends ActionBarActivity {
 
         setTitle("Mi Perfil");
 
-        mOwner.requestUserImage(getApplicationContext(), mProfileImageView, mProgressBar,
-                Tag.IMAGE_MEDIUM);
+        mOwner.requestUserImage(getApplicationContext(), mProfileImageView, mProgressBar, Tag.IMAGE_MEDIUM);
 
         mDogsListView.setOnTouchListener(new View.OnTouchListener() {
             @Override

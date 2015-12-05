@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -19,7 +20,10 @@ import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import social.laika.app.R;
 import social.laika.app.fragments.PanelFragment;
+import social.laika.app.models.Owner;
 import social.laika.app.utils.BaseActivity;
+import social.laika.app.utils.PrefsManager;
+import social.laika.app.utils.Tag;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
@@ -74,6 +78,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentTransaction.replace(R.id.container, new PanelFragment(), TAG_FRAGMENT_PANEL);
         fragmentTransaction.commit();
 
+        populateNavHeader();
+
     }
 
     @Override
@@ -114,5 +120,24 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void populateNavHeader() {
+        int ownerId = PrefsManager.getUserId(getBaseContext());
+
+        new AsyncTask<Integer, Void, Owner>() {
+            @Override
+            protected Owner doInBackground(Integer... params) {
+                Owner owner = Owner.getSingleOwner(params[0]);
+                return owner;
+            }
+
+            @Override
+            protected void onPostExecute(Owner owner) {
+                name.setText(owner.getFullName());
+                owner.requestUserImage(getApplicationContext(), picture, Tag.IMAGE_MEDIUM);
+                super.onPostExecute(owner);
+            }
+        }.execute(ownerId);
     }
 }
