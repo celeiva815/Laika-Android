@@ -94,13 +94,14 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mTitle);
 
         registerGCM();
         SyncUtils.createSyncAccount(getApplicationContext());
         Flurry.setConfigurations(this);
         FlurryAgent.onStartSession(this);
+
+        startActivity(new Intent(MainActivity.this, HomeActivity.class));
     }
 
     @Override

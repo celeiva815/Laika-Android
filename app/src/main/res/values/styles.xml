@@ -92,7 +92,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/btn_link</item>
-        <item name="android:textSize">@dimen/laika_small_text</item>
+        <item name="android:textSize">@dimen/laika_min_text</item>
     </style>
 
 </resources>

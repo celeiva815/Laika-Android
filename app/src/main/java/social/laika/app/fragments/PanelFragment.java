@@ -1,7 +1,8 @@
 package social.laika.app.fragments;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +17,20 @@ import social.laika.app.listeners.ToActivityOnCLickListener;
 import social.laika.app.listeners.ToAdoptActivityOnClickListener;
 import social.laika.app.listeners.ToMyDogOnCLickListener;
 
-/**
- * Created by Tito_Leiva on 10-02-15.
- */
-public class PlaceHolderFragment extends Fragment {
+public class PanelFragment extends Fragment {
 
-    private int mLayout;
-
-    public PlaceHolderFragment() {
-    }
-
-    public PlaceHolderFragment(int mLayout) {
-
-        this.mLayout = mLayout;
+    public PanelFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.laika_main_activity, container, false);
+    }
 
-        View view = inflater.inflate(mLayout > 0 ? mLayout : R.layout.laika_main_activity, container, false);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         ImageView adoptImageView = (ImageView) view.findViewById(R.id.gender_new_dog_register_textview);
         ImageView myDogImageView = (ImageView) view.findViewById(R.id.my_dog_main_imageview);
@@ -49,7 +45,5 @@ public class PlaceHolderFragment extends Fragment {
         tipsImageView.setOnClickListener(new ToActivityOnCLickListener(TipsActivity.class));
         eventsImageView.setOnClickListener(new ToActivityOnCLickListener(EventsActivity.class));
         storiesImageView.setOnClickListener(new ToActivityOnCLickListener(StoriesActivity.class));
-
-        return view;
     }
 }

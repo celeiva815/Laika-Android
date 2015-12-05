@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -16,10 +18,12 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import social.laika.app.R;
+import social.laika.app.fragments.PanelFragment;
 import social.laika.app.utils.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
+    protected static final String TAG_FRAGMENT_PANEL = "TagFragmentPanel";
     protected int navItemId = R.id.nav_panel;
 
     private CircleImageView picture;
@@ -36,7 +40,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.title_activity_home));
+            actionBar.setTitle(getString(R.string.app_name));
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,6 +68,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 Snackbar.make(navigationView, "Do something", Snackbar.LENGTH_SHORT).show();
             }
         });
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, new PanelFragment(), TAG_FRAGMENT_PANEL);
+        fragmentTransaction.commit();
 
     }
 
