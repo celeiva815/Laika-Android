@@ -366,4 +366,19 @@
 
 
     <string name="share_string">Compartir en:</string>
+
+    <!-- Feedback -->
+    <string name="feedback_loading">Cargando</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <!-- Drawer options -->
+    <string name="nav_panel">Panel</string>
+    <string name="nav_add_pet">Añadir nueva mascota</string>
+    <string name="nav_my_postulations">Mis postulaciones</string>
+    <string name="nav_profile">Mi perfil</string>
+    <string name="nav_close_session">Cerrar sesión</string>
+
+    <!-- Actions -->
+    <string name="action_edit_profile">Editar perfil</string>
+
 </resources>

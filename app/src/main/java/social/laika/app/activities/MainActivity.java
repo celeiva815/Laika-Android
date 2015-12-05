@@ -32,17 +32,17 @@ import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.City;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
-import social.laika.app.models.Region;
-import social.laika.app.models.publications.Event;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Personality;
-import social.laika.app.models.publications.Publication;
 import social.laika.app.models.Photo;
-import social.laika.app.models.publications.Story;
-import social.laika.app.models.publications.Tip;
+import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
+import social.laika.app.models.publications.Event;
+import social.laika.app.models.publications.Publication;
+import social.laika.app.models.publications.Story;
+import social.laika.app.models.publications.Tip;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
@@ -57,9 +57,7 @@ import social.laika.app.utils.PrefsManager;
 /**
  * Created by Tito_Leiva on 10-02-15.
  */
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        Requestable {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Requestable {
 
     private int mIdLayout = R.layout.laika_main_activity;
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -93,8 +91,7 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
         setTitle(mTitle);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
