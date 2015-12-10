@@ -3,8 +3,6 @@ package social.laika.app.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,10 +26,9 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
 
 public class RegisterActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
-
-    public int mIdLayout = R.layout.lk_register_activity;
-
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final int MIN_CHARACTERS_PASSWORD = 8;
+
     public static final String API_EMAIL = "email";
     public static final String API_PASSWORD = "password";
     public static final String API_PASSWORD_CONFIRMATION = "password_confirmation";
@@ -54,7 +51,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(mIdLayout);
+        setContentView(R.layout.lk_register_activity);
         getSupportActionBar().hide();
 
         final Calendar calendar = Calendar.getInstance();
@@ -73,8 +70,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         mRegisterProgressBar = (ProgressBar) findViewById(R.id.register_progressbar);
 
         mGender = Tag.GENDER_FEMALE;
-        mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        mDate = Do.getToStringDate(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         mBirthDateButton.setText(mDate);
         mBirthDateButton.setOnClickListener(new View.OnClickListener() {
 
@@ -95,26 +91,6 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         VolleyManager.getInstance(getApplicationContext()).cancelPendingRequests(TAG);
         super.onPause();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public void enableViews(boolean enable) {
 
@@ -140,7 +116,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
     public void register(View view) {
 
         final String name = mFirstNameEditText.getText().toString();
-        final String lastname = mLastNameEditText.getText().toString();
+        final String lastName = mLastNameEditText.getText().toString();
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
         final String repeatPassword = mRepeatPasswordEditText.getText().toString();
@@ -167,6 +143,11 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
             return;
         }
 
+        if (password.length() < 8) {
+            mPasswordEditText.setError(getString(R.string.password_min_length));
+            return;
+        }
+
         if (TextUtils.isEmpty(repeatPassword)) {
             mPasswordEditText.setError(getString(R.string.field_not_empty_error));
             return;
@@ -186,8 +167,8 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
         try {
 
             jsonParams.putOpt(Owner.COLUMN_FIRST_NAME, name);
-            jsonParams.putOpt(Owner.COLUMN_LAST_NAME, lastname);
-            jsonParams.putOpt(Owner.COLUMN_SECOND_LAST_NAME, getSecondLastName(lastname));
+            jsonParams.putOpt(Owner.COLUMN_LAST_NAME, lastName);
+            jsonParams.putOpt(Owner.COLUMN_SECOND_LAST_NAME, getSecondLastName(lastName));
             jsonParams.putOpt(Owner.COLUMN_BIRTH_DATE, mDate);
             jsonParams.putOpt(Owner.COLUMN_GENDER, mGender);
             jsonParams.putOpt(Owner.COLUMN_PHONE, phone);
@@ -197,11 +178,9 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
             RegisterResponse response = new RegisterResponse(this);
 
-            Request registerRequest = Api.postRequest(jsonParams,
-                    Api.ADDRESS_REGISTER, response, response, null);
+            Request registerRequest = Api.postRequest(jsonParams, Api.ADDRESS_REGISTER, response, response, null);
 
-            VolleyManager.getInstance(getApplicationContext())
-                    .addToRequestQueue(registerRequest, TAG);
+            VolleyManager.getInstance(getApplicationContext()).addToRequestQueue(registerRequest, TAG);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -231,22 +210,20 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-
         mDate = Do.getToStringDate(day, month, year);
         mBirthDateButton.setText(mDate);
-
     }
 
-    private String getSecondLastName(String lastname) {
+    private String getSecondLastName(String lastName) {
 
-        String[] names = lastname.split(" ");
+        if (!lastName.contains(" ")) {
+            return "";
+        }
 
+        String[] names = lastName.split(" ");
         if (names.length >= 2) {
-
             return names[names.length - 1];
-
         } else {
-
             return "";
         }
     }

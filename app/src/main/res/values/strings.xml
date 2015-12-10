@@ -24,6 +24,7 @@
     <string name="not_valid_email_error">Este no es correo electrónico válido</string>
     <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
     <string name="field_not_empty_error">Debes completar esta información</string>
+    <string name="password_min_length">La contraseña debe tener mínimo 8 caracteres</string>
     <string name="equal_password_field">Las contraseñas deben ser iguales</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
     <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
