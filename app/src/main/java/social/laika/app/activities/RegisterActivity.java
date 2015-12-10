@@ -149,7 +149,7 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
             return;
         }
 
-        if (password.length() < 8) {
+        if (password.length() < MIN_CHARACTERS_PASSWORD) {
             mPasswordEditText.setError(getString(R.string.password_min_length));
             return;
         }

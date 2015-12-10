@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.activities.CreateReminderActivity;
@@ -31,11 +27,7 @@ import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Reminder;
-import social.laika.app.network.Api;
-import social.laika.app.network.VolleyManager;
-import social.laika.app.responses.RemindersResponse;
 import social.laika.app.utils.Flurry;
-import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 /**
@@ -258,7 +250,7 @@ public class RemindersFragment extends Fragment implements Refreshable {
         dialog.show();
     }
 
-    public void requestReminders() {
+    /*public void requestReminders() {
 
         Context context = getActivity().getApplicationContext();
         Map<String, String> params = new HashMap<>();
@@ -269,7 +261,7 @@ public class RemindersFragment extends Fragment implements Refreshable {
                 response, response, PrefsManager.getUserToken(context));
 
         VolleyManager.getInstance(context).addToRequestQueue(eventsRequest, TAG);
-    }
+    }*/
 
     @Override
     public void refresh() {
