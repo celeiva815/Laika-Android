@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,7 +26,7 @@ import social.laika.app.utils.Tag;
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
     protected static final String TAG_FRAGMENT_PANEL = "TagFragmentPanel";
-    protected int navItemId = R.id.nav_panel;
+    protected int navItemId = R.id.nav_adopt;
 
     private CircleImageView picture;
     private TextView name;
@@ -60,10 +58,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         picture = (CircleImageView) header.findViewById(R.id.nav_header_picture);
-        Button btnEditProfile = (Button) header.findViewById(R.id.nav_header_btn_edit_profile);
+        // Button btnEditProfile = (Button) header.findViewById(R.id.nav_header_btn_edit_profile);
         name = (TextView) header.findViewById(R.id.nav_header_name);
 
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+        /*btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawer.closeDrawers();
@@ -71,7 +69,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 // startActivity(intentProfile);
                 Snackbar.make(navigationView, "Do something", Snackbar.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -88,15 +86,19 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.nav_panel:
-                return true;
-            case R.id.nav_add_pet:
-                return true;
-            case R.id.nav_my_postulations:
+            case R.id.nav_adopt:
                 return true;
             case R.id.nav_profile:
                 return true;
+            case R.id.nav_favorites:
+                return true;
+            case R.id.nav_my_postulations:
+                return true;
+            case R.id.nav_sponsors:
+                return true;
             case R.id.nav_close_session:
+                return true;
+            case R.id.nav_about_us:
                 return true;
         }
 

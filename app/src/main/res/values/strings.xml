@@ -374,10 +374,20 @@
 
     <!-- Drawer options -->
     <string name="nav_panel">Panel</string>
-    <string name="nav_add_pet">Añadir nueva mascota</string>
-    <string name="nav_my_postulations">Mis postulaciones</string>
+    <string name="nav_adopt">Adopta</string>
     <string name="nav_profile">Mi perfil</string>
+    <string name="nav_favorites">Mis favoritos</string>
+    <string name="nav_my_postulations">Mis postulaciones</string>
+    <string name="nav_sponsors">Colaboradores</string>
     <string name="nav_close_session">Cerrar sesión</string>
+    <string name="nav_about_us">Acerca de</string>
+
+    <!-- About -->
+    <string name="about_item_version_title">Versión de la compilación</string>
+    <string name="about_item_licenses_title">Licencias de código abierto</string>
+    <string name="about_item_policies_title">Política de privacidad</string>
+    <string name="about_item_terms_title">Términos y condiciones</string>
+    <string name="about_item_licences_subtitle">Detalles de la licencia de software de código abierto</string>
 
     <!-- Actions -->
     <string name="action_edit_profile">Editar perfil</string>
