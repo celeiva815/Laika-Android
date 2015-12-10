@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -11,7 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +27,7 @@ import social.laika.app.models.Owner;
 import social.laika.app.utils.BaseActivity;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import social.laika.app.utils.views.LaikaTypeFaceSpan;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
@@ -52,6 +58,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        updateFontMenu(navigationView.getMenu());
         View header = getLayoutInflater().inflate(R.layout.nav_header_home, null);
         navigationView.addHeaderView(header);
 
@@ -141,5 +148,31 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 super.onPostExecute(owner);
             }
         }.execute(ownerId);
+    }
+
+    private void updateFontMenu(Menu menu) {
+        if (menu == null) {
+            return;
+        }
+
+        for (int position = 0; position < menu.size(); position++) {
+            MenuItem menuItem = menu.getItem(position);
+            SubMenu subMenu = menuItem.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int positionSubMenu = 0; positionSubMenu < subMenu.size(); positionSubMenu++) {
+                    MenuItem subMenuItem = subMenu.getItem(positionSubMenu);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+            applyFontToMenuItem(menuItem);
+        }
+
+    }
+
+    protected void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new LaikaTypeFaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 }
