@@ -3,6 +3,7 @@ package social.laika.app.activities;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -135,6 +136,11 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
 
         if (TextUtils.isEmpty(email)) {
             mEmailEditText.setError(getString(R.string.field_not_empty_error));
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailEditText.setError(getString(R.string.not_valid_email_error));
             return;
         }
 
