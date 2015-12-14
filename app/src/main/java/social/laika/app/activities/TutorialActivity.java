@@ -4,25 +4,18 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.Build;
-import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-
-import social.laika.app.BuildConfig;
-import social.laika.app.R;
-import social.laika.app.fragments.TutorialFragment;
-import social.laika.app.utils.Do;
-import social.laika.app.utils.PrefsManager;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -31,6 +24,12 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import social.laika.app.BuildConfig;
+import social.laika.app.R;
+import social.laika.app.fragments.TutorialFragment;
+import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
 
 
 public class TutorialActivity extends ActionBarActivity {
@@ -61,9 +60,7 @@ public class TutorialActivity extends ActionBarActivity {
         initializer();
 
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
-
-            Do.changeActivity(getApplicationContext(), MainActivity.class, this,
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            Do.changeActivity(getApplicationContext(), MainActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
 
 
@@ -117,16 +114,18 @@ public class TutorialActivity extends ActionBarActivity {
 
     /**
      * Facebook CallbackManager Single Instance ?
+     *
      * @return CallbackManager
      */
     public CallbackManager getCallbackManager() {
-        if(mCallbackManager == null)
+        if (mCallbackManager == null)
             mCallbackManager = CallbackManager.Factory.create();
         return mCallbackManager;
     }
 
     /**
      * Calling the CallbackManager :D
+     *
      * @param requestCode
      * @param resultCode
      * @param data

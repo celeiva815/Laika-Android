@@ -371,6 +371,10 @@
     <!-- Feedback -->
     <string name="feedback_loading">Cargando</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="feedback_wait_a_minute">Espere un momento</string>
+    <string name="feedback_sync_dogs_info">Estamos sincronizando tu aplicación con la información de tus perritos</string>
+    <string name="feedback_postulations_saved">Mostrando postulaciones guardadas</string>
+    <string name="feedback_option_unavailable">Opción no disponible aún</string>
 
     <!-- Drawer options -->
     <string name="nav_panel">Panel</string>
