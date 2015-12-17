@@ -25,11 +25,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -79,6 +84,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     protected static final String TAG_FRAGMENT_PANEL = "TagFragmentPanel";
     protected static final int NAV_DRAWER_ICON_ALPHA = 150; // 0 (transparent) to 255
     protected int navItemId = R.id.nav_adopt;
+
+    private ProfileTracker profileTracker;
 
     public static final String GCM_NOTIFICATION = "gcm_notification";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -133,6 +140,23 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         picture = (CircleImageView) header.findViewById(R.id.nav_header_picture);
         name = (TextView) header.findViewById(R.id.nav_header_name);
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            Logger.d("We have a facebook user here, now we try to load his info from facebook");
+            Profile profile = Profile.getCurrentProfile();
+            if (profile == null) {
+                profileTracker = new ProfileTracker() {
+                    @Override
+                    protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                        getPictureFromFacebook(currentProfile.getId(), picture);
+                    }
+                };
+                profileTracker.startTracking();
+            } else {
+                getPictureFromFacebook(profile.getId(), picture);
+            }
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -221,6 +245,14 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 super.onPostExecute(owner);
             }
         }.execute(ownerId);
+    }
+
+    private void getPictureFromFacebook(String facebookId, ImageView target) {
+        String urlPicture = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
+        Glide.with(this)
+                .load(urlPicture)
+                .centerCrop()
+                .into(target);
     }
 
     private void updateMenuStyle(Menu menu) {
