@@ -56,7 +56,7 @@
     <string name="log_in_activity_name">Inicio de Sesión</string>
     <string name="user_log_in">Correo electrónico</string>
     <string name="password_log_in">Contraseña</string>
-    <string name="register_log_in">¿No tienes una cuenta? Regístrate aquí</string>
+    <string name="register_log_in">Regístrate</string>
     <string name="forgot_log_in">¿Olvidaste tu contraseña?</string>
     <string name="register_success">¡Te has registrado exitosamente!</string>
     <string name="log_in">Ingresar</string>

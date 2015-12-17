@@ -1,13 +1,14 @@
 package social.laika.app;
 
-import com.activeandroid.app.Application;
+import android.support.multidex.MultiDexApplication;
+
 import com.orhanobut.logger.Logger;
 
 import social.laika.app.utils.Flurry;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
-public class LaikaApplication extends Application {
+public class LaikaApplication extends MultiDexApplication {
 
     protected static final String TAG_APP = "LaikaApp";
 
