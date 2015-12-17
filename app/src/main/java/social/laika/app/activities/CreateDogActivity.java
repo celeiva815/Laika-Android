@@ -1,8 +1,5 @@
 package social.laika.app.activities;
 
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,18 +26,21 @@ import com.soundcloud.android.crop.Crop;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.List;
+
 import social.laika.app.R;
 import social.laika.app.adapters.BreedAdapter;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
 import social.laika.app.interfaces.Photographable;
 import social.laika.app.interfaces.Requestable;
+import social.laika.app.listeners.ChangeDogBreedsOnItemSelectedListener;
 import social.laika.app.listeners.HelperDialogOnClickListener;
 import social.laika.app.listeners.NewDogOnClickListener;
-import social.laika.app.listeners.ChangeDogBreedsOnItemSelectedListener;
 import social.laika.app.listeners.PhotographerListener;
-import social.laika.app.models.Dog;
 import social.laika.app.models.Breed;
+import social.laika.app.models.Dog;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Photo;
 import social.laika.app.models.Size;
@@ -52,6 +52,7 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CreateDogActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener,
         Photographable, Requestable {
@@ -108,7 +109,7 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -383,16 +384,16 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
             jsonObject.put(Photo.API_PHOTO, mPhotographer.getJsonPhoto(context));
             jsonObject.put(Photo.API_IS_PROFILE, true);
 
-        DogProfileResponse response = new DogProfileResponse(mDog, this, context);
-        Request imageRequest = Api.postRequest(jsonObject,
-                Api.ADDRESS_USER_DOG_PHOTOS, response, response, token);
+            DogProfileResponse response = new DogProfileResponse(mDog, this, context);
+            Request imageRequest = Api.postRequest(jsonObject,
+                    Api.ADDRESS_USER_DOG_PHOTOS, response, response, token);
 
-        imageRequest.setRetryPolicy(new DefaultRetryPolicy(
-                50000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            imageRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    50000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        VolleyManager.getInstance(context).addToRequestQueue(imageRequest, TAG);
+            VolleyManager.getInstance(context).addToRequestQueue(imageRequest, TAG);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -477,5 +478,10 @@ public class CreateDogActivity extends ActionBarActivity implements DatePickerDi
         String title = "Espere un momento";
         String message = "Estamos creando el perfil de " + mNameEditText.getText().toString();
         mProgressDialog = ProgressDialog.show(CreateDogActivity.this, title, message);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,8 +14,9 @@ import java.util.List;
 import social.laika.app.R;
 import social.laika.app.fragments.PhotoScreenSlideFragment;
 import social.laika.app.models.Photo;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class PhotosFragmentActivity extends FragmentActivity{
+public class PhotosFragmentActivity extends FragmentActivity {
 
     public static final String KEY_CURRENT_ITEM = "current_item";
     public static final String KEY_DOG_ID = "dog_id";
@@ -67,18 +69,18 @@ public class PhotosFragmentActivity extends FragmentActivity{
     private void setPhotoList() {
 
         mPhotos = Photo.getPhotos(mDogId);
-	}
-    
-	@Override
+    }
+
+    @Override
     public void onBackPressed() {
         /*if (mPager.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.*/
-            super.onBackPressed();
+        super.onBackPressed();
         /*} else {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-         }*/ 
+         }*/
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -88,7 +90,7 @@ public class PhotosFragmentActivity extends FragmentActivity{
 
         @Override
         public Fragment getItem(int position) {
-        	     	
+
             return new PhotoScreenSlideFragment(mPhotos.get(position), PhotosFragmentActivity.this);
         }
 
@@ -96,6 +98,11 @@ public class PhotosFragmentActivity extends FragmentActivity{
         public int getCount() {
             return mPhotos.size();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

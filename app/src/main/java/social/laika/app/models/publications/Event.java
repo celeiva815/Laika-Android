@@ -82,7 +82,7 @@ public class Event extends BasePublication {
         this.mSponsorId = mSponsorId;
         this.mSponsorName = mSponsorName;
         this.mUrlImage = mUrlImage;
-        this.mUrlEvent = mUrlEvent;
+        this.mUrl = mUrlEvent;
         this.mCityId = mCityId;
         this.mStartDate = mStartDate;
         this.mFinishDate = mFinishDate;
@@ -98,7 +98,7 @@ public class Event extends BasePublication {
         this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
         this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);
         this.mUrlImage = jsonObject.optString(COLUMN_URL_IMAGE);
-        this.mUrlEvent = jsonObject.optString(API_URL_EVENT);
+        this.mUrl = jsonObject.optString(API_URL_EVENT);
         this.mCityId = jsonObject.optInt(COLUMN_CITY_ID, 1);
         this.mAddress = jsonObject.optString(COLUMN_ADDRESS);
         this.mStartDate = jsonObject.optString(COLUMN_START_DATE);
@@ -132,7 +132,7 @@ public class Event extends BasePublication {
         this.mSponsorId = event.mSponsorId;
         this.mSponsorName = event.mSponsorName;
         this.mUrlImage = event.mUrlImage;
-        this.mUrlEvent = event.mUrlEvent;
+        this.mUrl = event.mUrl;
         this.mCityId = event.mCityId;
         this.mAddress = event.mAddress;
         this.mStartDate = event.mStartDate;

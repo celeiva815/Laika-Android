@@ -12,13 +12,12 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
-import java.text.ParseException;
-import java.util.Calendar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,8 +33,7 @@ import social.laika.app.utils.Tag;
 @Table(name = AlarmReminder.TABLE_ALARM_REMINDER)
 public class AlarmReminder extends ModelSync implements Alertable {
 
-    private final static long ONE_WEEK_MILLIS = Do.WEEK * Do.HOURS * Do.MINUTES * Do.SECONDS *
-            Do.MILLIS;
+    private final static long ONE_WEEK_MILLIS = Do.WEEK * Do.HOURS * Do.MINUTES * Do.SECONDS * Do.MILLIS;
 
     public final static int ID_NOT_SET = 0;
 
@@ -235,7 +233,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         return mAlarmReminderId;
     }
 
-    public int getImageResource() {
+    /*public int getImageResource() {
 
         switch (this.mCategory) {
 
@@ -258,10 +256,10 @@ public class AlarmReminder extends ModelSync implements Alertable {
         }
 
         return R.drawable.lk_food_tips;
-    }
+    }*/
 
 
-    public String getCategoryName(Context context) {
+    /*public String getCategoryName(Context context) {
 
         switch (this.mCategory) {
 
@@ -284,7 +282,7 @@ public class AlarmReminder extends ModelSync implements Alertable {
         }
 
         return Do.getRString(context, R.string.food_my_dog);
-    }
+    }*/
 
     public String toDate(Context context) {
 
@@ -566,8 +564,8 @@ public class AlarmReminder extends ModelSync implements Alertable {
     public void cancelAlarm(Context context) {
 
         int[] time = DateFormatter.parseTimeFromString(mTime);
-        int hour = time[0];
-        int minutes = time[1];
+        // int hour = time[0];
+        // int minutes = time[1];
 
         mStatus = Tag.STATUS_NOT_ACTIVATED;
         this.save();
@@ -827,14 +825,14 @@ public class AlarmReminder extends ModelSync implements Alertable {
         String condition = AlarmReminder.COLUMN_DOG_ID + DB.EQUALS + dogId;
         condition += DB.AND + AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(AlarmReminder.class).where(condition).execute();
-//        return new Select().from(AlarmReminder.class).execute();
+        // return new Select().from(AlarmReminder.class).execute();
     }
 
-    public static List<AlarmReminder> getAllReminders() {
+    /*public static List<AlarmReminder> getAllReminders() {
 
         String condition = AlarmReminder.COLUMN_NEEDS_SYNC + DB.NOT_EQUALS + Tag.FLAG_DELETED;
         return new Select().from(AlarmReminder.class).where(condition).execute();
-    }
+    }*/
 
     public static List<AlarmReminder> getNeedSync() {
 

@@ -20,6 +20,7 @@ import social.laika.app.responses.TipsResponse;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class TipsActivity extends BasePublicationsActivity {
 
@@ -107,6 +108,11 @@ public class TipsActivity extends BasePublicationsActivity {
     @Override
     public List getFavoritePublications() {
         return Tip.getFavoriteTips();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

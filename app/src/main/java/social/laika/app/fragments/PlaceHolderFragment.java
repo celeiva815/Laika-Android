@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import social.laika.app.R;
 import social.laika.app.activities.EventsActivity;
-import social.laika.app.activities.MainActivity;
 import social.laika.app.activities.PublicationsActivity;
 import social.laika.app.activities.StoriesActivity;
 import social.laika.app.activities.TipsActivity;
@@ -33,8 +32,7 @@ public class PlaceHolderFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(mLayout > 0 ? mLayout : R.layout.laika_main_activity, container, false);
 

@@ -72,7 +72,9 @@ public class Tip extends BasePublication {
     }
 
     public Tip(JSONObject jsonObject) {
+
         super();
+
         this.mServerId = jsonObject.optInt(API_ID);
         this.mSponsorId = jsonObject.optInt(COLUMN_SPONSOR_ID);
         this.mSponsorName = jsonObject.optString(COLUMN_SPONSOR_NAME);

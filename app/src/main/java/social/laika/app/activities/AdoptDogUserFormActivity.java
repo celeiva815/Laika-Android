@@ -21,9 +21,7 @@ import com.android.volley.Request;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.CitiesAdapter;
@@ -45,8 +43,8 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
-import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AdoptDogUserFormActivity extends ActionBarActivity implements Requestable {
 
@@ -94,7 +92,7 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -366,7 +364,9 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
         return Space.getSpaces(context);
     }
 
-    public List<FreeTime> getFreeTimes(Context context) { return FreeTime.getFreeTimes(context);  }
+    public List<FreeTime> getFreeTimes(Context context) {
+        return FreeTime.getFreeTimes(context);
+    }
 
     public List<Region> getRegions(Context context) {
 
@@ -400,5 +400,10 @@ public class AdoptDogUserFormActivity extends ActionBarActivity implements Reque
     @Override
     public void onFailure() {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
