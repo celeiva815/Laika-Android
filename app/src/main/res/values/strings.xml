@@ -8,6 +8,10 @@
     <!--Facebook-->
     <string name="facebook_app_id">1472555673060744</string>
 
+    <!-- URLS -->
+    <string name="privacy_title">Polícitcas de privacidad</string>
+    <string name="privacy_url">http://www.laika.social/privacy/</string>
+
     <!-- Network -->
     <string name="http_client_null_exception_message">Client must not be null.</string>
 
@@ -392,8 +396,13 @@
     <string name="about_item_policies_title">Política de privacidad</string>
     <string name="about_item_terms_title">Términos y condiciones</string>
     <string name="about_item_licences_subtitle">Detalles de la licencia de software de código abierto</string>
+    <string name="dialog_licenses_title">Open source libraries used by Laika</string>
 
     <!-- Actions -->
     <string name="action_edit_profile">Editar perfil</string>
+
+
+    <string name="title_activity_about">Acerca de Laika</string>
+    <string name="title_activity_web">Activity Web</string>
 
 </resources>

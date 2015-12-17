@@ -39,6 +39,7 @@ import com.orhanobut.logger.Logger;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import social.laika.app.R;
+import social.laika.app.about.AboutActivity;
 import social.laika.app.fragments.PanelFragment;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AdoptDogForm;
@@ -63,6 +64,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.network.gcm.LaikaRegistrationIntentService;
 import social.laika.app.network.requests.TokenRequest;
 import social.laika.app.network.sync.SyncUtils;
+import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.responses.LoginHandler;
 import social.laika.app.responses.PostulatedDogsResponse;
 import social.laika.app.utils.BaseActivity;
@@ -75,6 +77,7 @@ import social.laika.app.utils.views.LaikaTypeFaceSpan;
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, Requestable {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
     protected static final String TAG_FRAGMENT_PANEL = "TagFragmentPanel";
+    protected static final int NAV_DRAWER_ICON_ALPHA = 150; // 0 (transparent) to 255
     protected int navItemId = R.id.nav_adopt;
 
     public static final String GCM_NOTIFICATION = "gcm_notification";
@@ -122,7 +125,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        updateFontMenu(navigationView.getMenu());
+        updateMenuStyle(navigationView.getMenu());
         View header = getLayoutInflater().inflate(R.layout.nav_header_home, null);
         navigationView.addHeaderView(header);
 
@@ -147,6 +150,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.nav_adopt:
+                adopt();
                 return true;
 
             case R.id.nav_profile:
@@ -172,6 +176,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
 
             case R.id.nav_about_us:
+                Intent intentAbout = new Intent(HomeActivity.this, AboutActivity.class);
+                startActivity(intentAbout);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 return true;
         }
 
@@ -216,17 +223,19 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }.execute(ownerId);
     }
 
-    private void updateFontMenu(Menu menu) {
+    private void updateMenuStyle(Menu menu) {
         if (menu == null) {
             return;
         }
 
         for (int position = 0; position < menu.size(); position++) {
             MenuItem menuItem = menu.getItem(position);
+            menuItem.getIcon().setAlpha(NAV_DRAWER_ICON_ALPHA);
             SubMenu subMenu = menuItem.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int positionSubMenu = 0; positionSubMenu < subMenu.size(); positionSubMenu++) {
                     MenuItem subMenuItem = subMenu.getItem(positionSubMenu);
+                    subMenuItem.getIcon().setAlpha(NAV_DRAWER_ICON_ALPHA);
                     applyFontToMenuItem(subMenuItem);
                 }
             }
@@ -394,11 +403,32 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onSuccess() {
-
+        mProgressDialog.dismiss();
+        Do.showShortToast("Laika ha sido sincronizada con éxito", this);
     }
 
     @Override
     public void onFailure() {
+        mProgressDialog.dismiss();
+    }
 
+    private void adopt() {
+        String iso = Do.getCountryIso(HomeActivity.this);
+        if (Country.existIso(iso)) {
+            Intent intent;
+            Owner owner = PrefsManager.getLoggedOwner(HomeActivity.this);
+            AdoptDogForm adopt = AdoptDogForm.getUserAdoptDogForm(owner.mOwnerId);
+
+            if (adopt == null || !owner.hasCity()) {
+                intent = new Intent(HomeActivity.this, AdoptDogUserFormActivity.class);
+                intent.putExtra(AdoptDogUserFormActivity.KEY_NEXT_ACTIVITY, AdoptDogUserFormResponse.NEXT_ADOPT_DOG);
+            } else {
+                intent = new Intent(HomeActivity.this, AdoptDogFormActivity.class);
+            }
+
+            startActivity(intent);
+        } else {
+            Do.showLongToast("¡Lo sentimos! Por ahora no puedes adoptar perritos en tu país", HomeActivity.this);
+        }
     }
 }
