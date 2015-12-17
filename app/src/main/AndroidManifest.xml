@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="social.laika.app" >
+    package="social.laika.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name='android.permission.WAKE_LOCK'/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="social.laika.app.permission.C2D_MESSAGE"
+    <permission
+        android:name="social.laika.app.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="social.laika.app.permission.C2D_MESSAGE" />
 
     <uses-feature
@@ -32,173 +34,162 @@
         android:required="true" />
 
     <application
-        android:name="social.laika.app.LaikaApplication"
+        android:name=".LaikaApplication"
         android:allowBackup="true"
         android:icon="@drawable/laika_logo_2"
-        android:theme="@style/LaikaTheme"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/LaikaTheme">
         <activity
             android:name=".wasted.WelcomeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="social.laika.app.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/main_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:label="@string/main_activity_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="social.laika.app.activities.MainActivity"
-            android:label="@string/main_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".wasted.MapActivity"
-            android:label="Veterinarias" >
-        </activity>
+            android:label="Veterinarias" />
         <activity
             android:name=".wasted.MapHairActivity"
-            android:label="Peliquerías" >
-        </activity>
+            android:label="Peliquerías" />
 
         <!-- Activities de Laika -->
 
         <activity
-            android:name="social.laika.app.activities.AdoptDogFormActivity"
+            android:name=".activities.AdoptDogFormActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.AdoptDogUserFormActivity"
+            android:name=".activities.AdoptDogUserFormActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.AdoptDogsFragmentActivity"
+            android:name=".activities.AdoptDogsFragmentActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.PostulatedDogsFragmentActivity"
+            android:name=".activities.PostulatedDogsFragmentActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.AdoptDogSuccessActivity"
+            android:name=".activities.AdoptDogSuccessActivity"
             android:exported="false"
             android:label="@string/adopt_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.CreateDogActivity"
+            android:name=".activities.CreateDogActivity"
             android:exported="false"
             android:label="@string/new_dog_register_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.EditDogActivity"
+            android:name=".activities.EditDogActivity"
             android:exported="false"
             android:label="@string/edit_dog_register_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.EditUserActivity"
+            android:name=".activities.EditUserActivity"
             android:exported="false"
             android:label="@string/edit_user_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.UserProfileActivity"
+            android:name=".activities.UserProfileActivity"
             android:exported="false"
             android:label="@string/edit_user_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.CreateReminderActivity"
+            android:name=".activities.CreateReminderActivity"
             android:exported="false"
             android:label="@string/create_reminder_my_dog"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.VetVisitActivity"
+            android:name=".activities.VetVisitActivity"
             android:exported="false"
             android:label="@string/vet_visit_my_dog"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.CreateVetVisitActivity"
+            android:name=".activities.CreateVetVisitActivity"
             android:exported="false"
             android:label="@string/create_vet_visit_my_dog"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.MyDogsActivity"
+            android:name=".activities.MyDogsActivity"
             android:exported="false"
             android:label="@string/my_dog_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.PublicationsActivity"
+            android:name=".activities.PublicationsActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -207,13 +198,13 @@
             android:name=".wasted.PublicationsFragmentActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.PhotosFragmentActivity"
+            android:name=".activities.PhotosFragmentActivity"
             android:exported="false"
             android:label="@string/photos_activity_name">
             <intent-filter>
@@ -221,27 +212,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.WebActivity"
+            android:name=".activities.WebActivity"
             android:exported="false"
             android:label="@string/news_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.TipsActivity"
+            android:name=".activities.TipsActivity"
             android:exported="false"
             android:label="@string/tips_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.TutorialActivity"
+            android:name=".activities.TutorialActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -249,28 +240,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.EventsActivity"
+            android:name=".activities.EventsActivity"
             android:exported="false"
             android:label="@string/events_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.StoriesActivity"
+            android:name=".activities.StoriesActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name="social.laika.app.activities.CreateStoryActivity"
+            android:name=".activities.CreateStoryActivity"
             android:exported="false"
             android:label="@string/create_story_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -279,103 +270,105 @@
             android:name=".wasted.StoriesFragmentActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-        android:name="social.laika.app.activities.StopAlarmActivity"
-        android:exported="false"
-        android:label="@string/stories_fragment_activity_name"
-        android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="social.laika.app.activities.StopCalendarActivity"
+            android:name=".activities.StopAlarmActivity"
             android:exported="false"
             android:label="@string/stories_fragment_activity_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-        android:name="social.laika.app.utils.camera.CameraActivity"
-        android:exported="false"
-        android:label="@string/camera"
-        android:screenOrientation="portrait" >
+            android:name=".activities.StopCalendarActivity"
+            android:exported="false"
+            android:label="@string/stories_fragment_activity_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".utils.camera.CameraActivity"
+            android:exported="false"
+            android:label="@string/camera"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
-
 
         <!-- ########### SERVICES ########### -->
 
+
         <!-- Alarm & Calendar Receiver -->
-        <receiver android:name=".utils.AlarmReceiver">
-        </receiver>
+        <receiver android:name=".utils.AlarmReceiver" />
 
         <!-- GCM -->
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="social.laika.app" />
             </intent-filter>
         </receiver>
+
         <service
-            android:name="social.laika.app.network.gcm.LaikaGcmListenerService"
-            android:exported="false" >
+            android:name=".network.gcm.LaikaGcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name="social.laika.app.network.gcm.LaikaIdListenerService"
+            android:name=".network.gcm.LaikaIdListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
         <service
-            android:name="social.laika.app.network.gcm.LaikaRegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:name=".network.gcm.LaikaRegistrationIntentService"
+            android:exported="false" />
 
         <!-- SyncAdapter -->
 
-        <service android:name=".network.sync.SyncService"
+        <service
+            android:name=".network.sync.SyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
-
         <service android:name=".network.account.AccountService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            <meta-data android:name="android.accounts.AccountAuthenticator"
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
 
         <provider
             android:name="com.activeandroid.content.ContentProvider"
             android:authorities="social.laika.app"
-            android:syncable="true"
-            android:label="Mis Perros" />
+            android:label="Mis Perros"
+            android:syncable="true" />
 
         <!-- ################################ -->
 
@@ -398,14 +391,40 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1472555673060744"
-                  android:name="com.facebook.FacebookContentProvider"
-                  android:exported="true"/>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1472555673060744"
+            android:exported="true" />
         <!-- END Facebook -->
+
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Toolbar" />
+        <activity
+            android:name=".about.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/AppTheme.SwipeBack">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="social.laika.app.activities.HomeActivity" />
+        </activity>
+
+        <activity
+            android:name=".utils.WebActivity"
+            android:label="@string/title_activity_web"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SwipeBack" />
+
     </application>
+
 </manifest>

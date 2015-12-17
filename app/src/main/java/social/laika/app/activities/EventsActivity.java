@@ -22,6 +22,7 @@ import social.laika.app.responses.EventsResponse;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EventsActivity extends BasePublicationsActivity {
 
@@ -50,7 +51,7 @@ public class EventsActivity extends BasePublicationsActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -131,5 +132,11 @@ public class EventsActivity extends BasePublicationsActivity {
     @Override
     public List getFavoritePublications() {
         return Event.getFavoriteEvents();
-   }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

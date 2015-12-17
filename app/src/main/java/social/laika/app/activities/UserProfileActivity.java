@@ -21,16 +21,16 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.adapters.DogsAdapter;
+import social.laika.app.models.City;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
-import social.laika.app.models.City;
 import social.laika.app.models.Owner;
-import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UserProfileActivity extends ActionBarActivity {
 
@@ -59,8 +59,7 @@ public class UserProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mOwnerId = getIntent().getExtras().getInt(KEY_OWNER_ID,
-                PrefsManager.getUserId(getApplicationContext()));
+        mOwnerId = getIntent().getExtras().getInt(KEY_OWNER_ID, PrefsManager.getUserId(getApplicationContext()));
 
         setInformation();
         setContentView(mIdLayout);
@@ -153,8 +152,7 @@ public class UserProfileActivity extends ActionBarActivity {
 
         setTitle("Mi Perfil");
 
-        mOwner.requestUserImage(getApplicationContext(), mProfileImageView, mProgressBar,
-                Tag.IMAGE_MEDIUM);
+        mOwner.requestUserImage(getApplicationContext(), mProfileImageView, mProgressBar, Tag.IMAGE_MEDIUM);
 
         mDogsListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -175,7 +173,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class)) {
+        if (!this.getClass().equals(HomeActivity.class)) {
 
             if (Country.existIso(Do.getCountryIso(this))) {
                 getMenuInflater().inflate(R.menu.user_profile_menu, menu);
@@ -263,6 +261,11 @@ public class UserProfileActivity extends ActionBarActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

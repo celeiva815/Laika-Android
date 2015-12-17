@@ -128,7 +128,6 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
             public void onClick(View v) {
                 ShareHelper helper = new ShareHelper((Activity) mContext, publication);
                 helper.share();
-
                 Flurry.logEvent(Flurry.NEWS_SHARE, publication.getParams());
             }
         });

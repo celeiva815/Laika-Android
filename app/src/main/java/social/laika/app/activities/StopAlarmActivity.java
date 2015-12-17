@@ -1,6 +1,7 @@
 package social.laika.app.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class StopAlarmActivity extends Activity {
 
@@ -139,7 +141,7 @@ public class StopAlarmActivity extends Activity {
     public void startRing() {
 
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.ladrido);
-        mMediaPlayer.setVolume(1,1);
+        mMediaPlayer.setVolume(1, 1);
         mMediaPlayer.setLooping(true);
         mMediaPlayer.start();
 
@@ -161,7 +163,7 @@ public class StopAlarmActivity extends Activity {
 
     }
 
-    public void setCategoryImage(){
+    public void setCategoryImage() {
 
         int imageId = mAlarmReminder.mCategory;
 
@@ -201,4 +203,10 @@ public class StopAlarmActivity extends Activity {
                 break;
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

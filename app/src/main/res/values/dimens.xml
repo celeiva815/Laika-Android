@@ -16,4 +16,18 @@
 
     <!-- Menu -->
     <dimen name="bar_height">1sp</dimen>
+
+    <!-- Navigation Drawer. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
+
+
+    <!-- Buttons -->
+    <dimen name="btn_padding_left">30dp</dimen>
+    <dimen name="btn_padding_right">30dp</dimen>
+    <dimen name="btn_padding_top">10dp</dimen>
+    <dimen name="btn_padding_bottom">10dp</dimen>
+    <dimen name="btn_corner_radius">3dp</dimen>
+    <dimen name="btn_stroke_width">0dp</dimen>
+    <dimen name="btn_margin">5dp</dimen>
 </resources>

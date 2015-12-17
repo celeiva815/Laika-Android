@@ -2,6 +2,7 @@ package social.laika.app.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -32,6 +33,7 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AdoptDogFormActivity extends ActionBarActivity {
 
@@ -64,7 +66,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -138,7 +140,7 @@ public class AdoptDogFormActivity extends ActionBarActivity {
         mProgressDialog = ProgressDialog.show(AdoptDogFormActivity.this, "Espere un momento...",
                 "Estamos buscando perritos para ti.");
 
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         DogForAdoptionResponse response = new DogForAdoptionResponse(this);
         int dogSize = (int) mSizeSpinner.getSelectedItemId();
         int dogPersonality = (int) mPersonalitySpinner.getSelectedItemId();
@@ -208,5 +210,10 @@ public class AdoptDogFormActivity extends ActionBarActivity {
 
         Flurry.endTimedEvent(Flurry.ADOPTION_TIME);
         super.onDestroy();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -13,6 +14,7 @@ import social.laika.app.R;
 import social.laika.app.fragments.PostulatedDogScreenSlideFragment;
 import social.laika.app.models.Dog;
 import social.laika.app.models.UserAdoptDog;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Tito_Leiva on 28-05-15.
@@ -66,5 +68,9 @@ public class PostulatedDogsFragmentActivity extends AdoptDogsFragmentActivity {
 
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
 }
