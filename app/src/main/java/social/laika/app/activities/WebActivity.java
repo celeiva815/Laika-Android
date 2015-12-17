@@ -1,6 +1,7 @@
 package social.laika.app.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import social.laika.app.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Tito_Leiva on 24-03-15.
@@ -58,6 +60,11 @@ public class WebActivity extends Activity {
         }
 
         this.mProgressBar.setProgress(progress);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

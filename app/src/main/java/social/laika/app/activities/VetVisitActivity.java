@@ -9,8 +9,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 
@@ -21,6 +21,7 @@ import social.laika.app.models.Dog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.utils.Do;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class VetVisitActivity extends ActionBarActivity
         implements DatePickerDialog.OnDateSetListener {
@@ -124,7 +125,7 @@ public class VetVisitActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.vet_visit_menu, menu);
 
         return true;
@@ -166,4 +167,10 @@ public class VetVisitActivity extends ActionBarActivity
         startActivity(intent);
 
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

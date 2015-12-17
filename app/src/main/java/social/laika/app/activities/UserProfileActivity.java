@@ -30,6 +30,7 @@ import social.laika.app.responses.AdoptDogUserFormResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UserProfileActivity extends ActionBarActivity {
 
@@ -172,7 +173,7 @@ public class UserProfileActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class)) {
+        if (!this.getClass().equals(HomeActivity.class)) {
 
             if (Country.existIso(Do.getCountryIso(this))) {
                 getMenuInflater().inflate(R.menu.user_profile_menu, menu);
@@ -260,6 +261,11 @@ public class UserProfileActivity extends ActionBarActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

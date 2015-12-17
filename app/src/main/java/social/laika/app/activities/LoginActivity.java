@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -29,6 +30,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.LoginResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -45,8 +47,8 @@ public class LoginActivity extends ActionBarActivity {
 
     /* Facebook Login */
     private LoginButton mFacebookLoginButton;
-//    private LaikaFBCallback mFacebookCallback;
-    public static final List<String> FACEBOOK_PERMISSIONS =  Arrays.asList("public_profile", "email", "user_friends");
+    //    private LaikaFBCallback mFacebookCallback;
+    public static final List<String> FACEBOOK_PERMISSIONS = Arrays.asList("public_profile", "email", "user_friends");
     /* Facebook Login */
 
     @Override
@@ -58,7 +60,7 @@ public class LoginActivity extends ActionBarActivity {
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
 
             //FIXME ver qué información sincronizar al comienzo
-            Do.changeActivity(this, MainActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
+            Do.changeActivity(this, HomeActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
 
         }
 
@@ -155,4 +157,10 @@ public class LoginActivity extends ActionBarActivity {
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(loginRequest, TAG);
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

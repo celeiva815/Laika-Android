@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.RegisterResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegisterActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -233,4 +235,10 @@ public class RegisterActivity extends ActionBarActivity implements DatePickerDia
             return "";
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

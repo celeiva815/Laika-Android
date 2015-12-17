@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.activities.MainActivity;
+import social.laika.app.activities.HomeActivity;
 import social.laika.app.fragments.PublicationScreenSlideFragment;
 import social.laika.app.models.publications.Publication;
 
-public class PublicationsFragmentActivity extends ActionBarActivity{
-    
+public class PublicationsFragmentActivity extends ActionBarActivity {
+
     private int mIdLayout = R.layout.ai_screen_slide_activity;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -52,47 +52,47 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
 
     private void setNewsList() {
 
-    	this.aNews = new ArrayList<Publication>();
-	}
-    
+        this.aNews = new ArrayList<Publication>();
+    }
+
     @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		if (!this.getClass().equals(MainActivity.class))
-			getMenuInflater().inflate(R.menu.main_menu, menu);
-		
-		return true;
-	}
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(HomeActivity.class))
+            getMenuInflater().inflate(R.menu.main_menu, menu);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
         if (id == android.R.id.home) {
             super.onBackPressed();
             return true;
         }
-		return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 
-	}
+    }
 
 
-	@Override
+    @Override
     public void onBackPressed() {
         /*if (mPager.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.*/
-            super.onBackPressed();
+        super.onBackPressed();
         /*} else {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-         }*/ 
+         }*/
     }
-       
+
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -105,7 +105,7 @@ public class PublicationsFragmentActivity extends ActionBarActivity{
 
         @Override
         public Fragment getItem(int position) {
-        	     	
+
             return new PublicationScreenSlideFragment(aNews.get(position));
         }
 

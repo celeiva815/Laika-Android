@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import social.laika.app.R;
 import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class TutorialActivity extends ActionBarActivity {
@@ -167,4 +169,10 @@ public class TutorialActivity extends ActionBarActivity {
             return NUM_PAGES;
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

@@ -17,16 +17,13 @@ import org.json.JSONObject;
 import java.util.List;
 
 import social.laika.app.R;
-import social.laika.app.activities.MainActivity;
+import social.laika.app.activities.HomeActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
-import social.laika.app.models.City;
-import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
 import social.laika.app.models.Owner;
 import social.laika.app.models.OwnerDog;
 import social.laika.app.models.Photo;
-import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
 import social.laika.app.network.sync.SyncUtils;
@@ -65,7 +62,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
         if (!Do.isNullOrEmpty(message)) {
 
-            title = !Do.isNullOrEmpty(title)? title : "Laika";
+            title = !Do.isNullOrEmpty(title) ? title : "Laika";
             sendNotification(message, title);
         }
 
@@ -106,7 +103,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
     private void sendNotification(String message, String title) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -254,7 +251,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
         Log.d(TAG, "GCM synchronization completed");
     }
 
-    /** Performs a delete operation to a AlarmReminder instance.
+    /**
+     * Performs a delete operation to a AlarmReminder instance.
+     *
      * @param reminderId The alarm_reminder id to be deleted.
      */
     private static void deleteAlarmReminder(int reminderId) {
@@ -264,13 +263,15 @@ public class LaikaGcmListenerService extends GcmListenerService {
             Log.d(TAG, "Deleting alarm " + alarmReminder.mAlarmReminderId + "[" + alarmReminder.getId() + "]");
             /* Deleting the alarm */
             alarmReminder.delete();
-        }  else {
+        } else {
             /* Login the error */
             Log.e(TAG, "Attempting to delete alarm reminder @" + reminderId + ", but no alarm was found.");
         }
     }
 
-    /** Performs a delete operation to a CalendarReminder instance.
+    /**
+     * Performs a delete operation to a CalendarReminder instance.
+     *
      * @param reminderId The alarm_reminder id to be deleted.
      */
     private static void deleteCalendarReminder(int reminderId) {
@@ -279,13 +280,15 @@ public class LaikaGcmListenerService extends GcmListenerService {
         if (calendarReminder != null) {
             /* Deleting the alarm */
             calendarReminder.delete();
-        }  else {
+        } else {
             /* Login the error */
             Log.e(TAG, "Attempting to delete calendar reminder @" + reminderId + ", but no reminder was found.");
         }
     }
 
-    /** Performs a delete operation to a VetVisit instance.
+    /**
+     * Performs a delete operation to a VetVisit instance.
+     *
      * @param vetVisitID The vet_visit id to be deleted.
      */
     private void deleteVetVisit(int vetVisitID) {
@@ -294,15 +297,17 @@ public class LaikaGcmListenerService extends GcmListenerService {
         if (vetVisit != null) {
             /* Deleting the alarm */
             vetVisit.delete();
-        }  else {
+        } else {
             /* Login the error */
             Log.e(TAG, "Attempting to delete vet_visit @" + vetVisitID + ", but no vet_visit was found.");
         }
     }
 
-    /** Performs an operation to an UserAdoptDog instance, updating the status.
+    /**
+     * Performs an operation to an UserAdoptDog instance, updating the status.
+     *
      * @param userAdoptDogID The user_adopt_dog id to be sync.
-     * @param status The status to be updated.
+     * @param status         The status to be updated.
      */
     private static void syncUserAdoptDogSoft(int userAdoptDogID, int status) {
         /* First we search the postulation and then we update the data */
@@ -311,7 +316,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
         postulation.save();
     }
 
-    /** Requests a hard synchronization for a certain dog.
+    /**
+     * Requests a hard synchronization for a certain dog.
+     *
      * @param dogID The dog's id to be sync.
      */
     private static void syncDogHard(int dogID) {
@@ -322,7 +329,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
         SyncUtils.triggerRefresh(syncInfo);
     }
 
-    /** Performs a delete operation to a Photo instance.
+    /**
+     * Performs a delete operation to a Photo instance.
+     *
      * @param photoID The photo's id to be deleted.
      */
     private void deletePhoto(int photoID) {
@@ -331,7 +340,7 @@ public class LaikaGcmListenerService extends GcmListenerService {
         if (photo != null) {
             /* Deleting the alarm */
             photo.delete();
-        }  else {
+        } else {
             /* Login the error */
             Log.e(TAG, "Attempting to delete photo @" + photoID + ", but no photo was found.");
         }
@@ -339,9 +348,9 @@ public class LaikaGcmListenerService extends GcmListenerService {
 
     public void performFullSyncHard() {
 
-        if (MainActivity.isActive) {
+        if (HomeActivity.isActive) {
 
-            Intent intent = new Intent(MainActivity.GCM_NOTIFICATION);
+            Intent intent = new Intent(HomeActivity.GCM_NOTIFICATION);
             getApplicationContext().sendBroadcast(intent);
 
         } else {

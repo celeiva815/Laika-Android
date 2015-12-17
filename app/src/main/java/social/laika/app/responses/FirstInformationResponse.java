@@ -14,19 +14,18 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-import social.laika.app.activities.LoginActivity;
-import social.laika.app.activities.MainActivity;
+import social.laika.app.activities.HomeActivity;
 import social.laika.app.activities.TutorialActivity;
 import social.laika.app.fragments.TutorialFragment;
 import social.laika.app.interfaces.Requestable;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.Breed;
 import social.laika.app.models.CalendarReminder;
+import social.laika.app.models.City;
 import social.laika.app.models.Country;
 import social.laika.app.models.Dog;
-import social.laika.app.models.City;
-import social.laika.app.models.Photo;
 import social.laika.app.models.OwnerDog;
+import social.laika.app.models.Photo;
 import social.laika.app.models.Region;
 import social.laika.app.models.UserAdoptDog;
 import social.laika.app.models.VetVisit;
@@ -95,7 +94,7 @@ public class FirstInformationResponse implements Response.Listener<JSONObject>, 
         }
 
         if (mActivity != null) {
-            Do.changeActivity(mContext, MainActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
+            Do.changeActivity(mContext, HomeActivity.class, mActivity, Intent.FLAG_ACTIVITY_NEW_TASK);
             Do.showLongToast("Bienvenido " + PrefsManager.getUserName(mContext) +
                     ", ¿Cómo están tus perritos?", mContext);
         }

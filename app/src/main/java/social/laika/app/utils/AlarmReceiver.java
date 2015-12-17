@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import social.laika.app.R;
-import social.laika.app.activities.MainActivity;
 import social.laika.app.activities.StopAlarmActivity;
 import social.laika.app.activities.StopCalendarActivity;
 import social.laika.app.models.AlarmReminder;

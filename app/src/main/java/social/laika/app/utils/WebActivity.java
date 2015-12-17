@@ -1,5 +1,6 @@
 package social.laika.app.utils;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import social.laika.app.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class WebActivity extends BaseSwipeBackActivity {
@@ -70,6 +72,11 @@ public class WebActivity extends BaseSwipeBackActivity {
     public void finish() {
         super.finish();
         // overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

@@ -1,11 +1,13 @@
 package social.laika.app.utils;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import social.laika.app.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by GustavoAdolfo on 05-12-2015.
@@ -42,5 +44,10 @@ public class BaseActivity extends AppCompatActivity {
             dialog = createDialog();
             dialog.show();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

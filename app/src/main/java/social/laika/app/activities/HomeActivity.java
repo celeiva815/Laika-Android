@@ -78,6 +78,7 @@ import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 import social.laika.app.utils.views.LaikaTypeFaceSpan;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, Requestable {
     protected static final String OUT_STATE_NAV_ITEM_ID = "SavedNavigationItemId";
@@ -463,4 +464,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             Do.showLongToast("¡Lo sentimos! Por ahora no puedes adoptar perritos en tu país", HomeActivity.this);
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

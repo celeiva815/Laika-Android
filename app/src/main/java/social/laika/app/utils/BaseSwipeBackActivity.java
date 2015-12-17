@@ -1,5 +1,6 @@
 package social.laika.app.utils;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,6 +8,7 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by GustavoAdolfo on 05-12-2015.
@@ -50,6 +52,11 @@ public class BaseSwipeBackActivity extends BaseActivity implements SwipeBackActi
     public void scrollToFinishActivity() {
         Utils.convertActivityToTranslucent(this);
         getSwipeBackLayout().scrollToFinishActivity();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }
