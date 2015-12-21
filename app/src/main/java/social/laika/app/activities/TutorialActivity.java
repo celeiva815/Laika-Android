@@ -1,28 +1,20 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.Build;
-import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
-
-import social.laika.app.BuildConfig;
-import social.laika.app.R;
-import social.laika.app.fragments.TutorialFragment;
-import social.laika.app.utils.Do;
-import social.laika.app.utils.PrefsManager;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -31,6 +23,13 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import social.laika.app.BuildConfig;
+import social.laika.app.R;
+import social.laika.app.fragments.TutorialFragment;
+import social.laika.app.utils.Do;
+import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class TutorialActivity extends ActionBarActivity {
@@ -56,51 +55,26 @@ public class TutorialActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().hide(); // hide the actionbar
+        setContentView(R.layout.lk_indicator_view_pager_activity);
         /* Initialize the defaults */
         initializer();
 
         if (PrefsManager.isUserLoggedIn(getApplicationContext())) {
+            Do.changeActivity(getApplicationContext(), HomeActivity.class, this, Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
 
-            Do.changeActivity(getApplicationContext(), MainActivity.class, this,
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Instantiate a ViewPager and a PagerAdapter
+            mPager = (ViewPager) findViewById(R.id.view_pager);
+            mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+            mPager.setAdapter(mPagerAdapter);
+
+            mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
+            mIndicator.setViewPager(mPager);
         }
-
-
-        getSupportActionBar().hide(); // hide the actionbar
-        setContentView(R.layout.lk_indicator_view_pager_activity);
-
-        // Instantiate a ViewPager and a PagerAdapter
-        mPager = (ViewPager) findViewById(R.id.view_pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-
-        mIndicator = (CirclePageIndicator) findViewById(R.id.page_indicator);
-        mIndicator.setViewPager(mPager);
-
         if (BuildConfig.DEBUG) {
             printKeyHash();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tutorial, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -117,16 +91,18 @@ public class TutorialActivity extends ActionBarActivity {
 
     /**
      * Facebook CallbackManager Single Instance ?
+     *
      * @return CallbackManager
      */
     public CallbackManager getCallbackManager() {
-        if(mCallbackManager == null)
+        if (mCallbackManager == null)
             mCallbackManager = CallbackManager.Factory.create();
         return mCallbackManager;
     }
 
     /**
      * Calling the CallbackManager :D
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -193,4 +169,10 @@ public class TutorialActivity extends ActionBarActivity {
             return NUM_PAGES;
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

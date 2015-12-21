@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -54,6 +53,7 @@ import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EditUserActivity extends ActionBarActivity
         implements DatePickerDialog.OnDateSetListener, Photographable, Response.ErrorListener,
@@ -249,7 +249,7 @@ public class EditUserActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -297,7 +297,7 @@ public class EditUserActivity extends ActionBarActivity
 
             cropPhoto(result.getData());
 
-        }  else if (requestCode == Crop.REQUEST_CROP) {
+        } else if (requestCode == Crop.REQUEST_CROP) {
             mPhotographer.handleCrop(resultCode, result, this, mProfileImageView);
 
         }
@@ -483,4 +483,10 @@ public class EditUserActivity extends ActionBarActivity
         mProgressDialog.dismiss();
         enableViews(true);
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

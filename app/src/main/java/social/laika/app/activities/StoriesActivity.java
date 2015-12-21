@@ -24,11 +24,12 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class StoriesActivity extends BasePublicationsActivity {
 
     public static final String TAG = StoriesActivity.class.getSimpleName();
-    
+
     public List<Story> mStories;
 
     @Override
@@ -72,7 +73,7 @@ public class StoriesActivity extends BasePublicationsActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.stories_menu, menu);
 
         MenuItem favorites = menu.findItem(R.id.favorite_publications);
@@ -154,6 +155,11 @@ public class StoriesActivity extends BasePublicationsActivity {
     @Override
     public List getFavoritePublications() {
         return Story.getFavoriteStories();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

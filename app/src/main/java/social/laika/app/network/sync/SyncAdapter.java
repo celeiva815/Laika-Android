@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,8 +21,8 @@ import social.laika.app.activities.MyDogsActivity;
 import social.laika.app.models.AlarmReminder;
 import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
-import social.laika.app.models.VetVisit;
 import social.laika.app.models.Photo;
+import social.laika.app.models.VetVisit;
 import social.laika.app.network.requests.AlarmRemindersRequest;
 import social.laika.app.network.requests.CalendarRemindersRequest;
 import social.laika.app.network.requests.DogRequest;
@@ -98,13 +97,12 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
      * the sync.
      */
     @Override
-    public void onPerformSync(Account account, Bundle extras, String authority,
-                              ContentProviderClient provider, SyncResult syncResult) {
+    public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         // TODO implement: code zero synchronization
         try {
 
             Context context = this.getContext();
-            int code =  extras.getInt(CODE);
+            int code = extras.getInt(CODE);
 
             Log.i(TAG, "Beginning network synchronization | code:" + code);
             sync(context, code, extras);
@@ -233,7 +231,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
                 request = new PhotosRequest(context, dogId);
                 jsonObject = request.refresh();
-                Photo.saveDogPhotos(jsonObject,context);
+                Photo.saveDogPhotos(jsonObject, context);
 
                 break;
             case CODE_PHOTO_SYNC:

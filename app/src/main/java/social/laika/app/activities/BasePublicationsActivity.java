@@ -16,8 +16,8 @@ import java.util.List;
 
 import social.laika.app.R;
 import social.laika.app.listeners.PublicationsRefreshListener;
-import social.laika.app.models.publications.Publication;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Tito_Leiva on 07-10-15.
@@ -87,7 +87,6 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
             mSwipeLayout.setEnabled(false);
 
 
-
         }
     }
 
@@ -95,7 +94,7 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.favorite_menu, menu);
 
         MenuItem favorites = menu.findItem(R.id.favorite_publications);
@@ -128,7 +127,7 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
     }
 
     protected void onCreateSwipeRefresh(SwipeRefreshLayout refreshLayout,
-                                      SwipeRefreshLayout.OnRefreshListener listener) {
+                                        SwipeRefreshLayout.OnRefreshListener listener) {
 
         refreshLayout.setOnRefreshListener(listener);
         refreshLayout.setColorScheme(
@@ -168,4 +167,9 @@ public abstract class BasePublicationsActivity extends ActionBarActivity {
     public abstract List getPublications();
 
     public abstract List getFavoritePublications();
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }

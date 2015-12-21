@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/grp1">
+
+        <item
+            android:id="@+id/nav_adopt"
+            android:icon="@drawable/ic_nav_adopt"
+            android:title="@string/nav_adopt" />
+    </group>
+
+    <group android:id="@+id/grp2">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_nav_profile"
+            android:title="@string/nav_profile" />
+
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_nav_favorites"
+            android:title="@string/nav_favorites"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/nav_my_postulations"
+            android:icon="@drawable/ic_my_postulations"
+            android:title="@string/nav_my_postulations" />
+
+        <item
+            android:id="@+id/nav_sponsors"
+            android:icon="@drawable/ic_nav_sponsors"
+            android:title="@string/nav_sponsors"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/nav_close_session"
+            android:icon="@drawable/ic_nav_close"
+            android:title="@string/nav_close_session" />
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:title="@string/nav_about_us" />
+
+    </group>
+
+</menu>

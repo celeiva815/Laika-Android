@@ -35,7 +35,6 @@ import social.laika.app.responses.LocalImageSaverResponse;
 import social.laika.app.utils.DB;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Photographer;
-import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
 
 @Table(name = Owner.TABLE_NAME)
@@ -124,7 +123,7 @@ public class Owner extends Model implements Picturable {
         this.mCityId = mCityId;
     }
 
-    public  Owner(JSONObject jsonObject) {
+    public Owner(JSONObject jsonObject) {
 
         if (jsonObject.has(API_ID)) {
             this.mOwnerId = jsonObject.optInt(API_ID);
@@ -311,7 +310,7 @@ public class Owner extends Model implements Picturable {
 
     public boolean isGrownUp() {
 
-         return getAge() >= 18;
+        return getAge() >= 18;
     }
 
     public boolean hasCity() {
@@ -378,7 +377,7 @@ public class Owner extends Model implements Picturable {
     }
 
     public void requestUserImage(Context context, ImageView imageView, ProgressBar progressBar,
-                                String size)  {
+                                 String size) {
 
         if (!Do.isNullOrEmpty(mUrlLocal)) {
 
@@ -407,6 +406,28 @@ public class Owner extends Model implements Picturable {
                     response);
 
             response.setProgressBar(progressBar);
+            VolleyManager.getInstance(context).addToRequestQueue(request);
+        }
+    }
+
+
+    public void requestUserImage(Context context, ImageView imageView, String size) {
+
+        if (!Do.isNullOrEmpty(mUrlLocal)) {
+
+            File file = new File(Uri.parse(mUrlLocal).getPath());
+
+            if (file.exists()) {
+                imageView.setImageURI(Uri.parse(mUrlLocal));
+
+            } else if (!Do.isNullOrEmpty(mUrlImage)) {
+                LocalImageSaverResponse response = new LocalImageSaverResponse(context, imageView, this, TABLE_NAME);
+                Request request = Api.imageRequest(getImage(size), imageView, response, response);
+                VolleyManager.getInstance(context).addToRequestQueue(request);
+            }
+        } else if (!Do.isNullOrEmpty(mUrlImage)) {
+            LocalImageSaverResponse response = new LocalImageSaverResponse(context, imageView, this, TABLE_NAME);
+            Request request = Api.imageRequest(getImage(size), imageView, response, response);
             VolleyManager.getInstance(context).addToRequestQueue(request);
         }
     }

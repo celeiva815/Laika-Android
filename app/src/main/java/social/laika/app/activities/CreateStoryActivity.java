@@ -26,13 +26,14 @@ import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.CreateStoryOnClickListener;
 import social.laika.app.listeners.PhotographerListener;
 import social.laika.app.models.Photo;
-import social.laika.app.utils.Photographer;
 import social.laika.app.models.publications.Story;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.CreateStoryResponse;
 import social.laika.app.utils.Do;
+import social.laika.app.utils.Photographer;
 import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CreateStoryActivity extends ActionBarActivity implements Photographable {
 
@@ -116,7 +117,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
 
             cropPhoto(result.getData());
 
-        }  else if (requestCode == Crop.REQUEST_CROP) {
+        } else if (requestCode == Crop.REQUEST_CROP) {
             mPhotographer.handleCrop(resultCode, result, this, mStoryImageView);
 
         }
@@ -125,7 +126,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
     @Override
     public void takePhoto() {
 
-       mPhotographer.takePicture(this);
+        mPhotographer.takePicture(this);
 
     }
 
@@ -161,7 +162,7 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.create_story_menu, menu);
 
         return true;
@@ -278,6 +279,10 @@ public class CreateStoryActivity extends ActionBarActivity implements Photograph
 
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
 }
 

@@ -1,5 +1,6 @@
 package social.laika.app.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -19,6 +20,7 @@ import social.laika.app.models.CalendarReminder;
 import social.laika.app.models.Dog;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CreateReminderActivity extends ActionBarActivity {
 
@@ -134,7 +136,7 @@ public class CreateReminderActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
@@ -277,5 +279,10 @@ public class CreateReminderActivity extends ActionBarActivity {
                 setCheckedImage(category);
             }
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

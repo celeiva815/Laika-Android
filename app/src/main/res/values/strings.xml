@@ -8,6 +8,10 @@
     <!--Facebook-->
     <string name="facebook_app_id">1472555673060744</string>
 
+    <!-- URLS -->
+    <string name="privacy_title">Polícitcas de privacidad</string>
+    <string name="privacy_url">http://www.laika.social/privacy/</string>
+
     <!-- Network -->
     <string name="http_client_null_exception_message">Client must not be null.</string>
 
@@ -24,6 +28,7 @@
     <string name="not_valid_email_error">Este no es correo electrónico válido</string>
     <string name="email_error_activity">Lo sentimos! no podemos enviar el correo</string>
     <string name="field_not_empty_error">Debes completar esta información</string>
+    <string name="password_min_length">La contraseña debe tener mínimo 8 caracteres</string>
     <string name="equal_password_field">Las contraseñas deben ser iguales</string>
     <string name="parameters_error">El correo o contraseña ingresados no son correctos</string>
     <string name="password_recovery_parameters_error">No hay cuenta asociada a este correo</string>
@@ -51,7 +56,7 @@
     <string name="log_in_activity_name">Inicio de Sesión</string>
     <string name="user_log_in">Correo electrónico</string>
     <string name="password_log_in">Contraseña</string>
-    <string name="register_log_in">¿No tienes una cuenta? Regístrate aquí</string>
+    <string name="register_log_in">Regístrate</string>
     <string name="forgot_log_in">¿Olvidaste tu contraseña?</string>
     <string name="register_success">¡Te has registrado exitosamente!</string>
     <string name="log_in">Ingresar</string>
@@ -366,4 +371,38 @@
 
 
     <string name="share_string">Compartir en:</string>
+
+    <!-- Feedback -->
+    <string name="feedback_loading">Cargando</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="feedback_wait_a_minute">Espere un momento</string>
+    <string name="feedback_sync_dogs_info">Estamos sincronizando tu aplicación con la información de tus perritos</string>
+    <string name="feedback_postulations_saved">Mostrando postulaciones guardadas</string>
+    <string name="feedback_option_unavailable">Opción no disponible aún</string>
+
+    <!-- Drawer options -->
+    <string name="nav_panel">Panel</string>
+    <string name="nav_adopt">Adopta</string>
+    <string name="nav_profile">Mi perfil</string>
+    <string name="nav_favorites">Mis favoritos</string>
+    <string name="nav_my_postulations">Mis postulaciones</string>
+    <string name="nav_sponsors">Colaboradores</string>
+    <string name="nav_close_session">Cerrar sesión</string>
+    <string name="nav_about_us">Acerca de</string>
+
+    <!-- About -->
+    <string name="about_item_version_title">Versión de la compilación</string>
+    <string name="about_item_licenses_title">Licencias de código abierto</string>
+    <string name="about_item_policies_title">Política de privacidad</string>
+    <string name="about_item_terms_title">Términos y condiciones</string>
+    <string name="about_item_licences_subtitle">Detalles de la licencia de software de código abierto</string>
+    <string name="dialog_licenses_title">Open source libraries used by Laika</string>
+
+    <!-- Actions -->
+    <string name="action_edit_profile">Editar perfil</string>
+
+
+    <string name="title_activity_about">Acerca de Laika</string>
+    <string name="title_activity_web">Activity Web</string>
+
 </resources>

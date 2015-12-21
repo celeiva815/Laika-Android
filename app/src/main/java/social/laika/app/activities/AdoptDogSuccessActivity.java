@@ -1,9 +1,10 @@
 package social.laika.app.activities;
 
-import android.support.v7.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import social.laika.app.network.VolleyManager;
 import social.laika.app.responses.ImageResponse;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.PrefsManager;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AdoptDogSuccessActivity extends ActionBarActivity {
 
@@ -83,7 +85,7 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if (!this.getClass().equals(MainActivity.class))
+        if (!this.getClass().equals(HomeActivity.class))
             getMenuInflater().inflate(R.menu.adopt_dog_success_menu, menu);
 
         return true;
@@ -139,7 +141,7 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
 
     public void backToHome() {
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -171,6 +173,11 @@ public class AdoptDogSuccessActivity extends ActionBarActivity {
         VolleyManager.getInstance(getApplicationContext())
                 .addToRequestQueue(imageRequest, TAG);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

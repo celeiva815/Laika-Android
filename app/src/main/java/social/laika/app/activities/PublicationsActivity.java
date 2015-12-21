@@ -2,14 +2,8 @@ package social.laika.app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 
@@ -19,7 +13,6 @@ import java.util.Map;
 
 import social.laika.app.R;
 import social.laika.app.adapters.PublicationsAdapter;
-import social.laika.app.listeners.PublicationsRefreshListener;
 import social.laika.app.models.publications.Publication;
 import social.laika.app.network.Api;
 import social.laika.app.network.VolleyManager;
@@ -27,6 +20,7 @@ import social.laika.app.responses.PublicationsResponse;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.PrefsManager;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PublicationsActivity extends BasePublicationsActivity {
 
@@ -112,4 +106,10 @@ public class PublicationsActivity extends BasePublicationsActivity {
     public List getFavoritePublications() {
         return Publication.getFavorites();
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

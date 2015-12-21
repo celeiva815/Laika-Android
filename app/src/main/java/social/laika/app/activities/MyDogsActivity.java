@@ -2,12 +2,12 @@ package social.laika.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -44,6 +44,7 @@ import social.laika.app.utils.Do;
 import social.laika.app.utils.Flurry;
 import social.laika.app.utils.Photographer;
 import social.laika.app.utils.views.CustomPagerSlidingTabStrip;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MyDogsActivity extends ActionBarActivity implements Photographable {
 
@@ -149,7 +150,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!this.getClass().equals(MainActivity.class)) {
+        if (!this.getClass().equals(HomeActivity.class)) {
 
             getMenuInflater().inflate(R.menu.my_dog_menu, menu);
 
@@ -517,7 +518,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
 
     public void registerContentObserver() {
 
-        if(mAlarmObserver == null) {
+        if (mAlarmObserver == null) {
             mAlarmObserver = new AlarmReminderObserver(new Handler(getMainLooper()));
 
             getContentResolver().
@@ -525,7 +526,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                             true, mAlarmObserver);
         }
 
-        if(mCalendarObserver == null) {
+        if (mCalendarObserver == null) {
             mCalendarObserver = new CalendarReminderObserver(new Handler(getMainLooper()));
 
             getContentResolver().
@@ -533,7 +534,7 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                             true, mCalendarObserver);
         }
 
-        if(mVetVisitObserver == null) {
+        if (mVetVisitObserver == null) {
             mVetVisitObserver = new VetVisitObserver(new Handler(getMainLooper()));
 
             getContentResolver().
@@ -551,4 +552,10 @@ public class MyDogsActivity extends ActionBarActivity implements Photographable 
                 unregisterContentObserver(mVetVisitObserver);
         mVetVisitObserver = null;
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

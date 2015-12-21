@@ -1,9 +1,7 @@
 package social.laika.app.activities;
 
-import java.util.List;
-
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +10,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +17,17 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.List;
+
 import social.laika.app.R;
 import social.laika.app.fragments.AdoptDogScreenSlideFragment;
 import social.laika.app.models.Dog;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class AdoptDogsFragmentActivity extends ActionBarActivity{
-	
-	protected int mIdLayout = R.layout.lk_adopt_indicator_view_pager_activity;
+public class AdoptDogsFragmentActivity extends ActionBarActivity {
+
+    protected int mIdLayout = R.layout.lk_adopt_indicator_view_pager_activity;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -54,29 +54,29 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
         setViewPager();
 
     }
-    
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		if (!this.getClass().equals(MainActivity.class))
-			getMenuInflater().inflate(R.menu.main_menu, menu);
-		
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if (!this.getClass().equals(HomeActivity.class))
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
         if (id == android.R.id.home) {
             super.onBackPressed();
             return true;
         }
-		return super.onOptionsItemSelected(item);
-	}
+        return super.onOptionsItemSelected(item);
+    }
 
     protected void setViewPager() {
 
@@ -130,17 +130,17 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
      */
     protected class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
-    	Activity activity;
+        Activity activity;
 
         public ScreenSlidePagerAdapter(FragmentManager fm, Activity activity) {
-        	
-        	super(fm);
-        	this.activity = activity;            
+
+            super(fm);
+            this.activity = activity;
         }
 
         @Override
         public Fragment getItem(int position) {
-        	     	
+
             return new AdoptDogScreenSlideFragment(mDogs.get(position), this.activity);
         }
 
@@ -151,9 +151,14 @@ public class AdoptDogsFragmentActivity extends ActionBarActivity{
         }
 
         @Override
-        public int getItemPosition(Object object){
+        public int getItemPosition(Object object) {
 
             return PagerAdapter.POSITION_NONE;
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

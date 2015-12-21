@@ -9,14 +9,14 @@ import social.laika.app.R;
 import social.laika.app.adapters.BreedAdapter;
 import social.laika.app.adapters.PersonalityAdapter;
 import social.laika.app.adapters.SizeAdapter;
-import social.laika.app.interfaces.Photographable;
 import social.laika.app.listeners.EditDogOnClickListener;
-import social.laika.app.models.Dog;
 import social.laika.app.models.Breed;
+import social.laika.app.models.Dog;
 import social.laika.app.models.Personality;
 import social.laika.app.models.Size;
 import social.laika.app.utils.Do;
 import social.laika.app.utils.Tag;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EditDogActivity extends CreateDogActivity {
 
@@ -94,4 +94,10 @@ public class EditDogActivity extends CreateDogActivity {
         String message = "Estamos editando el perfil de " + mNameEditText.getText().toString();
         mProgressDialog = ProgressDialog.show(EditDogActivity.this, title, message);
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }
