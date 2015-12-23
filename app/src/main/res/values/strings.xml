@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Laika</string>
+    <string name="app_name_dummy">Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika  Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika Laika</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
